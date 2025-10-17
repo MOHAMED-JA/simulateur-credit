@@ -1,0 +1,1339 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulateur de Crédit en Dinars Tunisien</title>
+  <style>
+    :root{
+      /* Palette repensée avec des teintes bleu, violet, rouge et jaune pour un look futuriste */
+      --bg: #ffffff;
+      --text: #0a2540;
+      --muted: #64748b;
+      /* Couleurs principales : bleu et violet */
+      --primary: #3b82f6;        /* bleu vif */
+      --primary-2: #8b5cf6;      /* violet lumineux */
+      /* Couleurs d'accent : jaune et rouge pour les actions */
+      --accent: #fbbf24;         /* jaune doré */
+      --danger: #ef4444;         /* rouge soutenu */
+      /* Reste des variables */
+      --border: rgba(0,0,0,.12);
+      --shadow: 0 12px 32px rgba(0,0,0,.08);
+      --track: #e5e7eb;
+      --thumb: #c084fc;          /* pouce violet clair pour la barre de défilement */
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--text);
+      font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      /* Fond clair mais coloré : dégradé pastel bleu‑violet‑rose‑jaune pour évoquer un univers futuriste */
+      background: linear-gradient(135deg, #E0F2FE 0%, #EDE9FE 33%, #FFE4E6 66%, #FEF9C3 100%);
+      background-attachment: fixed;
+      padding: 16px;
+      min-height: 100vh;
+    }
+    .wrap{
+      max-width:1360px;
+      margin:0 auto;
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+    }
+    .panel{
+      /* Panneau principal avec effet verre */
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(12px);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding: 18px;
+      /* Chaque panneau occupe toute la largeur par défaut ; la flex-basis sera ajustée via media query */
+      flex: 1 1 100%;
+    }
+    .panel-header{
+      text-align:center;
+      margin-bottom:8px;
+      /* Encadrement interactif */
+      background: rgba(255,255,255,0.5);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+      box-shadow:var(--shadow);
+      /* Permet d'ancrer des éléments en position absolue (ex : interrupteur thème) */
+      position: relative;
+    }
+    h1{ margin:0; font-size:2rem; color:var(--primary) }
+    .sub{ color:var(--muted); font-size:.85rem }
+
+    .grid{ display:grid; grid-template-columns: 0.95fr 1.7fr; gap:16px; margin-top:12px }
+    @media (max-width:1100px){ .grid{ grid-template-columns: 1fr } }
+
+    .card{
+      /* Cartes lumineuses */
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(8px);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+    }
+    label{
+      display:block;
+      margin-bottom:6px;
+      font-weight:700;
+      color:var(--primary);
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      font-size:.8rem;
+    }
+    .control{ margin-bottom:12px }
+    input{
+      width:100%;
+      padding:11px 12px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.8);
+      color:var(--text);
+      font-variant-numeric:tabular-nums;
+    }
+    input[readonly]{
+      /* Champ désactivé grisé */
+      background:#f1f5f9;
+      color:#94a3b8;
+    }
+
+    .btns{ display:flex; gap:8px; flex-wrap:wrap }
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      color:#fff;
+      padding:10px 12px;
+      border-radius:10px;
+      font-weight:800;
+      background:linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      transition:transform .1s ease;
+    }
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,.15);
+    }
+    .btn.secondary{ background:linear-gradient(135deg,#cbd5e1,#94a3b8); color:var(--text) }
+.btn.accent{
+      /* Bouton accent en jaune dégradé pour mettre en valeur certaines actions */
+      background: linear-gradient(135deg, var(--accent), #fde047);
+      color: var(--text);
+    }
+.btn.danger{
+      /* Bouton danger rouge vif avec léger dégradé */
+      background: linear-gradient(135deg, #dc2626, var(--danger));
+      color: #fff;
+    }
+
+/* ===== Animation pour le bouton Calculer ===== */
+/* Le dégradé change de couleur en continu : bleu → rouge → violet → jaune */
+@keyframes rgbShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.btn.rgb {
+  background: linear-gradient(270deg, #3b82f6, #ef4444, #8b5cf6, #fbbf24);
+  background-size: 800% 800%;
+  color: #fff;
+  animation: rgbShift 12s linear infinite;
+}
+
+    .kpis{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px }
+    .kpi{
+      background:rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:10px;
+    }
+    .kpi .title{
+      color:var(--muted);
+      font-size:.82rem;
+    }
+    .kpi .value{
+      font-size:1.4rem;
+      font-weight:900;
+      color:var(--primary);
+    }
+
+    /*
+      Styles spécifiques pour les cellules KPI (Mensualité et Coût total des intérêts).
+      Chaque valeur est mise en avant avec un fond dégradé coloré et un texte contrasté.
+      Ces couleurs s'ajustent automatiquement via les variables CSS définies en fonction du mode clair/sombre.
+    */
+    #kpiMensualite{
+      /* Pour la mensualité : dégradé bleu‑violet inspiré de nos couleurs primaires */
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: inline-block;
+      min-width: 100%;
+    }
+    #kpiInterets{
+      /* Pour le coût total des intérêts : dégradé jaune‑rouge utilisant l'accent et le danger */
+      background: linear-gradient(135deg, var(--accent), var(--danger));
+      color: #0f172a;
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: inline-block;
+      min-width: 100%;
+    }
+    /* Les scénarios supplémentaires utilisent les mêmes couleurs que le premier scénario
+       pour mettre en valeur les indicateurs clés (Mensualité et Coût total des intérêts).
+       On applique donc exactement les mêmes dégradés et styles aux cellules du
+       deuxième scénario afin d'assurer la cohérence visuelle. */
+    #kpiMensualite2{
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: inline-block;
+      min-width: 100%;
+    }
+    #kpiInterets2{
+      background: linear-gradient(135deg, var(--accent), var(--danger));
+      color: #0f172a;
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: inline-block;
+      min-width: 100%;
+    }
+    /* En mode sombre, l'arrière‑plan général change mais le dégradé des KPI reste lumineux.
+       On conserve donc la même couleur de texte pour garantir un contraste suffisant. */
+    body.dark #kpiMensualite{
+      color:#ffffff;
+    }
+    body.dark #kpiInterets{
+      color:#0f172a;
+    }
+
+    /* En mode sombre, conserver le contraste pour les indicateurs du deuxième scénario. */
+    body.dark #kpiMensualite2{
+      color:#ffffff;
+    }
+    body.dark #kpiInterets2{
+      color:#0f172a;
+    }
+
+    /* ===== Table area: fixed height + always scrollable vertically ===== */
+    .table-shell{
+      background:rgba(255,255,255,0.6);
+      backdrop-filter: blur(8px);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+    }
+    .table-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px }
+    .table-wrap{
+      border-radius:10px; overflow-y:auto; overflow-x:auto; flex:1 1 auto;
+      max-height:72vh;  /* fixed visible area to force vertical scroll */
+      scrollbar-gutter: stable both-edges;
+    }
+    /* Custom scrollbar */
+    .table-wrap::-webkit-scrollbar { width: 12px; height: 12px; }
+    .table-wrap::-webkit-scrollbar-track { background: var(--track); border-radius:12px }
+    .table-wrap::-webkit-scrollbar-thumb { background: var(--thumb); border-radius:12px }
+    .table-wrap{ scrollbar-color: var(--thumb) var(--track); } /* Firefox */
+
+    /* ===== Compact colonnes redimensionnées ===== */
+    table{ width:100%; border-collapse:collapse; min-width: 700px; table-layout: fixed; font-variant-numeric:tabular-nums }
+    colgroup col.month{ width: 60px }
+    colgroup col.pay{ width: 120px }
+    colgroup col.int{ width: 100px }
+    colgroup col.prin{ width: 100px }
+    colgroup col.rem{ width: 150px }
+    thead th{
+      position:sticky;
+      top:0;
+      background:rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+      color:var(--text);
+      text-align:right;
+      padding:10px;
+      border-bottom:1px solid var(--border);
+      white-space:nowrap;
+      font-size:14px;
+    }
+    thead th:first-child, tbody td:first-child{ text-align:left }
+    tbody td{
+      padding:10px;
+      border-bottom:1px dashed rgba(0,0,0,.1);
+      text-align:right;
+      color:var(--text);
+      white-space:nowrap;
+      font-size:14px;
+    }
+    tbody tr:hover td{ background:rgba(147,197,253,.3) }
+
+    /* Bouton Export Excel en vert */
+    #btnExportXLSX{
+      background: linear-gradient(135deg,#059669,#10b981);
+      color:#fff;
+    }
+    #btnExportXLSX:hover{
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,.15);
+    }
+
+    /* Appliquer le même style vert au bouton d'export Excel du deuxième scénario.
+       Sans cette règle, ce bouton reprendrait la couleur par défaut des boutons
+       et se distinguerait visuellement de l'export du premier scénario. */
+    #btnExportXLSX2{
+      background: linear-gradient(135deg,#059669,#10b981);
+      color:#fff;
+    }
+    #btnExportXLSX2:hover{
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,.15);
+    }
+    /* Lien LinkedIn */
+    .linkedin-link{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      color:var(--primary);
+      text-decoration:none;
+      font-weight:700;
+    }
+    .linkedin-link:hover{
+      text-decoration:underline;
+    }
+    .linkedin-link svg{
+      width:16px;
+      height:16px;
+      fill:var(--primary);
+    }
+
+    /* ===== Composants pour le changement de thème (clair ↔ sombre) ===== */
+    .theme-toggle{
+      position:absolute;
+      top:12px;
+      right:12px;
+    }
+    .theme-toggle .switch{
+      position:relative;
+      display:inline-block;
+      width:46px;
+      height:24px;
+    }
+    .theme-toggle .switch input{
+      opacity:0;
+      width:0;
+      height:0;
+    }
+    .theme-toggle .slider{
+      position:absolute;
+      cursor:pointer;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:var(--track);
+      transition:.4s;
+      border-radius:34px;
+    }
+    .theme-toggle .slider:before{
+      position:absolute;
+      content:"";
+      height:18px;
+      width:18px;
+      left:3px;
+      bottom:3px;
+      background-color:#fff;
+      transition:.4s;
+      border-radius:50%;
+    }
+    .theme-toggle input:checked + .slider{
+      background:var(--primary);
+    }
+    .theme-toggle input:checked + .slider:before{
+      transform:translateX(22px);
+    }
+
+    /* Mode sombre : change les variables CSS et le fond */
+    body.dark{
+      --bg: #0f172a;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #38bdf8;        /* bleu ciel pour les titres */
+      --primary-2: #818cf8;      /* violet clair pour les gradients */
+      --accent: #facc15;         /* jaune plus vif */
+      --danger: #ef4444;         /* rouge inchangé */
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 12px 32px rgba(0,0,0,0.5);
+      --track: #1e293b;
+      --thumb: #334155;
+      /* Fond sombre en dégradé violet/bleu profond */
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 33%, #3b0764 66%, #4c1d95 100%);
+    }
+
+    /* Styles supplémentaires pour le mode sombre afin d'assurer la lisibilité */
+    body.dark .panel,
+    body.dark .panel-header,
+    body.dark .card,
+    body.dark .table-shell,
+    body.dark .kpi,
+    body.dark #chartContainer.card{
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.15);
+    }
+    body.dark input{
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+    }
+    body.dark input[readonly]{
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+    }
+    body.dark .btn.secondary{
+      background: linear-gradient(135deg, #374151, #1f2937);
+      color: var(--text);
+    }
+    body.dark .kpi{
+      background: rgba(255,255,255,0.1);
+    }
+    body.dark thead th{
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      border-bottom:1px solid rgba(255,255,255,0.15);
+    }
+    body.dark tbody td{
+      color: var(--text);
+      border-bottom:1px dashed rgba(255,255,255,0.15);
+    }
+    body.dark tbody tr:hover td{
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* Assure une meilleure lisibilité des boutons d'accent en mode sombre en utilisant un texte foncé sur le fond jaune */
+    body.dark .btn.accent{
+      color: #0f172a;
+    }
+
+    /* Permet d'afficher plusieurs panneaux côte à côte lorsque l'espace le permet. */
+    @media (min-width: 1100px){
+      .panel{
+        flex: 1 1 calc(50% - 16px);
+      }
+    }
+
+    /* Container optionnel pour plusieurs scénarios (non utilisé mais laissé pour extensibilité). */
+    .scenarios{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+    }
+    .scenarios .panel{
+      flex:1 1 100%;
+    }
+    @media (min-width: 1100px){
+      .scenarios .panel{
+        flex:1 1 calc(50% - 16px);
+      }
+    }
+  </style>
+
+<!-- SheetJS pour générer des .xlsx côté navigateur -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<!-- Chart.js pour les graphiques interactifs -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-header">
+        <h1>Simulateur de Crédit en Dinars Tunisien</h1>
+        <div class="sub">
+          Application faite par
+          <a class="linkedin-link" href="https://www.linkedin.com/in/mohamed-aziz-jaouadi-%C2%AEpsm-i-%C2%AEpspo-l-%C2%AEistqb-851009115/" target="_blank">
+            <!-- Icône LinkedIn -->
+            <svg viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.93v-5.569c0-1.327-.024-3.036-1.849-3.036-1.851 0-2.134 1.447-2.134 2.942v5.663h-3.93V9h3.77v1.561h.054c.525-0.998 1.807-2.049 3.721-2.049 3.979 0 4.713 2.618 4.713 6.018v6.922h-.001zM5.337 7.433c-1.27 0-2.297-1.026-2.297-2.295 0-1.269 1.028-2.296 2.297-2.296 1.27 0 2.297 1.027 2.297 2.296 0 1.269-1.028 2.295-2.297 2.295zm1.967 13.019H3.37V9h3.934v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.732v20.535C0 23.227.792 24 1.771 24h20.451c.979 0 1.772-.773 1.772-1.732V1.732C23.998.774 23.205 0 22.225 0z"/>
+            </svg>
+            Mohamed&nbsp;Aziz&nbsp;Jaouadi
+          </a>
+        </div>
+        <!-- Interrupteur mode clair/sombre -->
+        <div class="theme-toggle">
+          <label class="switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="grid">
+        <section class="card">
+          <div class="control">
+            <label for="capital">Capital emprunté (TND)</label>
+            <input type="number" id="capital" min="0" step="0.001" value="0">
+          </div>
+          <div class="control">
+            <label for="duree">Durée (en mois, 1–300)</label>
+            <input type="number" id="duree" min="1" max="300" step="1" value="1">
+            <div id="warnDuree" class="warning" style="color:#b91c1c; display:none">La durée doit être comprise entre 1 et 300 mois.</div>
+          </div>
+          <div class="control">
+            <label for="tauxAnnuel">Taux d'intérêt annuel (%)</label>
+            <input type="number" id="tauxAnnuel" min="0" step="0.001" value="0">
+          </div>
+          <div class="control">
+            <label for="tauxMensuel">Taux d'intérêt mensuel</label>
+            <input type="number" id="tauxMensuel" step="0.000001" readonly>
+          </div>
+
+          <div class="btns">
+            <button class="btn rgb" id="btnCalcul">Calculer</button>
+            <button class="btn secondary" id="btnReset">Réinitialiser</button>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi">
+              <div class="title">Mensualité</div>
+              <div class="value" id="kpiMensualite">—</div>
+            </div>
+            <div class="kpi">
+              <div class="title">Coût total des intérêts</div>
+              <div class="value" id="kpiInterets">—</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="table-shell">
+          <div class="table-actions">
+            <button class="btn accent" id="btnGen">Générer l'amortissement</button>
+            <button class="btn" id="btnExportXLSX">Exporter Excel (.xlsx)</button>
+            <button class="btn accent" id="btnToggleChart">Graphique</button>
+            <!-- Interrupteur pour basculer entre affichage mensuel et annuel -->
+            <button class="btn" id="btnTogglePeriod">Affichage: Annuel</button>
+            <!-- Ajoute un deuxième scénario pour comparer les prêts -->
+            <button class="btn" id="btnAddScenario">Ajouter un scénario</button>
+            <button class="btn danger" id="btnClear">Effacer le tableau</button>
+          </div>
+          <div class="table-wrap">
+            <table id="table">
+              <colgroup>
+                <col class="month"><col class="pay"><col class="int"><col class="prin"><col class="rem">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Mois</th>
+                  <th>Mensualité</th>
+                  <th>Intérêts</th>
+                  <th>Principal</th>
+                  <th>Capital restant dû</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <!-- Conteneur pour le graphique d'amortissement -->
+      <div id="chartContainer" class="card" style="display:none; margin-top:16px;">
+        <canvas id="amortChart" height="350"></canvas>
+      </div>
+    </div>
+    <!-- Scenario 2: second simulation panel (initialement masqué) -->
+    <div id="scenario2" class="panel" style="display:none;">
+      <div class="panel-header">
+        <h1>Scénario 2</h1>
+      </div>
+      <div class="grid">
+        <section class="card">
+          <div class="control">
+            <label for="capital2">Capital emprunté (TND)</label>
+            <input type="number" id="capital2" min="0" step="0.001" value="0">
+          </div>
+          <div class="control">
+            <label for="duree2">Durée (en mois, 1–300)</label>
+            <input type="number" id="duree2" min="1" max="300" step="1" value="1">
+            <div id="warnDuree2" class="warning" style="color:#b91c1c; display:none">La durée doit être comprise entre 1 et 300 mois.</div>
+          </div>
+          <div class="control">
+            <label for="tauxAnnuel2">Taux d'intérêt annuel (%)</label>
+            <input type="number" id="tauxAnnuel2" min="0" step="0.001" value="0">
+          </div>
+          <div class="control">
+            <label for="tauxMensuel2">Taux d'intérêt mensuel</label>
+            <input type="number" id="tauxMensuel2" step="0.000001" readonly>
+          </div>
+          <div class="btns">
+            <button class="btn rgb" id="btnCalcul2">Calculer</button>
+            <button class="btn secondary" id="btnReset2">Réinitialiser</button>
+          </div>
+          <div class="kpis">
+            <div class="kpi">
+              <div class="title">Mensualité</div>
+              <div class="value" id="kpiMensualite2">—</div>
+            </div>
+            <div class="kpi">
+              <div class="title">Coût total des intérêts</div>
+              <div class="value" id="kpiInterets2">—</div>
+            </div>
+          </div>
+        </section>
+        <section class="table-shell">
+          <div class="table-actions">
+            <button class="btn accent" id="btnGen2">Générer l'amortissement</button>
+            <button class="btn" id="btnExportXLSX2">Exporter Excel (.xlsx)</button>
+            <button class="btn accent" id="btnToggleChart2">Graphique</button>
+            <button class="btn" id="btnTogglePeriod2">Affichage: Annuel</button>
+            <button class="btn danger" id="btnClear2">Effacer le tableau</button>
+          </div>
+          <div class="table-wrap">
+            <table id="table2">
+              <colgroup>
+                <col class="month"><col class="pay"><col class="int"><col class="prin"><col class="rem">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Mois</th>
+                  <th>Mensualité</th>
+                  <th>Intérêts</th>
+                  <th>Principal</th>
+                  <th>Capital restant dû</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <div id="chartContainer2" class="card" style="display:none; margin-top:16px;">
+        <canvas id="amortChart2" height="350"></canvas>
+      </div>
+    </div>
+
+  <script>
+    const PREC = 3;
+    const el = id => document.getElementById(id);
+    const fmtMoney = v => new Intl.NumberFormat('fr-FR',{ style:'currency', currency:'TND', minimumFractionDigits:PREC, maximumFractionDigits:PREC }).format(v);
+    const fmtNum = (v, d=6) => Number(v).toFixed(d);
+
+    const capital = el('capital');
+    const duree = el('duree');
+    const tauxAnnuel = el('tauxAnnuel');
+    const tauxMensuel = el('tauxMensuel');
+    const warnDuree = el('warnDuree');
+    const kpiMensualite = el('kpiMensualite');
+    const kpiInterets = el('kpiInterets');
+    const tableBody = document.querySelector('#table tbody');
+
+    // Flags et sélecteurs pour gérer l'affichage annuel/mensuel et le deuxième scénario
+    let isAnnual = false;
+    let isAnnual2 = false;
+    const capital2 = el('capital2');
+    const duree2 = el('duree2');
+    const tauxAnnuel2 = el('tauxAnnuel2');
+    const tauxMensuel2 = el('tauxMensuel2');
+    const warnDuree2 = el('warnDuree2');
+    const kpiMensualite2 = el('kpiMensualite2');
+    const kpiInterets2 = el('kpiInterets2');
+    const tableBody2 = document.querySelector('#table2 tbody');
+
+    function roundPrec(v){ const p = Math.pow(10, PREC); return Math.round((v + Number.EPSILON) * p) / p; }
+    function pmt(rate_m, n, pv){ if (Math.abs(rate_m) < 1e-12) return pv / n; return pv * rate_m / (1 - Math.pow(1 + rate_m, -n)); }
+    function mensualite(cap, tm_pct, n){ const r = tm_pct / 100; if (!isFinite(cap) || !isFinite(r) || !isFinite(n) || n <= 0) return NaN; return roundPrec(pmt(r, n, cap)); }
+    function updateDerivedRates(){ const ta = parseFloat(tauxAnnuel.value || '0'); const tm = ta / 12; tauxMensuel.value = isFinite(tm) ? fmtNum(tm, 6) : ''; }
+    function validateDuree(){ const n = parseInt(duree.value || '0', 10); const ok = n >= 1 && n <= 300; warnDuree.style.display = ok ? 'none' : 'block'; return ok; }
+
+    function compute(){
+      updateDerivedRates();
+      if (!validateDuree()) { return; }
+      const C = parseFloat(capital.value || '0');
+      const n = parseInt(duree.value || '0', 10);
+      const tm = parseFloat(tauxMensuel.value || '0'); // en %
+      const M = mensualite(C, tm, n);
+
+      let reste = C, totalInterets = 0;
+      const r = tm / 100;
+      for (let mois = 1; mois <= n; mois++) {
+        const interet = roundPrec(reste * r);
+        let principal = roundPrec(M - interet);
+        if (mois === n) principal = roundPrec(reste);
+        reste = roundPrec(reste - principal);
+        totalInterets = roundPrec(totalInterets + interet);
+      }
+      kpiMensualite.textContent = isFinite(M) ? fmtMoney(M) : '—';
+      kpiInterets.textContent = isFinite(totalInterets) ? fmtMoney(totalInterets) : '—';
+    }
+
+    function generateSchedule(){
+      compute();
+      // Si l'affichage annuel est activé, utiliser la routine annuelle et quitter
+      if (isAnnual) {
+        generateAnnualSchedule();
+        return;
+      }
+      tableBody.innerHTML = '';
+
+      const C0 = parseFloat(capital.value || '0');
+      let reste = C0;
+      const n = parseInt(duree.value || '0', 10);
+      const tm_pct = parseFloat(tauxMensuel.value || '0');
+      const r = tm_pct / 100;
+      const M = mensualite(C0, tm_pct, n);
+      if (!isFinite(M)) { return; }
+
+      for (let mois = 1; mois <= n; mois++) {
+        const interet = roundPrec(reste * r);
+        let principal = roundPrec(M - interet);
+        let payment = M;
+        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
+        reste = roundPrec(reste - principal);
+
+        const tr = document.createElement('tr');
+        [mois, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
+          .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+        tableBody.appendChild(tr);
+      }
+      // Met à jour le graphique si celui‑ci est affiché
+      const chartContainer = document.getElementById('chartContainer');
+      if (chartContainer && chartContainer.style.display !== 'none'){
+        updateChart();
+      }
+    }
+
+    /**
+     * Génère un tableau d'amortissement annuel pour le scénario 1 en agrégeant les mensualités,
+     * les intérêts et le principal sur chaque période de 12 mois. Utilisé lorsque l'utilisateur
+     * sélectionne l'affichage annuel via le bouton dédié.
+     */
+    function generateAnnualSchedule(){
+      compute();
+      tableBody.innerHTML = '';
+      const C0 = parseFloat(capital.value || '0');
+      let reste = C0;
+      const n = parseInt(duree.value || '0', 10);
+      const tm_pct = parseFloat(tauxMensuel.value || '0');
+      const r = tm_pct / 100;
+      const M = mensualite(C0, tm_pct, n);
+      if (!isFinite(M)) { return; }
+      let accPayment = 0, accInterest = 0, accPrincipal = 0;
+      let year = 1;
+      for (let mois = 1; mois <= n; mois++){
+        const interet = roundPrec(reste * r);
+        let principal = roundPrec(M - interet);
+        let payment = M;
+        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
+        reste = roundPrec(reste - principal);
+        accPayment = roundPrec(accPayment + payment);
+        accInterest = roundPrec(accInterest + interet);
+        accPrincipal = roundPrec(accPrincipal + principal);
+        if (mois % 12 === 0 || mois === n){
+          const tr = document.createElement('tr');
+          [year, fmtMoney(accPayment), fmtMoney(accInterest), fmtMoney(accPrincipal), fmtMoney(reste)]
+            .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+          tableBody.appendChild(tr);
+          accPayment = 0; accInterest = 0; accPrincipal = 0;
+          year++;
+        }
+      }
+      const chartContainer = document.getElementById('chartContainer');
+      if (chartContainer && chartContainer.style.display !== 'none'){
+        updateChart();
+      }
+    }
+
+    function exportCSV(){
+      const rows = [['Mois','Mensualité','Intérêts','Principal','Capital restant dû']];
+      const trs = [...tableBody.querySelectorAll('tr')];
+      if (!trs.length){ return; }
+      trs.forEach(tr => { const cells = [...tr.querySelectorAll('td')].map(td => td.textContent.replace(/\s/g,'')); rows.push(cells); });
+      const csv = rows.map(r => r.join(';')).join('\n');
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'amortissement_scroll_compact.csv'; a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function resetAll(){ capital.value = 0; duree.value = 1; tauxAnnuel.value = 0; tableBody.innerHTML = ''; compute(); }
+    function clearTable(){ tableBody.innerHTML = ''; }
+
+    // ---- Graphiques ----
+    // Maintient une instance unique du graphique d'amortissement
+    let amortChart = null;
+
+    /**
+     * Met à jour ou crée le graphique d'amortissement à partir des données du tableau.
+     * Utilise Chart.js pour tracer les intérêts et le capital restant dû en fonction des mois.
+     */
+    function updateChart(){
+      const aoa = getAmortizationAoA();
+      const chartContainer = document.getElementById('chartContainer');
+      if (!aoa || !chartContainer){ return; }
+      // Prépare les étiquettes et les séries (intérêts et capital restant dû)
+      const labels = [];
+      const interestData = [];
+      const remainingData = [];
+      for (let i = 1; i < aoa.length; i++){
+        labels.push(aoa[i][0]);
+        interestData.push(aoa[i][2]);
+        remainingData.push(aoa[i][4]);
+      }
+      const data = {
+        labels: labels,
+        datasets: [
+          { label:'Intérêts', data: interestData, tension:0.3 },
+          { label:'Capital restant dû', data: remainingData, tension:0.3 }
+        ]
+      };
+  // Couleurs dynamiques en fonction du thème : texte clair sur fond sombre, texte sombre sur fond clair
+  const isDark = document.body.classList.contains('dark');
+  // Essayez d'utiliser les variables CSS si disponibles, sinon valeurs fallback
+  let textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+  if (!textColor) textColor = isDark ? '#f8fafc' : '#0f172a';
+  const gridColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)';
+
+  if (amortChart){
+    // Met à jour les données existantes
+    amortChart.data = data;
+    // Met à jour les couleurs des axes et de la légende pour correspondre au thème
+    if (amortChart.options && amortChart.options.plugins && amortChart.options.plugins.legend && amortChart.options.plugins.legend.labels){
+      amortChart.options.plugins.legend.labels.color = textColor;
+    }
+    if (amortChart.options && amortChart.options.scales){
+      ['x','y'].forEach(axis => {
+        if (amortChart.options.scales[axis]){
+          if (!amortChart.options.scales[axis].ticks) amortChart.options.scales[axis].ticks = {};
+          if (!amortChart.options.scales[axis].grid) amortChart.options.scales[axis].grid = {};
+          amortChart.options.scales[axis].ticks.color = textColor;
+          amortChart.options.scales[axis].grid.color = gridColor;
+        }
+      });
+    }
+    amortChart.update();
+  } else {
+    const ctx = document.getElementById('amortChart').getContext('2d');
+    amortChart = new Chart(ctx, {
+      type:'line',
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: textColor } }
+        },
+        scales: {
+          x: {
+            ticks: { color: textColor },
+            grid: { color: gridColor }
+          },
+          y: {
+            ticks: { color: textColor },
+            grid: { color: gridColor }
+          }
+        }
+      }
+    });
+  }
+    }
+    
+    // ======== Fonctions dédiées au second scénario (Scénario 2) ========
+
+    /**
+     * Met à jour la valeur du taux mensuel du second scénario en fonction du taux annuel.
+     */
+    function updateDerivedRates2(){
+      if (!tauxAnnuel2 || !tauxMensuel2) return;
+      const ta2 = parseFloat(tauxAnnuel2.value || '0');
+      const tm2 = ta2 / 12;
+      tauxMensuel2.value = isFinite(tm2) ? fmtNum(tm2, 6) : '';
+    }
+
+    /**
+     * Valide la durée du second scénario (entre 1 et 300 mois). Affiche un avertissement si invalide.
+     */
+    function validateDuree2(){
+      if (!duree2 || !warnDuree2) return false;
+      const n2 = parseInt(duree2.value || '0', 10);
+      const ok2 = n2 >= 1 && n2 <= 300;
+      warnDuree2.style.display = ok2 ? 'none' : 'block';
+      return ok2;
+    }
+
+    /**
+     * Calcule la mensualité et le coût total des intérêts pour le second scénario et met à jour les KPI.
+     */
+    function compute2(){
+      updateDerivedRates2();
+      if (!validateDuree2()) { return; }
+      const C2 = parseFloat(capital2 && capital2.value || '0');
+      const n2 = parseInt(duree2 && duree2.value || '0', 10);
+      const tm2 = parseFloat(tauxMensuel2 && tauxMensuel2.value || '0');
+      const M2 = mensualite(C2, tm2, n2);
+      let reste2 = C2, totalInterets2 = 0;
+      const r2 = tm2 / 100;
+      for (let mois = 1; mois <= n2; mois++){
+        const interet2 = roundPrec(reste2 * r2);
+        let principal2 = roundPrec(M2 - interet2);
+        if (mois === n2) principal2 = roundPrec(reste2);
+        reste2 = roundPrec(reste2 - principal2);
+        totalInterets2 = roundPrec(totalInterets2 + interet2);
+      }
+      if (kpiMensualite2) kpiMensualite2.textContent = isFinite(M2) ? fmtMoney(M2) : '—';
+      if (kpiInterets2) kpiInterets2.textContent = isFinite(totalInterets2) ? fmtMoney(totalInterets2) : '—';
+    }
+
+    /**
+     * Génère le tableau mensuel pour le second scénario.
+     */
+    function generateSchedule2(){
+      if (isAnnual2){
+        generateAnnualSchedule2();
+        return;
+      }
+      compute2();
+      if (!tableBody2) return;
+      tableBody2.innerHTML = '';
+      const C0 = parseFloat(capital2 && capital2.value || '0');
+      let reste = C0;
+      const n = parseInt(duree2 && duree2.value || '0', 10);
+      const tm_pct = parseFloat(tauxMensuel2 && tauxMensuel2.value || '0');
+      const r = tm_pct / 100;
+      const M = mensualite(C0, tm_pct, n);
+      if (!isFinite(M)) { return; }
+      for (let mois = 1; mois <= n; mois++){
+        const interet = roundPrec(reste * r);
+        let principal = roundPrec(M - interet);
+        let payment = M;
+        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
+        reste = roundPrec(reste - principal);
+        const tr = document.createElement('tr');
+        [mois, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
+          .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+        tableBody2.appendChild(tr);
+      }
+      const chartContainer2 = document.getElementById('chartContainer2');
+      if (chartContainer2 && chartContainer2.style.display !== 'none'){
+        updateChart2();
+      }
+    }
+
+    /**
+     * Génère le tableau annuel pour le second scénario.
+     */
+    function generateAnnualSchedule2(){
+      compute2();
+      if (!tableBody2) return;
+      tableBody2.innerHTML = '';
+      const C0 = parseFloat(capital2 && capital2.value || '0');
+      let reste = C0;
+      const n = parseInt(duree2 && duree2.value || '0', 10);
+      const tm_pct = parseFloat(tauxMensuel2 && tauxMensuel2.value || '0');
+      const r = tm_pct / 100;
+      const M = mensualite(C0, tm_pct, n);
+      if (!isFinite(M)) { return; }
+      let accPayment = 0, accInterest = 0, accPrincipal = 0;
+      let year = 1;
+      for (let mois = 1; mois <= n; mois++){
+        const interet = roundPrec(reste * r);
+        let principal = roundPrec(M - interet);
+        let payment = M;
+        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
+        reste = roundPrec(reste - principal);
+        accPayment = roundPrec(accPayment + payment);
+        accInterest = roundPrec(accInterest + interet);
+        accPrincipal = roundPrec(accPrincipal + principal);
+        if (mois % 12 === 0 || mois === n){
+          const tr = document.createElement('tr');
+          [year, fmtMoney(accPayment), fmtMoney(accInterest), fmtMoney(accPrincipal), fmtMoney(reste)]
+            .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+          tableBody2.appendChild(tr);
+          accPayment = 0; accInterest = 0; accPrincipal = 0;
+          year++;
+        }
+      }
+      const chartContainer2 = document.getElementById('chartContainer2');
+      if (chartContainer2 && chartContainer2.style.display !== 'none'){
+        updateChart2();
+      }
+    }
+
+    /**
+     * Convertit le tableau d'amortissement du scénario 2 en array-of-arrays pour l'exportation.
+     */
+    function getAmortizationAoA2(){
+      const tbody2 = document.querySelector('#table2 tbody');
+      const trs2 = tbody2 ? [...tbody2.querySelectorAll('tr')] : [];
+      if (!trs2.length) return null;
+      const header2 = ['Mois','Mensualité','Intérêts','Principal','Capital restant dû'];
+      const rows2 = trs2.map(tr => {
+        const tds = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
+        return [
+          Number(String(tds[0] || '').replace(/\D/g,'')),
+          frMoneyToNumber(tds[1]),
+          frMoneyToNumber(tds[2]),
+          frMoneyToNumber(tds[3]),
+          frMoneyToNumber(tds[4]),
+        ];
+      });
+      return [header2, ...rows2];
+    }
+
+    /**
+     * Graphique pour le second scénario. Utilise Chart.js pour tracer l'évolution des intérêts et du capital restant dû.
+     */
+    let amortChart2 = null;
+    function updateChart2(){
+      const aoa2 = getAmortizationAoA2();
+      const chartContainer2 = document.getElementById('chartContainer2');
+      if (!aoa2 || !chartContainer2){ return; }
+      const labels2 = [];
+      const interestData2 = [];
+      const remainingData2 = [];
+      for (let i = 1; i < aoa2.length; i++){
+        labels2.push(aoa2[i][0]);
+        interestData2.push(aoa2[i][2]);
+        remainingData2.push(aoa2[i][4]);
+      }
+      const data2 = {
+        labels: labels2,
+        datasets: [
+          { label:'Intérêts', data: interestData2, tension:0.3 },
+          { label:'Capital restant dû', data: remainingData2, tension:0.3 }
+        ]
+      };
+      const isDark2 = document.body.classList.contains('dark');
+      let textColor2 = getComputedStyle(document.body).getPropertyValue('--text').trim();
+      if (!textColor2) textColor2 = isDark2 ? '#f8fafc' : '#0f172a';
+      const gridColor2 = isDark2 ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)';
+      if (amortChart2){
+        amortChart2.data = data2;
+        if (amortChart2.options && amortChart2.options.plugins && amortChart2.options.plugins.legend && amortChart2.options.plugins.legend.labels){
+          amortChart2.options.plugins.legend.labels.color = textColor2;
+        }
+        if (amortChart2.options && amortChart2.options.scales){
+          ['x','y'].forEach(axis => {
+            if (amortChart2.options.scales[axis]){
+              if (!amortChart2.options.scales[axis].ticks) amortChart2.options.scales[axis].ticks = {};
+              if (!amortChart2.options.scales[axis].grid) amortChart2.options.scales[axis].grid = {};
+              amortChart2.options.scales[axis].ticks.color = textColor2;
+              amortChart2.options.scales[axis].grid.color = gridColor2;
+            }
+          });
+        }
+        amortChart2.update();
+      } else {
+        const ctx2 = document.getElementById('amortChart2').getContext('2d');
+        amortChart2 = new Chart(ctx2, {
+          type:'line',
+          data: data2,
+          options: {
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins:{ legend:{ labels:{ color:textColor2 } } },
+            scales:{
+              x:{ ticks:{ color:textColor2 }, grid:{ color:gridColor2 } },
+              y:{ ticks:{ color:textColor2 }, grid:{ color:gridColor2 } }
+            }
+          }
+        });
+      }
+    }
+
+    /**
+     * Exporte le tableau du scénario 2 au format XLSX à l'aide de SheetJS.
+     */
+    function exportXLSX2(){
+      const aoa2 = getAmortizationAoA2();
+      if (!aoa2){ alert("Génère d'abord le tableau d'amortissement."); return; }
+      if (typeof XLSX === 'undefined'){ alert("Bibliothèque XLSX non chargée."); return; }
+      const wb2 = XLSX.utils.book_new();
+      const ws2 = XLSX.utils.aoa_to_sheet(aoa2);
+      const range2 = XLSX.utils.decode_range(ws2['!ref']);
+      for (let R = 1; R <= range2.e.r; R++){
+        for (let C = 1; C <= 4; C++){
+          const cellAddr2 = XLSX.utils.encode_cell({r:R, c:C});
+          const cell2 = ws2[cellAddr2];
+          if (cell2 && typeof cell2.v === 'number'){
+            cell2.t = 'n';
+            cell2.z = '0.000';
+          }
+        }
+      }
+      ws2['!cols'] = [{wch:6},{wch:14},{wch:12},{wch:12},{wch:18}];
+      XLSX.utils.book_append_sheet(wb2, ws2, 'Amortissement');
+      XLSX.writeFile(wb2, 'amortissement2.xlsx', {bookType:'xlsx'});
+    }
+
+    /**
+     * Réinitialise les valeurs du second scénario aux valeurs par défaut.
+     */
+    function resetAll2(){
+      if (capital2) capital2.value = '0';
+      if (duree2) duree2.value = '1';
+      if (tauxAnnuel2) tauxAnnuel2.value = '0';
+      if (tauxMensuel2) tauxMensuel2.value = fmtNum(0, 6);
+      if (kpiMensualite2) kpiMensualite2.textContent = '—';
+      if (kpiInterets2) kpiInterets2.textContent = '—';
+      if (warnDuree2) warnDuree2.style.display = 'none';
+      if (tableBody2) tableBody2.innerHTML = '';
+    }
+
+    // Wire
+    document.getElementById('btnCalcul').addEventListener('click', compute);
+    document.getElementById('btnGen').addEventListener('click', generateSchedule);
+    /* Suppression du gestionnaire d'export CSV */
+    document.getElementById('btnReset').addEventListener('click', resetAll);
+    document.getElementById('btnClear').addEventListener('click', clearTable);
+
+    // Gestion de l'affichage annuel/mensuel pour le scénario 1
+    const btnTogglePeriod = document.getElementById('btnTogglePeriod');
+    if (btnTogglePeriod){
+      btnTogglePeriod.addEventListener('click', function(){
+        isAnnual = !isAnnual;
+        const headerCells = document.querySelectorAll('#table thead th');
+        if (headerCells && headerCells[0]) headerCells[0].textContent = isAnnual ? 'Année' : 'Mois';
+        btnTogglePeriod.textContent = isAnnual ? 'Affichage: Mensuel' : 'Affichage: Annuel';
+        generateSchedule();
+      });
+    }
+
+    // Bouton pour afficher/masquer le deuxième scénario
+    const btnAddScenario = document.getElementById('btnAddScenario');
+    if (btnAddScenario){
+      btnAddScenario.addEventListener('click', function(){
+        const sc2 = document.getElementById('scenario2');
+        if (!sc2) return;
+        if (sc2.style.display === 'none' || sc2.style.display === ''){
+          sc2.style.display = '';
+          btnAddScenario.textContent = 'Masquer le scénario';
+        } else {
+          sc2.style.display = 'none';
+          btnAddScenario.textContent = 'Ajouter un scénario';
+        }
+      });
+    }
+
+    // Attache les gestionnaires pour le scénario 2
+    const btnCalcul2El = document.getElementById('btnCalcul2');
+    if (btnCalcul2El) btnCalcul2El.addEventListener('click', compute2);
+    const btnGen2El = document.getElementById('btnGen2');
+    if (btnGen2El) btnGen2El.addEventListener('click', generateSchedule2);
+    const btnReset2El = document.getElementById('btnReset2');
+    if (btnReset2El) btnReset2El.addEventListener('click', function(e){ e.preventDefault(); resetAll2(); });
+    const btnClear2El = document.getElementById('btnClear2');
+    if (btnClear2El) btnClear2El.addEventListener('click', function(){ if (tableBody2) tableBody2.innerHTML = ''; });
+    const btnToggleChart2El = document.getElementById('btnToggleChart2');
+    if (btnToggleChart2El){
+      btnToggleChart2El.addEventListener('click', function(){
+        const cc2 = document.getElementById('chartContainer2');
+        if (!cc2) return;
+        if (cc2.style.display === 'none' || cc2.style.display === ''){
+          cc2.style.display = '';
+          btnToggleChart2El.textContent = 'Masquer Graphique';
+          updateChart2();
+        } else {
+          cc2.style.display = 'none';
+          btnToggleChart2El.textContent = 'Graphique';
+        }
+      });
+    }
+    const btnTogglePeriod2El = document.getElementById('btnTogglePeriod2');
+    if (btnTogglePeriod2El){
+      btnTogglePeriod2El.addEventListener('click', function(){
+        isAnnual2 = !isAnnual2;
+        const headerCells2 = document.querySelectorAll('#table2 thead th');
+        if (headerCells2 && headerCells2[0]) headerCells2[0].textContent = isAnnual2 ? 'Année' : 'Mois';
+        btnTogglePeriod2El.textContent = isAnnual2 ? 'Affichage: Mensuel' : 'Affichage: Annuel';
+        generateSchedule2();
+      });
+    }
+    const btnExportXLSX2El = document.getElementById('btnExportXLSX2');
+    if (btnExportXLSX2El) btnExportXLSX2El.addEventListener('click', exportXLSX2);
+
+    // Bouton pour afficher/masquer le graphique d'amortissement
+    const btnToggleChart = document.getElementById('btnToggleChart');
+    if (btnToggleChart){
+      btnToggleChart.addEventListener('click', function(){
+        const chartContainer = document.getElementById('chartContainer');
+        if (!chartContainer){ return; }
+        // Si le graphique est masqué (display:none), on l'affiche et on met à jour les données
+        if (chartContainer.style.display === 'none'){
+          chartContainer.style.display = '';
+          btnToggleChart.textContent = 'Masquer Graphique';
+          updateChart();
+        } else {
+          chartContainer.style.display = 'none';
+          btnToggleChart.textContent = 'Graphique';
+        }
+      });
+    }
+
+    // Live updates
+    ['input','change'].forEach(evt => { tauxAnnuel.addEventListener(evt, updateDerivedRates); duree.addEventListener(evt, validateDuree); });
+
+    // Init
+    updateDerivedRates(); validateDuree(); compute();
+  </script>
+
+<script>
+// ---- Utils : parse "1 234,567 TND" -> 1234.567 (Number)
+function frMoneyToNumber(str){
+  if (!str) return NaN;
+  // retire TND et autres lettres
+  let s = String(str).replace(/[^\d,\.\-\u202f\u00a0]/g,'');
+  // retire espaces (classiques, insécables, fines insécables)
+  s = s.replace(/[\s\u00a0\u202f]/g, '');
+  // En FR: virgule = décimale. Retire points des milliers, remplace virgule par point.
+  s = s.replace(/\.(?=\d{3}(?:\D|$))/g,'').replace(',', '.');
+  const num = Number(s);
+  return isFinite(num) ? num : NaN;
+}
+
+function getAmortizationAoA(){
+  const tbody = document.querySelector('#table tbody') || document.querySelector('table tbody');
+  const trs = tbody ? [...tbody.querySelectorAll('tr')] : [];
+  if (!trs.length) return null;
+  const header = ['Mois','Mensualité','Intérêts','Principal','Capital restant dû'];
+  const rows = trs.map(tr => {
+    const tds = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
+    return [
+      Number(String(tds[0] || '').replace(/\D/g,'')),
+      frMoneyToNumber(tds[1]),
+      frMoneyToNumber(tds[2]),
+      frMoneyToNumber(tds[3]),
+      frMoneyToNumber(tds[4]),
+    ];
+  });
+  return [header, ...rows];
+}
+
+function exportXLSX(){
+  const aoa = getAmortizationAoA();
+  if (!aoa){ alert("Génère d'abord le tableau d'amortissement."); return; }
+  if (typeof XLSX === 'undefined'){ alert("Bibliothèque XLSX non chargée."); return; }
+
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+
+  // Formats numériques à 3 décimales pour les montants
+  const range = XLSX.utils.decode_range(ws['!ref']);
+  for (let R = 1; R <= range.e.r; R++){
+    for (let C = 1; C <= 4; C++){
+      const cellAddr = XLSX.utils.encode_cell({r:R, c:C});
+      const cell = ws[cellAddr];
+      if (cell && typeof cell.v === 'number'){
+        cell.t = 'n';
+        cell.z = '0.000';
+      }
+    }
+  }
+
+  // Largeurs de colonnes
+  ws['!cols'] = [{wch:6},{wch:14},{wch:12},{wch:12},{wch:18}];
+
+  XLSX.utils.book_append_sheet(wb, ws, 'Amortissement');
+  XLSX.writeFile(wb, 'amortissement.xlsx', {bookType:'xlsx'});
+}
+
+// Wire: attache le clic
+document.addEventListener('DOMContentLoaded', function(){
+  const btn = document.getElementById('btnExportXLSX');
+  if (btn) btn.addEventListener('click', exportXLSX);
+});
+</script>
+<script>
+// Réinitialisation aux VALEURS PAR DÉFAUT souhaitées (capture d'écran)
+document.addEventListener('DOMContentLoaded', function(){
+  const DEFAULTS = {
+    capital: '0',
+    duree: '1',
+    tauxAnnuel: '0'
+  };
+
+  function deriveTauxMensuel(ta){
+    const n = parseFloat(String(ta).replace(',', '.'));
+    if (isFinite(n)) return String(n/12);
+    return '';
+  }
+
+  const ids = ['capital','tauxAnnuel','tauxMensuel','duree'];
+  const fields = {};
+  ids.forEach(id => { fields[id] = document.getElementById(id); });
+
+  // Optionnel: à l'ouverture, imposer ces valeurs par défaut si présentes
+  if (fields.capital) fields.capital.value = DEFAULTS.capital;
+  if (fields.duree) fields.duree.value = DEFAULTS.duree;
+  if (fields.tauxAnnuel) fields.tauxAnnuel.value = DEFAULTS.tauxAnnuel;
+  if (fields.tauxMensuel) fields.tauxMensuel.value = deriveTauxMensuel(DEFAULTS.tauxAnnuel);
+
+  function resetAll(){
+    if (fields.capital) fields.capital.value = DEFAULTS.capital;
+    if (fields.duree) fields.duree.value = DEFAULTS.duree;
+    if (fields.tauxAnnuel) fields.tauxAnnuel.value = DEFAULTS.tauxAnnuel;
+    if (fields.tauxMensuel) fields.tauxMensuel.value = deriveTauxMensuel(DEFAULTS.tauxAnnuel);
+
+    // Nettoie les KPIs
+    const kpiM = document.getElementById('kpiMensualite');
+    const kpiI = document.getElementById('kpiInterets');
+    if (kpiM) kpiM.textContent = '—';
+    if (kpiI) kpiI.textContent = '—';
+
+    // Alerte/avertissement
+    const warn = document.getElementById('warnDuree');
+    if (warn) warn.textContent = '';
+
+    // Vide le tableau d'amortissement
+    const tbody = document.querySelector('#table tbody');
+    if (tbody) tbody.innerHTML = '';
+  }
+
+  // Raccordement du bouton Réinitialiser
+  const btnReset = document.getElementById('btnReset') 
+                || document.querySelector('button[type="reset"]') 
+                || Array.from(document.querySelectorAll('button')).find(b => /réinitialiser/i.test(b.textContent));
+  if (btnReset){
+    btnReset.addEventListener('click', function(e){
+      e.preventDefault();
+      resetAll();
+    });
+  }
+});
+</script>
+<script>
+// Activation du mode sombre/clair via l'interrupteur
+document.addEventListener('DOMContentLoaded', function(){
+  const themeToggle = document.getElementById('themeToggle');
+  // Applique le thème sauvegardé à l'ouverture
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark'){
+    document.body.classList.add('dark');
+    if (themeToggle) themeToggle.checked = true;
+  }
+  if(themeToggle){
+    themeToggle.addEventListener('change', function(){
+      if (this.checked){
+        document.body.classList.add('dark');
+        localStorage.setItem('theme','dark');
+      } else {
+        document.body.classList.remove('dark');
+        localStorage.setItem('theme','light');
+      }
+      // Met à jour les graphiques pour appliquer les nouvelles couleurs en fonction du thème
+      // Si les graphiques existent (scénario 1 ou scénario 2), ils seront rafraîchis avec des couleurs adaptées.
+      try {
+        if (typeof updateChart === 'function') {
+          updateChart();
+        }
+        if (typeof updateChart2 === 'function') {
+          updateChart2();
+        }
+      } catch (e) {}
+    });
+  }
+});
+</script>
+</body>
+</html>
