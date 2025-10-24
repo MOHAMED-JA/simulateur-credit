@@ -490,6 +490,10 @@
             <label for="tauxMensuel">Taux d'intérêt mensuel</label>
             <input type="number" id="tauxMensuel" step="0.000001" readonly>
           </div>
+          <div class="control">
+            <label for="dateDebut">Date de début du crédit</label>
+            <input type="date" id="dateDebut" value="${new Date().toISOString().substring(0, 10)}">
+          </div>
 
           <div class="btns">
             <button class="btn rgb" id="btnCalcul">Calculer</button>
@@ -526,7 +530,7 @@
               </colgroup>
               <thead>
                 <tr>
-                  <th>Mois</th>
+                  <th>Période</th>
                   <th>Mensualité</th>
                   <th>Intérêts</th>
                   <th>Principal</th>
@@ -567,6 +571,10 @@
             <label for="tauxMensuel2">Taux d'intérêt mensuel</label>
             <input type="number" id="tauxMensuel2" step="0.000001" readonly>
           </div>
+          <div class="control">
+            <label for="dateDebut2">Date de début du crédit</label>
+            <input type="date" id="dateDebut2" value="${new Date().toISOString().substring(0, 10)}">
+          </div>
           <div class="btns">
             <button class="btn rgb" id="btnCalcul2">Calculer</button>
             <button class="btn secondary" id="btnReset2">Réinitialiser</button>
@@ -597,7 +605,7 @@
               </colgroup>
               <thead>
                 <tr>
-                  <th>Mois</th>
+                  <th>Période</th>
                   <th>Mensualité</th>
                   <th>Intérêts</th>
                   <th>Principal</th>
@@ -668,36 +676,38 @@
       kpiInterets.textContent = isFinite(totalInterets) ? fmtMoney(totalInterets) : '—';
     }
 
-    function generateSchedule(){
-      compute();
-      // Si l'affichage annuel est activé, utiliser la routine annuelle et quitter
-      if (isAnnual) {
+function generateSchedule(){
+      if (isAnnual){
         generateAnnualSchedule();
         return;
       }
+      compute();
+      if (!tableBody) return;
       tableBody.innerHTML = '';
-
-      const C0 = parseFloat(capital.value || '0');
+      const C0 = parseFloat(capital && capital.value || '0');
       let reste = C0;
-      const n = parseInt(duree.value || '0', 10);
-      const tm_pct = parseFloat(tauxMensuel.value || '0');
+      const n = parseInt(duree && duree.value || '0', 10);
+      const tm_pct = parseFloat(tauxMensuel && tauxMensuel.value || '0');
       const r = tm_pct / 100;
       const M = mensualite(C0, tm_pct, n);
       if (!isFinite(M)) { return; }
-
-      for (let mois = 1; mois <= n; mois++) {
+      const dateDebut = document.getElementById('dateDebut').value ? new Date(document.getElementById('dateDebut').value) : null;
+      for (let mois = 1; mois <= n; mois++){
         const interet = roundPrec(reste * r);
         let principal = roundPrec(M - interet);
         let payment = M;
         if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
         reste = roundPrec(reste - principal);
-
         const tr = document.createElement('tr');
-        [mois, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
+        let periode = mois;
+        if (dateDebut) {
+          const date = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
+          periode = date.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
+        }
+        [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
           .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
         tableBody.appendChild(tr);
       }
-      // Met à jour le graphique si celui‑ci est affiché
       const chartContainer = document.getElementById('chartContainer');
       if (chartContainer && chartContainer.style.display !== 'none'){
         updateChart();
@@ -721,6 +731,7 @@
       if (!isFinite(M)) { return; }
       let accPayment = 0, accInterest = 0, accPrincipal = 0;
       let year = 1;
+      const dateDebut = document.getElementById('dateDebut').value ? new Date(document.getElementById('dateDebut').value) : null;
       for (let mois = 1; mois <= n; mois++){
         const interet = roundPrec(reste * r);
         let principal = roundPrec(M - interet);
@@ -732,7 +743,12 @@
         accPrincipal = roundPrec(accPrincipal + principal);
         if (mois % 12 === 0 || mois === n){
           const tr = document.createElement('tr');
-          [year, fmtMoney(accPayment), fmtMoney(accInterest), fmtMoney(accPrincipal), fmtMoney(reste)]
+          let periode = year;
+          if (dateDebut) {
+            const date = new Date(dateDebut.getFullYear() + year - 1, dateDebut.getMonth(), dateDebut.getDate());
+            periode = date.toLocaleDateString('fr-FR', { year: 'numeric' });
+          }
+          [periode, fmtMoney(accPayment), fmtMoney(accInterest), fmtMoney(accPrincipal), fmtMoney(reste)]
             .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
           tableBody.appendChild(tr);
           accPayment = 0; accInterest = 0; accPrincipal = 0;
@@ -775,17 +791,17 @@
       // Prépare les étiquettes et les séries (intérêts et capital restant dû)
       const labels = [];
       const interestData = [];
-      const remainingData = [];
+      const principalData = [];
       for (let i = 1; i < aoa.length; i++){
         labels.push(aoa[i][0]);
         interestData.push(aoa[i][2]);
-        remainingData.push(aoa[i][4]);
+        principalData.push(aoa[i][3]); // Utiliser la colonne Principal (index 3)
       }
       const data = {
         labels: labels,
         datasets: [
-          { label:'Intérêts', data: interestData, tension:0.3 },
-          { label:'Capital restant dû', data: remainingData, tension:0.3 }
+          { label:'Intérêts', data: interestData, tension:0.3, borderColor: 'rgb(255, 99, 132)', backgroundColor: 'rgba(255, 99, 132, 0.5)' },
+          { label:'Principal', data: principalData, tension:0.3, borderColor: 'rgb(54, 162, 235)', backgroundColor: 'rgba(54, 162, 235, 0.5)' }
         ]
       };
   // Couleurs dynamiques en fonction du thème : texte clair sur fond sombre, texte sombre sur fond clair
@@ -901,8 +917,9 @@
       const n = parseInt(duree2 && duree2.value || '0', 10);
       const tm_pct = parseFloat(tauxMensuel2 && tauxMensuel2.value || '0');
       const r = tm_pct / 100;
-      const M = mensualite(C0, tm_pct, n);
+const M = mensualite(C0, tm_pct, n);
       if (!isFinite(M)) { return; }
+      const dateDebut = document.getElementById('dateDebut').value ? new Date(document.getElementById('dateDebut').value) : null;
       for (let mois = 1; mois <= n; mois++){
         const interet = roundPrec(reste * r);
         let principal = roundPrec(M - interet);
@@ -910,9 +927,14 @@
         if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
         reste = roundPrec(reste - principal);
         const tr = document.createElement('tr');
-        [mois, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
+        let periode = mois;
+        if (dateDebut) {
+          const date = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
+          periode = date.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
+        }
+        [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
           .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
-        tableBody2.appendChild(tr);
+        tableBody.appendChild(tr);
       }
       const chartContainer2 = document.getElementById('chartContainer2');
       if (chartContainer2 && chartContainer2.style.display !== 'none'){
@@ -936,6 +958,7 @@
       if (!isFinite(M)) { return; }
       let accPayment = 0, accInterest = 0, accPrincipal = 0;
       let year = 1;
+      const dateDebut2 = document.getElementById('dateDebut2').value ? new Date(document.getElementById('dateDebut2').value) : null;
       for (let mois = 1; mois <= n; mois++){
         const interet = roundPrec(reste * r);
         let principal = roundPrec(M - interet);
@@ -947,7 +970,12 @@
         accPrincipal = roundPrec(accPrincipal + principal);
         if (mois % 12 === 0 || mois === n){
           const tr = document.createElement('tr');
-          [year, fmtMoney(accPayment), fmtMoney(accInterest), fmtMoney(accPrincipal), fmtMoney(reste)]
+          let periode = year;
+          if (dateDebut2) {
+            const date = new Date(dateDebut2.getFullYear() + year - 1, dateDebut2.getMonth(), dateDebut2.getDate());
+            periode = date.toLocaleDateString('fr-FR', { year: 'numeric' });
+          }
+          [periode, fmtMoney(accPayment), fmtMoney(accInterest), fmtMoney(accPrincipal), fmtMoney(reste)]
             .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
           tableBody2.appendChild(tr);
           accPayment = 0; accInterest = 0; accPrincipal = 0;
@@ -967,11 +995,17 @@
       const tbody2 = document.querySelector('#table2 tbody');
       const trs2 = tbody2 ? [...tbody2.querySelectorAll('tr')] : [];
       if (!trs2.length) return null;
-      const header2 = ['Mois','Mensualité','Intérêts','Principal','Capital restant dû'];
+      const header2 = [
+        isAnnual2 ? 'Année' : 'Période',
+        isAnnual2 ? 'Annuité' : 'Mensualité',
+        'Intérêts',
+        'Principal',
+        'Capital restant dû'
+      ];
       const rows2 = trs2.map(tr => {
         const tds = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
         return [
-          Number(String(tds[0] || '').replace(/\D/g,'')),
+          tds[0], // Laisser comme string (Période/Année/Date)
           frMoneyToNumber(tds[1]),
           frMoneyToNumber(tds[2]),
           frMoneyToNumber(tds[3]),
@@ -991,17 +1025,17 @@
       if (!aoa2 || !chartContainer2){ return; }
       const labels2 = [];
       const interestData2 = [];
-      const remainingData2 = [];
+      const principalData2 = [];
       for (let i = 1; i < aoa2.length; i++){
         labels2.push(aoa2[i][0]);
         interestData2.push(aoa2[i][2]);
-        remainingData2.push(aoa2[i][4]);
+        principalData2.push(aoa2[i][3]); // Utiliser la colonne Principal (index 3)
       }
       const data2 = {
         labels: labels2,
         datasets: [
-          { label:'Intérêts', data: interestData2, tension:0.3 },
-          { label:'Capital restant dû', data: remainingData2, tension:0.3 }
+          { label:'Intérêts', data: interestData2, tension:0.3, borderColor: 'rgb(255, 99, 132)', backgroundColor: 'rgba(255, 99, 132, 0.5)' },
+          { label:'Principal', data: principalData2, tension:0.3, borderColor: 'rgb(54, 162, 235)', backgroundColor: 'rgba(54, 162, 235, 0.5)' }
         ]
       };
       const isDark2 = document.body.classList.contains('dark');
@@ -1094,7 +1128,8 @@
       btnTogglePeriod.addEventListener('click', function(){
         isAnnual = !isAnnual;
         const headerCells = document.querySelectorAll('#table thead th');
-        if (headerCells && headerCells[0]) headerCells[0].textContent = isAnnual ? 'Année' : 'Mois';
+        if (headerCells && headerCells[0]) headerCells[0].textContent = isAnnual ? 'Année' : 'Période';
+        if (headerCells && headerCells[1]) headerCells[1].textContent = isAnnual ? 'Annuité' : 'Mensualité';
         btnTogglePeriod.textContent = isAnnual ? 'Affichage: Mensuel' : 'Affichage: Annuel';
         generateSchedule();
       });
@@ -1145,7 +1180,8 @@
       btnTogglePeriod2El.addEventListener('click', function(){
         isAnnual2 = !isAnnual2;
         const headerCells2 = document.querySelectorAll('#table2 thead th');
-        if (headerCells2 && headerCells2[0]) headerCells2[0].textContent = isAnnual2 ? 'Année' : 'Mois';
+        if (headerCells2 && headerCells2[0]) headerCells2[0].textContent = isAnnual2 ? 'Année' : 'Période';
+        if (headerCells2 && headerCells2[1]) headerCells2[1].textContent = isAnnual2 ? 'Annuité' : 'Mensualité';
         btnTogglePeriod2El.textContent = isAnnual2 ? 'Affichage: Mensuel' : 'Affichage: Annuel';
         generateSchedule2();
       });
@@ -1171,11 +1207,18 @@
       });
     }
 
-    // Live updates
-    ['input','change'].forEach(evt => { tauxAnnuel.addEventListener(evt, updateDerivedRates); duree.addEventListener(evt, validateDuree); });
-
-    // Init
-    updateDerivedRates(); validateDuree(); compute();
+// Live updates
+      ['input','change'].forEach(evt => { tauxAnnuel.addEventListener(evt, updateDerivedRates); duree.addEventListener(evt, validateDuree); });
+      // Ajout de l'écouteur pour la date de début afin de régénérer le tableau
+      const dateDebut = document.getElementById('dateDebut');
+      if(dateDebut) dateDebut.addEventListener('change', generateSchedule);
+      
+      ['input','change'].forEach(evt => { tauxAnnuel2.addEventListener(evt, updateDerivedRates2); duree2.addEventListener(evt, validateDuree2); });
+      const dateDebut2 = document.getElementById('dateDebut2');
+      if(dateDebut2) dateDebut2.addEventListener('change', generateSchedule2);
+      
+      // Init
+      updateDerivedRates(); validateDuree(); compute();
   </script>
 
 <script>
@@ -1193,22 +1236,29 @@ function frMoneyToNumber(str){
 }
 
 function getAmortizationAoA(){
-  const tbody = document.querySelector('#table tbody') || document.querySelector('table tbody');
-  const trs = tbody ? [...tbody.querySelectorAll('tr')] : [];
-  if (!trs.length) return null;
-  const header = ['Mois','Mensualité','Intérêts','Principal','Capital restant dû'];
-  const rows = trs.map(tr => {
-    const tds = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
-    return [
-      Number(String(tds[0] || '').replace(/\D/g,'')),
-      frMoneyToNumber(tds[1]),
-      frMoneyToNumber(tds[2]),
-      frMoneyToNumber(tds[3]),
-      frMoneyToNumber(tds[4]),
-    ];
-  });
-  return [header, ...rows];
-}
+      const tbody = document.querySelector('#table tbody') || document.querySelector('table tbody');
+      const trs = tbody ? [...tbody.querySelectorAll('tr')] : [];
+      if (!trs.length) return null;
+      const header = [
+        isAnnual ? 'Année' : 'Période',
+        isAnnual ? 'Annuité' : 'Mensualité',
+        'Intérêts',
+        'Principal',
+        'Capital restant dû'
+      ];
+      const rows = trs.map(tr => {
+        const tds = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
+        // La première colonne (Période/Année) peut être une date ou un nombre, on la laisse comme string pour l'export
+        return [
+          tds[0],
+          frMoneyToNumber(tds[1]),
+          frMoneyToNumber(tds[2]),
+          frMoneyToNumber(tds[3]),
+          frMoneyToNumber(tds[4]),
+        ];
+      });
+      return [header, ...rows];
+    }
 
 function exportXLSX(){
   const aoa = getAmortizationAoA();
