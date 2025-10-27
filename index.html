@@ -1196,7 +1196,7 @@ const M = mensualite(C0, tm_pct, n);
     document.getElementById('btnGen').addEventListener('click', generateSchedule);
     /* Suppression du gestionnaire d'export CSV */
     document.getElementById('btnReset').addEventListener('click', resetAll);
-    document.getElementById('btnClear').addEventListener('click', clearTable);
+    // btnClear supprimé et remplacé par btnComparer
 
     // Gestion de l'affichage annuel/mensuel pour le scénario 1
     const btnTogglePeriod = document.getElementById('btnTogglePeriod');
