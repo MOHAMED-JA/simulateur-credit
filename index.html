@@ -1619,11 +1619,13 @@ function getAmortizationAoA2(){
 
 /**
  * Fonction pour partager par email les résultats du scénario 1
+ * Génère automatiquement le PDF et ouvre l'email avec un tableau récapitulatif
  */
 function partagerParEmail(){
   const capital = document.getElementById('capital').value;
   const duree = document.getElementById('duree').value;
   const tauxAnnuel = document.getElementById('tauxAnnuel').value;
+  const dateDebut = document.getElementById('dateDebut').value;
   const mensualite = document.getElementById('kpiMensualite').textContent;
   const interets = document.getElementById('kpiInterets').textContent;
   
@@ -1632,22 +1634,65 @@ function partagerParEmail(){
     return;
   }
   
-  // Construction du corps de l'email
-  const sujet = 'Simulation de Crédit - Résultats';
-  const corps = `Bonjour,\n\nVoici les résultats de ma simulation de crédit :\n\n` +
-    `Capital emprunté : ${capital} TND\n` +
-    `Durée : ${duree} mois\n` +
-    `Taux d'intérêt annuel : ${tauxAnnuel}%\n\n` +
-    `RESULTATS :\n` +
-    `Mensualité : ${mensualite}\n` +
-    `Coût total des intérêts : ${interets}\n\n` +
-    `Cordialement`;
+  // Vérifier si le tableau d'amortissement existe
+  const tbody = document.querySelector('#table tbody');
+  if (!tbody || tbody.children.length === 0) {
+    alert('⚠️ Veuillez d\'abord générer le tableau d\'amortissement avant de partager.');
+    return;
+  }
   
-  // Création du lien mailto
-  const mailtoLink = `mailto:?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+  // 1. Générer et télécharger le PDF automatiquement
+  try {
+    exportPDF();
+  } catch(e) {
+    console.error('Erreur lors de la génération du PDF:', e);
+  }
   
-  // Ouvrir le client email
-  window.location.href = mailtoLink;
+  // 2. Attendre un peu pour que le PDF soit téléchargé
+  setTimeout(function(){
+    // 3. Construire le tableau récapitulatif HTML pour l'email
+    const tableauHTML = `
+=== SIMULATION DE CREDIT ===
+
+DONNEES DE BASE:
+-----------------
+Capital emprunte : ${capital} TND
+Duree : ${duree} mois
+Taux d'interet annuel : ${tauxAnnuel}%
+Date de debut : ${dateDebut || 'Non specifiee'}
+
+RESULTATS:
+-----------------
+Mensualite : ${mensualite}
+Cout total des interets : ${interets}
+
+TABLEAU D'AMORTISSEMENT:
+-----------------
+(Voir le fichier PDF joint pour le détail complet)
+
+INSTRUCTIONS:
+-----------------
+1. Un fichier PDF "amortissement_scenario1.pdf" a été téléchargé dans votre dossier Téléchargements
+2. Veuillez joindre ce fichier PDF à cet email avant de l'envoyer
+3. Le PDF contient le tableau d'amortissement complet avec tous les détails
+
+Cordialement
+    `;
+    
+    // Construction du sujet
+    const sujet = 'Simulation de Credit - Resultats et Tableau d\'Amortissement';
+    
+    // Création du lien mailto
+    const mailtoLink = `mailto:?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(tableauHTML)}`;
+    
+    // Ouvrir le client email
+    window.location.href = mailtoLink;
+    
+    // Afficher un message d'information
+    setTimeout(function(){
+      alert('✅ Le PDF a été téléchargé !\n\n📧 Votre client email va s\'ouvrir.\n\n📎 N\'oubliez pas de joindre le fichier PDF "amortissement_scenario1.pdf" depuis votre dossier Téléchargements avant d\'envoyer l\'email.');
+    }, 500);
+  }, 1000);
 }
 
 /**
