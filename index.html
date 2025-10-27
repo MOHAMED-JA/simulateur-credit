@@ -567,6 +567,10 @@
             <button class="btn rgb" id="btnCalcul">Calculer</button>
             <button class="btn secondary" id="btnReset">Réinitialiser</button>
           </div>
+          
+          <div class="btns" style="margin-top: 12px;">
+            <button class="btn" id="btnCapacite" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); width: 100%;">💰 Capacité d'emprunt</button>
+          </div>
 
           <div class="kpis">
             <div class="kpi">
@@ -585,12 +589,14 @@
             <button class="btn accent" id="btnGen">Générer l'amortissement</button>
             <button class="btn" id="btnExportXLSX">Exporter Excel (.xlsx)</button>
             <button class="btn" id="btnExportPDF">Exporter PDF</button>
+            <button class="btn" id="btnEmail" style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: #fff; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);">📧 Partager par Email</button>
+            <button class="btn" id="btnHistorique" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);">📜 Historique</button>
             <button class="btn accent" id="btnToggleChart">Graphique</button>
             <!-- Interrupteur pour basculer entre affichage mensuel et annuel -->
             <button class="btn" id="btnTogglePeriod">Affichage: Annuel</button>
             <!-- Ajoute un deuxième scénario pour comparer les prêts -->
             <button class="btn" id="btnAddScenario">Ajouter un scénario</button>
-            <button class="btn danger" id="btnClear">Effacer le tableau</button>
+            <button class="btn" id="btnComparer" style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);">🔍 Comparer 3 scénarios</button>
           </div>
           <div class="table-wrap">
             <table id="table">
@@ -666,7 +672,7 @@
             <button class="btn" id="btnExportPDF2">Exporter PDF</button>
             <button class="btn accent" id="btnToggleChart2">Graphique</button>
             <button class="btn" id="btnTogglePeriod2">Affichage: Annuel</button>
-            <button class="btn danger" id="btnClear2">Effacer le tableau</button>
+            <!-- Bouton supprimé du scénario 2 -->
           </div>
           <div class="table-wrap">
             <table id="table2">
@@ -1610,6 +1616,698 @@ function getAmortizationAoA2(){
   });
   return [header2, ...rows2];
 }
+
+/**
+ * Fonction pour partager par email les résultats du scénario 1
+ */
+function partagerParEmail(){
+  const capital = document.getElementById('capital').value;
+  const duree = document.getElementById('duree').value;
+  const tauxAnnuel = document.getElementById('tauxAnnuel').value;
+  const mensualite = document.getElementById('kpiMensualite').textContent;
+  const interets = document.getElementById('kpiInterets').textContent;
+  
+  if (!capital || !duree || !tauxAnnuel || mensualite === '—') {
+    alert('Veuillez d\'abord calculer votre crédit avant de partager.');
+    return;
+  }
+  
+  // Construction du corps de l'email
+  const sujet = 'Simulation de Crédit - Résultats';
+  const corps = `Bonjour,\n\nVoici les résultats de ma simulation de crédit :\n\n` +
+    `Capital emprunté : ${capital} TND\n` +
+    `Durée : ${duree} mois\n` +
+    `Taux d'intérêt annuel : ${tauxAnnuel}%\n\n` +
+    `RESULTATS :\n` +
+    `Mensualité : ${mensualite}\n` +
+    `Coût total des intérêts : ${interets}\n\n` +
+    `Cordialement`;
+  
+  // Création du lien mailto
+  const mailtoLink = `mailto:?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+  
+  // Ouvrir le client email
+  window.location.href = mailtoLink;
+}
+
+/**
+ * Fonction pour calculer la capacité d'emprunt
+ */
+function calculerCapaciteEmprunt(){
+  // Créer une boîte de dialogue modale
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  `;
+  
+  const modalContent = document.createElement('div');
+  modalContent.style.cssText = `
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    border: 3px solid rgba(14, 165, 233, 0.6);
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.5);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+  `;
+  
+  modalContent.innerHTML = `
+    <h2 style="color: #0ea5e9; margin-top: 0; text-align: center;">💰 Calculateur de Capacité d'Emprunt</h2>
+    <p style="color: #64748b; text-align: center; margin-bottom: 20px;">Taux d'endettement maximum : 40%</p>
+    
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; color: #0ea5e9; font-weight: bold; margin-bottom: 5px;">Revenus mensuels nets (TND)</label>
+      <input type="number" id="revenusMensuels" placeholder="Ex: 2000" style="width: 100%; padding: 12px; border: 2px solid rgba(14, 165, 233, 0.6); border-radius: 10px; font-size: 16px;" />
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; color: #0ea5e9; font-weight: bold; margin-bottom: 5px;">Charges mensuelles (TND)</label>
+      <input type="number" id="chargesMensuelles" placeholder="Ex: 300" value="0" style="width: 100%; padding: 12px; border: 2px solid rgba(14, 165, 233, 0.6); border-radius: 10px; font-size: 16px;" />
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; color: #0ea5e9; font-weight: bold; margin-bottom: 5px;">Durée souhaitée (mois)</label>
+      <input type="number" id="dureeCapacite" placeholder="Ex: 120" value="120" style="width: 100%; padding: 12px; border: 2px solid rgba(14, 165, 233, 0.6); border-radius: 10px; font-size: 16px;" />
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+      <label style="display: block; color: #0ea5e9; font-weight: bold; margin-bottom: 5px;">Taux d'intérêt annuel (%)</label>
+      <input type="number" id="tauxCapacite" placeholder="Ex: 5" value="5" step="0.1" style="width: 100%; padding: 12px; border: 2px solid rgba(14, 165, 233, 0.6); border-radius: 10px; font-size: 16px;" />
+    </div>
+    
+    <div id="resultatCapacite" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; display: none;">
+      <h3 style="margin: 0 0 10px 0; text-align: center;">Résultat</h3>
+      <p style="margin: 5px 0; font-size: 14px;"><strong>Capacité d'endettement :</strong> <span id="capaciteEndettement"></span></p>
+      <p style="margin: 5px 0; font-size: 14px;"><strong>Mensualité maximale :</strong> <span id="mensualiteMax"></span></p>
+      <p style="margin: 5px 0; font-size: 18px; text-align: center; margin-top: 15px;"><strong>Montant empruntable :</strong><br><span id="montantEmpruntable" style="font-size: 28px;"></span></p>
+    </div>
+    
+    <div style="display: flex; gap: 10px;">
+      <button id="btnCalculerCapacite" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);">✅ Calculer</button>
+      <button id="btnUtiliser" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; display: none; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);">🔄 Utiliser</button>
+      <button id="btnFermerModal" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);">❌ Fermer</button>
+    </div>
+  `;
+  
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
+  
+  // Variables pour stocker les résultats
+  let montantCalcule = 0;
+  let dureeCalculee = 0;
+  let tauxCalcule = 0;
+  
+  // Fonction de calcul
+  document.getElementById('btnCalculerCapacite').addEventListener('click', function(){
+    const revenus = parseFloat(document.getElementById('revenusMensuels').value);
+    const charges = parseFloat(document.getElementById('chargesMensuelles').value) || 0;
+    const duree = parseFloat(document.getElementById('dureeCapacite').value);
+    const taux = parseFloat(document.getElementById('tauxCapacite').value);
+    
+    if (!revenus || revenus <= 0) {
+      alert('Veuillez saisir vos revenus mensuels.');
+      return;
+    }
+    
+    if (!duree || duree <= 0) {
+      alert('Veuillez saisir une durée valide.');
+      return;
+    }
+    
+    if (!taux || taux < 0) {
+      alert('Veuillez saisir un taux d\'intérêt valide.');
+      return;
+    }
+    
+    // Calcul de la capacité d'endettement (40% des revenus)
+    const capaciteEndettement = revenus * 0.40;
+    
+    // Mensualité maximale = capacité d'endettement - charges
+    const mensualiteMax = capaciteEndettement - charges;
+    
+    if (mensualiteMax <= 0) {
+      alert('Vos charges sont trop élevées par rapport à vos revenus. Capacité d\'emprunt nulle.');
+      return;
+    }
+    
+    // Calcul du montant empruntable
+    // Formule : C = M * [(1 - (1 + i)^-n) / i]
+    // où C = capital, M = mensualité, i = taux mensuel, n = nombre de mois
+    const tauxMensuel = taux / 100 / 12;
+    let montantEmpruntable;
+    
+    if (tauxMensuel === 0) {
+      montantEmpruntable = mensualiteMax * duree;
+    } else {
+      montantEmpruntable = mensualiteMax * ((1 - Math.pow(1 + tauxMensuel, -duree)) / tauxMensuel);
+    }
+    
+    // Stocker les valeurs pour utilisation ultérieure
+    montantCalcule = montantEmpruntable;
+    dureeCalculee = duree;
+    tauxCalcule = taux;
+    
+    // Afficher les résultats
+    document.getElementById('capaciteEndettement').textContent = fmtMoney(capaciteEndettement);
+    document.getElementById('mensualiteMax').textContent = fmtMoney(mensualiteMax);
+    document.getElementById('montantEmpruntable').textContent = fmtMoney(montantEmpruntable);
+    document.getElementById('resultatCapacite').style.display = 'block';
+    document.getElementById('btnUtiliser').style.display = 'block';
+  });
+  
+  // Bouton Utiliser : remplit les champs du formulaire principal
+  document.getElementById('btnUtiliser').addEventListener('click', function(){
+    if (montantCalcule > 0) {
+      document.getElementById('capital').value = montantCalcule.toFixed(3);
+      document.getElementById('duree').value = dureeCalculee;
+      document.getElementById('tauxAnnuel').value = tauxCalcule;
+      
+      // Calculer automatiquement le taux mensuel
+      const tauxMensuel = tauxCalcule / 12;
+      document.getElementById('tauxMensuel').value = tauxMensuel.toFixed(6);
+      
+      // Fermer la modale
+      document.body.removeChild(modal);
+      
+      // Afficher un message de confirmation
+      alert('✅ Les valeurs ont été appliquées ! Cliquez sur "Calculer" pour voir la mensualité.');
+    }
+  });
+  
+  // Fermer la modale
+  document.getElementById('btnFermerModal').addEventListener('click', function(){
+    document.body.removeChild(modal);
+  });
+  
+  // Fermer en cliquant sur le fond
+  modal.addEventListener('click', function(e){
+    if (e.target === modal) {
+      document.body.removeChild(modal);
+    }
+  });
+}
+
+/**
+ * Fonction pour sauvegarder une simulation dans l'historique
+ */
+function sauvegarderSimulation(){
+  const capital = document.getElementById('capital').value;
+  const duree = document.getElementById('duree').value;
+  const tauxAnnuel = document.getElementById('tauxAnnuel').value;
+  const dateDebut = document.getElementById('dateDebut').value;
+  const mensualite = document.getElementById('kpiMensualite').textContent;
+  const interets = document.getElementById('kpiInterets').textContent;
+  
+  if (!capital || !duree || !tauxAnnuel || mensualite === '—') {
+    return; // Ne pas sauvegarder si les données sont incomplètes
+  }
+  
+  // Récupérer l'historique existant
+  let historique = JSON.parse(localStorage.getItem('historiqueSimulations') || '[]');
+  
+  // Créer une nouvelle entrée
+  const simulation = {
+    id: Date.now(),
+    date: new Date().toLocaleString('fr-FR'),
+    capital: capital,
+    duree: duree,
+    tauxAnnuel: tauxAnnuel,
+    dateDebut: dateDebut,
+    mensualite: mensualite,
+    interets: interets
+  };
+  
+  // Ajouter au début de l'historique
+  historique.unshift(simulation);
+  
+  // Limiter à 50 simulations maximum
+  if (historique.length > 50) {
+    historique = historique.slice(0, 50);
+  }
+  
+  // Sauvegarder dans localStorage
+  localStorage.setItem('historiqueSimulations', JSON.stringify(historique));
+}
+
+/**
+ * Fonction pour afficher l'historique des simulations
+ */
+function afficherHistorique(){
+  // Récupérer l'historique
+  const historique = JSON.parse(localStorage.getItem('historiqueSimulations') || '[]');
+  
+  // Créer la modale
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    overflow: auto;
+    padding: 20px;
+  `;
+  
+  const modalContent = document.createElement('div');
+  modalContent.style.cssText = `
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    border: 3px solid rgba(245, 158, 11, 0.6);
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  `;
+  
+  let contenuHTML = `
+    <h2 style="color: #f59e0b; margin-top: 0; text-align: center;">📜 Historique des Simulations</h2>
+    <p style="color: #64748b; text-align: center; margin-bottom: 20px;">${historique.length} simulation(s) sauvegardée(s)</p>
+  `;
+  
+  if (historique.length === 0) {
+    contenuHTML += `
+      <div style="text-align: center; padding: 40px; color: #64748b;">
+        <p style="font-size: 18px;">❌ Aucune simulation dans l'historique</p>
+        <p>Les simulations seront automatiquement sauvegardées après chaque calcul.</p>
+      </div>
+    `;
+  } else {
+    contenuHTML += '<div style="display: flex; flex-direction: column; gap: 15px;">';
+    
+    historique.forEach((sim, index) => {
+      contenuHTML += `
+        <div style="background: white; border: 2px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div>
+              <strong style="color: #f59e0b; font-size: 16px;">Simulation #${historique.length - index}</strong>
+              <span style="color: #64748b; font-size: 12px; margin-left: 10px;">${sim.date}</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-charger" data-id="${sim.id}" style="padding: 6px 12px; background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold;">🔄 Charger</button>
+              <button class="btn-supprimer" data-id="${sim.id}" style="padding: 6px 12px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold;">🗑️ Supprimer</button>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 13px;">
+            <div><strong style="color: #0ea5e9;">Capital:</strong> ${sim.capital} TND</div>
+            <div><strong style="color: #0ea5e9;">Durée:</strong> ${sim.duree} mois</div>
+            <div><strong style="color: #0ea5e9;">Taux:</strong> ${sim.tauxAnnuel}%</div>
+            <div><strong style="color: #10b981;">Mensualité:</strong> ${sim.mensualite}</div>
+            <div><strong style="color: #ef4444;">Intérêts:</strong> ${sim.interets}</div>
+            <div><strong style="color: #64748b;">Début:</strong> ${sim.dateDebut || 'Non spécifié'}</div>
+          </div>
+        </div>
+      `;
+    });
+    
+    contenuHTML += '</div>';
+  }
+  
+  contenuHTML += `
+    <div style="display: flex; gap: 10px; margin-top: 20px;">
+      <button id="btnEffacerHistorique" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);">🗑️ Effacer tout l'historique</button>
+      <button id="btnFermerHistorique" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #64748b 0%, #475569 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(100, 116, 139, 0.4);">❌ Fermer</button>
+    </div>
+  `;
+  
+  modalContent.innerHTML = contenuHTML;
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
+  
+  // Attacher les événements pour charger une simulation
+  const btnsCharger = modalContent.querySelectorAll('.btn-charger');
+  btnsCharger.forEach(btn => {
+    btn.addEventListener('click', function(){
+      const simId = parseInt(this.getAttribute('data-id'));
+      const sim = historique.find(s => s.id === simId);
+      
+      if (sim) {
+        // Charger les valeurs dans le formulaire
+        document.getElementById('capital').value = sim.capital;
+        document.getElementById('duree').value = sim.duree;
+        document.getElementById('tauxAnnuel').value = sim.tauxAnnuel;
+        document.getElementById('dateDebut').value = sim.dateDebut || '';
+        
+        // Calculer le taux mensuel
+        const tauxMensuel = parseFloat(sim.tauxAnnuel) / 12;
+        document.getElementById('tauxMensuel').value = tauxMensuel.toFixed(6);
+        
+        // Fermer la modale
+        document.body.removeChild(modal);
+        
+        // Afficher un message
+        alert('✅ Simulation chargée ! Cliquez sur "Calculer" pour voir les résultats.');
+      }
+    });
+  });
+  
+  // Attacher les événements pour supprimer une simulation
+  const btnsSupprimer = modalContent.querySelectorAll('.btn-supprimer');
+  btnsSupprimer.forEach(btn => {
+    btn.addEventListener('click', function(){
+      const simId = parseInt(this.getAttribute('data-id'));
+      
+      if (confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette simulation ?')) {
+        // Filtrer l'historique pour supprimer la simulation
+        const nouvelHistorique = historique.filter(s => s.id !== simId);
+        localStorage.setItem('historiqueSimulations', JSON.stringify(nouvelHistorique));
+        
+        // Fermer et rouvrir la modale pour rafraîchir
+        document.body.removeChild(modal);
+        afficherHistorique();
+      }
+    });
+  });
+  
+  // Bouton pour effacer tout l'historique
+  const btnEffacer = document.getElementById('btnEffacerHistorique');
+  if (btnEffacer) {
+    btnEffacer.addEventListener('click', function(){
+      if (confirm('⚠️ Êtes-vous sûr de vouloir effacer TOUT l\'historique ? Cette action est irréversible.')) {
+        localStorage.removeItem('historiqueSimulations');
+        document.body.removeChild(modal);
+        alert('✅ Historique effacé avec succès.');
+      }
+    });
+  }
+  
+  // Fermer la modale
+  const btnFermer = document.getElementById('btnFermerHistorique');
+  if (btnFermer) {
+    btnFermer.addEventListener('click', function(){
+      document.body.removeChild(modal);
+    });
+  }
+  
+  // Fermer en cliquant sur le fond
+  modal.addEventListener('click', function(e){
+    if (e.target === modal) {
+      document.body.removeChild(modal);
+    }
+  });
+}
+
+// Attacher les événements aux boutons
+document.addEventListener('DOMContentLoaded', function(){
+  const btnEmail = document.getElementById('btnEmail');
+  const btnCapacite = document.getElementById('btnCapacite');
+  const btnHistorique = document.getElementById('btnHistorique');
+  const btnCalcul = document.getElementById('btnCalcul');
+  
+  if (btnEmail) {
+    btnEmail.addEventListener('click', partagerParEmail);
+  }
+  
+  if (btnCapacite) {
+    btnCapacite.addEventListener('click', calculerCapaciteEmprunt);
+  }
+  
+  if (btnHistorique) {
+    btnHistorique.addEventListener('click', afficherHistorique);
+  }
+  
+  // Sauvegarder automatiquement après chaque calcul
+  if (btnCalcul) {
+    const originalCalcul = btnCalcul.onclick;
+    btnCalcul.addEventListener('click', function(){
+      // Attendre que le calcul soit terminé
+      setTimeout(function(){
+        sauvegarderSimulation();
+      }, 500);
+    });
+  }
+  
+  // Bouton Comparer 3 scénarios
+  const btnComparer = document.getElementById('btnComparer');
+  if (btnComparer) {
+    btnComparer.addEventListener('click', comparerScenarios);
+  }
+});
+
+/**
+ * Fonction pour comparer jusqu'à 3 scénarios
+ */
+function comparerScenarios(){
+  // Récupérer l'historique
+  const historique = JSON.parse(localStorage.getItem('historiqueSimulations') || '[]');
+  
+  if (historique.length === 0) {
+    alert('⚠️ Aucune simulation dans l\'historique. Veuillez d\'abord effectuer des simulations.');
+    return;
+  }
+  
+  // Créer la modale
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    overflow: auto;
+    padding: 20px;
+  `;
+  
+  const modalContent = document.createElement('div');
+  modalContent.style.cssText = `
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    border: 3px solid rgba(139, 92, 246, 0.6);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 1000px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  `;
+  
+  let contenuHTML = `
+    <h2 style="color: #8b5cf6; margin-top: 0; text-align: center;">🔍 Comparaison de Scénarios</h2>
+    <p style="color: #64748b; text-align: center; margin-bottom: 20px;">Sélectionnez jusqu'à 3 simulations à comparer</p>
+  `;
+  
+  // Afficher la liste des simulations avec des checkboxes
+  contenuHTML += '<div style="margin-bottom: 20px; max-height: 300px; overflow-y: auto; border: 2px solid rgba(139, 92, 246, 0.3); border-radius: 10px; padding: 15px;">';
+  
+  historique.slice(0, 10).forEach((sim, index) => {
+    contenuHTML += `
+      <div style="margin-bottom: 10px; padding: 10px; background: white; border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 8px;">
+        <label style="display: flex; align-items: center; cursor: pointer;">
+          <input type="checkbox" class="sim-checkbox" data-id="${sim.id}" style="margin-right: 10px; width: 18px; height: 18px; cursor: pointer;">
+          <div style="flex: 1;">
+            <strong style="color: #8b5cf6;">Simulation #${historique.length - index}</strong>
+            <span style="color: #64748b; font-size: 12px; margin-left: 10px;">${sim.date}</span>
+            <div style="font-size: 13px; color: #475569; margin-top: 5px;">
+              Capital: ${sim.capital} TND | Durée: ${sim.duree} mois | Taux: ${sim.tauxAnnuel}%
+            </div>
+          </div>
+        </label>
+      </div>
+    `;
+  });
+  
+  contenuHTML += '</div>';
+  
+  // Tableau de comparaison (initialement vide)
+  contenuHTML += '<div id="tableauComparaison" style="margin-top: 20px;"></div>';
+  
+  contenuHTML += `
+    <div style="display: flex; gap: 10px; margin-top: 20px;">
+      <button id="btnComparer" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);">🔍 Comparer</button>
+      <button id="btnFermerComparaison" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #64748b 0%, #475569 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(100, 116, 139, 0.4);">❌ Fermer</button>
+    </div>
+  `;
+  
+  modalContent.innerHTML = contenuHTML;
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
+  
+  // Gérer les checkboxes (max 3)
+  const checkboxes = modalContent.querySelectorAll('.sim-checkbox');
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', function(){
+      const checked = modalContent.querySelectorAll('.sim-checkbox:checked');
+      if (checked.length > 3) {
+        this.checked = false;
+        alert('⚠️ Vous ne pouvez comparer que 3 scénarios maximum.');
+      }
+    });
+  });
+  
+  // Bouton Comparer
+  const btnComparerModal = modalContent.querySelector('#btnComparer');
+  btnComparerModal.addEventListener('click', function(){
+    const checked = modalContent.querySelectorAll('.sim-checkbox:checked');
+    
+    if (checked.length < 2) {
+      alert('⚠️ Veuillez sélectionner au moins 2 scénarios à comparer.');
+      return;
+    }
+    
+    // Récupérer les simulations sélectionnées
+    const selectedIds = Array.from(checked).map(cb => parseInt(cb.getAttribute('data-id')));
+    const selectedSims = historique.filter(sim => selectedIds.includes(sim.id));
+    
+    // Générer le tableau de comparaison
+    let tableHTML = `
+      <h3 style="color: #8b5cf6; text-align: center; margin-bottom: 15px;">Résultat de la comparaison</h3>
+      <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <thead>
+          <tr style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: white;">
+            <th style="padding: 12px; text-align: left; border: 1px solid rgba(255,255,255,0.2);">Critère</th>
+    `;
+    
+    selectedSims.forEach((sim, index) => {
+      const simIndex = historique.findIndex(s => s.id === sim.id);
+      tableHTML += `<th style="padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.2);">Scénario #${historique.length - simIndex}</th>`;
+    });
+    
+    tableHTML += `
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: #f8fafc;">
+            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">Date</td>
+    `;
+    
+    selectedSims.forEach(sim => {
+      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; font-size: 12px;">${sim.date}</td>`;
+    });
+    
+    tableHTML += `
+          </tr>
+          <tr>
+            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">Capital emprunté</td>
+    `;
+    
+    selectedSims.forEach(sim => {
+      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #0ea5e9; font-weight: bold;">${sim.capital} TND</td>`;
+    });
+    
+    tableHTML += `
+          </tr>
+          <tr style="background: #f8fafc;">
+            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">Durée</td>
+    `;
+    
+    selectedSims.forEach(sim => {
+      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #0ea5e9; font-weight: bold;">${sim.duree} mois</td>`;
+    });
+    
+    tableHTML += `
+          </tr>
+          <tr>
+            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">Taux d'intérêt</td>
+    `;
+    
+    selectedSims.forEach(sim => {
+      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #0ea5e9; font-weight: bold;">${sim.tauxAnnuel}%</td>`;
+    });
+    
+    tableHTML += `
+          </tr>
+          <tr style="background: #f0fdf4;">
+            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">💵 Mensualité</td>
+    `;
+    
+    selectedSims.forEach(sim => {
+      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #10b981; font-weight: bold; font-size: 16px;">${sim.mensualite}</td>`;
+    });
+    
+    tableHTML += `
+          </tr>
+          <tr style="background: #fef2f2;">
+            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">💸 Coût total des intérêts</td>
+    `;
+    
+    selectedSims.forEach(sim => {
+      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #ef4444; font-weight: bold; font-size: 16px;">${sim.interets}</td>`;
+    });
+    
+    tableHTML += `
+          </tr>
+          <tr style="background: #eff6ff;">
+            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">📊 Coût total du crédit</td>
+    `;
+    
+    selectedSims.forEach(sim => {
+      // Calculer le coût total (capital + intérêts)
+      const capital = parseFloat(sim.capital.replace(/[^0-9.,]/g, '').replace(',', '.'));
+      const interets = parseFloat(sim.interets.replace(/[^0-9.,]/g, '').replace(',', '.'));
+      const total = capital + interets;
+      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #3b82f6; font-weight: bold; font-size: 16px;">${total.toLocaleString('fr-FR', {minimumFractionDigits: 3, maximumFractionDigits: 3})} TND</td>`;
+    });
+    
+    tableHTML += `
+          </tr>
+        </tbody>
+      </table>
+    `;
+    
+    // Afficher le meilleur scénario
+    const mensualites = selectedSims.map(sim => {
+      const mensualite = parseFloat(sim.mensualite.replace(/[^0-9.,]/g, '').replace(',', '.'));
+      return { sim, mensualite };
+    });
+    
+    const interets = selectedSims.map(sim => {
+      const interet = parseFloat(sim.interets.replace(/[^0-9.,]/g, '').replace(',', '.'));
+      return { sim, interet };
+    });
+    
+    const meilleurMensualite = mensualites.reduce((min, curr) => curr.mensualite < min.mensualite ? curr : min);
+    const meilleurInteret = interets.reduce((min, curr) => curr.interet < min.interet ? curr : min);
+    
+    const simIndexMensualite = historique.findIndex(s => s.id === meilleurMensualite.sim.id);
+    const simIndexInteret = historique.findIndex(s => s.id === meilleurInteret.sim.id);
+    
+    tableHTML += `
+      <div style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #10b981; border-radius: 10px;">
+        <h4 style="color: #10b981; margin-top: 0;">✅ Recommandation</h4>
+        <p style="margin: 5px 0; color: #475569;"><strong>💵 Mensualité la plus basse :</strong> Scénario #${historique.length - simIndexMensualite} (${meilleurMensualite.sim.mensualite})</p>
+        <p style="margin: 5px 0; color: #475569;"><strong>💸 Coût total le plus bas :</strong> Scénario #${historique.length - simIndexInteret} (${meilleurInteret.sim.interets})</p>
+      </div>
+    `;
+    
+    // Afficher le tableau
+    const tableauDiv = modalContent.querySelector('#tableauComparaison');
+    tableauDiv.innerHTML = tableHTML;
+  });
+  
+  // Fermer la modale
+  const btnFermer = modalContent.querySelector('#btnFermerComparaison');
+  btnFermer.addEventListener('click', function(){
+    document.body.removeChild(modal);
+  });
+  
+  // Fermer en cliquant sur le fond
+  modal.addEventListener('click', function(e){
+    if (e.target === modal) {
+      document.body.removeChild(modal);
+    }
+  });
+}
+
 </script>
 <script>
 // Réinitialisation aux VALEURS PAR DÉFAUT souhaitées (capture d'écran)
