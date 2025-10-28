@@ -504,7 +504,24 @@
         flex:1 1 calc(50% - 16px);
       }
     }
-  </style>
+  
+  /* Orange style for the "Réduire taux (si éligible)" button */
+  .btn.orange{
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 10px 25px rgba(249, 115, 22, 0.35) !important;
+  }
+  .btn.orange:hover{
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+  }
+  .dark .btn.orange{
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+    color: #111827;
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.35);
+  }
+</style>
 
 <!-- SheetJS pour générer des .xlsx côté navigateur -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -566,6 +583,7 @@
           <div class="btns">
             <button class="btn rgb" id="btnCalcul">Calculer</button>
             <button class="btn secondary" id="btnReset">Réinitialiser</button>
+            <button class="btn orange" id="btnReducTaux" title="Diviser le taux si conditions remplies">Réduire taux (si éligible)</button>
           </div>
           
           <div class="btns" style="margin-top: 12px;">
@@ -752,6 +770,99 @@
       kpiInterets.textContent = isFinite(totalInterets) ? fmtMoney(totalInterets) : '—';
     }
 
+
+    // ---- Génère un tableau avec changement de taux après 3 années révolues (début année 4 = mois 37) ----
+    function generateScheduleWithRateChange(startYear = 3, newAnnualRate = null){
+      // On force l'affichage mensuel
+      if (typeof isAnnual !== 'undefined') isAnnual = false;
+      // Nettoyage
+      if (!tableBody) return;
+      tableBody.innerHTML = '';
+
+      // Lire les entrées actuelles
+      const C0 = parseFloat(capital && capital.value || '0');
+      const n  = parseInt(duree && duree.value || '0', 10);
+      const ta = parseFloat(tauxAnnuel && tauxAnnuel.value || '0');
+      const tm_pct = parseFloat(tauxMensuel && tauxMensuel.value || '0'); // en %
+
+      if (!(C0 > 0) || !(n > 0)) return;
+      const changeMonth = Math.max(1, (startYear - 1) * 12 + 1); // début de la 3ème année = mois 25
+      const monthsBefore = Math.min(n, changeMonth - 1);         // 1..24 si n >= 24
+      const monthsAfter  = Math.max(0, n - monthsBefore);
+
+      // Taux et mensualité avant changement
+      const r1 = tm_pct / 100;
+      const M1 = mensualite(C0, tm_pct, n);
+      if (!isFinite(M1)) return;
+
+      // Boucle avant changement
+      let reste = C0;
+      let totalInterets = 0;
+      const dateDebutEl = document.getElementById('dateDebut');
+      const dateDebut = (dateDebutEl && dateDebutEl.value) ? new Date(dateDebutEl.value) : null;
+
+      for (let mois = 1; mois <= monthsBefore; mois++){
+        const interet = roundPrec(reste * r1);
+        let principal = roundPrec(M1 - interet);
+        let payment = M1;
+        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
+        reste = roundPrec(reste - principal);
+
+        const tr = document.createElement('tr');
+        let periode = mois;
+        if (dateDebut) {
+          const d = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
+          periode = d.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
+        }
+        [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
+          .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+        tableBody.appendChild(tr);
+        totalInterets = roundPrec(totalInterets + interet);
+      }
+
+      // Si le crédit se termine avant le changement
+      if (monthsAfter <= 0){
+        if (kpiMensualite) kpiMensualite.textContent = isFinite(M1) ? fmtMoney(M1) : '—';
+        if (kpiInterets)   kpiInterets.textContent   = isFinite(totalInterets) ? fmtMoney(totalInterets) : '—';
+        const chartContainer = document.getElementById('chartContainer');
+        if (chartContainer && chartContainer.style.display !== 'none'){ updateChart(); }
+        return;
+      }
+
+      // Taux et mensualité après changement
+      const ta2 = (newAnnualRate != null ? newAnnualRate : (ta / 2));
+      const tm2_pct = ta2 / 12; // en %
+      const r2 = tm2_pct / 100;
+      const M2 = mensualite(reste, tm2_pct, monthsAfter);
+      if (!isFinite(M2)) return;
+
+      for (let k = 1; k <= monthsAfter; k++){
+        const mois = monthsBefore + k;
+        const interet = roundPrec(reste * r2);
+        let principal = roundPrec(M2 - interet);
+        let payment = M2;
+        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
+        reste = roundPrec(reste - principal);
+
+        const tr = document.createElement('tr');
+        let periode = mois;
+        if (dateDebut) {
+          const d = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
+          periode = d.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
+        }
+        [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
+          .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+        tableBody.appendChild(tr);
+        totalInterets = roundPrec(totalInterets + interet);
+      }
+
+      // KPIs : afficher M1 → M2 et intérêts totaux
+      if (kpiMensualite) kpiMensualite.textContent = fmtMoney(M1) + " → " + fmtMoney(M2);
+      if (kpiInterets)   kpiInterets.textContent   = isFinite(totalInterets) ? fmtMoney(totalInterets) : '—';
+
+      const chartContainer = document.getElementById('chartContainer');
+      if (chartContainer && chartContainer.style.display !== 'none'){ updateChart(); }
+    }
 function generateSchedule(){
       if (isAnnual){
         generateAnnualSchedule();
@@ -1191,11 +1302,69 @@ const M = mensualite(C0, tm_pct, n);
       if (tableBody2) tableBody2.innerHTML = '';
     }
 
-    // Wire
+    
+    // ---- Réduction de taux si durée > 84 mois et (Intérêts Totaux / CRD à 36 mois) >= 8% ----
+    function simulateMetrics(C, n, tm_pct){
+      const r = tm_pct / 100;
+      const M = mensualite(C, tm_pct, n);
+      if (!isFinite(M)) return { totalInterets: NaN, reste36: NaN };
+      let reste = C;
+      let totalInterets = 0;
+      let reste36 = NaN;
+      for (let mois = 1; mois <= n; mois++) {
+        const interet = roundPrec(reste * r);
+        let principal = roundPrec(M - interet);
+        if (mois === n) principal = roundPrec(reste);
+        reste = roundPrec(reste - principal);
+        totalInterets = roundPrec(totalInterets + interet);
+        if (mois === 36) reste36 = reste;
+      }
+      if (!isFinite(reste36)) reste36 = reste;
+      return { totalInterets, reste36 };
+    }
+
+    function reduceRateIfEligible(){
+      const C = parseFloat(document.getElementById('capital').value || '0');
+      const n = parseInt(document.getElementById('duree').value || '0', 10);
+      const ta = parseFloat(document.getElementById('tauxAnnuel').value || '0');
+      const tm_pct = parseFloat(document.getElementById('tauxMensuel').value || '0');
+
+      if (!(C > 0) || !(n > 0) || !(ta >= 0)) { alert("Veuillez saisir un crédit valide d'abord."); return; }
+
+      const condDuree = n > 84; // > 7 ans
+      const { totalInterets, reste36 } = simulateMetrics(C, n, tm_pct);
+      if (!isFinite(totalInterets) || !isFinite(reste36) || reste36 <= 0){
+        alert("Données insuffisantes pour évaluer l'éligibilité.");
+        return;
+      }
+      const ratio = totalInterets / reste36;
+      const condRatio = ratio >= 0.08;
+
+      if (condDuree && condRatio){
+        const oldTA = ta;
+        const newTA = oldTA / 2;
+
+        if (typeof generateScheduleWithRateChange === 'function') generateScheduleWithRateChange(4, newTA);
+
+        alert(
+          "✅ Éligible : taux réduit de moitié.\n"
+          + "Ancien taux annuel : " + oldTA + "%\n"
+          + "Nouveau taux annuel : " + newTA + "%\n"
+          + "Ratio (Intérêts Totaux / CRD à 36 mois) : " + (ratio*100).toFixed(2) + "%"
+        );
+      } else {
+        let msg = "❌ Non éligible à la réduction :\n";
+        msg += "- Durée > 84 mois ? " + (condDuree ? "Oui" : "Non") + "\n";
+        msg += "- Ratio ≥ 8% ? " + (ratio*100).toFixed(2) + "% " + (condRatio ? "≥ 8%" : "< 8%") + "\n";
+        alert(msg);
+      }
+    }
+// Wire
     document.getElementById('btnCalcul').addEventListener('click', compute);
     document.getElementById('btnGen').addEventListener('click', generateSchedule);
     /* Suppression du gestionnaire d'export CSV */
     document.getElementById('btnReset').addEventListener('click', resetAll);
+    document.getElementById('btnReducTaux').addEventListener('click', reduceRateIfEligible);
     // btnClear supprimé et remplacé par btnComparer
 
     // Gestion de l'affichage annuel/mensuel pour le scénario 1
