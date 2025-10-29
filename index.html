@@ -1303,24 +1303,27 @@ const M = mensualite(C0, tm_pct, n);
     }
 
     
-    // ---- Réduction de taux si durée > 84 mois et (Intérêts Totaux / CRD à 36 mois) >= 8% ----
+    // ---- Réduction de taux si durée > 84 mois et (Intérêts 36 mois / CRD à 36 mois) >= 8% ----
     function simulateMetrics(C, n, tm_pct){
       const r = tm_pct / 100;
       const M = mensualite(C, tm_pct, n);
-      if (!isFinite(M)) return { totalInterets: NaN, reste36: NaN };
+      if (!isFinite(M)) return { interets36mois: NaN, reste36: NaN };
       let reste = C;
-      let totalInterets = 0;
+      let interets36mois = 0;
       let reste36 = NaN;
       for (let mois = 1; mois <= n; mois++) {
         const interet = roundPrec(reste * r);
         let principal = roundPrec(M - interet);
         if (mois === n) principal = roundPrec(reste);
         reste = roundPrec(reste - principal);
-        totalInterets = roundPrec(totalInterets + interet);
+        // Accumuler les intérêts uniquement pour les 36 premiers mois
+        if (mois <= 36) {
+          interets36mois = roundPrec(interets36mois + interet);
+        }
         if (mois === 36) reste36 = reste;
       }
       if (!isFinite(reste36)) reste36 = reste;
-      return { totalInterets, reste36 };
+      return { interets36mois, reste36 };
     }
 
     function reduceRateIfEligible(){
@@ -1332,12 +1335,12 @@ const M = mensualite(C0, tm_pct, n);
       if (!(C > 0) || !(n > 0) || !(ta >= 0)) { alert("Veuillez saisir un crédit valide d'abord."); return; }
 
       const condDuree = n > 84; // > 7 ans
-      const { totalInterets, reste36 } = simulateMetrics(C, n, tm_pct);
-      if (!isFinite(totalInterets) || !isFinite(reste36) || reste36 <= 0){
+      const { interets36mois, reste36 } = simulateMetrics(C, n, tm_pct);
+      if (!isFinite(interets36mois) || !isFinite(reste36) || reste36 <= 0){
         alert("Données insuffisantes pour évaluer l'éligibilité.");
         return;
       }
-      const ratio = totalInterets / reste36;
+      const ratio = interets36mois / reste36;
       const condRatio = ratio >= 0.08;
 
       if (condDuree && condRatio){
@@ -1350,7 +1353,7 @@ const M = mensualite(C0, tm_pct, n);
           "✅ Éligible : taux réduit de moitié.\n"
           + "Ancien taux annuel : " + oldTA + "%\n"
           + "Nouveau taux annuel : " + newTA + "%\n"
-          + "Ratio (Intérêts Totaux / CRD à 36 mois) : " + (ratio*100).toFixed(2) + "%"
+          + "Ratio (Intérêts 36 mois / CRD à 36 mois) : " + (ratio*100).toFixed(2) + "%"
         );
       } else {
         let msg = "❌ Non éligible à la réduction :\n";
