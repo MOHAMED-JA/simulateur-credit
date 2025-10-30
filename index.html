@@ -1,2621 +1,1048 @@
-
+<!--
+  Version revisitée du simulateur d'optimisation fiscale. Cette édition adopte
+  une esthétique sombre et minimaliste, avec une structure en deux colonnes
+  pour séparer les entrées et les résultats. Les couleurs et la typographie
+  diffèrent nettement de la précédente version pastel. Le pied de page
+  référence toujours Mohamed Aziz Jaouadi avec un nouveau numéro de téléphone.
+-->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simulateur de Crédit en Dinars Tunisien</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mise à jour du titre pour refléter le nouveau périmètre (CEA) -->
+  <title>Simulateur Assurance Vie et Compte Epargne en Action (CEA)</title>
+  <!-- Icônes FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-dRynbq1+Dds4wGmWVF3hDtPV3Mf38hB+bOWvCmVcdPYqQUUcNcx1Cjt4fyov6BbZkp8hRrwW4fO4Yn06suqO2w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    :root{
-      /* Palette futuriste rouge et bleu - Mode clair */
-      --bg: #f8fafc;
-      --text: #0f172a;
-      --muted: #64748b;
-      /* Couleurs principales : bleu électrique et rouge néon */
-      --primary: #0ea5e9;        /* bleu électrique */
-      --primary-2: #3b82f6;      /* bleu ciel */
-      /* Couleurs d'accent : rouge néon et bleu profond */
-      --accent: #ef4444;         /* rouge néon */
-      --danger: #dc2626;         /* rouge foncé */
-      /* Reste des variables */
-      --border: rgba(0,0,0,.12);
-      --shadow: 0 12px 32px rgba(0,0,0,.08);
-      --track: #e5e7eb;
-      --thumb: #c084fc;          /* pouce violet clair pour la barre de défilement */
+    /* Thème sombre et couleurs de base */
+    :root {
+      --background: #0f172a;       /* Couleur d'arrière-plan principale */
+      --surface: #1e293b;          /* Couleur des surfaces (cartes, footer) */
+      --surface-light: #334155;    /* Variante plus claire pour le container */
+      /* Couleurs primaires bleues pour remplacer le violet */
+      --primary: #3b82f6;          /* Bleu pour les éléments interactifs */
+      --primary-dark: #1d4ed8;
+      --secondary: #22c55e;        /* Vert doux pour les indicateurs */
+      --accent: #fbbf24;           /* Jaune pour attirer l'œil */
+      /* Couleur du titre, définie à un orange chaud */
+      --title-color: #f97316;
+      --text: #f1f5f9;             /* Texte principal clair */
+      --muted: #94a3b8;            /* Texte secondaire/gris */
+      --border: #475569;           /* Couleur des bordures */
+      --radius: 12px;
+      --transition: all 0.3s ease;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0; color:var(--text);
-      font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
-      /* Fond clair futuriste : dégradé subtil bleu clair vers rose pâle */
-      background: linear-gradient(135deg, #f0f9ff 0%, #eff6ff 33%, #fce7f3 66%, #fff1f2 100%);
-      background-attachment: fixed;
-      padding: 16px;
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
       min-height: 100vh;
+      padding: 20px;
     }
-    .wrap{
-      max-width:1360px;
-      margin:0 auto;
-      display:flex;
-      flex-wrap:wrap;
-      gap:16px;
-    }
-    .panel{
-      /* Panneau principal avec effet verre clair et contour lumineux */
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      border: 2px solid rgba(14, 165, 233, 0.5);
-      box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
-      border-radius:20px;
-      padding: 18px;
-      /* Chaque panneau occupe toute la largeur par défaut ; la flex-basis sera ajustée via media query */
-      flex: 1 1 100%;
-    }
-    .panel-header{
-      text-align:center;
-      margin-bottom:8px;
-      /* Encadrement interactif avec animation RGB */
-      background: linear-gradient(270deg, #0ea5e9, #ef4444, #3b82f6, #dc2626, #0ea5e9);
-      background-size: 400% 400%;
-      animation: rgbShift 8s ease infinite;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 0 25px rgba(14, 165, 233, 0.5);
-      border-radius:14px;
-      padding:12px;
-      /* Permet d'ancrer des éléments en position absolue (ex : interrupteur thème) */
-      position: relative;
-    }
-    h1{ margin:0; font-size:2rem; color:#ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.3) }
-    .sub{ color:#ffffff; font-size:.85rem; text-shadow: 0 1px 4px rgba(0,0,0,0.3) }
 
-    .grid{ display:grid; grid-template-columns: 0.95fr 1.7fr; gap:16px; margin-top:12px }
-    @media (max-width:1100px){ .grid{ grid-template-columns: 1fr } }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--surface-light);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
 
-    .card{
-      /* Cartes claires avec contours lumineux */
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(8px);
-      border: 2px solid rgba(239, 68, 68, 0.5);
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-      border-radius:14px;
-      padding:14px;
+    /* Mise en page de l'en‑tête avec un espace réservé pour l'interrupteur de thème */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1rem;
     }
-    label{
-      display:block;
-      margin-bottom:6px;
-      font-weight:700;
-      color:var(--primary);
-      letter-spacing:.3px;
-      text-transform:uppercase;
-      font-size:.8rem;
+
+    /* Conteneur pour le titre et le sous‑titre afin de les empiler verticalement */
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
-    .control{ margin-bottom:12px }
-    input{
-      width:100%;
-      padding:11px 12px;
-      border-radius:10px;
-      border: 2px solid rgba(14, 165, 233, 0.6);
-      background: rgba(255, 255, 255, 0.95);
-      color: #0f172a;
-      font-variant-numeric:tabular-nums;
-      box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
-      transition: all 0.3s ease;
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      /* Utiliser la couleur du titre personnalisée pour l'en-tête */
+      color: var(--title-color);
     }
-    input:focus{
+
+    header p {
+      margin-top: 0.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Style du bouton d'interrupteur de thème lorsqu'il est placé dans l'en‑tête */
+    #theme-toggle {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--primary);
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    #theme-toggle:hover {
+      background: var(--surface-light);
+      color: var(--accent);
+    }
+
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .left-panel,
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+      /* Mettre en valeur les bords au survol de la carte */
+      border-color: var(--primary);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .card-title i {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    label i {
+      margin-right: 0.4rem;
+      color: var(--primary);
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface-light);
+      color: var(--text);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    /* Effet interactif sur les champs de saisie : lors du survol, la bordure
+       prend la couleur primaire et une légère ombre apparaît pour donner du relief. */
+    input:hover,
+    select:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    input:focus,
+    select:focus {
       outline: none;
-      border-color: rgba(239, 68, 68, 0.8);
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
-    }
-    input[readonly]{
-      /* Champ désactivé avec style futuriste */
-      background: rgba(241, 245, 249, 0.9);
-      color: #94a3b8;
-      border-color: rgba(100, 116, 139, 0.4);
-      box-shadow: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4);
     }
 
-    .btns{ display:flex; gap:8px; flex-wrap:wrap }
-    .btn{
-      appearance:none;
-      border:none;
-      cursor:pointer;
-      color:#fff;
-      padding:10px 12px;
-      border-radius:10px;
-      font-weight:800;
-      background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
-      box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
-      transition:transform .1s ease;
-    }
-    .btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 4px 12px rgba(0,0,0,.15);
-    }
-    .btn.secondary{ 
-      background: linear-gradient(135deg, #475569, #64748b); 
-      color: #e0e7ff;
-      box-shadow: 0 0 10px rgba(100, 116, 139, 0.4);
-    }
-.btn.accent{
-      /* Bouton accent en rouge néon pour mettre en valeur certaines actions */
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: #ffffff;
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
-    }
-.btn.danger{
-      /* Bouton danger rouge vif avec léger dégradé */
-      background: linear-gradient(135deg, #dc2626, #991b1b);
-      color: #fff;
-      box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
     }
 
-/* ===== Animation pour le bouton Calculer ===== */
-/* Le dégradé change de couleur en continu : bleu → rouge → violet → jaune */
-@keyframes rgbShift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.btn.rgb {
-  background: linear-gradient(270deg, #0ea5e9, #ef4444, #3b82f6, #dc2626);
-  background-size: 800% 800%;
-  color: #fff;
-  animation: rgbShift 12s linear infinite;
-  box-shadow: 0 0 20px rgba(14, 165, 233, 0.6);
-}
-
-    .kpis{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px }
-    .kpi{
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(6px);
-      border: 2px solid rgba(14, 165, 233, 0.5);
-      border-radius:10px;
-      padding:10px;
-      box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
-    }
-    .kpi .title{
-      color:var(--muted);
-      font-size:.82rem;
-    }
-    .kpi .value{
-      font-size:1.4rem;
-      font-weight:900;
-      color:var(--primary);
+    .radio-group input {
+      margin-right: 0.4rem;
     }
 
     /*
-      Styles spécifiques pour les cellules KPI (Mensualité et Coût total des intérêts).
-      Chaque valeur est mise en avant avec un fond dégradé coloré et un texte contrasté.
-      Ces couleurs s'ajustent automatiquement via les variables CSS définies en fonction du mode clair/sombre.
+      Styles pour l'interrupteur personnalisé Oui/Non. La structure est la suivante :
+      .switch-container contient un libellé "Non", le bouton bascule, puis "Oui".
+      L'input de type checkbox est masqué et le slider visuel réagit à son état.
     */
-    #kpiMensualite{
-      /* Pour la mensualité : dégradé bleu‑violet inspiré de nos couleurs primaires */
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color: #ffffff;
-      padding: 4px 10px;
-      border-radius: 8px;
+    .switch-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .switch-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Boîtier du bouton bascule */
+    .switch {
+      position: relative;
       display: inline-block;
-      min-width: 100%;
-    }
-    #kpiInterets{
-      /* Pour le coût total des intérêts : dégradé jaune‑rouge utilisant l'accent et le danger */
-      background: linear-gradient(135deg, var(--accent), var(--danger));
-      color: #0f172a;
-      padding: 4px 10px;
-      border-radius: 8px;
-      display: inline-block;
-      min-width: 100%;
-    }
-    /* Les scénarios supplémentaires utilisent les mêmes couleurs que le premier scénario
-       pour mettre en valeur les indicateurs clés (Mensualité et Coût total des intérêts).
-       On applique donc exactement les mêmes dégradés et styles aux cellules du
-       deuxième scénario afin d'assurer la cohérence visuelle. */
-    #kpiMensualite2{
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color: #ffffff;
-      padding: 4px 10px;
-      border-radius: 8px;
-      display: inline-block;
-      min-width: 100%;
-    }
-    #kpiInterets2{
-      background: linear-gradient(135deg, var(--accent), var(--danger));
-      color: #0f172a;
-      padding: 4px 10px;
-      border-radius: 8px;
-      display: inline-block;
-      min-width: 100%;
-    }
-    /* En mode sombre, l'arrière‑plan général change mais le dégradé des KPI reste lumineux.
-       On conserve donc la même couleur de texte pour garantir un contraste suffisant. */
-    body.dark #kpiMensualite{
-      color:#ffffff;
-    }
-    body.dark #kpiInterets{
-      color:#0f172a;
+      width: 50px;
+      height: 26px;
     }
 
-    /* En mode sombre, conserver le contraste pour les indicateurs du deuxième scénario. */
-    body.dark #kpiMensualite2{
-      color:#ffffff;
-    }
-    body.dark #kpiInterets2{
-      color:#0f172a;
-    }
-
-    /* ===== Table area: fixed height + always scrollable vertically ===== */
-    .table-shell{
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(8px);
-      border: 2px solid rgba(239, 68, 68, 0.5);
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-      border-radius:14px;
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-    }
-    .table-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px }
-    .table-wrap{
-      border-radius:10px; overflow-y:auto; overflow-x:auto; flex:1 1 auto;
-      max-height:72vh;  /* fixed visible area to force vertical scroll */
-      scrollbar-gutter: stable both-edges;
-    }
-    /* Custom scrollbar */
-    .table-wrap::-webkit-scrollbar { width: 12px; height: 12px; }
-    .table-wrap::-webkit-scrollbar-track { background: var(--track); border-radius:12px }
-    .table-wrap::-webkit-scrollbar-thumb { background: var(--thumb); border-radius:12px }
-    .table-wrap{ scrollbar-color: var(--thumb) var(--track); } /* Firefox */
-
-    /* ===== Compact colonnes redimensionnées ===== */
-    table{ width:100%; border-collapse:collapse; min-width: 700px; table-layout: fixed; font-variant-numeric:tabular-nums }
-    colgroup col.month{ width: 60px }
-    colgroup col.pay{ width: 120px }
-    colgroup col.int{ width: 100px }
-    colgroup col.prin{ width: 100px }
-    colgroup col.rem{ width: 150px }
-    thead th{
-      position:sticky;
-      top:0;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(6px);
-      color: #0ea5e9;
-      border: 1px solid rgba(14, 165, 233, 0.3);
-      text-align:right;
-      padding:10px;
-      border-bottom:1px solid var(--border);
-      white-space:nowrap;
-      font-size:14px;
-    }
-    thead th:first-child, tbody td:first-child{ text-align:left }
-    tbody td{
-      padding:10px;
-      border-bottom:1px dashed rgba(14, 165, 233, 0.2);
-      text-align:right;
-      color: #0f172a;
-      white-space:nowrap;
-      font-size:14px;
-    }
-    tbody tr:hover td{ 
-      background: rgba(14, 165, 233, 0.2);
-      box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+    /* Masquer la case à cocher native */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
     }
 
-    /* Bouton Export Excel en vert */
-    #btnExportXLSX{
-      background: linear-gradient(135deg,#059669,#10b981);
-      color:#fff;
-    }
-    #btnExportXLSX:hover{
-      transform:translateY(-2px);
-      box-shadow:0 4px 12px rgba(0,0,0,.15);
-    }
-    
-    /* Bouton Export PDF en orange */
-    #btnExportPDF, #btnExportPDF2{
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color:#fff;
-      box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
-    }
-    #btnExportPDF:hover, #btnExportPDF2:hover{
-      transform:translateY(-2px);
-      box-shadow:0 4px 12px rgba(249, 115, 22, 0.5);
+    /* Le slider : la partie visible qui change de couleur et déplace le point */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--border);
+      transition: var(--transition);
+      border-radius: var(--radius);
     }
 
-    /* Appliquer le même style vert au bouton d'export Excel du deuxième scénario.
-       Sans cette règle, ce bouton reprendrait la couleur par défaut des boutons
-       et se distinguerait visuellement de l'export du premier scénario. */
-    #btnExportXLSX2{
-      background: linear-gradient(135deg,#059669,#10b981);
-      color:#fff;
-    }
-    #btnExportXLSX2:hover{
-      transform:translateY(-2px);
-      box-shadow:0 4px 12px rgba(0,0,0,.15);
-    }
-    /* Lien LinkedIn */
-    .linkedin-link{
-      display:inline-flex;
-      align-items:center;
-      gap:4px;
-      color:var(--primary);
-      text-decoration:none;
-      font-weight:700;
-    }
-    .linkedin-link:hover{
-      text-decoration:underline;
-    }
-    .linkedin-link svg{
-      width:16px;
-      height:16px;
-      fill:var(--primary);
+    /* Le rond à l'intérieur du slider */
+    .slider::before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: var(--text);
+      transition: var(--transition);
+      border-radius: 50%;
     }
 
-    /* ===== Composants pour le changement de thème (clair ↔ sombre) ===== */
-    .theme-toggle{
-      position:absolute;
-      top:12px;
-      right:12px;
-    }
-    .theme-toggle .switch{
-      position:relative;
-      display:inline-block;
-      width:46px;
-      height:24px;
-    }
-    .theme-toggle .switch input{
-      opacity:0;
-      width:0;
-      height:0;
-    }
-    .theme-toggle .slider{
-      position:absolute;
-      cursor:pointer;
-      top:0;
-      left:0;
-      right:0;
-      bottom:0;
-      background:var(--track);
-      transition:.4s;
-      border-radius:34px;
-    }
-    .theme-toggle .slider:before{
-      position:absolute;
-      content:"";
-      height:18px;
-      width:18px;
-      left:3px;
-      bottom:3px;
-      background-color:#fff;
-      transition:.4s;
-      border-radius:50%;
-    }
-    .theme-toggle input:checked + .slider{
-      background:var(--primary);
-    }
-    .theme-toggle input:checked + .slider:before{
-      transform:translateX(22px);
+    /* Quand la case est cochée, le fond du slider devient couleur primaire */
+    .switch input:checked + .slider {
+      background-color: var(--primary);
     }
 
-    /* Mode sombre : change les variables CSS et le fond */
-    body.dark{
-      --bg: #0f172a;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --primary: #0ea5e9;        /* bleu électrique */
-      --primary-2: #3b82f6;      /* bleu ciel */
-      --accent: #ef4444;         /* rouge néon */
-      --danger: #dc2626;         /* rouge foncé */
-      --border: rgba(255,255,255,0.12);
-      --shadow: 0 12px 32px rgba(0,0,0,0.5);
-      --track: #1e293b;
-      --thumb: #334155;
-      /* Fond sombre futuriste : dégradé bleu profond vers violet sombre */
-      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 33%, #312e81 66%, #1e293b 100%);
+    /* Quand cochée, déplacer le rond vers la droite */
+    .switch input:checked + .slider::before {
+      transform: translateX(24px);
+      background-color: var(--surface);
     }
 
-    /* Styles supplémentaires pour le mode sombre afin d'assurer la lisibilité */
-    body.dark .panel{
-      background: rgba(15, 23, 42, 0.7);
-      border: 2px solid rgba(14, 165, 233, 0.5);
-      box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
-    }
-    body.dark .panel-header{
-      background: rgba(15, 23, 42, 0.8);
-      border: 2px solid rgba(14, 165, 233, 0.6);
-      box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
-    }
-    body.dark .card{
-      background: rgba(15, 23, 42, 0.8);
-      border: 2px solid rgba(239, 68, 68, 0.5);
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-    }
-    body.dark .table-shell{
-      background: rgba(15, 23, 42, 0.8);
-      border: 2px solid rgba(239, 68, 68, 0.5);
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-    }
-    body.dark .kpi{
-      background: rgba(15, 23, 42, 0.8);
-      border: 2px solid rgba(14, 165, 233, 0.5);
-      box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
-    }
-    body.dark #chartContainer.card{
-      background: rgba(15, 23, 42, 0.8);
-      border: 2px solid rgba(239, 68, 68, 0.5);
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-    }
-    body.dark input{
-      background: rgba(30, 41, 59, 0.9);
-      color: #e0e7ff;
-      border: 2px solid rgba(14, 165, 233, 0.6);
-      box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
-    }
-    body.dark input[readonly]{
-      background: rgba(30, 41, 59, 0.5);
-      color: #64748b;
-      border-color: rgba(100, 116, 139, 0.4);
-      box-shadow: none;
-    }
-    body.dark .btn.secondary{
-      background: linear-gradient(135deg, #475569, #64748b);
-      color: #e0e7ff;
-      box-shadow: 0 0 10px rgba(100, 116, 139, 0.4);
+    .info-card {
+      /* Couleur de fond blanche pour la suggestion optimale. L'écriture reste lisible grâce à la couleur de texte sombre. */
+      background: #ffffff;
+      /* Bordure colorée : bleu à gauche, rouge à droite */
+      border-left: 4px solid var(--primary);
+      border-right: 4px solid #ef4444;
+      padding: 1rem;
+      border-radius: var(--radius);
+      /* Texte sombre pour contraste sur fond clair */
+      color: var(--background);
+      cursor: pointer;
+      transition: transform 0.3s;
     }
 
-    body.dark thead th{
-      background: rgba(15, 23, 42, 0.9);
-      color: #0ea5e9;
-      border: 1px solid rgba(14, 165, 233, 0.3);
-    }
-    body.dark tbody td{
-      color: #e0e7ff;
-      border-bottom:1px dashed rgba(14, 165, 233, 0.2);
-    }
-    body.dark tbody tr:hover td{
-      background: rgba(14, 165, 233, 0.2);
-      box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+    .info-card:hover {
+      transform: scale(1.03);
     }
 
-    /* Boutons accent en mode sombre gardent le style rouge néon */
-    body.dark .btn.accent{
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: #ffffff;
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+    .info-card.active {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
     }
 
-    /* Permet d'afficher plusieurs panneaux côte à côte lorsque l'espace le permet. */
-    @media (min-width: 1100px){
-      .panel{
-        flex: 1 1 calc(50% - 16px);
+    .info-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-card p {
+      /* Texte en noir (ou sombre) pour assurer une bonne lisibilité sur fond clair */
+      font-size: 0.85rem;
+      color: var(--background);
+    }
+
+    /* En mode clair, les paragraphes de la carte d'information doivent utiliser
+       la couleur de texte principale pour rester lisibles sur fond clair. */
+    body.light-mode .info-card p {
+      color: var(--text);
+    }
+
+    /* Le montant conseillé dans la carte de suggestion est en vert pour se démarquer */
+    #optimal-recommendation {
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      /* Bouton principal en rouge */
+      background: #ef4444;
+      color: var(--text);
+    }
+
+    .btn-primary:hover {
+      /* Ton plus sombre au survol du bouton rouge */
+      background: #dc2626;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+    }
+
+    .results-section h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .results-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .result-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      /* Permet une transition fluide des bordures et du léger déplacement au survol */
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    .result-item span:first-child {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .result-item span:last-child {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .result-item.highlight span:last-child {
+      color: var(--secondary);
+    }
+
+    /* Effet interactif sur les "rubriques" (éléments de résultat) : on change la couleur de bordure et on ajoute
+       une ombre légère lors du survol pour attirer l’attention de l’utilisateur. */
+    .result-item:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Appliquer la couleur de mise en évidence directement sur le span marqué highlight */
+    .result-item span.highlight {
+      color: var(--secondary);
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 0.8rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    .comparison-table th {
+      /* Entêtes du tableau en jaune pour une meilleure lisibilité */
+      background: var(--accent);
+      color: var(--background);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .comparison-table tr:nth-child(even) {
+      background: var(--surface-light);
+    }
+
+    /* Cellule d'impact affichant les économies de taxe avec une teinte verte
+       pour mettre en valeur la réduction d'impôt. */
+    .impact-cell {
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ------------------------------------------------------------ */
+    /* Variables pour le thème clair. Lorsqu'une classe light-mode est appliquée
+       au body, ces variables écrasent celles définies dans :root. */
+    body.light-mode {
+      --background: #f8fafc;
+      --surface: #ffffff;
+      --surface-light: #f1f5f9;
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --secondary: #22c55e;
+      --accent: #fbbf24;
+      --title-color: #d97706;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    /* Les paragraphes de la carte d'information doivent utiliser la couleur de
+       texte principale en mode clair afin de rester lisibles sur fond blanc. */
+    body.light-mode .info-card,
+    body.light-mode .info-card p {
+      color: var(--text);
+    }
+
+    @media (max-width: 900px) {
+      .main-layout {
+        grid-template-columns: 1fr;
       }
     }
-
-    /* Container optionnel pour plusieurs scénarios (non utilisé mais laissé pour extensibilité). */
-    .scenarios{
-      display:flex;
-      flex-wrap:wrap;
-      gap:16px;
-    }
-    .scenarios .panel{
-      flex:1 1 100%;
-    }
-    @media (min-width: 1100px){
-      .scenarios .panel{
-        flex:1 1 calc(50% - 16px);
-      }
-    }
-  
-  /* Orange style for the "Réduire taux (si éligible)" button */
-  .btn.orange{
-    background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%) !important;
-    color: #ffffff !important;
-    border: none !important;
-    box-shadow: 0 10px 25px rgba(249, 115, 22, 0.35) !important;
-  }
-  .btn.orange:hover{
-    filter: brightness(1.05);
-    transform: translateY(-1px);
-  }
-  .dark .btn.orange{
-    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
-    color: #111827;
-    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.35);
-  }
-</style>
-
-<!-- SheetJS pour générer des .xlsx côté navigateur -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<!-- Chart.js pour les graphiques interactifs -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- jsPDF pour générer des PDF côté navigateur -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- jsPDF autoTable pour les tableaux dans les PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="panel">
-      <div class="panel-header">
-        <h1>Simulateur de Crédit en Dinars Tunisien</h1>
-        <div class="sub">
-          Application faite par
-          <a class="linkedin-link" href="https://www.linkedin.com/in/mohamed-aziz-jaouadi-%C2%AEpsm-i-%C2%AEpspo-l-%C2%AEistqb-851009115/" target="_blank">
-            <!-- Icône LinkedIn -->
-            <svg viewBox="0 0 24 24">
-              <path d="M20.447 20.452h-3.93v-5.569c0-1.327-.024-3.036-1.849-3.036-1.851 0-2.134 1.447-2.134 2.942v5.663h-3.93V9h3.77v1.561h.054c.525-0.998 1.807-2.049 3.721-2.049 3.979 0 4.713 2.618 4.713 6.018v6.922h-.001zM5.337 7.433c-1.27 0-2.297-1.026-2.297-2.295 0-1.269 1.028-2.296 2.297-2.296 1.27 0 2.297 1.027 2.297 2.296 0 1.269-1.028 2.295-2.297 2.295zm1.967 13.019H3.37V9h3.934v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.732v20.535C0 23.227.792 24 1.771 24h20.451c.979 0 1.772-.773 1.772-1.732V1.732C23.998.774 23.205 0 22.225 0z"/>
-            </svg>
-            Mohamed&nbsp;Aziz&nbsp;Jaouadi
-          </a>
-        </div>
-        <!-- Interrupteur mode clair/sombre -->
-        <div class="theme-toggle">
-          <label class="switch">
-            <input type="checkbox" id="themeToggle">
-            <span class="slider"></span>
-          </label>
-        </div>
+  <div class="container">
+    <header>
+      <!-- Section de gauche contenant le titre et le sous‑titre -->
+      <div class="header-left">
+        <h1>Simulateur Assurance Vie et Compte Epargne en Action (CEA)</h1>
+        <p>Calculez et optimisez votre impôt en quelques clics grâce à notre outil.</p>
       </div>
+      <!-- Interrupteur de thème placé dans l'en‑tête -->
+      <button id="theme-toggle" aria-label="Basculer le thème">🌙</button>
+    </header>
 
-      <div class="grid">
-        <section class="card">
-          <div class="control">
-            <label for="capital">Capital emprunté (TND)</label>
-            <input type="number" id="capital" min="0" step="0.001" value="0">
+    <div class="main-layout">
+      <!-- Colonne gauche avec les champs de saisie -->
+      <div class="left-panel">
+        <div class="card">
+          <div class="card-title">
+            <i class="fas fa-user"></i>
+            Situation familiale
           </div>
-          <div class="control">
-            <label for="duree">Durée (en mois, 1–300)</label>
-            <input type="number" id="duree" min="1" max="300" step="1" value="1">
-            <div id="warnDuree" class="warning" style="color:#b91c1c; display:none">La durée doit être comprise entre 1 et 300 mois.</div>
+          <div class="form-group">
+            <label for="revenue"><i class="fas fa-money-bill-wave"></i> Revenu brut imposable (TND)</label>
+            <input type="number" id="revenue" value="0" min="0" step="1000" />
           </div>
-          <div class="control">
-            <label for="tauxAnnuel">Taux d'intérêt annuel (%)</label>
-            <input type="number" id="tauxAnnuel" min="0" step="0.001" value="0">
-          </div>
-          <div class="control">
-            <label for="tauxMensuel">Taux d'intérêt mensuel</label>
-            <input type="number" id="tauxMensuel" step="0.000001" readonly>
-          </div>
-          <div class="control">
-            <label for="dateDebut">Date de début du crédit</label>
-            <input type="date" id="dateDebut" value="${new Date().toISOString().substring(0, 10)}">
-          </div>
-
-          <div class="btns">
-            <button class="btn rgb" id="btnCalcul">Calculer</button>
-            <button class="btn secondary" id="btnReset">Réinitialiser</button>
-            <button class="btn orange" id="btnReducTaux" title="Diviser le taux si conditions remplies">Réduire taux (si éligible)</button>
-          </div>
-          
-          <div class="btns" style="margin-top: 12px;">
-            <button class="btn" id="btnCapacite" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); width: 100%;">💰 Capacité d'emprunt</button>
-          </div>
-
-          <div class="kpis">
-            <div class="kpi">
-              <div class="title">Mensualité</div>
-              <div class="value" id="kpiMensualite">—</div>
-            </div>
-            <div class="kpi">
-              <div class="title">Coût total des intérêts</div>
-              <div class="value" id="kpiInterets">—</div>
+          <div class="form-group">
+            <label for="head-family-toggle"><i class="fas fa-home"></i> Chef de famille</label>
+            <!-- Interrupteur custom pour sélectionner Oui ou Non. Lorsque la case est cochée, l'utilisateur est chef de famille. -->
+            <div class="switch-container">
+              <span class="switch-label">Non</span>
+              <label class="switch">
+                <input type="checkbox" id="head-family-toggle" checked />
+                <span class="slider"></span>
+              </label>
+              <span class="switch-label">Oui</span>
             </div>
           </div>
-        </section>
+          <div class="form-group">
+            <label for="children"><i class="fas fa-baby"></i> Enfants à charge (moins de 20 ans)</label>
+            <input type="number" id="children" value="0" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="disabled-children"><i class="fas fa-wheelchair"></i> Enfants infirmes</label>
+            <input type="number" id="disabled-children" value="0" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="students"><i class="fas fa-graduation-cap"></i> Étudiants sans bourse</label>
+            <input type="number" id="students" value="0" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="parents"><i class="fas fa-users"></i> Parents à charge (max 2)</label>
+            <input type="number" id="parents" value="0" min="0" max="2" />
+          </div>
+        </div>
 
-        <section class="table-shell">
-          <div class="table-actions">
-            <button class="btn accent" id="btnGen">Générer l'amortissement</button>
-            <button class="btn" id="btnExportXLSX">Exporter Excel (.xlsx)</button>
-            <button class="btn" id="btnExportPDF">Exporter PDF</button>
-            <button class="btn" id="btnEmail" style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: #fff; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);">📧 Partager par Email</button>
-            <button class="btn" id="btnHistorique" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);">📜 Historique</button>
-            <button class="btn accent" id="btnToggleChart">Graphique</button>
-            <!-- Interrupteur pour basculer entre affichage mensuel et annuel -->
-            <button class="btn" id="btnTogglePeriod">Affichage: Annuel</button>
-            <!-- Ajoute un deuxième scénario pour comparer les prêts -->
-            <button class="btn" id="btnAddScenario">Ajouter un scénario</button>
-            <button class="btn" id="btnComparer" style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);">🔍 Comparer 3 scénarios</button>
+        <div class="card">
+          <div class="card-title">
+            <i class="fas fa-chart-line"></i>
+            Investissement
           </div>
-          <div class="table-wrap">
-            <table id="table">
-              <colgroup>
-                <col class="month"><col class="pay"><col class="int"><col class="prin"><col class="rem">
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>Période</th>
-                  <th>Mensualité</th>
-                  <th>Intérêts</th>
-                  <th>Principal</th>
-                  <th>Capital restant dû</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+          <!-- Fractionnement (Mensuel, Trimestriel, Semestriel, Annuel) -->
+          <div class="form-group">
+            <label for="investment-frequency"><i class="fas fa-calendar-alt"></i> Fractionnement</label>
+            <select id="investment-frequency">
+              <option value="Mensuel">Mensuel</option>
+              <option value="Trimestriel">Trimestriel</option>
+              <option value="Semestriel">Semestriel</option>
+              <option value="Annuel">Annuel</option>
+            </select>
           </div>
-        </section>
+          <!-- Montant à investir par période -->
+          <div class="form-group">
+            <label for="investment-amount-period"><i class="fas fa-coins"></i> Montant à investir (TND)</label>
+            <input type="number" id="investment-amount-period" value="0" min="0" step="100" />
+          </div>
+          <!-- Montant total calculé en fonction du fractionnement -->
+          <div class="form-group">
+            <label for="investment-amount-total"><i class="fas fa-coins"></i> Montant Total à investir (TND)</label>
+            <input type="number" id="investment-amount-total" value="0" min="0" step="100" readonly />
+          </div>
+          <div class="info-card" id="info-card">
+            <h4><i class="fas fa-lightbulb"></i> Suggestion optimale</h4>
+            <p id="optimal-recommendation">-</p>
+            <p>Investissez ce montant pour réduire votre impôt au plancher légal (45 %).</p>
+          </div>
+        </div>
+
       </div>
-      <!-- Conteneur pour le graphique d'amortissement -->
-      <div id="chartContainer" class="card" style="display:none; margin-top:16px;">
-        <canvas id="amortChart" height="350"></canvas>
+
+      <!-- Colonne droite avec l'affichage des résultats -->
+      <div class="right-panel">
+        <div class="results-section" id="results-section">
+          <h3><i class="fas fa-chart-pie"></i> Résultats</h3>
+          <div class="results-group">
+            <div class="result-item">
+              <span>Impôt total avant investissement</span>
+              <span id="tax-before">0 TND</span>
+            </div>
+            <div class="result-item">
+              <!-- Libellé précisant que l'impôt correspond à la situation après investissement -->
+              <span>Impôt total après investissement</span>
+              <span id="tax-after">0 TND</span>
+            </div>
+            <div class="result-item">
+              <span>Économie d'impôt</span>
+              <span id="tax-saved" class="highlight">0 TND</span>
+            </div>
+            <div class="result-item">
+              <span>Économie d'impôt mensuel</span>
+              <span id="tax-saved-monthly">0 TND</span>
+            </div>
+            <div class="result-item">
+              <!-- Taux de réduction d'impôt -->
+              <span>Taux de réduction d'impôt</span>
+              <span id="tax-reduction-rate">0 %</span>
+            </div>
+            <div class="result-item">
+              <!-- Minimum d'impôt -->
+              <span>Minimum d'impôt</span>
+              <span id="min-tax">0 TND</span>
+            </div>
+            <div class="result-item">
+              <span>Montant optimal</span>
+              <span id="optimal-investment">0 TND</span>
+            </div>
+          </div>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Tranche (TND)</th>
+                <th>Taux</th>
+                <th>Impôt sans inv.</th>
+                <th>Impôt avec inv.</th>
+                <th>Économie</th>
+              </tr>
+            </thead>
+            <tbody id="tax-brackets-comparison">
+              <!-- Lignes ajoutées par script -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <!-- Scenario 2: second simulation panel (initialement masqué) -->
-    <div id="scenario2" class="panel" style="display:none;">
-      <div class="panel-header">
-        <h1>Scénario 2</h1>
-      </div>
-      <div class="grid">
-        <section class="card">
-          <div class="control">
-            <label for="capital2">Capital emprunté (TND)</label>
-            <input type="number" id="capital2" min="0" step="0.001" value="0">
-          </div>
-          <div class="control">
-            <label for="duree2">Durée (en mois, 1–300)</label>
-            <input type="number" id="duree2" min="1" max="300" step="1" value="1">
-            <div id="warnDuree2" class="warning" style="color:#b91c1c; display:none">La durée doit être comprise entre 1 et 300 mois.</div>
-          </div>
-          <div class="control">
-            <label for="tauxAnnuel2">Taux d'intérêt annuel (%)</label>
-            <input type="number" id="tauxAnnuel2" min="0" step="0.001" value="0">
-          </div>
-          <div class="control">
-            <label for="tauxMensuel2">Taux d'intérêt mensuel</label>
-            <input type="number" id="tauxMensuel2" step="0.000001" readonly>
-          </div>
-          <div class="control">
-            <label for="dateDebut2">Date de début du crédit</label>
-            <input type="date" id="dateDebut2" value="${new Date().toISOString().substring(0, 10)}">
-          </div>
-          <div class="btns">
-            <button class="btn rgb" id="btnCalcul2">Calculer</button>
-            <button class="btn secondary" id="btnReset2">Réinitialiser</button>
-          </div>
-          <div class="kpis">
-            <div class="kpi">
-              <div class="title">Mensualité</div>
-              <div class="value" id="kpiMensualite2">—</div>
-            </div>
-            <div class="kpi">
-              <div class="title">Coût total des intérêts</div>
-              <div class="value" id="kpiInterets2">—</div>
-            </div>
-          </div>
-        </section>
-        <section class="table-shell">
-          <div class="table-actions">
-            <button class="btn accent" id="btnGen2">Générer l'amortissement</button>
-            <button class="btn" id="btnExportXLSX2">Exporter Excel (.xlsx)</button>
-            <button class="btn" id="btnExportPDF2">Exporter PDF</button>
-            <button class="btn accent" id="btnToggleChart2">Graphique</button>
-            <button class="btn" id="btnTogglePeriod2">Affichage: Annuel</button>
-            <!-- Bouton supprimé du scénario 2 -->
-          </div>
-          <div class="table-wrap">
-            <table id="table2">
-              <colgroup>
-                <col class="month"><col class="pay"><col class="int"><col class="prin"><col class="rem">
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>Période</th>
-                  <th>Mensualité</th>
-                  <th>Intérêts</th>
-                  <th>Principal</th>
-                  <th>Capital restant dû</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-      <div id="chartContainer2" class="card" style="display:none; margin-top:16px;">
-        <canvas id="amortChart2" height="350"></canvas>
-      </div>
+
+    <div class="footer">
+      <p>
+        ©
+        <a href="https://www.linkedin.com/in/mohamed-aziz-jaouadi-%C2%AEpsm-i-%C2%AEpspo-l-%C2%AEistqb-851009115/" target="_blank">Mohamed Aziz Jaouadi</a>
+      </p>
     </div>
+  </div>
 
   <script>
-    const PREC = 3;
-    const el = id => document.getElementById(id);
-    const fmtMoney = v => new Intl.NumberFormat('fr-FR',{ style:'currency', currency:'TND', minimumFractionDigits:PREC, maximumFractionDigits:PREC }).format(v);
-    const fmtNum = (v, d=6) => Number(v).toFixed(d);
-
-    const capital = el('capital');
-    const duree = el('duree');
-    const tauxAnnuel = el('tauxAnnuel');
-    const tauxMensuel = el('tauxMensuel');
-    const warnDuree = el('warnDuree');
-    const kpiMensualite = el('kpiMensualite');
-    const kpiInterets = el('kpiInterets');
-    const tableBody = document.querySelector('#table tbody');
-
-    // Flags et sélecteurs pour gérer l'affichage annuel/mensuel et le deuxième scénario
-    let isAnnual = false;
-    let isAnnual2 = false;
-    const capital2 = el('capital2');
-    const duree2 = el('duree2');
-    const tauxAnnuel2 = el('tauxAnnuel2');
-    const tauxMensuel2 = el('tauxMensuel2');
-    const warnDuree2 = el('warnDuree2');
-    const kpiMensualite2 = el('kpiMensualite2');
-    const kpiInterets2 = el('kpiInterets2');
-    const tableBody2 = document.querySelector('#table2 tbody');
-
-    function roundPrec(v){ const p = Math.pow(10, PREC); return Math.round((v + Number.EPSILON) * p) / p; }
-    function pmt(rate_m, n, pv){ if (Math.abs(rate_m) < 1e-12) return pv / n; return pv * rate_m / (1 - Math.pow(1 + rate_m, -n)); }
-    function mensualite(cap, tm_pct, n){ const r = tm_pct / 100; if (!isFinite(cap) || !isFinite(r) || !isFinite(n) || n <= 0) return NaN; return roundPrec(pmt(r, n, cap)); }
-    function updateDerivedRates(){ const ta = parseFloat(tauxAnnuel.value || '0'); const tm = ta / 12; tauxMensuel.value = isFinite(tm) ? fmtNum(tm, 6) : ''; }
-    function validateDuree(){ const n = parseInt(duree.value || '0', 10); const ok = n >= 1 && n <= 300; warnDuree.style.display = ok ? 'none' : 'block'; return ok; }
-
-    function compute(){
-      updateDerivedRates();
-      if (!validateDuree()) { return; }
-      const C = parseFloat(capital.value || '0');
-      const n = parseInt(duree.value || '0', 10);
-      const tm = parseFloat(tauxMensuel.value || '0'); // en %
-      const M = mensualite(C, tm, n);
-
-      let reste = C, totalInterets = 0;
-      const r = tm / 100;
-      for (let mois = 1; mois <= n; mois++) {
-        const interet = roundPrec(reste * r);
-        let principal = roundPrec(M - interet);
-        if (mois === n) principal = roundPrec(reste);
-        reste = roundPrec(reste - principal);
-        totalInterets = roundPrec(totalInterets + interet);
-      }
-      kpiMensualite.textContent = isFinite(M) ? fmtMoney(M) : '—';
-      kpiInterets.textContent = isFinite(totalInterets) ? fmtMoney(totalInterets) : '—';
+    // Helper: format a number with thousands separator (space) and 3 decimal places
+    function formatAmount(num) {
+      const parts = num.toFixed(3).split('.');
+      // Ajout d'espaces comme séparateurs de milliers
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      return parts.join('.');
     }
 
-
-    // ---- Génère un tableau avec changement de taux après 3 années révolues (début année 4 = mois 37) ----
-    function generateScheduleWithRateChange(startYear = 3, newAnnualRate = null){
-      // On force l'affichage mensuel
-      if (typeof isAnnual !== 'undefined') isAnnual = false;
-      // Nettoyage
-      if (!tableBody) return;
-      tableBody.innerHTML = '';
-
-      // Lire les entrées actuelles
-      const C0 = parseFloat(capital && capital.value || '0');
-      const n  = parseInt(duree && duree.value || '0', 10);
-      const ta = parseFloat(tauxAnnuel && tauxAnnuel.value || '0');
-      const tm_pct = parseFloat(tauxMensuel && tauxMensuel.value || '0'); // en %
-
-      if (!(C0 > 0) || !(n > 0)) return;
-      const changeMonth = Math.max(1, (startYear - 1) * 12 + 1); // début de la 3ème année = mois 25
-      const monthsBefore = Math.min(n, changeMonth - 1);         // 1..24 si n >= 24
-      const monthsAfter  = Math.max(0, n - monthsBefore);
-
-      // Taux et mensualité avant changement
-      const r1 = tm_pct / 100;
-      const M1 = mensualite(C0, tm_pct, n);
-      if (!isFinite(M1)) return;
-
-      // Boucle avant changement
-      let reste = C0;
-      let totalInterets = 0;
-      const dateDebutEl = document.getElementById('dateDebut');
-      const dateDebut = (dateDebutEl && dateDebutEl.value) ? new Date(dateDebutEl.value) : null;
-
-      for (let mois = 1; mois <= monthsBefore; mois++){
-        const interet = roundPrec(reste * r1);
-        let principal = roundPrec(M1 - interet);
-        let payment = M1;
-        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
-        reste = roundPrec(reste - principal);
-
-        const tr = document.createElement('tr');
-        let periode = mois;
-        if (dateDebut) {
-          const d = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
-          periode = d.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
-        }
-        [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
-          .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
-        tableBody.appendChild(tr);
-        totalInterets = roundPrec(totalInterets + interet);
-      }
-
-      // Si le crédit se termine avant le changement
-      if (monthsAfter <= 0){
-        if (kpiMensualite) kpiMensualite.textContent = isFinite(M1) ? fmtMoney(M1) : '—';
-        if (kpiInterets)   kpiInterets.textContent   = isFinite(totalInterets) ? fmtMoney(totalInterets) : '—';
-        const chartContainer = document.getElementById('chartContainer');
-        if (chartContainer && chartContainer.style.display !== 'none'){ updateChart(); }
-        return;
-      }
-
-      // Taux et mensualité après changement
-      const ta2 = (newAnnualRate != null ? newAnnualRate : (ta / 2));
-      const tm2_pct = ta2 / 12; // en %
-      const r2 = tm2_pct / 100;
-      const M2 = mensualite(reste, tm2_pct, monthsAfter);
-      if (!isFinite(M2)) return;
-
-      for (let k = 1; k <= monthsAfter; k++){
-        const mois = monthsBefore + k;
-        const interet = roundPrec(reste * r2);
-        let principal = roundPrec(M2 - interet);
-        let payment = M2;
-        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
-        reste = roundPrec(reste - principal);
-
-        const tr = document.createElement('tr');
-        let periode = mois;
-        if (dateDebut) {
-          const d = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
-          periode = d.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
-        }
-        [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
-          .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
-        tableBody.appendChild(tr);
-        totalInterets = roundPrec(totalInterets + interet);
-      }
-
-      // KPIs : afficher M1 → M2 et intérêts totaux
-      if (kpiMensualite) kpiMensualite.textContent = fmtMoney(M1) + " → " + fmtMoney(M2);
-      if (kpiInterets)   kpiInterets.textContent   = isFinite(totalInterets) ? fmtMoney(totalInterets) : '—';
-
-      const chartContainer = document.getElementById('chartContainer');
-      if (chartContainer && chartContainer.style.display !== 'none'){ updateChart(); }
+    // Helper: format an integer with thousand separators and no decimals.
+    function formatInteger(num) {
+      // Cast to number and remove decimals
+      const n = Math.floor(num);
+      // Convert to string and insert spaces every three digits
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     }
-function generateSchedule(){
-      if (isAnnual){
-        generateAnnualSchedule();
-        return;
-      }
-      compute();
-      if (!tableBody) return;
-      tableBody.innerHTML = '';
-      const C0 = parseFloat(capital && capital.value || '0');
-      let reste = C0;
-      const n = parseInt(duree && duree.value || '0', 10);
-      const tm_pct = parseFloat(tauxMensuel && tauxMensuel.value || '0');
-      const r = tm_pct / 100;
-      const M = mensualite(C0, tm_pct, n);
-      if (!isFinite(M)) { return; }
-      const dateDebut = document.getElementById('dateDebut').value ? new Date(document.getElementById('dateDebut').value) : null;
-      for (let mois = 1; mois <= n; mois++){
-        const interet = roundPrec(reste * r);
-        let principal = roundPrec(M - interet);
-        let payment = M;
-        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
-        reste = roundPrec(reste - principal);
-        const tr = document.createElement('tr');
-        let periode = mois;
-        if (dateDebut) {
-          const date = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
-          periode = date.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
-        }
-        [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
-          .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
-        tableBody.appendChild(tr);
-      }
-      const chartContainer = document.getElementById('chartContainer');
-      if (chartContainer && chartContainer.style.display !== 'none'){
-        updateChart();
-      }
+    /* Barème progressif avec bornes explicites (min/max).
+       Chaque tranche est définie par un minimum inclusif et un maximum inclusif.
+       Les montants sont exprimés en TND. */
+    const taxBrackets = [
+      { min: 0,     max: 5000,  rate: 0.00 },
+      { min: 5001,  max: 10000, rate: 0.15 },
+      { min: 10001, max: 20000, rate: 0.25 },
+      { min: 20001, max: 30000, rate: 0.30 },
+      { min: 30001, max: 40000, rate: 0.33 },
+      { min: 40001, max: 50000, rate: 0.36 },
+      { min: 50001, max: 70000, rate: 0.38 },
+      { min: 70001, max: Infinity, rate: 0.40 },
+    ];
+
+    /**
+     * Calcule les déductions selon la méthodologie officielle.
+     * Frais professionnels : 10 % du revenu brut, plafonné à 2 000 TND.
+     * Chef de famille : 300 TND.
+     * Enfants à charge : 100 TND par enfant, plafonné à 400 TND.
+     * Enfants infirmes : 2 000 TND par enfant.
+     * Étudiants sans bourse : 1 000 TND par étudiant, plafonné à 4 000 TND.
+     * Parents à charge : 450 TND par parent.
+     */
+    function calculateDeductions(revenue, isHeadOfFamily, children, disabledChildren, students, parents) {
+      const professionalExpenses = Math.min(0.1 * revenue, 2000);
+      const headOfFamilyDeduction = isHeadOfFamily ? 300 : 0;
+      const childrenDeduction = Math.min(children * 100, 400);
+      const disabledChildrenDeduction = disabledChildren * 2000;
+      const studentsDeduction = Math.min(students * 1000, 4000);
+      const parentsDeduction = parents * 450;
+      return professionalExpenses + headOfFamilyDeduction + childrenDeduction + disabledChildrenDeduction + studentsDeduction + parentsDeduction;
     }
 
     /**
-     * Génère un tableau d'amortissement annuel pour le scénario 1 en agrégeant les mensualités,
-     * les intérêts et le principal sur chaque période de 12 mois. Utilisé lorsque l'utilisateur
-     * sélectionne l'affichage annuel via le bouton dédié.
+     * Calcule l'impôt détaillé pour un revenu net donné.
+     * Utilise des tranches définies par un minimum inclusif et un maximum inclusif.
+     * Pour chaque tranche, on détermine la part du revenu restant à imposer dans l'intervalle.
+     * La fonction renvoie le total de l'impôt et le détail par tranche.
      */
-    function generateAnnualSchedule(){
-      compute();
-      tableBody.innerHTML = '';
-      const C0 = parseFloat(capital.value || '0');
-      let reste = C0;
-      const n = parseInt(duree.value || '0', 10);
-      const tm_pct = parseFloat(tauxMensuel.value || '0');
-      const r = tm_pct / 100;
-      const M = mensualite(C0, tm_pct, n);
-      if (!isFinite(M)) { return; }
-      let accPayment = 0, accInterest = 0, accPrincipal = 0;
-      let year = 1;
-      const dateDebut = document.getElementById('dateDebut').value ? new Date(document.getElementById('dateDebut').value) : null;
-      for (let mois = 1; mois <= n; mois++){
-        const interet = roundPrec(reste * r);
-        let principal = roundPrec(M - interet);
-        let payment = M;
-        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
-        reste = roundPrec(reste - principal);
-        accPayment = roundPrec(accPayment + payment);
-        accInterest = roundPrec(accInterest + interet);
-        accPrincipal = roundPrec(accPrincipal + principal);
-        if (mois % 12 === 0 || mois === n){
-          const tr = document.createElement('tr');
-          let periode = year;
-          if (dateDebut) {
-            const date = new Date(dateDebut.getFullYear() + year - 1, dateDebut.getMonth(), dateDebut.getDate());
-            periode = date.toLocaleDateString('fr-FR', { year: 'numeric' });
-          }
-          [periode, fmtMoney(accPayment), fmtMoney(accInterest), fmtMoney(accPrincipal), fmtMoney(reste)]
-            .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
-          tableBody.appendChild(tr);
-          accPayment = 0; accInterest = 0; accPrincipal = 0;
-          year++;
-        }
-      }
-      const chartContainer = document.getElementById('chartContainer');
-      if (chartContainer && chartContainer.style.display !== 'none'){
-        updateChart();
-      }
-    }
-
-    function exportCSV(){
-      const rows = [['Mois','Mensualité','Intérêts','Principal','Capital restant dû']];
-      const trs = [...tableBody.querySelectorAll('tr')];
-      if (!trs.length){ return; }
-      trs.forEach(tr => { const cells = [...tr.querySelectorAll('td')].map(td => td.textContent.replace(/\s/g,'')); rows.push(cells); });
-      const csv = rows.map(r => r.join(';')).join('\n');
-      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'amortissement_scroll_compact.csv'; a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function resetAll(){ capital.value = 0; duree.value = 1; tauxAnnuel.value = 0; tableBody.innerHTML = ''; compute(); }
-    function clearTable(){ tableBody.innerHTML = ''; }
-
-    // ---- Graphiques ----
-    // Maintient une instance unique du graphique d'amortissement
-    let amortChart = null;
-
-    /**
-     * Met à jour ou crée le graphique d'amortissement à partir des données du tableau.
-     * Utilise Chart.js pour tracer les intérêts et le capital restant dû en fonction des mois.
-     */
-    function updateChart(){
-      const aoa = getAmortizationAoA();
-      const chartContainer = document.getElementById('chartContainer');
-      if (!aoa || !chartContainer){ return; }
-      // Prépare les étiquettes et les séries (intérêts et capital restant dû)
-      const labels = [];
-      const interestData = [];
-      const principalData = [];
-      for (let i = 1; i < aoa.length; i++){
-        labels.push(aoa[i][0]);
-        interestData.push(aoa[i][2]);
-        principalData.push(aoa[i][3]); // Utiliser la colonne Principal (index 3)
-      }
-      const data = {
-        labels: labels,
-        datasets: [
-          { label:'Intérêts', data: interestData, tension:0.3, borderColor: 'rgb(255, 99, 132)', backgroundColor: 'rgba(255, 99, 132, 0.5)' },
-          { label:'Principal', data: principalData, tension:0.3, borderColor: 'rgb(54, 162, 235)', backgroundColor: 'rgba(54, 162, 235, 0.5)' }
-        ]
-      };
-  // Couleurs dynamiques en fonction du thème : texte clair sur fond sombre, texte sombre sur fond clair
-  const isDark = document.body.classList.contains('dark');
-  // Essayez d'utiliser les variables CSS si disponibles, sinon valeurs fallback
-  let textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
-  if (!textColor) textColor = isDark ? '#f8fafc' : '#0f172a';
-  const gridColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)';
-
-  if (amortChart){
-    // Met à jour les données existantes
-    amortChart.data = data;
-    // Met à jour les couleurs des axes et de la légende pour correspondre au thème
-    if (amortChart.options && amortChart.options.plugins && amortChart.options.plugins.legend && amortChart.options.plugins.legend.labels){
-      amortChart.options.plugins.legend.labels.color = textColor;
-    }
-    if (amortChart.options && amortChart.options.scales){
-      ['x','y'].forEach(axis => {
-        if (amortChart.options.scales[axis]){
-          if (!amortChart.options.scales[axis].ticks) amortChart.options.scales[axis].ticks = {};
-          if (!amortChart.options.scales[axis].grid) amortChart.options.scales[axis].grid = {};
-          amortChart.options.scales[axis].ticks.color = textColor;
-          amortChart.options.scales[axis].grid.color = gridColor;
-        }
-      });
-    }
-    amortChart.update();
-  } else {
-    const ctx = document.getElementById('amortChart').getContext('2d');
-    amortChart = new Chart(ctx, {
-      type:'line',
-      data: data,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { labels: { color: textColor } }
-        },
-        scales: {
-          x: {
-            ticks: { color: textColor },
-            grid: { color: gridColor }
-          },
-          y: {
-            ticks: { color: textColor },
-            grid: { color: gridColor }
-          }
-        }
-      }
-    });
-  }
-    }
-    
-    // ======== Fonctions dédiées au second scénario (Scénario 2) ========
-
-    /**
-     * Met à jour la valeur du taux mensuel du second scénario en fonction du taux annuel.
-     */
-    function updateDerivedRates2(){
-      if (!tauxAnnuel2 || !tauxMensuel2) return;
-      const ta2 = parseFloat(tauxAnnuel2.value || '0');
-      const tm2 = ta2 / 12;
-      tauxMensuel2.value = isFinite(tm2) ? fmtNum(tm2, 6) : '';
-    }
-
-    /**
-     * Valide la durée du second scénario (entre 1 et 300 mois). Affiche un avertissement si invalide.
-     */
-    function validateDuree2(){
-      if (!duree2 || !warnDuree2) return false;
-      const n2 = parseInt(duree2.value || '0', 10);
-      const ok2 = n2 >= 1 && n2 <= 300;
-      warnDuree2.style.display = ok2 ? 'none' : 'block';
-      return ok2;
-    }
-
-    /**
-     * Calcule la mensualité et le coût total des intérêts pour le second scénario et met à jour les KPI.
-     */
-    function compute2(){
-      updateDerivedRates2();
-      if (!validateDuree2()) { return; }
-      const C2 = parseFloat(capital2 && capital2.value || '0');
-      const n2 = parseInt(duree2 && duree2.value || '0', 10);
-      const tm2 = parseFloat(tauxMensuel2 && tauxMensuel2.value || '0');
-      const M2 = mensualite(C2, tm2, n2);
-      let reste2 = C2, totalInterets2 = 0;
-      const r2 = tm2 / 100;
-      for (let mois = 1; mois <= n2; mois++){
-        const interet2 = roundPrec(reste2 * r2);
-        let principal2 = roundPrec(M2 - interet2);
-        if (mois === n2) principal2 = roundPrec(reste2);
-        reste2 = roundPrec(reste2 - principal2);
-        totalInterets2 = roundPrec(totalInterets2 + interet2);
-      }
-      if (kpiMensualite2) kpiMensualite2.textContent = isFinite(M2) ? fmtMoney(M2) : '—';
-      if (kpiInterets2) kpiInterets2.textContent = isFinite(totalInterets2) ? fmtMoney(totalInterets2) : '—';
-    }
-
-    /**
-     * Génère le tableau mensuel pour le second scénario.
-     */
-    function generateSchedule2(){
-      if (isAnnual2){
-        generateAnnualSchedule2();
-        return;
-      }
-      compute2();
-      if (!tableBody2) return;
-      tableBody2.innerHTML = '';
-      const C0 = parseFloat(capital2 && capital2.value || '0');
-      let reste = C0;
-      const n = parseInt(duree2 && duree2.value || '0', 10);
-      const tm_pct = parseFloat(tauxMensuel2 && tauxMensuel2.value || '0');
-      const r = tm_pct / 100;
-const M = mensualite(C0, tm_pct, n);
-      if (!isFinite(M)) { return; }
-      const dateDebut = document.getElementById('dateDebut').value ? new Date(document.getElementById('dateDebut').value) : null;
-      for (let mois = 1; mois <= n; mois++){
-        const interet = roundPrec(reste * r);
-        let principal = roundPrec(M - interet);
-        let payment = M;
-        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
-        reste = roundPrec(reste - principal);
-        const tr = document.createElement('tr');
-        let periode = mois;
-        if (dateDebut) {
-          const date = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
-          periode = date.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
-        }
-        [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
-          .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
-        tableBody.appendChild(tr);
-      }
-      const chartContainer2 = document.getElementById('chartContainer2');
-      if (chartContainer2 && chartContainer2.style.display !== 'none'){
-        updateChart2();
-      }
-    }
-
-    /**
-     * Génère le tableau annuel pour le second scénario.
-     */
-    function generateAnnualSchedule2(){
-      compute2();
-      if (!tableBody2) return;
-      tableBody2.innerHTML = '';
-      const C0 = parseFloat(capital2 && capital2.value || '0');
-      let reste = C0;
-      const n = parseInt(duree2 && duree2.value || '0', 10);
-      const tm_pct = parseFloat(tauxMensuel2 && tauxMensuel2.value || '0');
-      const r = tm_pct / 100;
-      const M = mensualite(C0, tm_pct, n);
-      if (!isFinite(M)) { return; }
-      let accPayment = 0, accInterest = 0, accPrincipal = 0;
-      let year = 1;
-      const dateDebut2 = document.getElementById('dateDebut2').value ? new Date(document.getElementById('dateDebut2').value) : null;
-      for (let mois = 1; mois <= n; mois++){
-        const interet = roundPrec(reste * r);
-        let principal = roundPrec(M - interet);
-        let payment = M;
-        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
-        reste = roundPrec(reste - principal);
-        accPayment = roundPrec(accPayment + payment);
-        accInterest = roundPrec(accInterest + interet);
-        accPrincipal = roundPrec(accPrincipal + principal);
-        if (mois % 12 === 0 || mois === n){
-          const tr = document.createElement('tr');
-          let periode = year;
-          if (dateDebut2) {
-            const date = new Date(dateDebut2.getFullYear() + year - 1, dateDebut2.getMonth(), dateDebut2.getDate());
-            periode = date.toLocaleDateString('fr-FR', { year: 'numeric' });
-          }
-          [periode, fmtMoney(accPayment), fmtMoney(accInterest), fmtMoney(accPrincipal), fmtMoney(reste)]
-            .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
-          tableBody2.appendChild(tr);
-          accPayment = 0; accInterest = 0; accPrincipal = 0;
-          year++;
-        }
-      }
-      const chartContainer2 = document.getElementById('chartContainer2');
-      if (chartContainer2 && chartContainer2.style.display !== 'none'){
-        updateChart2();
-      }
-    }
-
-    /**
-     * Convertit le tableau d'amortissement du scénario 2 en array-of-arrays pour l'exportation.
-     */
-    function getAmortizationAoA2(){
-      const tbody2 = document.querySelector('#table2 tbody');
-      const trs2 = tbody2 ? [...tbody2.querySelectorAll('tr')] : [];
-      if (!trs2.length) return null;
-      const header2 = [
-        isAnnual2 ? 'Année' : 'Période',
-        isAnnual2 ? 'Annuité' : 'Mensualité',
-        'Intérêts',
-        'Principal',
-        'Capital restant dû'
-      ];
-      const rows2 = trs2.map(tr => {
-        const tds = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
-        return [
-          tds[0], // Laisser comme string (Période/Année/Date)
-          frMoneyToNumber(tds[1]),
-          frMoneyToNumber(tds[2]),
-          frMoneyToNumber(tds[3]),
-          frMoneyToNumber(tds[4]),
-        ];
-      });
-      return [header2, ...rows2];
-    }
-
-    /**
-     * Graphique pour le second scénario. Utilise Chart.js pour tracer l'évolution des intérêts et du capital restant dû.
-     */
-    let amortChart2 = null;
-    function updateChart2(){
-      const aoa2 = getAmortizationAoA2();
-      const chartContainer2 = document.getElementById('chartContainer2');
-      if (!aoa2 || !chartContainer2){ return; }
-      const labels2 = [];
-      const interestData2 = [];
-      const principalData2 = [];
-      for (let i = 1; i < aoa2.length; i++){
-        labels2.push(aoa2[i][0]);
-        interestData2.push(aoa2[i][2]);
-        principalData2.push(aoa2[i][3]); // Utiliser la colonne Principal (index 3)
-      }
-      const data2 = {
-        labels: labels2,
-        datasets: [
-          { label:'Intérêts', data: interestData2, tension:0.3, borderColor: 'rgb(255, 99, 132)', backgroundColor: 'rgba(255, 99, 132, 0.5)' },
-          { label:'Principal', data: principalData2, tension:0.3, borderColor: 'rgb(54, 162, 235)', backgroundColor: 'rgba(54, 162, 235, 0.5)' }
-        ]
-      };
-      const isDark2 = document.body.classList.contains('dark');
-      let textColor2 = getComputedStyle(document.body).getPropertyValue('--text').trim();
-      if (!textColor2) textColor2 = isDark2 ? '#f8fafc' : '#0f172a';
-      const gridColor2 = isDark2 ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)';
-      if (amortChart2){
-        amortChart2.data = data2;
-        if (amortChart2.options && amortChart2.options.plugins && amortChart2.options.plugins.legend && amortChart2.options.plugins.legend.labels){
-          amortChart2.options.plugins.legend.labels.color = textColor2;
-        }
-        if (amortChart2.options && amortChart2.options.scales){
-          ['x','y'].forEach(axis => {
-            if (amortChart2.options.scales[axis]){
-              if (!amortChart2.options.scales[axis].ticks) amortChart2.options.scales[axis].ticks = {};
-              if (!amortChart2.options.scales[axis].grid) amortChart2.options.scales[axis].grid = {};
-              amortChart2.options.scales[axis].ticks.color = textColor2;
-              amortChart2.options.scales[axis].grid.color = gridColor2;
-            }
+    function calculateDetailedTax(netIncome) {
+      let remainingIncome = Math.max(netIncome, 0);
+      let totalTax = 0;
+      const bracketDetails = [];
+      for (const bracket of taxBrackets) {
+        // Si aucun revenu ne reste à imposer, ajouter des tranches vides
+        if (remainingIncome <= 0) {
+          bracketDetails.push({
+            min: bracket.min,
+            max: bracket.max,
+            rate: bracket.rate,
+            amount: 0,
+            tax: 0,
           });
+          continue;
         }
-        amortChart2.update();
-      } else {
-        const ctx2 = document.getElementById('amortChart2').getContext('2d');
-        amortChart2 = new Chart(ctx2, {
-          type:'line',
-          data: data2,
-          options: {
-            responsive:true,
-            maintainAspectRatio:false,
-            plugins:{ legend:{ labels:{ color:textColor2 } } },
-            scales:{
-              x:{ ticks:{ color:textColor2 }, grid:{ color:gridColor2 } },
-              y:{ ticks:{ color:textColor2 }, grid:{ color:gridColor2 } }
-            }
-          }
+        // Largeur de la tranche (Infini si max est Infinity)
+        const rangeWidth =
+          bracket.max === Infinity ? Infinity : bracket.max - bracket.min;
+        // Montant imposable dans la tranche : le minimum entre le revenu restant et la largeur de la tranche
+        const taxableAmount = Math.min(
+          remainingIncome,
+          rangeWidth === Infinity ? remainingIncome : rangeWidth
+        );
+        const taxForBracket = taxableAmount * bracket.rate;
+        totalTax += taxForBracket;
+        remainingIncome -= taxableAmount;
+        bracketDetails.push({
+          min: bracket.min,
+          max: bracket.max,
+          rate: bracket.rate,
+          amount: taxableAmount,
+          tax: taxForBracket,
         });
       }
+      return { total: totalTax, byBracket: bracketDetails };
     }
 
     /**
-     * Exporte le tableau du scénario 2 au format XLSX à l'aide de SheetJS.
+     * Applique le minimum d'impôt (45 % de l'impôt initial) en répartissant la charge
+     * sur les différentes tranches selon leur capacité maximale.
+     * Si l'impôt calculé dépasse le minimum, les détails initiaux sont renvoyés.
      */
-    function exportXLSX2(){
-      const aoa2 = getAmortizationAoA2();
-      if (!aoa2){ alert("Génère d'abord le tableau d'amortissement."); return; }
-      if (typeof XLSX === 'undefined'){ alert("Bibliothèque XLSX non chargée."); return; }
-      const wb2 = XLSX.utils.book_new();
-      const ws2 = XLSX.utils.aoa_to_sheet(aoa2);
-      const range2 = XLSX.utils.decode_range(ws2['!ref']);
-      for (let R = 1; R <= range2.e.r; R++){
-        for (let C = 1; C <= 4; C++){
-          const cellAddr2 = XLSX.utils.encode_cell({r:R, c:C});
-          const cell2 = ws2[cellAddr2];
-          if (cell2 && typeof cell2.v === 'number'){
-            cell2.t = 'n';
-            cell2.z = '0.000';
+    function applyMinTax(taxDetails, minTax) {
+      if (taxDetails.total >= minTax) {
+        return taxDetails;
+      }
+      // Calcul de l'espace disponible (largeur) pour chaque tranche
+      const availableSpace = taxBrackets.map((br) =>
+        br.max === Infinity ? Infinity : br.max - br.min
+      );
+      let remainingTax = minTax;
+      const adjusted = { total: 0, byBracket: [] };
+      for (let i = 0; i < taxBrackets.length; i++) {
+        const bracket = taxBrackets[i];
+        const width = availableSpace[i];
+        // Capacité maximale d'impôt que cette tranche peut absorber
+        const maxPossibleTax =
+          width === Infinity ? Infinity : width * bracket.rate;
+        const taxForBracket = Math.min(remainingTax, maxPossibleTax);
+        const amount = bracket.rate > 0 ? taxForBracket / bracket.rate : 0;
+        adjusted.byBracket.push({
+          min: bracket.min,
+          max: bracket.max,
+          rate: bracket.rate,
+          amount: amount,
+          tax: taxForBracket,
+        });
+        adjusted.total += taxForBracket;
+        remainingTax -= taxForBracket;
+        if (remainingTax <= 0) {
+          // Compléter les tranches restantes avec des montants nuls
+          for (let j = i + 1; j < taxBrackets.length; j++) {
+            const b = taxBrackets[j];
+            adjusted.byBracket.push({
+              min: b.min,
+              max: b.max,
+              rate: b.rate,
+              amount: 0,
+              tax: 0,
+            });
           }
+          break;
         }
       }
-      ws2['!cols'] = [{wch:6},{wch:14},{wch:12},{wch:12},{wch:18}];
-      XLSX.utils.book_append_sheet(wb2, ws2, 'Amortissement');
-      XLSX.writeFile(wb2, 'amortissement2.xlsx', {bookType:'xlsx'});
+      // S'il reste du montant à répartir (normalement uniquement sur la dernière tranche infinie)
+      if (remainingTax > 0) {
+        const last = adjusted.byBracket[adjusted.byBracket.length - 1];
+        last.tax += remainingTax;
+        if (last.rate > 0) {
+          last.amount += remainingTax / last.rate;
+        }
+        adjusted.total += remainingTax;
+      }
+      return adjusted;
     }
 
     /**
-     * Réinitialise les valeurs du second scénario aux valeurs par défaut.
+     * Calcule l'investissement optimal pour réduire l'impôt au niveau du minimum légal (45 %).
+     * L'algorithme parcourt les tranches jusqu'à ce que le montant d'impôt restant atteigne le plancher.
      */
-    function resetAll2(){
-      if (capital2) capital2.value = '0';
-      if (duree2) duree2.value = '1';
-      if (tauxAnnuel2) tauxAnnuel2.value = '0';
-      if (tauxMensuel2) tauxMensuel2.value = fmtNum(0, 6);
-      if (kpiMensualite2) kpiMensualite2.textContent = '—';
-      if (kpiInterets2) kpiInterets2.textContent = '—';
-      if (warnDuree2) warnDuree2.style.display = 'none';
-      if (tableBody2) tableBody2.innerHTML = '';
-    }
-
-    
-    // ---- Réduction de taux si durée > 84 mois et (Intérêts 36 mois / CRD à 36 mois) >= 8% ----
-    function simulateMetrics(C, n, tm_pct){
-      const r = tm_pct / 100;
-      const M = mensualite(C, tm_pct, n);
-      if (!isFinite(M)) return { interets36mois: NaN, reste36: NaN };
-      let reste = C;
-      let interets36mois = 0;
-      let reste36 = NaN;
-      for (let mois = 1; mois <= n; mois++) {
-        const interet = roundPrec(reste * r);
-        let principal = roundPrec(M - interet);
-        if (mois === n) principal = roundPrec(reste);
-        reste = roundPrec(reste - principal);
-        // Accumuler les intérêts uniquement pour les 36 premiers mois
-        if (mois <= 36) {
-          interets36mois = roundPrec(interets36mois + interet);
+    function findOptimalInvestment(initialNetIncome, initialTax) {
+      // Pas d'investissement optimal si le revenu net est inférieur ou égal à 5 000 TND
+      if (initialNetIncome <= 5000) {
+        return { optimalInvestment: 0, netIncomeAfter: initialNetIncome, taxAfter: initialTax };
+      }
+      const minTax = 0.45 * initialTax;
+      let netIncomeAfter = 0;
+      let remainingTax = minTax;
+      for (const bracket of taxBrackets) {
+        const width = bracket.max === Infinity ? Infinity : bracket.max - bracket.min;
+        const maxTaxInBracket =
+          width === Infinity ? Infinity : width * bracket.rate;
+        if (remainingTax <= maxTaxInBracket) {
+          // La tranche en cours suffit pour atteindre le minimum d'impôt
+          netIncomeAfter += bracket.rate > 0 ? remainingTax / bracket.rate : 0;
+          remainingTax = 0;
+          break;
+        } else {
+          // On consomme entièrement la tranche et continue sur la suivante
+          netIncomeAfter += width;
+          remainingTax -= maxTaxInBracket;
         }
-        if (mois === 36) reste36 = reste;
       }
-      if (!isFinite(reste36)) reste36 = reste;
-      return { interets36mois, reste36 };
+      const optimalInvestment = Math.min(
+        initialNetIncome - netIncomeAfter,
+        initialNetIncome
+      );
+      return { optimalInvestment, netIncomeAfter, taxAfter: minTax };
     }
 
-    function reduceRateIfEligible(){
-      const C = parseFloat(document.getElementById('capital').value || '0');
-      const n = parseInt(document.getElementById('duree').value || '0', 10);
-      const ta = parseFloat(document.getElementById('tauxAnnuel').value || '0');
-      const tm_pct = parseFloat(document.getElementById('tauxMensuel').value || '0');
-
-      if (!(C > 0) || !(n > 0) || !(ta >= 0)) { alert("Veuillez saisir un crédit valide d'abord."); return; }
-
-      const condDuree = n > 84; // > 7 ans
-      const { interets36mois, reste36 } = simulateMetrics(C, n, tm_pct);
-      if (!isFinite(interets36mois) || !isFinite(reste36) || reste36 <= 0){
-        alert("Données insuffisantes pour évaluer l'éligibilité.");
-        return;
+    function updateComparisonTable(beforeDetails, afterDetails) {
+      const tbody = document.getElementById('tax-brackets-comparison');
+      tbody.innerHTML = '';
+      for (let i = 0; i < beforeDetails.byBracket.length; i++) {
+        const bd = beforeDetails.byBracket[i];
+        const ad = afterDetails.byBracket[i] || { tax: 0 };
+        // Formater les bornes avec séparateurs de milliers et sans décimales.
+        // Les bornes min et max sont déjà définies dans taxBrackets (min inclusif, max inclusif).
+        const minDisplay = formatInteger(bd.min);
+        const maxDisplay = bd.max === Infinity ? '∞' : formatInteger(bd.max);
+        const savings = bd.tax - ad.tax;
+        // Appliquer une classe uniquement si l'économie est positive
+        const impactClass = savings > 0 ? 'impact-cell' : '';
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${minDisplay} – ${maxDisplay}</td>
+          <td>${(bd.rate * 100).toFixed(0)} %</td>
+          <td>${formatAmount(bd.tax)} TND</td>
+          <td>${formatAmount(ad.tax)} TND</td>
+          <td class="${impactClass}">${formatAmount(savings)} TND</td>
+        `;
+        tbody.appendChild(row);
       }
-      const ratio = interets36mois / reste36;
-      const condRatio = ratio >= 0.08;
+    }
 
-      if (condDuree && condRatio){
-        const oldTA = ta;
-        const newTA = oldTA / 2;
-
-        if (typeof generateScheduleWithRateChange === 'function') generateScheduleWithRateChange(4, newTA);
-
-        alert(
-          "✅ Éligible : taux réduit de moitié.\n"
-          + "Ancien taux annuel : " + oldTA + "%\n"
-          + "Nouveau taux annuel : " + newTA + "%\n"
-          + "Ratio (Intérêts 36 mois / CRD à 36 mois) : " + (ratio*100).toFixed(2) + "%"
-        );
+    function displayResults(beforeTax, afterTax, taxSaved, optimalInvestment) {
+      document.getElementById('tax-before').textContent = formatAmount(beforeTax) + ' TND';
+      document.getElementById('tax-after').textContent = formatAmount(afterTax) + ' TND';
+      // Met à jour l'économie d'impôt et applique la mise en évidence seulement si elle est positive
+      const taxSavedEl = document.getElementById('tax-saved');
+      taxSavedEl.textContent = formatAmount(taxSaved) + ' TND';
+      if (taxSaved > 0) {
+        // Gain positif : utiliser la couleur verte définie dans les variables CSS
+        taxSavedEl.classList.add('highlight');
+        // Utiliser les variables définies sur le body afin de respecter le thème actif
+        taxSavedEl.style.color = getComputedStyle(document.body).getPropertyValue('--secondary');
       } else {
-        let msg = "❌ Non éligible à la réduction :\n";
-        msg += "- Durée > 84 mois ? " + (condDuree ? "Oui" : "Non") + "\n";
-        msg += "- Ratio ≥ 8% ? " + (ratio*100).toFixed(2) + "% " + (condRatio ? "≥ 8%" : "< 8%") + "\n";
-        alert(msg);
+        // Gain nul ou négatif : retirer la classe highlight et rétablir la couleur du texte principal
+        taxSavedEl.classList.remove('highlight');
+        taxSavedEl.style.color = getComputedStyle(document.body).getPropertyValue('--text');
+      }
+
+      // Calcule l'économie d'impôt mensuelle (sur 12) et met à jour son affichage
+      const monthlySaved = taxSaved / 12;
+      const taxSavedMonthlyEl = document.getElementById('tax-saved-monthly');
+      if (taxSavedMonthlyEl) {
+        taxSavedMonthlyEl.textContent = formatAmount(monthlySaved) + ' TND';
+        if (monthlySaved > 0) {
+          taxSavedMonthlyEl.style.color = getComputedStyle(document.body).getPropertyValue('--secondary');
+        } else {
+          taxSavedMonthlyEl.style.color = getComputedStyle(document.body).getPropertyValue('--text');
+        }
+      }
+      // Calcul du taux de réduction d'impôt : pourcentage d'économie par rapport à l'impôt initial
+      const reductionRate = beforeTax > 0 ? (taxSaved / beforeTax * 100) : 0;
+      const taxReductionEl = document.getElementById('tax-reduction-rate');
+      taxReductionEl.textContent = reductionRate.toFixed(1) + '\u00a0%';
+      // Afficher le taux de réduction en vert. Utiliser la variable du body pour respecter le thème actif
+      taxReductionEl.style.color = getComputedStyle(document.body).getPropertyValue('--secondary');
+      // Calcul du minimum d'impôt (plancher à 45 % de l'impôt initial)
+      const minimumTax = beforeTax * 0.45;
+      document.getElementById('min-tax').textContent = formatAmount(minimumTax) + ' TND';
+      // Mettre à jour l'investissement optimal formaté
+      document.getElementById('optimal-investment').textContent = formatAmount(optimalInvestment) + ' TND';
+    }
+
+    function updateOptimalRecommendation(optimalInvestment) {
+      const rec = document.getElementById('optimal-recommendation');
+      if (optimalInvestment > 0) {
+        rec.textContent = formatAmount(optimalInvestment) + ' TND';
+      } else {
+        rec.textContent = '-';
       }
     }
-// Wire
-    document.getElementById('btnCalcul').addEventListener('click', compute);
-    document.getElementById('btnGen').addEventListener('click', generateSchedule);
-    /* Suppression du gestionnaire d'export CSV */
-    document.getElementById('btnReset').addEventListener('click', resetAll);
-    document.getElementById('btnReducTaux').addEventListener('click', reduceRateIfEligible);
-    // btnClear supprimé et remplacé par btnComparer
 
-    // Gestion de l'affichage annuel/mensuel pour le scénario 1
-    const btnTogglePeriod = document.getElementById('btnTogglePeriod');
-    if (btnTogglePeriod){
-      btnTogglePeriod.addEventListener('click', function(){
-        isAnnual = !isAnnual;
-        const headerCells = document.querySelectorAll('#table thead th');
-        if (headerCells && headerCells[0]) headerCells[0].textContent = isAnnual ? 'Année' : 'Période';
-        if (headerCells && headerCells[1]) headerCells[1].textContent = isAnnual ? 'Annuité' : 'Mensualité';
-        btnTogglePeriod.textContent = isAnnual ? 'Affichage: Mensuel' : 'Affichage: Annuel';
-        generateSchedule();
+    const revenueInput = document.getElementById('revenue');
+    // Récupérer l'interrupteur chef de famille (oui/non)
+    const headFamilyToggle = document.getElementById('head-family-toggle');
+    const childrenInput = document.getElementById('children');
+    const disabledChildrenInput = document.getElementById('disabled-children');
+    const studentsInput = document.getElementById('students');
+    const parentsInput = document.getElementById('parents');
+    // Champs pour l'investissement : montant par période, total et fractionnement
+    const investmentPeriodInput = document.getElementById('investment-amount-period');
+    const investmentTotalInput = document.getElementById('investment-amount-total');
+    const frequencyInput = document.getElementById('investment-frequency');
+
+    // Met à jour le montant total à investir en fonction du fractionnement et de la valeur par période
+    function updateTotalInvestment() {
+      const period = parseFloat(investmentPeriodInput.value) || 0;
+      const freq = frequencyInput.value;
+      let factor = 1;
+      switch (freq) {
+        case 'Mensuel':
+          // Mensuel : 12 versements par an
+          factor = 12;
+          break;
+        case 'Trimestriel':
+          factor = 4;
+          break;
+        case 'Semestriel':
+          factor = 2;
+          break;
+        case 'Annuel':
+          // Annuel : un seul versement
+          factor = 1;
+          break;
+      }
+      const total = period * factor;
+      // Mettre à jour le champ total directement sans formatage afin de conserver un nombre brut
+      investmentTotalInput.value = total;
+      // Recalculer les résultats après mise à jour
+      calculateAndDisplay();
+    }
+
+    function calculateAndDisplay() {
+      const revenue = parseFloat(revenueInput.value) || 0;
+      const isHeadOfFamily = headFamilyToggle.checked;
+      const children = parseInt(childrenInput.value) || 0;
+      const disabledChildren = parseInt(disabledChildrenInput.value) || 0;
+      const students = parseInt(studentsInput.value) || 0;
+      const parents = parseInt(parentsInput.value) || 0;
+      // Montant total investi (par période × fréquence), déjà mis à jour par updateTotalInvestment()
+      const investment = parseFloat(investmentTotalInput.value) || 0;
+
+      // Calcul du revenu net initial après déductions selon le barème officiel
+      const totalDeductions = calculateDeductions(
+        revenue,
+        isHeadOfFamily,
+        children,
+        disabledChildren,
+        students,
+        parents
+      );
+      const initialNetIncome = Math.max(revenue - totalDeductions, 0);
+      // Impôt initial détaillé
+      const initialDetails = calculateDetailedTax(initialNetIncome);
+      const initialTax = initialDetails.total;
+      // Plancher d'impôt : 45 % de l'impôt initial
+      const minTax = initialTax * 0.45;
+      // Revenu net après investissement
+      const netIncomeAfter = Math.max(initialNetIncome - investment, 0);
+      const investmentDetails = calculateDetailedTax(netIncomeAfter);
+      // Appliquer le minimum d'impôt si nécessaire
+      const adjustedAfter = investmentDetails.total < minTax
+        ? applyMinTax(investmentDetails, minTax)
+        : investmentDetails;
+      const adjustedTax = adjustedAfter.total;
+      // Économies d'impôt
+      const taxSaved = Math.max(0, initialTax - adjustedTax);
+      // Calcul du montant optimal selon l'algorithme officiel
+      const { optimalInvestment } = findOptimalInvestment(initialNetIncome, initialTax);
+      // Affichage des résultats et mise à jour du tableau comparatif
+      displayResults(initialTax, adjustedTax, taxSaved, optimalInvestment);
+      updateComparisonTable(initialDetails, adjustedAfter);
+      updateOptimalRecommendation(optimalInvestment);
+    }
+
+    // Mettre à jour en temps réel
+    revenueInput.addEventListener('input', calculateAndDisplay);
+    headFamilyToggle.addEventListener('change', calculateAndDisplay);
+    childrenInput.addEventListener('input', calculateAndDisplay);
+    disabledChildrenInput.addEventListener('input', calculateAndDisplay);
+    studentsInput.addEventListener('input', calculateAndDisplay);
+    parentsInput.addEventListener('input', calculateAndDisplay);
+    // Mise à jour du montant total lorsque la valeur par période ou le fractionnement change
+    investmentPeriodInput.addEventListener('input', updateTotalInvestment);
+    frequencyInput.addEventListener('change', updateTotalInvestment);
+
+    // Initialiser le montant total à partir du fractionnement et du montant par période par défaut
+    updateTotalInvestment();
+
+    // Rendre la carte de suggestion interactive : elle passe en mode actif au clic
+    const infoCard = document.getElementById('info-card');
+    if (infoCard) {
+      infoCard.addEventListener('click', () => {
+        infoCard.classList.toggle('active');
       });
     }
 
-    // Bouton pour afficher/masquer le deuxième scénario
-    const btnAddScenario = document.getElementById('btnAddScenario');
-    if (btnAddScenario){
-      btnAddScenario.addEventListener('click', function(){
-        const sc2 = document.getElementById('scenario2');
-        if (!sc2) return;
-        if (sc2.style.display === 'none' || sc2.style.display === ''){
-          sc2.style.display = '';
-          btnAddScenario.textContent = 'Masquer le scénario';
+    // Gestion du basculement de thème (sombre/claire)
+    const themeToggleButton = document.getElementById('theme-toggle');
+    if (themeToggleButton) {
+      // Appliquer la préférence sauvegardée si elle existe
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+        themeToggleButton.textContent = '☀️';
+        // Recalculer l'affichage afin que les couleurs soient ajustées au thème clair
+        calculateAndDisplay();
+      } else {
+        document.body.classList.remove('light-mode');
+        themeToggleButton.textContent = '🌙';
+        // Recalculer également pour assurer que les couleurs reflètent le thème sombre
+        calculateAndDisplay();
+      }
+      // Alternance de thème lors du clic
+      themeToggleButton.addEventListener('click', () => {
+        const isLight = document.body.classList.toggle('light-mode');
+        if (isLight) {
+          themeToggleButton.textContent = '☀️';
+          localStorage.setItem('theme', 'light');
         } else {
-          sc2.style.display = 'none';
-          btnAddScenario.textContent = 'Ajouter un scénario';
+          themeToggleButton.textContent = '🌙';
+          localStorage.setItem('theme', 'dark');
         }
+        // Mettre à jour l'affichage pour refléter immédiatement la nouvelle palette de couleurs
+        calculateAndDisplay();
       });
     }
 
-    // Attache les gestionnaires pour le scénario 2
-    const btnCalcul2El = document.getElementById('btnCalcul2');
-    if (btnCalcul2El) btnCalcul2El.addEventListener('click', compute2);
-    const btnGen2El = document.getElementById('btnGen2');
-    if (btnGen2El) btnGen2El.addEventListener('click', generateSchedule2);
-    const btnReset2El = document.getElementById('btnReset2');
-    if (btnReset2El) btnReset2El.addEventListener('click', function(e){ e.preventDefault(); resetAll2(); });
-    const btnClear2El = document.getElementById('btnClear2');
-    if (btnClear2El) btnClear2El.addEventListener('click', function(){ if (tableBody2) tableBody2.innerHTML = ''; });
-    const btnToggleChart2El = document.getElementById('btnToggleChart2');
-    if (btnToggleChart2El){
-      btnToggleChart2El.addEventListener('click', function(){
-        const cc2 = document.getElementById('chartContainer2');
-        if (!cc2) return;
-        if (cc2.style.display === 'none' || cc2.style.display === ''){
-          cc2.style.display = '';
-          btnToggleChart2El.textContent = 'Masquer Graphique';
-          updateChart2();
-        } else {
-          cc2.style.display = 'none';
-          btnToggleChart2El.textContent = 'Graphique';
-        }
-      });
-    }
-    const btnTogglePeriod2El = document.getElementById('btnTogglePeriod2');
-    if (btnTogglePeriod2El){
-      btnTogglePeriod2El.addEventListener('click', function(){
-        isAnnual2 = !isAnnual2;
-        const headerCells2 = document.querySelectorAll('#table2 thead th');
-        if (headerCells2 && headerCells2[0]) headerCells2[0].textContent = isAnnual2 ? 'Année' : 'Période';
-        if (headerCells2 && headerCells2[1]) headerCells2[1].textContent = isAnnual2 ? 'Annuité' : 'Mensualité';
-        btnTogglePeriod2El.textContent = isAnnual2 ? 'Affichage: Mensuel' : 'Affichage: Annuel';
-        generateSchedule2();
-      });
-    }
-    const btnExportXLSX2El = document.getElementById('btnExportXLSX2');
-    if (btnExportXLSX2El) btnExportXLSX2El.addEventListener('click', exportXLSX2);
-
-    // Bouton pour afficher/masquer le graphique d'amortissement
-    const btnToggleChart = document.getElementById('btnToggleChart');
-    if (btnToggleChart){
-      btnToggleChart.addEventListener('click', function(){
-        const chartContainer = document.getElementById('chartContainer');
-        if (!chartContainer){ return; }
-        // Si le graphique est masqué (display:none), on l'affiche et on met à jour les données
-        if (chartContainer.style.display === 'none'){
-          chartContainer.style.display = '';
-          btnToggleChart.textContent = 'Masquer Graphique';
-          updateChart();
-        } else {
-          chartContainer.style.display = 'none';
-          btnToggleChart.textContent = 'Graphique';
-        }
-      });
-    }
-
-// Live updates
-      ['input','change'].forEach(evt => { tauxAnnuel.addEventListener(evt, updateDerivedRates); duree.addEventListener(evt, validateDuree); });
-      // Ajout de l'écouteur pour la date de début afin de régénérer le tableau
-      const dateDebut = document.getElementById('dateDebut');
-      if(dateDebut) dateDebut.addEventListener('change', generateSchedule);
-      
-      ['input','change'].forEach(evt => { tauxAnnuel2.addEventListener(evt, updateDerivedRates2); duree2.addEventListener(evt, validateDuree2); });
-      const dateDebut2 = document.getElementById('dateDebut2');
-      if(dateDebut2) dateDebut2.addEventListener('change', generateSchedule2);
-      
-      // Init
-      updateDerivedRates(); validateDuree(); compute();
+    // Initialiser l'affichage : updateTotalInvestment() a déjà déclenché calculateAndDisplay()
   </script>
-
-<script>
-// ---- Utils : parse "1 234,567 TND" -> 1234.567 (Number)
-function frMoneyToNumber(str){
-  if (!str) return NaN;
-  // retire TND et autres lettres
-  let s = String(str).replace(/[^\d,\.\-\u202f\u00a0]/g,'');
-  // retire espaces (classiques, insécables, fines insécables)
-  s = s.replace(/[\s\u00a0\u202f]/g, '');
-  // En FR: virgule = décimale. Retire points des milliers, remplace virgule par point.
-  s = s.replace(/\.(?=\d{3}(?:\D|$))/g,'').replace(',', '.');
-  const num = Number(s);
-  return isFinite(num) ? num : NaN;
-}
-
-function getAmortizationAoA(){
-      const tbody = document.querySelector('#table tbody') || document.querySelector('table tbody');
-      const trs = tbody ? [...tbody.querySelectorAll('tr')] : [];
-      if (!trs.length) return null;
-      const header = [
-        isAnnual ? 'Année' : 'Période',
-        isAnnual ? 'Annuité' : 'Mensualité',
-        'Intérêts',
-        'Principal',
-        'Capital restant dû'
-      ];
-      const rows = trs.map(tr => {
-        const tds = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
-        // La première colonne (Période/Année) peut être une date ou un nombre, on la laisse comme string pour l'export
-        return [
-          tds[0],
-          frMoneyToNumber(tds[1]),
-          frMoneyToNumber(tds[2]),
-          frMoneyToNumber(tds[3]),
-          frMoneyToNumber(tds[4]),
-        ];
-      });
-      return [header, ...rows];
-    }
-
-function exportXLSX(){
-  const aoa = getAmortizationAoA();
-  if (!aoa){ alert("Génère d'abord le tableau d'amortissement."); return; }
-  if (typeof XLSX === 'undefined'){ alert("Bibliothèque XLSX non chargée."); return; }
-
-  const wb = XLSX.utils.book_new();
-  const ws = XLSX.utils.aoa_to_sheet(aoa);
-
-  // Formats numériques à 3 décimales pour les montants
-  const range = XLSX.utils.decode_range(ws['!ref']);
-  for (let R = 1; R <= range.e.r; R++){
-    for (let C = 1; C <= 4; C++){
-      const cellAddr = XLSX.utils.encode_cell({r:R, c:C});
-      const cell = ws[cellAddr];
-      if (cell && typeof cell.v === 'number'){
-        cell.t = 'n';
-        cell.z = '0.000';
-      }
-    }
-  }
-
-  // Largeurs de colonnes
-  ws['!cols'] = [{wch:6},{wch:14},{wch:12},{wch:12},{wch:18}];
-
-  XLSX.utils.book_append_sheet(wb, ws, 'Amortissement');
-  XLSX.writeFile(wb, 'amortissement.xlsx', {bookType:'xlsx'});
-}
-
-// Wire: attache le clic
-document.addEventListener('DOMContentLoaded', function(){
-  const btn = document.getElementById('btnExportXLSX');
-  if (btn) btn.addEventListener('click', exportXLSX);
-  
-  const btnPDF = document.getElementById('btnExportPDF');
-  if (btnPDF) btnPDF.addEventListener('click', exportPDF);
-  
-  const btnPDF2 = document.getElementById('btnExportPDF2');
-  if (btnPDF2) btnPDF2.addEventListener('click', exportPDF2);
-});
-
-/**
- * Exporte les données saisies et le tableau d'amortissement du scénario 1 en PDF
- */
-function exportPDF(){
-  const aoa = getAmortizationAoA();
-  if (!aoa){ alert("Génère d'abord le tableau d'amortissement."); return; }
-  
-  // Récupération des données saisies
-  const capital = document.getElementById('capital').value;
-  const duree = document.getElementById('duree').value;
-  const tauxAnnuel = document.getElementById('tauxAnnuel').value;
-  const tauxMensuel = document.getElementById('tauxMensuel').value;
-  const dateDebut = document.getElementById('dateDebut').value;
-  let mensualite = document.getElementById('kpiMensualite').textContent;
-  let interets = document.getElementById('kpiInterets').textContent;
-  
-  // Nettoyer les montants pour le PDF (remplacer les espaces insécables par des espaces normaux)
-  mensualite = mensualite.replace(/[\u00a0\u202f]/g, ' ').replace(/\s+/g, ' ').trim();
-  interets = interets.replace(/[\u00a0\u202f]/g, ' ').replace(/\s+/g, ' ').trim();
-  
-  // Création du document PDF avec jsPDF
-  if (typeof jspdf === 'undefined' && typeof window.jspdf === 'undefined'){
-    alert("Bibliothèque jsPDF non chargée.");
-    return;
-  }
-  
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  
-  // Titre
-  doc.setFontSize(18);
-  doc.setTextColor(14, 165, 233);
-  doc.text('Simulateur de Credit - Scenario 1', 105, 15, { align: 'center' });
-  
-  // Informations saisies
-  doc.setFontSize(12);
-  doc.setTextColor(15, 23, 42);
-  doc.text('Donnees du credit:', 14, 30);
-  
-  doc.setFontSize(10);
-  let yPos = 40;
-  doc.text('Capital emprunte: ' + capital + ' TND', 14, yPos);
-  yPos += 7;
-  doc.text('Duree: ' + duree + ' mois', 14, yPos);
-  yPos += 7;
-  doc.text('Taux d\'interet annuel: ' + tauxAnnuel + '%', 14, yPos);
-  yPos += 7;
-  doc.text('Taux d\'interet mensuel: ' + tauxMensuel + '%', 14, yPos);
-  yPos += 7;
-  if(dateDebut) {
-    doc.text('Date de debut: ' + dateDebut, 14, yPos);
-    yPos += 7;
-  }
-  
-  // KPIs
-  yPos += 5;
-  doc.setFontSize(12);
-  doc.setTextColor(14, 165, 233);
-  doc.text('Resultats:', 14, yPos);
-  yPos += 10;
-  
-  doc.setFontSize(10);
-  doc.setTextColor(15, 23, 42);
-  doc.text('Mensualite: ' + mensualite, 14, yPos);
-  yPos += 7;
-  doc.text('Cout total des interets: ' + interets, 14, yPos);
-  yPos += 15;
-  
-  // Tableau d'amortissement
-  doc.setFontSize(12);
-  doc.setTextColor(14, 165, 233);
-  doc.text('Tableau d\'amortissement:', 14, yPos);
-  yPos += 10;
-  
-  // Utilisation de autoTable pour le tableau
-  if (typeof doc.autoTable !== 'undefined'){
-    doc.autoTable({
-      head: [aoa[0]],
-      body: aoa.slice(1),
-      startY: yPos,
-      theme: 'grid',
-      headStyles: { fillColor: [14, 165, 233], textColor: [255, 255, 255] },
-      styles: { fontSize: 8, cellPadding: 2 },
-      columnStyles: {
-        0: { cellWidth: 25 },
-        1: { cellWidth: 35, halign: 'right' },
-        2: { cellWidth: 35, halign: 'right' },
-        3: { cellWidth: 35, halign: 'right' },
-        4: { cellWidth: 40, halign: 'right' }
-      }
-    });
-  } else {
-    // Fallback si autoTable n'est pas disponible
-    doc.setFontSize(8);
-    doc.text(aoa[0].join('  |  '), 14, yPos);
-    yPos += 5;
-    for(let i = 1; i < Math.min(aoa.length, 30); i++){
-      if(yPos > 280) break;
-      doc.text(aoa[i].join('  |  '), 14, yPos);
-      yPos += 5;
-    }
-  }
-  
-  // Sauvegarde
-  doc.save('amortissement_scenario1.pdf');
-}
-
-/**
- * Exporte les données saisies et le tableau d'amortissement du scénario 2 en PDF
- */
-function exportPDF2(){
-  const aoa2 = getAmortizationAoA2();
-  if (!aoa2){ alert("Génère d'abord le tableau d'amortissement."); return; }
-  
-  // Récupération des données saisies
-  const capital2 = document.getElementById('capital2').value;
-  const duree2 = document.getElementById('duree2').value;
-  const tauxAnnuel2 = document.getElementById('tauxAnnuel2').value;
-  const tauxMensuel2 = document.getElementById('tauxMensuel2').value;
-  const dateDebut2 = document.getElementById('dateDebut2').value;
-  let mensualite2 = document.getElementById('kpiMensualite2').textContent;
-  let interets2 = document.getElementById('kpiInterets2').textContent;
-  
-  // Nettoyer les montants pour le PDF (remplacer les espaces insécables par des espaces normaux)
-  mensualite2 = mensualite2.replace(/[\u00a0\u202f]/g, ' ').replace(/\s+/g, ' ').trim();
-  interets2 = interets2.replace(/[\u00a0\u202f]/g, ' ').replace(/\s+/g, ' ').trim();
-  
-  // Création du document PDF avec jsPDF
-  if (typeof jspdf === 'undefined' && typeof window.jspdf === 'undefined'){
-    alert("Bibliothèque jsPDF non chargée.");
-    return;
-  }
-  
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  
-  // Titre
-  doc.setFontSize(18);
-  doc.setTextColor(14, 165, 233);
-  doc.text('Simulateur de Credit - Scenario 2', 105, 15, { align: 'center' });
-  
-  // Informations saisies
-  doc.setFontSize(12);
-  doc.setTextColor(15, 23, 42);
-  doc.text('Donnees du credit:', 14, 30);
-  
-  doc.setFontSize(10);
-  let yPos = 40;
-  doc.text('Capital emprunte: ' + capital2 + ' TND', 14, yPos);
-  yPos += 7;
-  doc.text('Duree: ' + duree2 + ' mois', 14, yPos);
-  yPos += 7;
-  doc.text('Taux d\'interet annuel: ' + tauxAnnuel2 + '%', 14, yPos);
-  yPos += 7;
-  doc.text('Taux d\'interet mensuel: ' + tauxMensuel2 + '%', 14, yPos);
-  yPos += 7;
-  if(dateDebut2) {
-    doc.text('Date de debut: ' + dateDebut2, 14, yPos);
-    yPos += 7;
-  }
-  
-  // KPIs
-  yPos += 5;
-  doc.setFontSize(12);
-  doc.setTextColor(14, 165, 233);
-  doc.text('Resultats:', 14, yPos);
-  yPos += 10;
-  
-  doc.setFontSize(10);
-  doc.setTextColor(15, 23, 42);
-  doc.text('Mensualite: ' + mensualite2, 14, yPos);
-  yPos += 7;
-  doc.text('Cout total des interets: ' + interets2, 14, yPos);
-  yPos += 15;
-  
-  // Tableau d'amortissement
-  doc.setFontSize(12);
-  doc.setTextColor(14, 165, 233);
-  doc.text('Tableau d\'amortissement:', 14, yPos);
-  yPos += 10;
-  
-  // Utilisation de autoTable pour le tableau
-  if (typeof doc.autoTable !== 'undefined'){
-    doc.autoTable({
-      head: [aoa2[0]],
-      body: aoa2.slice(1),
-      startY: yPos,
-      theme: 'grid',
-      headStyles: { fillColor: [14, 165, 233], textColor: [255, 255, 255] },
-      styles: { fontSize: 8, cellPadding: 2 },
-      columnStyles: {
-        0: { cellWidth: 25 },
-        1: { cellWidth: 35, halign: 'right' },
-        2: { cellWidth: 35, halign: 'right' },
-        3: { cellWidth: 35, halign: 'right' },
-        4: { cellWidth: 40, halign: 'right' }
-      }
-    });
-  } else {
-    // Fallback si autoTable n'est pas disponible
-    doc.setFontSize(8);
-    doc.text(aoa2[0].join('  |  '), 14, yPos);
-    yPos += 5;
-    for(let i = 1; i < Math.min(aoa2.length, 30); i++){
-      if(yPos > 280) break;
-      doc.text(aoa2[i].join('  |  '), 14, yPos);
-      yPos += 5;
-    }
-  }
-  
-  // Sauvegarde
-  doc.save('amortissement_scenario2.pdf');
-}
-
-/**
- * Récupère les données du tableau d'amortissement du scénario 2
- */
-function getAmortizationAoA2(){
-  const tbody2 = document.querySelector('#table2 tbody');
-  const trs2 = tbody2 ? [...tbody2.querySelectorAll('tr')] : [];
-  if (!trs2.length) return null;
-  const header2 = [
-    isAnnual2 ? 'Année' : 'Période',
-    isAnnual2 ? 'Annuité' : 'Mensualité',
-    'Intérêts',
-    'Principal',
-    'Capital restant dû'
-  ];
-  const rows2 = trs2.map(tr => {
-    const tds = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
-    return [
-      tds[0],
-      frMoneyToNumber(tds[1]),
-      frMoneyToNumber(tds[2]),
-      frMoneyToNumber(tds[3]),
-      frMoneyToNumber(tds[4]),
-    ];
-  });
-  return [header2, ...rows2];
-}
-
-/**
- * Fonction pour partager par email les résultats du scénario 1
- * Génère automatiquement le PDF et ouvre l'email avec un tableau récapitulatif
- */
-function partagerParEmail(){
-  const capital = document.getElementById('capital').value;
-  const duree = document.getElementById('duree').value;
-  const tauxAnnuel = document.getElementById('tauxAnnuel').value;
-  const dateDebut = document.getElementById('dateDebut').value;
-  const mensualite = document.getElementById('kpiMensualite').textContent;
-  const interets = document.getElementById('kpiInterets').textContent;
-  
-  if (!capital || !duree || !tauxAnnuel || mensualite === '—') {
-    alert('Veuillez d\'abord calculer votre crédit avant de partager.');
-    return;
-  }
-  
-  // Vérifier si le tableau d'amortissement existe
-  const tbody = document.querySelector('#table tbody');
-  if (!tbody || tbody.children.length === 0) {
-    alert('⚠️ Veuillez d\'abord générer le tableau d\'amortissement avant de partager.');
-    return;
-  }
-  
-  // 1. Générer et télécharger le PDF automatiquement
-  try {
-    exportPDF();
-  } catch(e) {
-    console.error('Erreur lors de la génération du PDF:', e);
-  }
-  
-  // 2. Attendre un peu pour que le PDF soit téléchargé
-  setTimeout(function(){
-    // 3. Construire le tableau récapitulatif HTML pour l'email
-    const tableauHTML = `
-=== SIMULATION DE CREDIT ===
-
-DONNEES DE BASE:
------------------
-Capital emprunte : ${capital} TND
-Duree : ${duree} mois
-Taux d'interet annuel : ${tauxAnnuel}%
-Date de debut : ${dateDebut || 'Non specifiee'}
-
-RESULTATS:
------------------
-Mensualite : ${mensualite}
-Cout total des interets : ${interets}
-
-TABLEAU D'AMORTISSEMENT:
------------------
-(Voir le fichier PDF joint pour le détail complet)
-
-INSTRUCTIONS:
------------------
-1. Un fichier PDF "amortissement_scenario1.pdf" a été téléchargé dans votre dossier Téléchargements
-2. Veuillez joindre ce fichier PDF à cet email avant de l'envoyer
-3. Le PDF contient le tableau d'amortissement complet avec tous les détails
-
-Cordialement
-    `;
-    
-    // Construction du sujet
-    const sujet = 'Simulation de Credit - Resultats et Tableau d\'Amortissement';
-    
-    // Création du lien mailto
-    const mailtoLink = `mailto:?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(tableauHTML)}`;
-    
-    // Ouvrir le client email
-    window.location.href = mailtoLink;
-    
-    // Afficher un message d'information
-    setTimeout(function(){
-      alert('✅ Le PDF a été téléchargé !\n\n📧 Votre client email va s\'ouvrir.\n\n📎 N\'oubliez pas de joindre le fichier PDF "amortissement_scenario1.pdf" depuis votre dossier Téléchargements avant d\'envoyer l\'email.');
-    }, 500);
-  }, 1000);
-}
-
-/**
- * Fonction pour calculer la capacité d'emprunt
- */
-function calculerCapaciteEmprunt(){
-  // Créer une boîte de dialogue modale
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-    border: 3px solid rgba(14, 165, 233, 0.6);
-    box-shadow: 0 0 30px rgba(14, 165, 233, 0.5);
-    border-radius: 20px;
-    padding: 30px;
-    max-width: 500px;
-    width: 90%;
-  `;
-  
-  modalContent.innerHTML = `
-    <h2 style="color: #0ea5e9; margin-top: 0; text-align: center;">💰 Calculateur de Capacité d'Emprunt</h2>
-    <p style="color: #64748b; text-align: center; margin-bottom: 20px;">Taux d'endettement maximum : 40%</p>
-    
-    <div style="margin-bottom: 15px;">
-      <label style="display: block; color: #0ea5e9; font-weight: bold; margin-bottom: 5px;">Revenus mensuels nets (TND)</label>
-      <input type="number" id="revenusMensuels" placeholder="Ex: 2000" style="width: 100%; padding: 12px; border: 2px solid rgba(14, 165, 233, 0.6); border-radius: 10px; font-size: 16px;" />
-    </div>
-    
-    <div style="margin-bottom: 15px;">
-      <label style="display: block; color: #0ea5e9; font-weight: bold; margin-bottom: 5px;">Charges mensuelles (TND)</label>
-      <input type="number" id="chargesMensuelles" placeholder="Ex: 300" value="0" style="width: 100%; padding: 12px; border: 2px solid rgba(14, 165, 233, 0.6); border-radius: 10px; font-size: 16px;" />
-    </div>
-    
-    <div style="margin-bottom: 15px;">
-      <label style="display: block; color: #0ea5e9; font-weight: bold; margin-bottom: 5px;">Durée souhaitée (mois)</label>
-      <input type="number" id="dureeCapacite" placeholder="Ex: 120" value="120" style="width: 100%; padding: 12px; border: 2px solid rgba(14, 165, 233, 0.6); border-radius: 10px; font-size: 16px;" />
-    </div>
-    
-    <div style="margin-bottom: 20px;">
-      <label style="display: block; color: #0ea5e9; font-weight: bold; margin-bottom: 5px;">Taux d'intérêt annuel (%)</label>
-      <input type="number" id="tauxCapacite" placeholder="Ex: 5" value="5" step="0.1" style="width: 100%; padding: 12px; border: 2px solid rgba(14, 165, 233, 0.6); border-radius: 10px; font-size: 16px;" />
-    </div>
-    
-    <div id="resultatCapacite" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; display: none;">
-      <h3 style="margin: 0 0 10px 0; text-align: center;">Résultat</h3>
-      <p style="margin: 5px 0; font-size: 14px;"><strong>Capacité d'endettement :</strong> <span id="capaciteEndettement"></span></p>
-      <p style="margin: 5px 0; font-size: 14px;"><strong>Mensualité maximale :</strong> <span id="mensualiteMax"></span></p>
-      <p style="margin: 5px 0; font-size: 18px; text-align: center; margin-top: 15px;"><strong>Montant empruntable :</strong><br><span id="montantEmpruntable" style="font-size: 28px;"></span></p>
-    </div>
-    
-    <div style="display: flex; gap: 10px;">
-      <button id="btnCalculerCapacite" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);">✅ Calculer</button>
-      <button id="btnUtiliser" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; display: none; box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);">🔄 Utiliser</button>
-      <button id="btnFermerModal" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);">❌ Fermer</button>
-    </div>
-  `;
-  
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  
-  // Variables pour stocker les résultats
-  let montantCalcule = 0;
-  let dureeCalculee = 0;
-  let tauxCalcule = 0;
-  
-  // Fonction de calcul
-  document.getElementById('btnCalculerCapacite').addEventListener('click', function(){
-    const revenus = parseFloat(document.getElementById('revenusMensuels').value);
-    const charges = parseFloat(document.getElementById('chargesMensuelles').value) || 0;
-    const duree = parseFloat(document.getElementById('dureeCapacite').value);
-    const taux = parseFloat(document.getElementById('tauxCapacite').value);
-    
-    if (!revenus || revenus <= 0) {
-      alert('Veuillez saisir vos revenus mensuels.');
-      return;
-    }
-    
-    if (!duree || duree <= 0) {
-      alert('Veuillez saisir une durée valide.');
-      return;
-    }
-    
-    if (!taux || taux < 0) {
-      alert('Veuillez saisir un taux d\'intérêt valide.');
-      return;
-    }
-    
-    // Calcul de la capacité d'endettement (40% des revenus)
-    const capaciteEndettement = revenus * 0.40;
-    
-    // Mensualité maximale = capacité d'endettement - charges
-    const mensualiteMax = capaciteEndettement - charges;
-    
-    if (mensualiteMax <= 0) {
-      alert('Vos charges sont trop élevées par rapport à vos revenus. Capacité d\'emprunt nulle.');
-      return;
-    }
-    
-    // Calcul du montant empruntable
-    // Formule : C = M * [(1 - (1 + i)^-n) / i]
-    // où C = capital, M = mensualité, i = taux mensuel, n = nombre de mois
-    const tauxMensuel = taux / 100 / 12;
-    let montantEmpruntable;
-    
-    if (tauxMensuel === 0) {
-      montantEmpruntable = mensualiteMax * duree;
-    } else {
-      montantEmpruntable = mensualiteMax * ((1 - Math.pow(1 + tauxMensuel, -duree)) / tauxMensuel);
-    }
-    
-    // Stocker les valeurs pour utilisation ultérieure
-    montantCalcule = montantEmpruntable;
-    dureeCalculee = duree;
-    tauxCalcule = taux;
-    
-    // Afficher les résultats
-    document.getElementById('capaciteEndettement').textContent = fmtMoney(capaciteEndettement);
-    document.getElementById('mensualiteMax').textContent = fmtMoney(mensualiteMax);
-    document.getElementById('montantEmpruntable').textContent = fmtMoney(montantEmpruntable);
-    document.getElementById('resultatCapacite').style.display = 'block';
-    document.getElementById('btnUtiliser').style.display = 'block';
-  });
-  
-  // Bouton Utiliser : remplit les champs du formulaire principal
-  document.getElementById('btnUtiliser').addEventListener('click', function(){
-    if (montantCalcule > 0) {
-      document.getElementById('capital').value = montantCalcule.toFixed(3);
-      document.getElementById('duree').value = dureeCalculee;
-      document.getElementById('tauxAnnuel').value = tauxCalcule;
-      
-      // Calculer automatiquement le taux mensuel
-      const tauxMensuel = tauxCalcule / 12;
-      document.getElementById('tauxMensuel').value = tauxMensuel.toFixed(6);
-      
-      // Fermer la modale
-      document.body.removeChild(modal);
-      
-      // Afficher un message de confirmation
-      alert('✅ Les valeurs ont été appliquées ! Cliquez sur "Calculer" pour voir la mensualité.');
-    }
-  });
-  
-  // Fermer la modale
-  document.getElementById('btnFermerModal').addEventListener('click', function(){
-    document.body.removeChild(modal);
-  });
-  
-  // Fermer en cliquant sur le fond
-  modal.addEventListener('click', function(e){
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-/**
- * Fonction pour sauvegarder une simulation dans l'historique
- */
-function sauvegarderSimulation(){
-  const capital = document.getElementById('capital').value;
-  const duree = document.getElementById('duree').value;
-  const tauxAnnuel = document.getElementById('tauxAnnuel').value;
-  const dateDebut = document.getElementById('dateDebut').value;
-  const mensualite = document.getElementById('kpiMensualite').textContent;
-  const interets = document.getElementById('kpiInterets').textContent;
-  
-  if (!capital || !duree || !tauxAnnuel || mensualite === '—') {
-    return; // Ne pas sauvegarder si les données sont incomplètes
-  }
-  
-  // Récupérer l'historique existant
-  let historique = JSON.parse(localStorage.getItem('historiqueSimulations') || '[]');
-  
-  // Créer une nouvelle entrée
-  const simulation = {
-    id: Date.now(),
-    date: new Date().toLocaleString('fr-FR'),
-    capital: capital,
-    duree: duree,
-    tauxAnnuel: tauxAnnuel,
-    dateDebut: dateDebut,
-    mensualite: mensualite,
-    interets: interets
-  };
-  
-  // Ajouter au début de l'historique
-  historique.unshift(simulation);
-  
-  // Limiter à 50 simulations maximum
-  if (historique.length > 50) {
-    historique = historique.slice(0, 50);
-  }
-  
-  // Sauvegarder dans localStorage
-  localStorage.setItem('historiqueSimulations', JSON.stringify(historique));
-}
-
-/**
- * Fonction pour afficher l'historique des simulations
- */
-function afficherHistorique(){
-  // Récupérer l'historique
-  const historique = JSON.parse(localStorage.getItem('historiqueSimulations') || '[]');
-  
-  // Créer la modale
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    overflow: auto;
-    padding: 20px;
-  `;
-  
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-    border: 3px solid rgba(245, 158, 11, 0.6);
-    box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
-    border-radius: 20px;
-    padding: 30px;
-    max-width: 900px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-  `;
-  
-  let contenuHTML = `
-    <h2 style="color: #f59e0b; margin-top: 0; text-align: center;">📜 Historique des Simulations</h2>
-    <p style="color: #64748b; text-align: center; margin-bottom: 20px;">${historique.length} simulation(s) sauvegardée(s)</p>
-  `;
-  
-  if (historique.length === 0) {
-    contenuHTML += `
-      <div style="text-align: center; padding: 40px; color: #64748b;">
-        <p style="font-size: 18px;">❌ Aucune simulation dans l'historique</p>
-        <p>Les simulations seront automatiquement sauvegardées après chaque calcul.</p>
-      </div>
-    `;
-  } else {
-    contenuHTML += '<div style="display: flex; flex-direction: column; gap: 15px;">';
-    
-    historique.forEach((sim, index) => {
-      contenuHTML += `
-        <div style="background: white; border: 2px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <div>
-              <strong style="color: #f59e0b; font-size: 16px;">Simulation #${historique.length - index}</strong>
-              <span style="color: #64748b; font-size: 12px; margin-left: 10px;">${sim.date}</span>
-            </div>
-            <div style="display: flex; gap: 8px;">
-              <button class="btn-charger" data-id="${sim.id}" style="padding: 6px 12px; background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold;">🔄 Charger</button>
-              <button class="btn-supprimer" data-id="${sim.id}" style="padding: 6px 12px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold;">🗑️ Supprimer</button>
-            </div>
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 13px;">
-            <div><strong style="color: #0ea5e9;">Capital:</strong> ${sim.capital} TND</div>
-            <div><strong style="color: #0ea5e9;">Durée:</strong> ${sim.duree} mois</div>
-            <div><strong style="color: #0ea5e9;">Taux:</strong> ${sim.tauxAnnuel}%</div>
-            <div><strong style="color: #10b981;">Mensualité:</strong> ${sim.mensualite}</div>
-            <div><strong style="color: #ef4444;">Intérêts:</strong> ${sim.interets}</div>
-            <div><strong style="color: #64748b;">Début:</strong> ${sim.dateDebut || 'Non spécifié'}</div>
-          </div>
-        </div>
-      `;
-    });
-    
-    contenuHTML += '</div>';
-  }
-  
-  contenuHTML += `
-    <div style="display: flex; gap: 10px; margin-top: 20px;">
-      <button id="btnEffacerHistorique" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);">🗑️ Effacer tout l'historique</button>
-      <button id="btnFermerHistorique" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #64748b 0%, #475569 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(100, 116, 139, 0.4);">❌ Fermer</button>
-    </div>
-  `;
-  
-  modalContent.innerHTML = contenuHTML;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  
-  // Attacher les événements pour charger une simulation
-  const btnsCharger = modalContent.querySelectorAll('.btn-charger');
-  btnsCharger.forEach(btn => {
-    btn.addEventListener('click', function(){
-      const simId = parseInt(this.getAttribute('data-id'));
-      const sim = historique.find(s => s.id === simId);
-      
-      if (sim) {
-        // Charger les valeurs dans le formulaire
-        document.getElementById('capital').value = sim.capital;
-        document.getElementById('duree').value = sim.duree;
-        document.getElementById('tauxAnnuel').value = sim.tauxAnnuel;
-        document.getElementById('dateDebut').value = sim.dateDebut || '';
-        
-        // Calculer le taux mensuel
-        const tauxMensuel = parseFloat(sim.tauxAnnuel) / 12;
-        document.getElementById('tauxMensuel').value = tauxMensuel.toFixed(6);
-        
-        // Fermer la modale
-        document.body.removeChild(modal);
-        
-        // Afficher un message
-        alert('✅ Simulation chargée ! Cliquez sur "Calculer" pour voir les résultats.');
-      }
-    });
-  });
-  
-  // Attacher les événements pour supprimer une simulation
-  const btnsSupprimer = modalContent.querySelectorAll('.btn-supprimer');
-  btnsSupprimer.forEach(btn => {
-    btn.addEventListener('click', function(){
-      const simId = parseInt(this.getAttribute('data-id'));
-      
-      if (confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette simulation ?')) {
-        // Filtrer l'historique pour supprimer la simulation
-        const nouvelHistorique = historique.filter(s => s.id !== simId);
-        localStorage.setItem('historiqueSimulations', JSON.stringify(nouvelHistorique));
-        
-        // Fermer et rouvrir la modale pour rafraîchir
-        document.body.removeChild(modal);
-        afficherHistorique();
-      }
-    });
-  });
-  
-  // Bouton pour effacer tout l'historique
-  const btnEffacer = document.getElementById('btnEffacerHistorique');
-  if (btnEffacer) {
-    btnEffacer.addEventListener('click', function(){
-      if (confirm('⚠️ Êtes-vous sûr de vouloir effacer TOUT l\'historique ? Cette action est irréversible.')) {
-        localStorage.removeItem('historiqueSimulations');
-        document.body.removeChild(modal);
-        alert('✅ Historique effacé avec succès.');
-      }
-    });
-  }
-  
-  // Fermer la modale
-  const btnFermer = document.getElementById('btnFermerHistorique');
-  if (btnFermer) {
-    btnFermer.addEventListener('click', function(){
-      document.body.removeChild(modal);
-    });
-  }
-  
-  // Fermer en cliquant sur le fond
-  modal.addEventListener('click', function(e){
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-// Attacher les événements aux boutons
-document.addEventListener('DOMContentLoaded', function(){
-  const btnEmail = document.getElementById('btnEmail');
-  const btnCapacite = document.getElementById('btnCapacite');
-  const btnHistorique = document.getElementById('btnHistorique');
-  const btnCalcul = document.getElementById('btnCalcul');
-  
-  if (btnEmail) {
-    btnEmail.addEventListener('click', partagerParEmail);
-  }
-  
-  if (btnCapacite) {
-    btnCapacite.addEventListener('click', calculerCapaciteEmprunt);
-  }
-  
-  if (btnHistorique) {
-    btnHistorique.addEventListener('click', afficherHistorique);
-  }
-  
-  // Sauvegarder automatiquement après chaque calcul
-  if (btnCalcul) {
-    const originalCalcul = btnCalcul.onclick;
-    btnCalcul.addEventListener('click', function(){
-      // Attendre que le calcul soit terminé
-      setTimeout(function(){
-        sauvegarderSimulation();
-      }, 500);
-    });
-  }
-  
-  // Bouton Comparer 3 scénarios
-  const btnComparer = document.getElementById('btnComparer');
-  if (btnComparer) {
-    btnComparer.addEventListener('click', comparerScenarios);
-  }
-});
-
-/**
- * Fonction pour comparer jusqu'à 3 scénarios
- */
-function comparerScenarios(){
-  // Récupérer l'historique
-  const historique = JSON.parse(localStorage.getItem('historiqueSimulations') || '[]');
-  
-  if (historique.length === 0) {
-    alert('⚠️ Aucune simulation dans l\'historique. Veuillez d\'abord effectuer des simulations.');
-    return;
-  }
-  
-  // Créer la modale
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    overflow: auto;
-    padding: 20px;
-  `;
-  
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-    border: 3px solid rgba(139, 92, 246, 0.6);
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
-    border-radius: 20px;
-    padding: 30px;
-    max-width: 1000px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-  `;
-  
-  let contenuHTML = `
-    <h2 style="color: #8b5cf6; margin-top: 0; text-align: center;">🔍 Comparaison de Scénarios</h2>
-    <p style="color: #64748b; text-align: center; margin-bottom: 20px;">Sélectionnez jusqu'à 3 simulations à comparer</p>
-  `;
-  
-  // Afficher la liste des simulations avec des checkboxes
-  contenuHTML += '<div style="margin-bottom: 20px; max-height: 300px; overflow-y: auto; border: 2px solid rgba(139, 92, 246, 0.3); border-radius: 10px; padding: 15px;">';
-  
-  historique.slice(0, 10).forEach((sim, index) => {
-    contenuHTML += `
-      <div style="margin-bottom: 10px; padding: 10px; background: white; border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 8px;">
-        <label style="display: flex; align-items: center; cursor: pointer;">
-          <input type="checkbox" class="sim-checkbox" data-id="${sim.id}" style="margin-right: 10px; width: 18px; height: 18px; cursor: pointer;">
-          <div style="flex: 1;">
-            <strong style="color: #8b5cf6;">Simulation #${historique.length - index}</strong>
-            <span style="color: #64748b; font-size: 12px; margin-left: 10px;">${sim.date}</span>
-            <div style="font-size: 13px; color: #475569; margin-top: 5px;">
-              Capital: ${sim.capital} TND | Durée: ${sim.duree} mois | Taux: ${sim.tauxAnnuel}%
-            </div>
-          </div>
-        </label>
-      </div>
-    `;
-  });
-  
-  contenuHTML += '</div>';
-  
-  // Tableau de comparaison (initialement vide)
-  contenuHTML += '<div id="tableauComparaison" style="margin-top: 20px;"></div>';
-  
-  contenuHTML += `
-    <div style="display: flex; gap: 10px; margin-top: 20px;">
-      <button id="btnComparer" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);">🔍 Comparer</button>
-      <button id="btnFermerComparaison" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #64748b 0%, #475569 100%); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px rgba(100, 116, 139, 0.4);">❌ Fermer</button>
-    </div>
-  `;
-  
-  modalContent.innerHTML = contenuHTML;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  
-  // Gérer les checkboxes (max 3)
-  const checkboxes = modalContent.querySelectorAll('.sim-checkbox');
-  checkboxes.forEach(cb => {
-    cb.addEventListener('change', function(){
-      const checked = modalContent.querySelectorAll('.sim-checkbox:checked');
-      if (checked.length > 3) {
-        this.checked = false;
-        alert('⚠️ Vous ne pouvez comparer que 3 scénarios maximum.');
-      }
-    });
-  });
-  
-  // Bouton Comparer
-  const btnComparerModal = modalContent.querySelector('#btnComparer');
-  btnComparerModal.addEventListener('click', function(){
-    const checked = modalContent.querySelectorAll('.sim-checkbox:checked');
-    
-    if (checked.length < 2) {
-      alert('⚠️ Veuillez sélectionner au moins 2 scénarios à comparer.');
-      return;
-    }
-    
-    // Récupérer les simulations sélectionnées
-    const selectedIds = Array.from(checked).map(cb => parseInt(cb.getAttribute('data-id')));
-    const selectedSims = historique.filter(sim => selectedIds.includes(sim.id));
-    
-    // Générer le tableau de comparaison
-    let tableHTML = `
-      <h3 style="color: #8b5cf6; text-align: center; margin-bottom: 15px;">Résultat de la comparaison</h3>
-      <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-        <thead>
-          <tr style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: white;">
-            <th style="padding: 12px; text-align: left; border: 1px solid rgba(255,255,255,0.2);">Critère</th>
-    `;
-    
-    selectedSims.forEach((sim, index) => {
-      const simIndex = historique.findIndex(s => s.id === sim.id);
-      tableHTML += `<th style="padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.2);">Scénario #${historique.length - simIndex}</th>`;
-    });
-    
-    tableHTML += `
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="background: #f8fafc;">
-            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">Date</td>
-    `;
-    
-    selectedSims.forEach(sim => {
-      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; font-size: 12px;">${sim.date}</td>`;
-    });
-    
-    tableHTML += `
-          </tr>
-          <tr>
-            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">Capital emprunté</td>
-    `;
-    
-    selectedSims.forEach(sim => {
-      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #0ea5e9; font-weight: bold;">${sim.capital} TND</td>`;
-    });
-    
-    tableHTML += `
-          </tr>
-          <tr style="background: #f8fafc;">
-            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">Durée</td>
-    `;
-    
-    selectedSims.forEach(sim => {
-      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #0ea5e9; font-weight: bold;">${sim.duree} mois</td>`;
-    });
-    
-    tableHTML += `
-          </tr>
-          <tr>
-            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">Taux d'intérêt</td>
-    `;
-    
-    selectedSims.forEach(sim => {
-      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #0ea5e9; font-weight: bold;">${sim.tauxAnnuel}%</td>`;
-    });
-    
-    tableHTML += `
-          </tr>
-          <tr style="background: #f0fdf4;">
-            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">💵 Mensualité</td>
-    `;
-    
-    selectedSims.forEach(sim => {
-      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #10b981; font-weight: bold; font-size: 16px;">${sim.mensualite}</td>`;
-    });
-    
-    tableHTML += `
-          </tr>
-          <tr style="background: #fef2f2;">
-            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">💸 Coût total des intérêts</td>
-    `;
-    
-    selectedSims.forEach(sim => {
-      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #ef4444; font-weight: bold; font-size: 16px;">${sim.interets}</td>`;
-    });
-    
-    tableHTML += `
-          </tr>
-          <tr style="background: #eff6ff;">
-            <td style="padding: 10px; font-weight: bold; color: #475569; border: 1px solid #e2e8f0;">📊 Coût total du crédit</td>
-    `;
-    
-    selectedSims.forEach(sim => {
-      // Calculer le coût total (capital + intérêts)
-      const capital = parseFloat(sim.capital.replace(/[^0-9.,]/g, '').replace(',', '.'));
-      const interets = parseFloat(sim.interets.replace(/[^0-9.,]/g, '').replace(',', '.'));
-      const total = capital + interets;
-      tableHTML += `<td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0; color: #3b82f6; font-weight: bold; font-size: 16px;">${total.toLocaleString('fr-FR', {minimumFractionDigits: 3, maximumFractionDigits: 3})} TND</td>`;
-    });
-    
-    tableHTML += `
-          </tr>
-        </tbody>
-      </table>
-    `;
-    
-    // Afficher le meilleur scénario
-    const mensualites = selectedSims.map(sim => {
-      const mensualite = parseFloat(sim.mensualite.replace(/[^0-9.,]/g, '').replace(',', '.'));
-      return { sim, mensualite };
-    });
-    
-    const interets = selectedSims.map(sim => {
-      const interet = parseFloat(sim.interets.replace(/[^0-9.,]/g, '').replace(',', '.'));
-      return { sim, interet };
-    });
-    
-    const meilleurMensualite = mensualites.reduce((min, curr) => curr.mensualite < min.mensualite ? curr : min);
-    const meilleurInteret = interets.reduce((min, curr) => curr.interet < min.interet ? curr : min);
-    
-    const simIndexMensualite = historique.findIndex(s => s.id === meilleurMensualite.sim.id);
-    const simIndexInteret = historique.findIndex(s => s.id === meilleurInteret.sim.id);
-    
-    tableHTML += `
-      <div style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #10b981; border-radius: 10px;">
-        <h4 style="color: #10b981; margin-top: 0;">✅ Recommandation</h4>
-        <p style="margin: 5px 0; color: #475569;"><strong>💵 Mensualité la plus basse :</strong> Scénario #${historique.length - simIndexMensualite} (${meilleurMensualite.sim.mensualite})</p>
-        <p style="margin: 5px 0; color: #475569;"><strong>💸 Coût total le plus bas :</strong> Scénario #${historique.length - simIndexInteret} (${meilleurInteret.sim.interets})</p>
-      </div>
-    `;
-    
-    // Afficher le tableau
-    const tableauDiv = modalContent.querySelector('#tableauComparaison');
-    tableauDiv.innerHTML = tableHTML;
-  });
-  
-  // Fermer la modale
-  const btnFermer = modalContent.querySelector('#btnFermerComparaison');
-  btnFermer.addEventListener('click', function(){
-    document.body.removeChild(modal);
-  });
-  
-  // Fermer en cliquant sur le fond
-  modal.addEventListener('click', function(e){
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-</script>
-<script>
-// Réinitialisation aux VALEURS PAR DÉFAUT souhaitées (capture d'écran)
-document.addEventListener('DOMContentLoaded', function(){
-  const DEFAULTS = {
-    capital: '0',
-    duree: '1',
-    tauxAnnuel: '0'
-  };
-
-  function deriveTauxMensuel(ta){
-    const n = parseFloat(String(ta).replace(',', '.'));
-    if (isFinite(n)) return String(n/12);
-    return '';
-  }
-
-  const ids = ['capital','tauxAnnuel','tauxMensuel','duree'];
-  const fields = {};
-  ids.forEach(id => { fields[id] = document.getElementById(id); });
-
-  // Optionnel: à l'ouverture, imposer ces valeurs par défaut si présentes
-  if (fields.capital) fields.capital.value = DEFAULTS.capital;
-  if (fields.duree) fields.duree.value = DEFAULTS.duree;
-  if (fields.tauxAnnuel) fields.tauxAnnuel.value = DEFAULTS.tauxAnnuel;
-  if (fields.tauxMensuel) fields.tauxMensuel.value = deriveTauxMensuel(DEFAULTS.tauxAnnuel);
-
-  function resetAll(){
-    if (fields.capital) fields.capital.value = DEFAULTS.capital;
-    if (fields.duree) fields.duree.value = DEFAULTS.duree;
-    if (fields.tauxAnnuel) fields.tauxAnnuel.value = DEFAULTS.tauxAnnuel;
-    if (fields.tauxMensuel) fields.tauxMensuel.value = deriveTauxMensuel(DEFAULTS.tauxAnnuel);
-
-    // Nettoie les KPIs
-    const kpiM = document.getElementById('kpiMensualite');
-    const kpiI = document.getElementById('kpiInterets');
-    if (kpiM) kpiM.textContent = '—';
-    if (kpiI) kpiI.textContent = '—';
-
-    // Alerte/avertissement
-    const warn = document.getElementById('warnDuree');
-    if (warn) warn.textContent = '';
-
-    // Vide le tableau d'amortissement
-    const tbody = document.querySelector('#table tbody');
-    if (tbody) tbody.innerHTML = '';
-  }
-
-  // Raccordement du bouton Réinitialiser
-  const btnReset = document.getElementById('btnReset') 
-                || document.querySelector('button[type="reset"]') 
-                || Array.from(document.querySelectorAll('button')).find(b => /réinitialiser/i.test(b.textContent));
-  if (btnReset){
-    btnReset.addEventListener('click', function(e){
-      e.preventDefault();
-      resetAll();
-    });
-  }
-});
-</script>
-<script>
-// Activation du mode sombre/clair via l'interrupteur
-document.addEventListener('DOMContentLoaded', function(){
-  const themeToggle = document.getElementById('themeToggle');
-  // Applique le thème sauvegardé à l'ouverture
-  const savedTheme = localStorage.getItem('theme');
-  if(savedTheme === 'dark'){
-    document.body.classList.add('dark');
-    if (themeToggle) themeToggle.checked = true;
-  }
-  if(themeToggle){
-    themeToggle.addEventListener('change', function(){
-      if (this.checked){
-        document.body.classList.add('dark');
-        localStorage.setItem('theme','dark');
-      } else {
-        document.body.classList.remove('dark');
-        localStorage.setItem('theme','light');
-      }
-      // Met à jour les graphiques pour appliquer les nouvelles couleurs en fonction du thème
-      // Si les graphiques existent (scénario 1 ou scénario 2), ils seront rafraîchis avec des couleurs adaptées.
-      try {
-        if (typeof updateChart === 'function') {
-          updateChart();
-        }
-        if (typeof updateChart2 === 'function') {
-          updateChart2();
-        }
-      } catch (e) {}
-    });
-  }
-});
-</script>
 </body>
 </html>
