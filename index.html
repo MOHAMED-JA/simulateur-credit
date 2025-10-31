@@ -276,20 +276,31 @@
     thead th{
       position:sticky;
       top:0;
-      background: rgba(255, 255, 255, 0.95);
+      /* Fond dégradé animé bleu et rouge */
+      background: linear-gradient(270deg, #0ea5e9, #ef4444, #3b82f6, #dc2626, #0ea5e9);
+      background-size: 400% 400%;
+      animation: rgbShift 8s ease infinite;
       backdrop-filter: blur(6px);
-      color: #0ea5e9;
-      border: 1px solid rgba(14, 165, 233, 0.3);
+      color: #ffffff;
+      font-weight: 800;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
       text-align:right;
-      padding:10px;
-      border-bottom:1px solid var(--border);
+      padding:12px;
       white-space:nowrap;
       font-size:14px;
+      transition: all 0.3s ease;
+    }
+    /* Effet interactif au survol */
+    thead th:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.5);
     }
     thead th:first-child, tbody td:first-child{ text-align:left }
     tbody td{
       padding:10px;
-      border-bottom:1px dashed rgba(14, 165, 233, 0.2);
+      border: 1px solid rgba(14, 165, 233, 0.3);
       text-align:right;
       color: #0f172a;
       white-space:nowrap;
@@ -298,6 +309,52 @@
     tbody tr:hover td{ 
       background: rgba(14, 165, 233, 0.2);
       box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+    }
+    
+    /* Masquer thead et tfoot par défaut */
+    #table thead,
+    #table tfoot,
+    #table2 thead,
+    #table2 tfoot {
+      display: none;
+    }
+    
+    /* Afficher thead et tfoot quand la classe 'show-headers' est présente */
+    #table.show-headers thead,
+    #table.show-headers tfoot,
+    #table2.show-headers thead,
+    #table2.show-headers tfoot {
+      display: table-header-group;
+    }
+    
+    #table.show-headers tfoot,
+    #table2.show-headers tfoot {
+      display: table-footer-group;
+    }
+    
+    /* Style pour la ligne Total */
+    tfoot td{
+      padding:12px 10px;
+      border: 2px solid rgba(14, 165, 233, 0.5);
+      text-align:right;
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(239, 68, 68, 0.15));
+      color: #0f172a;
+      white-space:nowrap;
+      font-size:15px;
+      font-weight: 700;
+    }
+    tfoot td:first-child{
+      text-align:left;
+      font-weight: 900;
+      font-size:16px;
+      color: #0ea5e9;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    tfoot td .total-value{
+      font-weight: 900;
+      font-size:16px;
+      color: #dc2626;
     }
 
     /* Bouton Export Excel en vert */
@@ -563,8 +620,12 @@
             <input type="number" id="capital" min="0" step="0.001" value="0">
           </div>
           <div class="control">
+            <label for="annee">Durée (en années)</label>
+            <input type="number" id="annee" min="0" max="25" step="0.1" value="" placeholder="Saisir les années">
+          </div>
+          <div class="control">
             <label for="duree">Durée (en mois, 1–300)</label>
-            <input type="number" id="duree" min="1" max="300" step="1" value="1">
+            <input type="number" id="duree" min="1" max="300" step="1" value="1" readonly>
             <div id="warnDuree" class="warning" style="color:#b91c1c; display:none">La durée doit être comprise entre 1 et 300 mois.</div>
           </div>
           <div class="control">
@@ -631,6 +692,15 @@
                 </tr>
               </thead>
               <tbody></tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td><span class="total-value" id="totalMensualite">—</span></td>
+                  <td><span class="total-value" id="totalInterets">—</span></td>
+                  <td><span class="total-value" id="totalPrincipal">—</span></td>
+                  <td></td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </section>
@@ -652,8 +722,12 @@
             <input type="number" id="capital2" min="0" step="0.001" value="0">
           </div>
           <div class="control">
+            <label for="annee2">Durée (en années)</label>
+            <input type="number" id="annee2" min="0" max="25" step="0.1" value="" placeholder="Saisir les années">
+          </div>
+          <div class="control">
             <label for="duree2">Durée (en mois, 1–300)</label>
-            <input type="number" id="duree2" min="1" max="300" step="1" value="1">
+            <input type="number" id="duree2" min="1" max="300" step="1" value="1" readonly>
             <div id="warnDuree2" class="warning" style="color:#b91c1c; display:none">La durée doit être comprise entre 1 et 300 mois.</div>
           </div>
           <div class="control">
@@ -707,6 +781,15 @@
                 </tr>
               </thead>
               <tbody></tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td><span class="total-value" id="totalMensualite2">—</span></td>
+                  <td><span class="total-value" id="totalInterets2">—</span></td>
+                  <td><span class="total-value" id="totalPrincipal2">—</span></td>
+                  <td></td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </section>
@@ -723,6 +806,7 @@
     const fmtNum = (v, d=6) => Number(v).toFixed(d);
 
     const capital = el('capital');
+    const annee = el('annee');
     const duree = el('duree');
     const tauxAnnuel = el('tauxAnnuel');
     const tauxMensuel = el('tauxMensuel');
@@ -731,9 +815,57 @@
     const kpiInterets = el('kpiInterets');
     const tableBody = document.querySelector('#table tbody');
 
+    // Fonction pour convertir les années en mois (le champ mois reste toujours readonly)
+    function updateDureeFromAnnee(){
+      const anneeVal = parseFloat(annee.value || '0');
+      if(anneeVal > 0){
+        const mois = Math.round(anneeVal * 12);
+        if(mois >= 1 && mois <= 300){
+          duree.value = mois;
+        } else {
+          // Si le résultat est hors limites, réinitialiser
+          annee.value = '';
+          duree.value = 1;
+          alert('La durée en mois doit rester entre 1 et 300 mois (0.08 à 25 années)');
+        }
+      } else {
+        // Si le champ année est vide, réinitialiser à 1 mois
+        duree.value = 1;
+      }
+    }
+
+    // Fonction pour supprimer les zéros à gauche des inputs numériques
+    function removeLeadingZeros(inputElement){
+      if(inputElement && inputElement.type === 'number'){
+        let val = inputElement.value;
+        if(val && val.length > 0){
+          // Convertir en nombre puis retour en string pour éliminer les zéros
+          const num = parseFloat(val);
+          if(!isNaN(num)){
+            inputElement.value = num;
+          }
+        }
+      }
+    }
+
+    // Attacher les événements
+    if(annee){
+      annee.addEventListener('input', updateDureeFromAnnee);
+      annee.addEventListener('change', updateDureeFromAnnee);
+    }
+
+    // Supprimer les zéros à gauche pour tous les champs numériques (sauf duree qui est readonly)
+    [capital, annee, tauxAnnuel].forEach(input => {
+      if(input){
+        input.addEventListener('blur', () => removeLeadingZeros(input));
+        input.addEventListener('change', () => removeLeadingZeros(input));
+      }
+    });
+
     // Flags et sélecteurs pour gérer l'affichage annuel/mensuel et le deuxième scénario
     let isAnnual = false;
     let isAnnual2 = false;
+    const annee2 = el('annee2');
     const capital2 = el('capital2');
     const duree2 = el('duree2');
     const tauxAnnuel2 = el('tauxAnnuel2');
@@ -778,6 +910,10 @@
       // Nettoyage
       if (!tableBody) return;
       tableBody.innerHTML = '';
+      
+      // Afficher les en-têtes et le total
+      const table = document.getElementById('table');
+      if(table) table.classList.add('show-headers');
 
       // Lire les entrées actuelles
       const C0 = parseFloat(capital && capital.value || '0');
@@ -871,6 +1007,10 @@ function generateSchedule(){
       compute();
       if (!tableBody) return;
       tableBody.innerHTML = '';
+      
+      // Afficher les en-têtes et le total
+      const table = document.getElementById('table');
+      if(table) table.classList.add('show-headers');
       const C0 = parseFloat(capital && capital.value || '0');
       let reste = C0;
       const n = parseInt(duree && duree.value || '0', 10);
@@ -878,6 +1018,10 @@ function generateSchedule(){
       const r = tm_pct / 100;
       const M = mensualite(C0, tm_pct, n);
       if (!isFinite(M)) { return; }
+      
+      // Variables pour les totaux
+      let totalPay = 0, totalInt = 0, totalPrin = 0;
+      
       const dateDebut = document.getElementById('dateDebut').value ? new Date(document.getElementById('dateDebut').value) : null;
       for (let mois = 1; mois <= n; mois++){
         const interet = roundPrec(reste * r);
@@ -885,6 +1029,12 @@ function generateSchedule(){
         let payment = M;
         if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
         reste = roundPrec(reste - principal);
+        
+        // Accumuler les totaux
+        totalPay = roundPrec(totalPay + payment);
+        totalInt = roundPrec(totalInt + interet);
+        totalPrin = roundPrec(totalPrin + principal);
+        
         const tr = document.createElement('tr');
         let periode = mois;
         if (dateDebut) {
@@ -895,6 +1045,15 @@ function generateSchedule(){
           .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
         tableBody.appendChild(tr);
       }
+      
+      // Mettre à jour les totaux dans le tfoot
+      const totalMensualiteEl = document.getElementById('totalMensualite');
+      const totalInteretsEl = document.getElementById('totalInterets');
+      const totalPrincipalEl = document.getElementById('totalPrincipal');
+      if(totalMensualiteEl) totalMensualiteEl.textContent = fmtMoney(totalPay);
+      if(totalInteretsEl) totalInteretsEl.textContent = fmtMoney(totalInt);
+      if(totalPrincipalEl) totalPrincipalEl.textContent = fmtMoney(totalPrin);
+      
       const chartContainer = document.getElementById('chartContainer');
       if (chartContainer && chartContainer.style.display !== 'none'){
         updateChart();
@@ -906,9 +1065,13 @@ function generateSchedule(){
      * les intérêts et le principal sur chaque période de 12 mois. Utilisé lorsque l'utilisateur
      * sélectionne l'affichage annuel via le bouton dédié.
      */
-    function generateAnnualSchedule(){
-      compute();
-      tableBody.innerHTML = '';
+     function generateAnnualSchedule(){
+       compute();
+       tableBody.innerHTML = '';
+       
+       // Afficher les en-têtes et le total
+       const table = document.getElementById('table');
+       if(table) table.classList.add('show-headers');
       const C0 = parseFloat(capital.value || '0');
       let reste = C0;
       const n = parseInt(duree.value || '0', 10);
@@ -1045,6 +1208,27 @@ function generateSchedule(){
     // ======== Fonctions dédiées au second scénario (Scénario 2) ========
 
     /**
+     * Fonction pour convertir les années en mois pour le scénario 2 (le champ mois reste toujours readonly)
+     */
+    function updateDureeFromAnnee2(){
+      if(!annee2 || !duree2) return;
+      const anneeVal = parseFloat(annee2.value || '0');
+      if(anneeVal > 0){
+        const mois = Math.round(anneeVal * 12);
+        if(mois >= 1 && mois <= 300){
+          duree2.value = mois;
+        } else {
+          annee2.value = '';
+          duree2.value = 1;
+          alert('La durée en mois doit rester entre 1 et 300 mois (0.08 à 25 années)');
+        }
+      } else {
+        // Si le champ année est vide, réinitialiser à 1 mois
+        duree2.value = 1;
+      }
+    }
+
+    /**
      * Met à jour la valeur du taux mensuel du second scénario en fonction du taux annuel.
      */
     function updateDerivedRates2(){
@@ -1091,51 +1275,78 @@ function generateSchedule(){
     /**
      * Génère le tableau mensuel pour le second scénario.
      */
-    function generateSchedule2(){
-      if (isAnnual2){
-        generateAnnualSchedule2();
-        return;
-      }
-      compute2();
-      if (!tableBody2) return;
-      tableBody2.innerHTML = '';
-      const C0 = parseFloat(capital2 && capital2.value || '0');
-      let reste = C0;
-      const n = parseInt(duree2 && duree2.value || '0', 10);
-      const tm_pct = parseFloat(tauxMensuel2 && tauxMensuel2.value || '0');
-      const r = tm_pct / 100;
-const M = mensualite(C0, tm_pct, n);
-      if (!isFinite(M)) { return; }
-      const dateDebut = document.getElementById('dateDebut').value ? new Date(document.getElementById('dateDebut').value) : null;
-      for (let mois = 1; mois <= n; mois++){
-        const interet = roundPrec(reste * r);
-        let principal = roundPrec(M - interet);
-        let payment = M;
-        if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
-        reste = roundPrec(reste - principal);
-        const tr = document.createElement('tr');
-        let periode = mois;
-        if (dateDebut) {
-          const date = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
-          periode = date.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
-        }
-        [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
-          .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
-        tableBody.appendChild(tr);
-      }
-      const chartContainer2 = document.getElementById('chartContainer2');
-      if (chartContainer2 && chartContainer2.style.display !== 'none'){
-        updateChart2();
-      }
-    }
+     function generateSchedule2(){
+       if (isAnnual2){
+         generateAnnualSchedule2();
+         return;
+       }
+       compute2();
+       if (!tableBody2) return;
+       tableBody2.innerHTML = '';
+       
+       // Afficher les en-têtes et le total
+       const table2 = document.getElementById('table2');
+       if(table2) table2.classList.add('show-headers');
+       const C0 = parseFloat(capital2 && capital2.value || '0');
+       let reste = C0;
+       const n = parseInt(duree2 && duree2.value || '0', 10);
+       const tm_pct = parseFloat(tauxMensuel2 && tauxMensuel2.value || '0');
+       const r = tm_pct / 100;
+       const M = mensualite(C0, tm_pct, n);
+       if (!isFinite(M)) { return; }
+       
+       // Variables pour les totaux
+       let totalPay = 0, totalInt = 0, totalPrin = 0;
+       
+       const dateDebut = document.getElementById('dateDebut').value ? new Date(document.getElementById('dateDebut').value) : null;
+       for (let mois = 1; mois <= n; mois++){
+         const interet = roundPrec(reste * r);
+         let principal = roundPrec(M - interet);
+         let payment = M;
+         if (mois === n) { principal = roundPrec(reste); payment = roundPrec(interet + principal); }
+         reste = roundPrec(reste - principal);
+         
+         // Accumuler les totaux
+         totalPay = roundPrec(totalPay + payment);
+         totalInt = roundPrec(totalInt + interet);
+         totalPrin = roundPrec(totalPrin + principal);
+         
+         const tr = document.createElement('tr');
+         let periode = mois;
+         if (dateDebut) {
+           const date = new Date(dateDebut.getFullYear(), dateDebut.getMonth() + mois - 1, dateDebut.getDate());
+           periode = date.toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit' });
+         }
+         [periode, fmtMoney(payment), fmtMoney(interet), fmtMoney(principal), fmtMoney(reste)]
+           .forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+         tableBody.appendChild(tr);
+       }
+       
+       // Mettre à jour les totaux dans le tfoot
+       const totalMensualiteEl = document.getElementById('totalMensualite2');
+       const totalInteretsEl = document.getElementById('totalInterets2');
+       const totalPrincipalEl = document.getElementById('totalPrincipal2');
+       if(totalMensualiteEl) totalMensualiteEl.textContent = fmtMoney(totalPay);
+       if(totalInteretsEl) totalInteretsEl.textContent = fmtMoney(totalInt);
+       if(totalPrincipalEl) totalPrincipalEl.textContent = fmtMoney(totalPrin);
+       
+       const chartContainer2 = document.getElementById('chartContainer2');
+       if (chartContainer2 && chartContainer2.style.display !== 'none'){
+         updateChart2();
+       }
+     }
 
     /**
      * Génère le tableau annuel pour le second scénario.
      */
-    function generateAnnualSchedule2(){
-      compute2();
-      if (!tableBody2) return;
-      tableBody2.innerHTML = '';
+     function generateAnnualSchedule2(){
+       compute2();
+       if (!tableBody2) return;
+       tableBody2.innerHTML = '';
+       
+       // Afficher les en-têtes et le total
+       const table2 = document.getElementById('table2');
+       if(table2) table2.classList.add('show-headers');
       const C0 = parseFloat(capital2 && capital2.value || '0');
       let reste = C0;
       const n = parseInt(duree2 && duree2.value || '0', 10);
@@ -1460,6 +1671,20 @@ const M = mensualite(C0, tm_pct, n);
       // Ajout de l'écouteur pour la date de début afin de régénérer le tableau
       const dateDebut = document.getElementById('dateDebut');
       if(dateDebut) dateDebut.addEventListener('change', generateSchedule);
+      
+      // Attacher les événements pour le scénario 2
+      if(annee2){
+        annee2.addEventListener('input', updateDureeFromAnnee2);
+        annee2.addEventListener('change', updateDureeFromAnnee2);
+      }
+      
+      // Supprimer les zéros à gauche pour le scénario 2 (sauf duree2 qui est readonly)
+      [capital2, annee2, tauxAnnuel2].forEach(input => {
+        if(input){
+          input.addEventListener('blur', () => removeLeadingZeros(input));
+          input.addEventListener('change', () => removeLeadingZeros(input));
+        }
+      });
       
       ['input','change'].forEach(evt => { tauxAnnuel2.addEventListener(evt, updateDerivedRates2); duree2.addEventListener(evt, validateDuree2); });
       const dateDebut2 = document.getElementById('dateDebut2');
