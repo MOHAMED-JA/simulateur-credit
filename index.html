@@ -266,6 +266,10 @@ a { color: inherit; }
 .btn-blue:hover { background: rgba(59, 130, 246, 0.18); }
 :root[data-theme="dark"] .btn-blue { color: #93c5fd; }
 
+.btn-violet { color: #6d28d9; background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.24); }
+.btn-violet:hover { background: rgba(139, 92, 246, 0.18); }
+:root[data-theme="dark"] .btn-violet { color: #c4b5fd; }
+
 .btn-icon { width: var(--h); padding: 0; }
 
 /* Interrupteur de thème */
@@ -552,6 +556,34 @@ a { color: inherit; }
 :root[data-theme="dark"] .seg button[aria-pressed="true"] { background: var(--surface-3); box-shadow: none; }
 
 .export-bar { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0; }
+
+/* QR code de partage */
+.qr-zone { display: grid; justify-items: center; gap: 14px; }
+.qr-carte {
+  padding: 14px; border-radius: 20px; background: #fff;
+  box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.14), 0 22px 44px -22px rgba(124, 58, 237, 0.55);
+  position: relative;
+}
+.qr-carte::before {
+  content: ""; position: absolute; inset: -3px; z-index: -1; border-radius: 23px;
+  background: var(--grad-main); opacity: 0.9;
+}
+.qr-carte svg { display: block; width: min(232px, 62vw); height: auto; }
+.qr-resume { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.qr-resume span {
+  padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600;
+  background: var(--surface-3); color: var(--text-2);
+}
+.qr-lien {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  padding: 6px 6px 6px 12px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border);
+}
+.qr-lien input {
+  flex: 1; min-width: 0; border: 0; outline: 0; background: transparent;
+  font: inherit; font-size: 12.5px; color: var(--text-2); text-overflow: ellipsis;
+}
+.qr-aide { font-size: 12.5px; color: var(--muted); text-align: center; max-width: 40ch; }
+.qr-attente { padding: 40px 10px; color: var(--muted); text-align: center; }
 
 .table-wrap {
   position: relative;
@@ -844,11 +876,12 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
 }
 </style>
 
-<!-- Bibliothèques : Excel (SheetJS), graphiques (Chart.js), PDF (jsPDF + autoTable) -->
+<!-- Bibliothèques : Excel (SheetJS), graphiques (Chart.js), PDF (jsPDF + autoTable), QR code (qrcode-generator) -->
 <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 </head>
 <body>
 
@@ -881,6 +914,9 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
     <symbol id="i-coins" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18M7 6h1v4M16.71 13.88l.7.71-2.82 2.82"/></symbol>
     <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></symbol>
     <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></symbol>
     <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5M12 3v12"/></symbol>
   </defs>
 </svg>
@@ -1357,6 +1393,7 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
               '<button class="btn btn-green btn-sm" id="' + k + '-xlsx">' + ico('sheet', 'ico-sm') + 'Exporter Excel</button>' +
               '<button class="btn btn-orange btn-sm" id="' + k + '-pdf">' + ico('file', 'ico-sm') + 'Exporter PDF</button>' +
               '<button class="btn btn-blue btn-sm" id="' + k + '-mail">' + ico('mail', 'ico-sm') + 'Partager par e-mail</button>' +
+              '<button class="btn btn-violet btn-sm" id="' + k + '-qr">' + ico('qr', 'ico-sm') + 'QR code</button>' +
             '</div>' +
             '<div class="table-wrap" id="' + k + '-twrap" tabindex="0" aria-label="Tableau d\'amortissement, défilable">' +
               '<table class="amort"><thead id="' + k + '-thead"></thead><tbody id="' + k + '-tbody"></tbody><tfoot id="' + k + '-tfoot"></tfoot></table>' +
@@ -1764,6 +1801,7 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
     f('xlsx').addEventListener('click', function () { exporterExcel(sc); });
     f('pdf').addEventListener('click', function () { exporterPDF(sc); });
     f('mail').addEventListener('click', function () { partagerParEmail(sc); });
+    f('qr').addEventListener('click', function () { ouvrirQR(sc); });
 
     sc.appliquer = function (valeurs) {
       if (valeurs.capital != null) sc.champs.capital.value = fmtLibre(valeurs.capital);
@@ -1876,6 +1914,32 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
     doc.text('Synthèse', 14, y);
 
     var aTable = typeof doc.autoTable === 'function';
+    var qr = matriceQR(lienSimulation(sc));
+    var tailleQR = 40, xQR = L - 14 - tailleQR, yQR = y + 3;
+    if (qr) {
+      doc.setFillColor(255, 255, 255);
+      doc.setDrawColor(violet[0], violet[1], violet[2]);
+      doc.setLineWidth(0.6);
+      doc.roundedRect(xQR - 2, yQR - 2, tailleQR + 4, tailleQR + 4, 3, 3, 'FD');
+      var n = qr.getModuleCount(), mod = tailleQR / n;
+      doc.setFillColor(encre[0], encre[1], encre[2]);
+      for (var qy = 0; qy < n; qy++) {
+        for (var qx = 0; qx < n; qx++) {
+          if (!qr.isDark(qy, qx)) continue;
+          var debut = qx;
+          while (qx + 1 < n && qr.isDark(qy, qx + 1)) qx++;
+          doc.rect(xQR + debut * mod, yQR + qy * mod, (qx - debut + 1) * mod + 0.02, mod + 0.02, 'F');
+        }
+      }
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(8);
+      doc.setTextColor(violet[0], violet[1], violet[2]);
+      doc.text('Scannez pour ouvrir', xQR + tailleQR / 2, yQR + tailleQR + 7, { align: 'center' });
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5);
+      doc.setTextColor(gris[0], gris[1], gris[2]);
+      doc.text('cette simulation sur mobile', xQR + tailleQR / 2, yQR + tailleQR + 11, { align: 'center' });
+      doc.setTextColor(encre[0], encre[1], encre[2]);
+    }
+
     if (aTable) {
       doc.autoTable({
         startY: y + 3,
@@ -1884,9 +1948,9 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
         styles: { fontSize: 10, cellPadding: { top: 2.2, bottom: 2.2, left: 3, right: 3 }, textColor: encre },
         columnStyles: { 0: { textColor: gris, cellWidth: 70 }, 1: { fontStyle: 'bold' } },
         alternateRowStyles: { fillColor: [245, 243, 252] },
-        margin: { left: 14, right: 14 }
+        margin: { left: 14, right: qr ? 14 + tailleQR + 8 : 14 }
       });
-      y = doc.lastAutoTable.finalY + 10;
+      y = Math.max(doc.lastAutoTable.finalY, qr ? yQR + tailleQR + 12 : 0) + 10;
     } else {
       doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
       synthese(sc).forEach(function (l) { y += 7; doc.text(l[0] + ' : ' + l[1], 14, y); });
@@ -1952,6 +2016,7 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
       'Mensualité : ' + (r.M2 != null ? fmtTexte(r.M1) + ' puis ' + fmtTexte(r.M2) + ' dès le 37e mois' : fmtTexte(r.M1)) + '\n' +
       'Coût total des intérêts : ' + fmtTexte(r.totI) + '\n' +
       'Coût total du crédit : ' + fmtTexte(roundPrec(r.C + r.totI)) + '\n\n' +
+      'Ouvrir cette simulation en ligne :\n' + lienSimulation(sc) + '\n\n' +
       (ok ? 'TABLEAU D\'AMORTISSEMENT\n-----------------\nLe détail complet figure dans le fichier PDF joint (' + nomPdf + ').\n\n' : '') +
       'Cordialement';
     var sujet = 'Simulation de crédit — résultats et tableau d\'amortissement';
@@ -1959,6 +2024,134 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
       window.location.href = 'mailto:?subject=' + encodeURIComponent(sujet) + '&body=' + encodeURIComponent(corps);
       toast(ok ? 'PDF téléchargé : joignez « ' + nomPdf + ' » (dossier Téléchargements) à l\'e-mail avant l\'envoi.' : 'Votre messagerie va s\'ouvrir avec le résumé de la simulation.', 'info', 7000);
     }, ok ? 700 : 0);
+  }
+
+  /* ===================================================================
+     Lien de partage et QR code
+     Le lien contient la simulation : c = capital, m = durée en mois,
+     t = taux annuel, d = date de début, r = 1 si réduction de taux.
+     =================================================================== */
+  var URL_PUBLIQUE = 'https://mohamed-ja.github.io/simulateur-credit/';
+
+  function adresseApplication() {
+    var l = window.location;
+    if (/^https?:$/.test(l.protocol) && !/^(localhost|127\.|\[::1\])/.test(l.hostname)) return l.origin + l.pathname;
+    return URL_PUBLIQUE;
+  }
+
+  function lienSimulation(sc) {
+    var e = sc.entrees;
+    var p = ['c=' + roundPrec(e.capital), 'm=' + e.mois, 't=' + e.taux];
+    if (e.dateDebut) p.push('d=' + e.dateDebut);
+    if (sc.reduction && sc.resultat && sc.resultat.M2 != null) p.push('r=1');
+    return adresseApplication() + '?' + p.join('&');
+  }
+
+  function matriceQR(texte) {
+    if (typeof qrcode !== 'function') return null;
+    try {
+      var qr = qrcode(0, 'M');
+      qr.addData(texte);
+      qr.make();
+      return qr;
+    } catch (err) { return null; }
+  }
+
+  function svgQR(qr) {
+    var n = qr.getModuleCount(), marge = 2, t = n + marge * 2, d = '';
+    for (var y = 0; y < n; y++) {
+      for (var x = 0; x < n; x++) {
+        if (!qr.isDark(y, x)) continue;
+        var debut = x;
+        while (x + 1 < n && qr.isDark(y, x + 1)) x++;
+        d += 'M' + (debut + marge) + ' ' + (y + marge) + 'h' + (x - debut + 1) + 'v1h-' + (x - debut + 1) + 'z';
+      }
+    }
+    return '<svg viewBox="0 0 ' + t + ' ' + t + '" shape-rendering="crispEdges" role="img" aria-label="QR code de la simulation">' +
+      '<rect width="' + t + '" height="' + t + '" fill="#fff"/><path d="' + d + '" fill="#161229"/></svg>';
+  }
+
+  function telechargerQR(qr, nom) {
+    var n = qr.getModuleCount(), marge = 4, echelle = 12, t = (n + marge * 2) * echelle;
+    var cv = document.createElement('canvas');
+    cv.width = t; cv.height = t;
+    var ctx = cv.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, t, t);
+    ctx.fillStyle = '#161229';
+    for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) {
+      if (qr.isDark(y, x)) ctx.fillRect((x + marge) * echelle, (y + marge) * echelle, echelle, echelle);
+    }
+    var a = document.createElement('a');
+    a.href = cv.toDataURL('image/png');
+    a.download = nom;
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  function copierTexte(texte) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(texte);
+    return new Promise(function (ok, ko) {
+      var zone = document.createElement('textarea');
+      zone.value = texte; zone.setAttribute('readonly', ''); zone.style.position = 'fixed'; zone.style.opacity = '0';
+      document.body.appendChild(zone); zone.select();
+      try { document.execCommand('copy') ? ok() : ko(); } catch (err) { ko(err); }
+      zone.remove();
+    });
+  }
+
+  function ouvrirQR(sc) {
+    if (!exigerResultat(sc)) return;
+    var e = sc.entrees, r = sc.resultat;
+    var lien = lienSimulation(sc);
+    var qr = matriceQR(lien);
+    if (!qr) { toast('QR code indisponible : bibliothèque non chargée (connexion requise).', 'erreur'); return; }
+    var puces = [fmtTexte(e.capital), e.mois + ' mois', fmtLibre(e.taux) + ' %', 'Mensualité ' + fmtTexte(r.M1)];
+    var partageNatif = typeof navigator.share === 'function';
+    var d = ouvrirDialogue({
+      titre: 'QR code de la simulation',
+      sousTitre: 'Scannez-le avec un téléphone : le simulateur s\'ouvre avec ces valeurs déjà remplies.',
+      icone: 'qr',
+      corps:
+        '<div class="qr-zone">' +
+          '<div class="qr-carte">' + svgQR(qr) + '</div>' +
+          '<div class="qr-resume">' + puces.map(function (x) { return '<span>' + echapper(x) + '</span>'; }).join('') + '</div>' +
+          '<div class="qr-lien">' + ico('link', 'ico-sm') +
+            '<input id="qr-url" type="text" readonly aria-label="Lien de la simulation" value="' + echapper(lien) + '">' +
+            '<button class="btn btn-primary btn-sm" id="qr-copier">Copier</button>' +
+          '</div>' +
+          '<p class="qr-aide">Le QR code figure aussi sur la première page de l\'export PDF.</p>' +
+        '</div>',
+      pied: '<button class="btn btn-ghost" data-fermer>Fermer</button>' +
+            (partageNatif ? '<button class="btn btn-blue" id="qr-partager">' + ico('upload', 'ico-sm') + 'Partager</button>' : '') +
+            '<button class="btn btn-primary" id="qr-image">' + ico('download', 'ico-sm') + 'Télécharger l\'image</button>'
+    });
+    var el = d.el;
+    $('#qr-url', el).addEventListener('focus', function () { this.select(); });
+    $('#qr-copier', el).addEventListener('click', function () {
+      copierTexte(lien).then(function () { toast('Lien copié dans le presse-papiers.'); },
+        function () { $('#qr-url', el).select(); toast('Copie impossible : sélectionnez le lien et copiez-le.', 'info'); });
+    });
+    $('#qr-image', el).addEventListener('click', function () {
+      telechargerQR(qr, 'qr_simulation_' + sc.nom + '.png');
+      toast('Image du QR code téléchargée.');
+    });
+    if (partageNatif) $('#qr-partager', el).addEventListener('click', function () {
+      navigator.share({ title: 'Simulation de crédit', text: 'Ma simulation de crédit (' + puces.join(' · ') + ')', url: lien }).catch(function () {});
+    });
+  }
+
+  /* Ouverture d'une simulation reçue par lien ou QR code */
+  function lireLienPartage() {
+    var q;
+    try { q = new URLSearchParams(window.location.search); } catch (err) { return; }
+    if (!q.has('c') || !q.has('m') || !q.has('t')) return;
+    var capital = parseFloat(q.get('c')), mois = parseInt(q.get('m'), 10), taux = parseFloat(q.get('t'));
+    var date = q.get('d') || '';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) date = '';
+    var valide = isFinite(capital) && capital > 0 && isFinite(mois) && mois >= 1 && mois <= 300 && isFinite(taux) && taux >= 0 && taux <= 100;
+    try { history.replaceState(null, '', window.location.pathname + window.location.hash); } catch (err) { /* sans effet */ }
+    if (!valide) { toast('Le lien de simulation est incomplet ou invalide.', 'erreur'); return; }
+    scenarios.a.appliquer({ capital: capital, mois: mois, taux: taux, dateDebut: date, reduction: q.get('r') === '1' });
+    toast('Simulation ouverte depuis le lien partagé.', 'info');
   }
 
   /* ===================================================================
@@ -2287,6 +2480,7 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
     $('#btnHistorique').addEventListener('click', ouvrirHistorique);
     $('#btnComparer').addEventListener('click', ouvrirComparaison);
     $('#btnTheme').addEventListener('click', basculerTheme);
+    lireLienPartage();
 
     var meta = document.querySelector('meta[name="theme-color"]');
     if (meta && document.documentElement.getAttribute('data-theme') === 'dark') meta.setAttribute('content', '#0b0a11');
