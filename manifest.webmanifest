@@ -1,0 +1,19 @@
+{
+  "name": "Simulateur de crédit en dinars tunisiens",
+  "short_name": "Crédit TND",
+  "description": "Mensualité, coût des intérêts, tableau d'amortissement, TMM, remboursement anticipé et comparaison de scénarios.",
+  "lang": "fr",
+  "dir": "auto",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f4fb",
+  "theme_color": "#7c3aed",
+  "categories": ["finance", "business", "productivity"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
