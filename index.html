@@ -1061,6 +1061,22 @@ table.sensi-t { width: 100%; min-width: 560px; border-collapse: collapse; font-s
 .input-wrap.sm .suffix { padding-inline-end: 10px; font-size: 12px; }
 .seg.sm button { height: 30px; padding: 0 10px; font-size: 12.5px; }
 .etapes { margin: 0; padding-inline-start: 20px; display: grid; gap: 8px; color: var(--text-2); font-size: 14px; }
+.etapes.grandes { list-style: none; padding: 0; counter-reset: etape; gap: 12px; font-size: 15px; }
+.etapes.grandes li {
+  counter-increment: etape; position: relative; padding: 12px 14px; padding-inline-start: 54px;
+  border-radius: 14px; background: var(--surface-2); line-height: 1.45;
+}
+.etapes.grandes li::before {
+  content: counter(etape); position: absolute; inset-inline-start: 12px; top: 10px;
+  width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center;
+  font-weight: 800; color: #fff; background: var(--grad-main);
+}
+.etapes.grandes b { color: var(--text); }
+.ios-partage { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 7px; background: var(--primary-soft); color: var(--primary); vertical-align: -7px; }
+.install-direct { display: grid; justify-items: center; gap: 14px; text-align: center; padding: 8px 0 4px; }
+.install-direct img { border-radius: 22px; box-shadow: var(--shadow-glow); }
+.install-direct p { color: var(--text-2); font-size: 15px; max-width: 34ch; }
+.install-go { --h: 54px; font-size: 16px; padding: 0 26px; border-radius: 16px; }
 
 /* =====================================================================
    Arabe (de droite à gauche)
@@ -1417,32 +1433,39 @@ var AR = {
   "%": "%",
   "(+{n} autre palier)": "(+{n} مرحلة أخرى)",
   "(au lieu de {n})": "(بدلًا من {n})",
+  "(en bas de l'écran dans Safari, en haut à droite dans Chrome).": "(أسفل الشاشة في سفاري، وأعلى اليمين في كروم).",
   "(hors assurance)": "(دون تأمين)",
   "(échéance mensualisée + charges) ÷ revenus, maximum {m}": "(القسط الشهري المكافئ + الأعباء) ÷ المداخيل، بحد أقصى {m}",
   ", puis ": "، ثم ",
   "0": "0",
   "0 %": "0 %",
   "1 simulation enregistrée": "محاكاة واحدة محفوظة",
+  "1. Ouvrez l'appareil photo et visez le QR code.": "1. افتح الكاميرا ووجّهها نحو رمز QR.",
   "10 %": "10 %",
   "10 remboursements au maximum.": "10 عمليات سداد كحد أقصى.",
   "12,5 ans": "12,5 سنة",
+  "2. Touchez le lien qui apparaît.": "2. المس الرابط الذي يظهر.",
   "20 %": "20 %",
   "25 ans": "25 سنة",
   "250 k": "250 ألف",
+  "3. Suivez les indications : « Installer » ou « Sur l'écran d'accueil ».": "3. اتبع التعليمات: «تثبيت» أو «إضافة إلى الشاشة الرئيسية».",
   "4 prêts au maximum.": "4 قروض كحد أقصى.",
   "500 k": "500 ألف",
   "A contre B": "A مقابل B",
   "Actuel": "الحالي",
+  "Affiche A4 (PNG)": "ملصق A4 (PNG)",
+  "Affiche téléchargée : imprimez-la et posez-la à l'accueil de l'agence.": "تم تنزيل الملصق: اطبعه وضعه في استقبال الوكالة.",
   "Afficher en arabe": "العرض بالفرنسية",
   "Agence": "الوكالة",
   "Agence et paramètres": "الوكالة والإعدادات",
   "Agence, logo, TMM et types de crédit": "الوكالة والشعار ومعدل السوق النقدية وأنواع القروض",
   "Agenda (.ics)": "الرزنامة (.ics)",
   "Agenda téléchargé : ouvrez le fichier pour ajouter les {n} échéances à votre calendrier.": "تم تنزيل الرزنامة: افتح الملف لإضافة الأقساط الـ{n} إلى رزنامتك.",
+  "Ajouter": "إضافة",
   "Ajouter un prêt": "إضافة قرض",
   "Ajouter un remboursement": "إضافة عملية سداد",
   "Ajouter un scénario": "إضافة سيناريو",
-  "Ajoutez le simulateur à l'écran d'accueil : il s'ouvre comme une application et fonctionne hors connexion.": "أضف المحاكي إلى الشاشة الرئيسية: يفتح كتطبيق ويعمل دون اتصال بالإنترنت.",
+  "Ajouter à l'écran d'accueil": "إضافة إلى الشاشة الرئيسية",
   "Amortissement": "طريقة الاستهلاك",
   "Amortissement constant": "استهلاك قار لأصل الدين",
   "Amortissement constant : le capital remboursé est le même à chaque échéance, qui diminue avec les intérêts. In fine : seuls les intérêts sont payés, le capital est remboursé à la dernière échéance.": "استهلاك قار: يُسدَّد نفس المبلغ من أصل الدين في كل قسط، فيتناقص القسط مع الفوائد. السداد في النهاية: تُدفع الفوائد فقط، ويُسدَّد أصل الدين مع آخر قسط.",
@@ -1502,10 +1525,11 @@ var AR = {
   "Charges mensuelles": "الأعباء الشهرية",
   "Charges {p}": "الأعباء {p}",
   "Choisir un logo": "اختيار شعار",
+  "Choisissez": "اختر",
   "Choisissez une échéance entre 1 et {n}.": "اختر قسطًا بين 1 و {n}.",
   "Choisissez une échéance entre 2 et {n}.": "اختر قسطًا بين 2 و {n}.",
-  "Choisissez « Sur l'écran d'accueil », puis « Ajouter ».": "اختر «إضافة إلى الشاشة الرئيسية» ثم «إضافة».",
   "Client": "الحريف",
+  "Cliquez sur l'icône d'installation à droite de la barre d'adresse, ou ouvrez le menu du navigateur.": "انقر على أيقونة التثبيت يمين شريط العنوان، أو افتح قائمة المتصفح.",
   "Cliquez sur « Calculer et enregistrer » pour conserver une simulation ici.": "انقر على «احسب واحفظ» للاحتفاظ بمحاكاة هنا.",
   "Compagnie ou agence": "الشركة أو الوكالة",
   "Comparer": "مقارنة",
@@ -1516,9 +1540,9 @@ var AR = {
   "Comparez votre crédit en cours avec une nouvelle offre, frais et indemnité compris.": "قارن قرضك الحالي بعرض جديد، مع احتساب المصاريف والغرامة.",
   "Complétez le capital, la durée et le taux pour calculer.": "أكمل مبلغ القرض والمدة والنسبة للحساب.",
   "Complétez le capital, la durée, le TMM et la marge pour calculer.": "أكمل مبلغ القرض والمدة ومعدل السوق النقدية والهامش للحساب.",
-  "Compris": "فهمت",
   "Conditions": "الشروط",
   "Confirmer": "تأكيد",
+  "Confirmez avec": "أكّد بـ",
   "Conseiller": "المستشار",
   "Conseiller : {n}": "المستشار: {n}",
   "Consommation": "استهلاكي",
@@ -1607,6 +1631,7 @@ var AR = {
   "Export PDF indisponible : bibliothèque non chargée (connexion requise).": "تصدير PDF غير متاح: المكتبة غير محمّلة (يتطلب اتصالًا بالإنترنت).",
   "Exporter Excel": "تصدير Excel",
   "Exporter PDF": "تصدير PDF",
+  "Faites défiler et choisissez": "مرّر واختر",
   "Fermer": "إغلاق",
   "Fichier Excel téléchargé.": "تم تنزيل ملف Excel.",
   "Financer les frais et l'indemnité dans le nouveau crédit": "تمويل المصاريف والغرامة ضمن القرض الجديد",
@@ -1628,6 +1653,7 @@ var AR = {
   "Historique effacé.": "تم مسح السجل.",
   "Identité": "الهوية",
   "Il faudrait plus de 300 mois : augmentez la mensualité.": "يتطلب ذلك أكثر من 300 شهر: ارفع القسط.",
+  "Image du QR code": "صورة رمز QR",
   "Image du QR code téléchargée.": "تم تنزيل صورة رمز QR.",
   "Image illisible.": "صورة غير قابلة للقراءة.",
   "Image trop lourde (5 Mo maximum).": "الصورة كبيرة جدًا (5 ميغابايت كحد أقصى).",
@@ -1643,7 +1669,10 @@ var AR = {
   "Indiquez le capital et la durée, puis le taux d'au moins deux offres.": "أدخل مبلغ القرض والمدة، ثم نسبة عرضين على الأقل.",
   "Indiquez le montant ou cochez « Solde ».": "أدخل المبلغ أو اختر «تصفية».",
   "Indiquez une date de début pour la date exacte": "أدخل تاريخ البداية لمعرفة التاريخ الدقيق",
+  "Installation annulée. Vous pourrez la relancer depuis le bouton « Installer l'application ».": "تم إلغاء التثبيت. يمكنك إعادة المحاولة من زر «تثبيت التطبيق».",
+  "Installer": "تثبيت",
   "Installer l'application": "تثبيت التطبيق",
+  "Installer maintenant": "ثبّت الآن",
   "Intérêts": "الفوائد",
   "Intérêts des 36 premiers mois / capital restant dû à 36 mois": "فوائد الأشهر الـ36 الأولى / رأس المال المتبقي عند الشهر 36",
   "Intérêts les plus faibles :": "أقل فوائد:",
@@ -1651,6 +1680,7 @@ var AR = {
   "Intérêts restants": "الفوائد المتبقية",
   "Intérêts sans lissage : {m}.": "الفوائد دون تسوية: {m}.",
   "Intérêts {m}": "الفوائد {m}",
+  "L'application est déjà installée sur cet appareil.": "التطبيق مثبّت مسبقًا على هذا الجهاز.",
   "L'apport doit être inférieur au prix du bien.": "يجب أن تكون المساهمة أقل من ثمن العقار.",
   "L'indemnité doit être comprise entre 0 et 20 %.": "يجب أن تكون الغرامة بين 0 و 20 %.",
   "L'indemnité s'applique à tous les remboursements anticipés, ponctuels et réguliers.": "تنطبق الغرامة على جميع عمليات السداد المسبق، الظرفية والمنتظمة.",
@@ -1663,6 +1693,7 @@ var AR = {
   "La nouvelle durée est plus longue : la mensualité baisse, mais vous payez plus longtemps.": "المدة الجديدة أطول: ينخفض القسط، لكنك تدفع لمدة أطول.",
   "La réduction de taux s'applique aux crédits mensuels à échéances constantes, sans différé.": "يُطبَّق تخفيض النسبة على القروض الشهرية ذات الأقساط الثابتة ودون فترة إمهال.",
   "Le QR code figure aussi sur la première page de l'export PDF et sur l'impression.": "يظهر رمز QR أيضًا في الصفحة الأولى من ملف PDF وفي النسخة المطبوعة.",
+  "Le bouton « Installer maintenant » apparaît ici dès que le navigateur est prêt.": "يظهر زر «ثبّت الآن» هنا بمجرد أن يصبح المتصفح جاهزًا.",
   "Le capital": "رأس المال",
   "Le capital doit être supérieur à 0.": "يجب أن يكون مبلغ القرض أكبر من 0.",
   "Le capital emprunté est le prix du bien moins l'apport.": "مبلغ القرض هو ثمن العقار ناقص المساهمة الذاتية.",
@@ -1675,6 +1706,7 @@ var AR = {
   "Le lissage ne s'applique pas quand le prêt principal a un différé.": "لا تنطبق التسوية عندما يتضمن القرض الرئيسي فترة إمهال.",
   "Le nouveau taux s'applique à partir de l'échéance 37 (4e année).": "تُطبَّق النسبة الجديدة ابتداءً من القسط 37 (السنة الرابعة).",
   "Le simulateur accepte 300 mois au maximum : réduisez la durée pour l'utiliser.": "يقبل المحاكي 300 شهر كحد أقصى: قلّص المدة لاستعمالها.",
+  "Le simulateur s'ouvre alors comme une application, depuis l'écran d'accueil, même sans connexion.": "يفتح المحاكي عندها كتطبيق من الشاشة الرئيسية، حتى دون اتصال.",
   "Le taux": "النسبة",
   "Le taux appliqué est la somme du TMM et de la marge.": "النسبة المطبّقة هي مجموع معدل السوق النقدية والهامش.",
   "Le taux dépasserait 100 % : vérifiez les valeurs.": "ستتجاوز النسبة 100 %: تحقّق من القيم.",
@@ -1683,6 +1715,7 @@ var AR = {
   "Les résultats se mettent à jour pendant la saisie.": "تُحدَّث النتائج أثناء الإدخال.",
   "Libre": "حر",
   "Lien copié dans le presse-papiers.": "تم نسخ الرابط.",
+  "Lien d'installation": "رابط التثبيت",
   "Lien de la simulation": "رابط المحاكاة",
   "Lissage impossible : les autres prêts dépassent à eux seuls la mensualité lissée.": "التسوية غير ممكنة: أقساط القروض الأخرى وحدها تتجاوز القسط المسوّى.",
   "Lisser les mensualités (le prêt le plus long s'ajuste)": "تسوية الأقساط (يتكيّف القرض الأطول)",
@@ -1703,6 +1736,7 @@ var AR = {
   "Mensualité sur cette durée": "القسط الشهري على هذه المدة",
   "Mensualité {m}": "القسط الشهري {m}",
   "Mensualité à ce taux": "القسط الشهري بهذه النسبة",
+  "Mensualité, TEG, tableau d'amortissement, hors connexion": "القسط الشهري، النسبة الفعلية، جدول الاستهلاك، دون اتصال",
   "Mensualité, coût des intérêts et tableau d'amortissement détaillé, mis à jour en temps réel. Taux fixe ou indexé sur le TMM, remboursement anticipé, exports Excel et PDF, comparaison de scénarios.": "القسط الشهري وكلفة الفوائد وجدول الاستهلاك المفصّل، محدّثة في الوقت الفعلي. نسبة قارة أو مرتبطة بمعدل السوق النقدية، سداد مسبق، تصدير Excel و PDF، ومقارنة السيناريوهات.",
   "Mensuelle": "شهرية",
   "Minimum conseillé : {m} du prix du bien": "الحد الأدنى المنصوح به: {m} من ثمن العقار",
@@ -1748,6 +1782,7 @@ var AR = {
   "Pendant {n}, l'échéance du prêt principal ne couvre pas ses intérêts : son capital augmente.": "لمدة {n}، لا يغطي قسط القرض الرئيسي فوائده: يرتفع رأس ماله.",
   "Plan de financement": "خطة التمويل",
   "Plus de 7 ans de remboursement": "أكثر من 7 سنوات من السداد",
+  "Plus tard": "لاحقًا",
   "Plusieurs prêts (par exemple crédit principal et crédit d'autofinancement) : mensualité globale, paliers et lissage.": "عدة قروض (مثلًا قرض رئيسي وقرض للتمويل الذاتي): القسط الجملي والمراحل والتسوية.",
   "Plusieurs prêts, paliers et lissage": "عدة قروض، مراحل وتسوية",
   "Première mensualité globale": "أول قسط شهري جملي",
@@ -1761,6 +1796,7 @@ var AR = {
   "Périodicité": "دورية الأقساط",
   "Périodicité, amortissement, différé": "الدورية، الاستهلاك، الإمهال",
   "QR code": "رمز QR",
+  "QR code d'installation": "رمز QR للتثبيت",
   "QR code de la simulation": "رمز QR للمحاكاة",
   "QR code indisponible : bibliothèque non chargée (connexion requise).": "رمز QR غير متاح: المكتبة غير محمّلة (يتطلب اتصالًا بالإنترنت).",
   "Que voulez-vous calculer ?": "ماذا تريد أن تحسب؟",
@@ -1807,8 +1843,10 @@ var AR = {
   "Saisissez une durée valide, en années (ex. 7 ou 2,5).": "أدخل مدة صالحة بالسنوات (مثال: 7 أو 2,5).",
   "Saisissez une marge valide (ex. 2,5).": "أدخل هامشًا صالحًا (مثال: 2,5).",
   "Saisissez une variation en points (ex. +1 ou -0,5).": "أدخل التغيّر بالنقاط (مثال: +1 أو -0,5).",
+  "Scannez pour installer l'application": "امسح الرمز لتثبيت التطبيق",
   "Scannez pour ouvrir cette simulation sur mobile": "امسح الرمز لفتح هذه المحاكاة على الهاتف",
   "Scannez-le avec un téléphone : le simulateur s'ouvre avec ces valeurs déjà remplies.": "امسحه بالهاتف: يفتح المحاكي بهذه القيم معبّأة مسبقًا.",
+  "Scanné avec n'importe quel téléphone, il ouvre le simulateur et propose aussitôt de l'installer.": "عند مسحه بأي هاتف، يفتح المحاكي ويقترح تثبيته فورًا.",
   "Scénario A": "السيناريو A",
   "Scénario B": "السيناريو B",
   "Scénario {n}": "السيناريو {n}",
@@ -1830,8 +1868,9 @@ var AR = {
   "Supprimer ce prêt": "حذف هذا القرض",
   "Supprimer ce remboursement": "حذف عملية السداد هذه",
   "Supprimer la simulation #{n}": "حذف المحاكاة رقم {n}",
-  "Sur Android ou ordinateur : menu du navigateur, puis « Installer l'application ».": "على أندرويد أو الحاسوب: قائمة المتصفح ثم «تثبيت التطبيق».",
-  "Sur iPhone ou iPad, ouvrez cette page dans Safari.": "على آيفون أو آيباد، افتح هذه الصفحة في متصفح سفاري.",
+  "Sur Android, un bouton « Installer maintenant » s'affiche ; sur iPhone, les deux gestes à faire sont indiqués. Aucun téléphone n'autorise une installation sans confirmation de l'utilisateur.": "على أندرويد يظهر زر «ثبّت الآن»، وعلى آيفون تظهر الخطوتان اللازمتان. لا يسمح أي هاتف بالتثبيت دون تأكيد المستخدم.",
+  "Sur l'écran d'accueil": "إضافة إلى الشاشة الرئيسية",
+  "Sur téléphone, scannez le QR code d'installation pour l'avoir dans votre poche.": "على الهاتف، امسح رمز QR الخاص بالتثبيت ليكون التطبيق دائمًا معك.",
   "Surcoût net sur toute la durée": "الكلفة الإضافية الصافية على كامل المدة",
   "Sélectionnez 2 ou 3 simulations de l'historique.": "اختر محاكاتين أو ثلاثًا من السجل.",
   "TEG": "النسبة الفعلية الجملية",
@@ -1873,7 +1912,9 @@ var AR = {
   "Total": "المجموع",
   "Total payé": "المبلغ المدفوع",
   "Total restant à payer": "المتبقي للدفع",
-  "Touchez le bouton Partager (carré avec une flèche).": "المس زر المشاركة (مربع بسهم).",
+  "Touchez": "المس",
+  "Touchez le bouton": "المس زر",
+  "Touchez le menu": "المس القائمة",
   "Tout ce que coûte le crédit en plus du capital emprunté.": "كل ما يكلّفه القرض زيادة على المبلغ المقترض.",
   "Tout effacer": "مسح الكل",
   "Toutes les simulations enregistrées seront effacées. Cette action est irréversible.": "سيتم مسح جميع المحاكاة المحفوظة. لا يمكن التراجع عن هذا الإجراء.",
@@ -1888,6 +1929,7 @@ var AR = {
   "Télécharger l'image": "تنزيل الصورة",
   "Téléphone": "الهاتف",
   "Un prêt incomplet ou invalide est ignoré (durée de 1 à 300 mois, différé plus court que la durée).": "يتم تجاهل القرض غير المكتمل أو غير الصالح (مدة من 1 إلى 300 شهر، وإمهال أقصر من المدة).",
+  "Un seul geste : touchez « Installer maintenant », puis confirmez.": "خطوة واحدة: المس «ثبّت الآن» ثم أكّد.",
   "Une fois par an": "مرة في السنة",
   "Utiliser": "استعمال",
   "Utiliser dans le scénario {n}": "استعمال في السيناريو {n}",
@@ -1916,6 +1958,8 @@ var AR = {
   "différé {n}": "إمهال {n}",
   "dont indemnité {m}": "منها غرامة {m}",
   "dégressive jusqu'à {m}": "متناقص حتى {m}",
+  "en Dinar Tunisien": "بالدينار التونسي",
+  "en haut à droite du navigateur.": "أعلى يمين المتصفح.",
   "en {n} versements": "على {n} دفعات",
   "frais": "المصاريف",
   "hors capital": "دون رأس المال",
@@ -1923,8 +1967,10 @@ var AR = {
   "indemnités": "الغرامات",
   "intérêts": "الفوائد",
   "intérêts seuls, capital à la dernière échéance": "الفوائد فقط، ورأس المال مع آخر قسط",
+  "l'icône du simulateur apparaît sur votre écran d'accueil.": "تظهر أيقونة المحاكي على شاشتك الرئيسية.",
   "mois": "شهر",
   "n°": "رقم",
+  "ou": "أو",
   "ou montant fixe": "أو مبلغ قار",
   "pendant {n}": "لمدة {n}",
   "pt": "نقطة",
@@ -1969,6 +2015,7 @@ var AR = {
   "{v} / semestre": "{v} / سداسية",
   "{v} / trimestre": "{v} / ثلاثية",
   "À chaque échéance": "مع كل قسط",
+  "À scanner pour installer l'application sur un téléphone": "للمسح من أجل تثبيت التطبيق على الهاتف",
   "Âge actuel": "السن الحالية",
   "Âge en fin de crédit": "السن عند نهاية القرض",
   "Âge maximal en fin de crédit": "أقصى سن عند نهاية القرض",
@@ -4892,7 +4939,8 @@ var AR = {
     { cle: 'inverse', nom: 'Calcul inverse', aide: 'Capital, durée ou taux pour une mensualité', ico: 'calc', fn: ouvrirCalculInverse },
     { cle: 'plan', nom: 'Plan de financement', aide: 'Plusieurs prêts, paliers et lissage', ico: 'layers', fn: ouvrirPlan },
     { cle: 'offres', nom: 'Comparer des offres', aide: 'Taux, frais, assurance et TEG', ico: 'scale', fn: ouvrirOffres },
-    { cle: 'renego', nom: 'Renégociation ou rachat', aide: 'Économie réelle d\'un nouveau crédit', ico: 'refresh', fn: ouvrirRenegociation }
+    { cle: 'renego', nom: 'Renégociation ou rachat', aide: 'Économie réelle d\'un nouveau crédit', ico: 'refresh', fn: ouvrirRenegociation },
+    { cle: 'installer', nom: 'QR code d\'installation', aide: 'À scanner pour installer l\'application sur un téléphone', ico: 'phone', fn: ouvrirQRInstallation }
   ];
 
   function initialiserMenuOutils() {
@@ -5328,41 +5376,201 @@ var AR = {
   function estInstallee() { return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true; }
   function estIOS() { return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); }
 
+  function estAndroid() { return /android/i.test(navigator.userAgent); }
+  var surInvitation = null;
+
+  function lancerInstallation() {
+    if (!invitationInstall) return;
+    var inv = invitationInstall;
+    inv.prompt();
+    inv.userChoice.then(function (choix) {
+      invitationInstall = null;
+      $('#btnInstaller').hidden = true;
+      if (choix && choix.outcome === 'dismissed') toast(t('Installation annulée. Vous pourrez la relancer depuis le bouton « Installer l\'application ».'), 'info', 5000);
+    }).catch(function () {});
+  }
+
+  /* Fenêtre d'installation adaptée au téléphone : bouton direct quand le
+     navigateur le permet (Android, ordinateur), sinon les gestes à faire. */
+  function ouvrirInstallation() {
+    if (estInstallee()) { toast(t('L\'application est déjà installée sur cet appareil.'), 'info'); return; }
+    function etapes(liste) { return '<ol class="etapes grandes">' + liste.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>'; }
+    function b(s) { return '<b>' + echapper(s) + '</b>'; }
+    function contenu() {
+      if (invitationInstall) {
+        return '<div class="install-direct">' +
+          '<img src="icons/icon-192.png" alt="" width="84" height="84">' +
+          '<p>' + echapper(t('Un seul geste : touchez « Installer maintenant », puis confirmez.')) + '</p>' +
+          '<button type="button" class="btn btn-primary install-go" id="install-go">' + ico('download') + echapper(t('Installer maintenant')) + '</button></div>';
+      }
+      if (estIOS()) {
+        return etapes([
+          echapper(t('Touchez le bouton')) + ' ' + b(t('Partager')) + ' <span class="ios-partage" aria-hidden="true">' + ico('upload', 'ico-sm') + '</span> ' +
+            echapper(t('(en bas de l\'écran dans Safari, en haut à droite dans Chrome).')),
+          echapper(t('Faites défiler et choisissez')) + ' ' + b(t('Sur l\'écran d\'accueil')) + '.',
+          echapper(t('Touchez')) + ' ' + b(t('Ajouter')) + ' : ' + echapper(t('l\'icône du simulateur apparaît sur votre écran d\'accueil.'))
+        ]);
+      }
+      if (estAndroid()) {
+        return etapes([
+          echapper(t('Touchez le menu')) + ' ' + b('⋮') + ' ' + echapper(t('en haut à droite du navigateur.')),
+          echapper(t('Choisissez')) + ' ' + b(t('Installer l\'application')) + ' ' + echapper(t('ou')) + ' ' + b(t('Ajouter à l\'écran d\'accueil')) + '.',
+          echapper(t('Confirmez avec')) + ' ' + b(t('Installer')) + '.'
+        ]) + '<p class="opt-note" style="margin-top:10px">' + echapper(t('Le bouton « Installer maintenant » apparaît ici dès que le navigateur est prêt.')) + '</p>';
+      }
+      return etapes([
+        echapper(t('Cliquez sur l\'icône d\'installation à droite de la barre d\'adresse, ou ouvrez le menu du navigateur.')),
+        echapper(t('Choisissez')) + ' ' + b(t('Installer l\'application')) + '.'
+      ]) + '<p class="opt-note" style="margin-top:10px">' + echapper(t('Sur téléphone, scannez le QR code d\'installation pour l\'avoir dans votre poche.')) + '</p>';
+    }
+    var d = ouvrirDialogue({
+      titre: t('Installer l\'application'),
+      sousTitre: echapper(t('Le simulateur s\'ouvre alors comme une application, depuis l\'écran d\'accueil, même sans connexion.')),
+      icone: 'phone',
+      corps: '<div id="install-zone">' + contenu() + '</div>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Plus tard')) + '</button>',
+      surFermeture: function () { surInvitation = null; }
+    });
+    function brancher() {
+      var go = $('#install-go', d.el);
+      if (go) go.addEventListener('click', function () { d.fermer(); lancerInstallation(); });
+    }
+    brancher();
+    /* L'invitation du navigateur peut arriver après l'ouverture de la fenêtre */
+    surInvitation = function () { $('#install-zone', d.el).innerHTML = contenu(); brancher(); };
+  }
+
+  /* Adresse à mettre dans le QR code d'installation */
+  function adresseInstallation() { return adresseApplication() + '?installer=1'; }
+
+  /* Affiche A4 (PNG) : titre, QR code d'installation et mode d'emploi */
+  function dessinerAffiche(qr) {
+    var L = 1240, H = 1754;
+    var cv = document.createElement('canvas');
+    cv.width = L; cv.height = H;
+    var c = cv.getContext('2d');
+    var police = enArabe() ? '"Noto Sans Arabic", sans-serif' : '"Plus Jakarta Sans", Inter, sans-serif';
+    var rtl = enArabe();
+    c.direction = rtl ? 'rtl' : 'ltr';
+    c.fillStyle = '#ffffff'; c.fillRect(0, 0, L, H);
+    var g = c.createLinearGradient(0, 0, L, 520);
+    g.addColorStop(0, '#7c3aed'); g.addColorStop(0.55, '#c026d3'); g.addColorStop(1, '#ec4899');
+    c.fillStyle = g;
+    c.beginPath(); c.moveTo(0, 0); c.lineTo(L, 0); c.lineTo(L, 440); c.quadraticCurveTo(L / 2, 560, 0, 440); c.closePath(); c.fill();
+    c.fillStyle = '#ffffff'; c.textAlign = 'center';
+    c.font = '800 70px ' + police;
+    c.fillText(t('Simulateur de crédit'), L / 2, 190);
+    c.font = '600 44px ' + police;
+    c.fillText(t('en Dinar Tunisien'), L / 2, 262);
+    c.font = '500 34px ' + police;
+    c.fillText(t('Mensualité, TEG, tableau d\'amortissement, hors connexion'), L / 2, 340);
+    /* QR code dans une carte */
+    var n = qr.getModuleCount(), taille = 640, mod = Math.floor(taille / (n + 8)), cote = mod * (n + 8);
+    var x0 = Math.round((L - cote) / 2), y0 = 520;
+    c.fillStyle = '#7c3aed';
+    arrondi(c, x0 - 14, y0 - 14, cote + 28, cote + 28, 40); c.fill();
+    c.fillStyle = '#ffffff';
+    arrondi(c, x0, y0, cote, cote, 28); c.fill();
+    c.fillStyle = '#161229';
+    for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (qr.isDark(y, x)) c.fillRect(x0 + (x + 4) * mod, y0 + (y + 4) * mod, mod, mod);
+    var yT = y0 + cote + 110;
+    c.fillStyle = '#6d28d9'; c.font = '800 54px ' + police;
+    c.fillText(t('Scannez pour installer l\'application'), L / 2, yT);
+    c.fillStyle = '#3d3857'; c.font = '500 34px ' + police;
+    var lignes = [
+      t('1. Ouvrez l\'appareil photo et visez le QR code.'),
+      t('2. Touchez le lien qui apparaît.'),
+      t('3. Suivez les indications : « Installer » ou « Sur l\'écran d\'accueil ».')
+    ];
+    lignes.forEach(function (l, i) { c.fillText(l, L / 2, yT + 80 + i * 56); });
+    c.fillStyle = '#6e6989'; c.font = '500 26px ' + police;
+    var pied = agence.nom ? ligneAgence() : 'Mohamed Aziz Jaouadi';
+    c.fillText(pied, L / 2, H - 70);
+    c.fillStyle = '#a39fb8'; c.font = '400 22px ' + police;
+    c.direction = 'ltr';
+    c.fillText(adresseApplication(), L / 2, H - 30);
+    return cv;
+  }
+  function arrondi(c, x, y, l, h, r) {
+    c.beginPath(); c.moveTo(x + r, y); c.lineTo(x + l - r, y); c.quadraticCurveTo(x + l, y, x + l, y + r);
+    c.lineTo(x + l, y + h - r); c.quadraticCurveTo(x + l, y + h, x + l - r, y + h); c.lineTo(x + r, y + h);
+    c.quadraticCurveTo(x, y + h, x, y + h - r); c.lineTo(x, y + r); c.quadraticCurveTo(x, y, x + r, y); c.closePath();
+  }
+
+  function ouvrirQRInstallation() {
+    var lien = adresseInstallation();
+    var qr = matriceQR(lien);
+    if (!qr) { toast(t('QR code indisponible : bibliothèque non chargée (connexion requise).'), 'erreur'); return; }
+    var d = ouvrirDialogue({
+      titre: t('QR code d\'installation'),
+      sousTitre: echapper(t('Scanné avec n\'importe quel téléphone, il ouvre le simulateur et propose aussitôt de l\'installer.')),
+      icone: 'phone',
+      corps:
+        '<div class="qr-zone">' +
+          '<div class="qr-carte">' + svgQR(qr) + '</div>' +
+          '<div class="qr-lien">' + ico('link', 'ico-sm') +
+            '<input id="qri-url" type="text" readonly dir="ltr" aria-label="' + echapper(t('Lien d\'installation')) + '" value="' + echapper(lien) + '">' +
+            '<button class="btn btn-primary btn-sm" id="qri-copier">' + echapper(t('Copier')) + '</button>' +
+          '</div>' +
+          '<p class="qr-aide">' + echapper(t('Sur Android, un bouton « Installer maintenant » s\'affiche ; sur iPhone, les deux gestes à faire sont indiqués. Aucun téléphone n\'autorise une installation sans confirmation de l\'utilisateur.')) + '</p>' +
+        '</div>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button>' +
+            '<button class="btn btn-violet" id="qri-image">' + ico('qr', 'ico-sm') + echapper(t('Image du QR code')) + '</button>' +
+            '<button class="btn btn-primary" id="qri-affiche">' + ico('download', 'ico-sm') + echapper(t('Affiche A4 (PNG)')) + '</button>'
+    });
+    var el = d.el;
+    $('#qri-url', el).addEventListener('focus', function () { this.select(); });
+    $('#qri-copier', el).addEventListener('click', function () {
+      copierTexte(lien).then(function () { toast(t('Lien copié dans le presse-papiers.')); },
+        function () { $('#qri-url', el).select(); toast(t('Copie impossible : sélectionnez le lien et copiez-le.'), 'info'); });
+    });
+    $('#qri-image', el).addEventListener('click', function () {
+      telechargerQR(qr, 'qr_installation_simulateur.png');
+      toast(t('Image du QR code téléchargée.'));
+    });
+    $('#qri-affiche', el).addEventListener('click', function () {
+      var a = document.createElement('a');
+      a.href = dessinerAffiche(qr).toDataURL('image/png');
+      a.download = 'affiche_installation_simulateur.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      toast(t('Affiche téléchargée : imprimez-la et posez-la à l\'accueil de l\'agence.'));
+    });
+  }
+
   function initialiserPWA() {
     var bouton = $('#btnInstaller');
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
       window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
     }
+    /* Arrivée par le QR code d'installation (?installer=1) */
+    var parInstallation = false;
+    try {
+      var q = new URLSearchParams(window.location.search);
+      if (q.get('installer') === '1') {
+        parInstallation = true;
+        q.delete('installer');
+        var reste = q.toString();
+        history.replaceState(null, '', window.location.pathname + (reste ? '?' + reste : '') + window.location.hash);
+      }
+    } catch (err) { /* sans effet */ }
     if (estInstallee()) return;
     window.addEventListener('beforeinstallprompt', function (ev) {
       ev.preventDefault();
       invitationInstall = ev;
       bouton.hidden = false;
+      if (surInvitation) surInvitation();
     });
     window.addEventListener('appinstalled', function () {
       invitationInstall = null;
       bouton.hidden = true;
       toast(t('Application installée : elle fonctionne aussi hors connexion.'));
     });
-    if (estIOS() && /^https:$/.test(location.protocol)) bouton.hidden = false;
+    if ((estIOS() || estAndroid()) && /^https:$/.test(location.protocol)) bouton.hidden = false;
     bouton.addEventListener('click', function () {
-      if (invitationInstall) {
-        invitationInstall.prompt();
-        invitationInstall.userChoice.then(function () { invitationInstall = null; bouton.hidden = true; }).catch(function () {});
-        return;
-      }
-      ouvrirDialogue({
-        titre: t('Installer l\'application'),
-        sousTitre: echapper(t('Ajoutez le simulateur à l\'écran d\'accueil : il s\'ouvre comme une application et fonctionne hors connexion.')),
-        icone: 'phone',
-        corps: '<ol class="etapes">' +
-          '<li>' + echapper(t('Sur iPhone ou iPad, ouvrez cette page dans Safari.')) + '</li>' +
-          '<li>' + echapper(t('Touchez le bouton Partager (carré avec une flèche).')) + '</li>' +
-          '<li>' + echapper(t('Choisissez « Sur l\'écran d\'accueil », puis « Ajouter ».')) + '</li>' +
-          '<li>' + echapper(t('Sur Android ou ordinateur : menu du navigateur, puis « Installer l\'application ».')) + '</li></ol>',
-        pied: '<button class="btn btn-primary" data-fermer>' + echapper(t('Compris')) + '</button>'
-      });
+      if (invitationInstall) { lancerInstallation(); return; }
+      ouvrirInstallation();
     });
+    if (parInstallation) setTimeout(ouvrirInstallation, 700);
   }
 
   /* ===================================================================
