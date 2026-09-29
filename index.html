@@ -388,7 +388,7 @@ a { color: inherit; }
   border-radius: 10px; font-weight: 800; font-family: var(--font-display);
   color: #fff; background: var(--grad-main);
 }
-.fields { margin-top: 18px; display: grid; gap: 18px; }
+.fields { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
 .field-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; min-height: 22px; }
 .field label { font-size: 13px; font-weight: 600; color: var(--text-2); }
 .chip {
@@ -458,9 +458,10 @@ a { color: inherit; }
 .range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px var(--ring); }
 .range-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; }
 
-.form-actions { margin-top: 22px; display: grid; gap: 10px; }
+.form-actions { margin-top: 22px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .form-actions .btn-primary { --h: 50px; font-size: 15px; border-radius: 13px; }
-.form-actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-actions-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 380px) { .form-actions-row { grid-template-columns: minmax(0, 1fr); } }
 
 /* =====================================================================
    Résultats
@@ -484,7 +485,7 @@ a { color: inherit; }
   position: relative; overflow: hidden;
   padding: 18px; border-radius: var(--radius-lg);
   background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
-  min-width: 0;
+  min-width: 0; container-type: inline-size;
   transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
 }
 .kpi:hover { transform: translateY(-2px); }
@@ -493,7 +494,7 @@ a { color: inherit; }
 .kpi-value {
   margin-top: 12px;
   font-family: var(--font-display); font-weight: 800;
-  font-size: clamp(20px, 1.9vw, 26px); line-height: 1.1; letter-spacing: -0.02em;
+  font-size: clamp(20px, 1.9vw, 26px); font-size: clamp(16px, 12cqi, 26px); line-height: 1.1; letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .kpi-value .unit { font-size: 0.55em; font-weight: 700; margin-left: 4px; opacity: 0.75; letter-spacing: 0; }
@@ -641,7 +642,8 @@ dialog.dlg.fermeture::backdrop { animation: fondu-out 180ms ease-in both; }
 .dlg-body { padding: 18px 22px; overflow: auto; }
 .dlg-foot { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; padding: 14px 22px 20px; border-top: 1px solid var(--border); background: var(--surface-2); }
 
-.dlg-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.dlg-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.dlg-fields .field { min-width: 0; }
 .dlg-fields .field label { display: block; margin-bottom: 7px; }
 
 .result-box {
@@ -812,7 +814,7 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 1024px) {
-  .scenario-grid { grid-template-columns: 1fr; }
+  .scenario-grid { grid-template-columns: minmax(0, 1fr); }
   .form-card { position: static; }
   .versus { grid-template-columns: 1fr 1fr 1fr; }
   .versus-title { grid-column: 1 / -1; flex-direction: row; gap: 10px; align-items: baseline; padding: 0 4px; }
@@ -824,11 +826,11 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
   .brand-name .brand-tag { display: none; }
   .page { padding: 16px 16px 32px; }
   .hero { padding: 24px 20px; border-radius: var(--radius-lg); }
-  .versus { grid-template-columns: 1fr; }
+  .versus { grid-template-columns: minmax(0, 1fr); }
   .form-card, .schedule { padding: 16px; }
   .kpi { padding: 15px; }
   .kpi-value { font-size: 20px; }
-  .dlg-fields { grid-template-columns: 1fr; }
+  .dlg-fields { grid-template-columns: minmax(0, 1fr); }
   .hist-item { grid-template-columns: auto 1fr; }
   .hist-actions { grid-column: 1 / -1; justify-content: flex-end; }
   .cmp-bar { grid-template-columns: 80px 1fr; }
@@ -837,7 +839,7 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
   .chart-wrap { height: 300px; }
 }
 @media (max-width: 420px) {
-  .kpis { grid-template-columns: 1fr; }
+  .kpis { grid-template-columns: minmax(0, 1fr); }
   .brand-name { font-size: 15px; }
 }
 </style>
