@@ -648,6 +648,15 @@ table.amort { width: 100%; min-width: 640px; border-collapse: separate; border-s
 .amort td.per small { display: block; color: var(--muted); font-weight: 500; font-size: 12px; }
 .amort td.pay { color: var(--text); font-weight: 600; }
 .amort td.int { color: #db2777; }
+.amort td.cum { color: var(--muted); }
+.amort.avec-ratio th, .amort.avec-ratio td { padding-inline: 6px; }
+.amort.avec-ratio th { letter-spacing: 0; }
+.amort.avec-ratio { font-size: 12.5px; }
+.amort td.ratio.ok { color: #047857; font-weight: 800; }
+.amort td.ratio.ko { color: #be123c; }
+.amort tbody tr.reduc td { background: rgba(16, 185, 129, 0.1); }
+:root[data-theme="dark"] .amort td.ratio.ok { color: #6ee7b7; }
+:root[data-theme="dark"] .amort td.ratio.ko { color: #fda4af; }
 .amort td.pri { color: var(--violet-strong); }
 :root[data-theme="dark"] .amort td.int { color: #f9a8d4; }
 :root[data-theme="dark"] .amort td.pri { color: #c4b5fd; }
@@ -1704,8 +1713,8 @@ var AR = {
   "1 000 évolutions possibles du TMM, révisé chaque année : quel risque sur votre mensualité ?": "1000 تطور محتمل لمعدل السوق النقدية، يُراجع كل سنة: ما الخطر على قسطك الشهري؟",
   "1 cas sur 2": "حالة من 2",
   "1 cas sur 20 au-delà": "حالة من 20 تتجاوز ذلك",
-  "1 simulation enregistrée dans ce navigateur.": "محاكاة واحدة محفوظة في هذا المتصفح.",
   "1 simulation enregistrée": "محاكاة واحدة محفوظة",
+  "1 simulation enregistrée dans ce navigateur.": "محاكاة واحدة محفوظة في هذا المتصفح.",
   "1. Ouvrez l'appareil photo et visez le QR code.": "1. افتح الكاميرا ووجّهها نحو رمز QR.",
   "10 %": "10 %",
   "10 remboursements au maximum.": "10 عمليات سداد كحد أقصى.",
@@ -1869,7 +1878,7 @@ var AR = {
   "Dicter mon crédit (micro)": "إملاء قرضي (ميكروفون)",
   "Différé": "فترة الإمهال",
   "Différé de remboursement (facultatif)": "فترة إمهال السداد (اختياري)",
-  "Divise le taux par deux à partir de la 4e année, si la durée dépasse 84 mois et si le ratio intérêts des 36 premiers mois / capital restant dû à 36 mois atteint 8 %": "يقسم النسبة على اثنين ابتداءً من السنة الرابعة، إذا تجاوزت المدة 84 شهرًا وبلغت نسبة فوائد الأشهر الـ36 الأولى إلى رأس المال المتبقي عند الشهر 36 ما لا يقل عن 8 %",
+  "Divise le taux par deux (crédit de plus de 84 mois) dès que les intérêts des 36 derniers mois dépassent strictement 8 % du capital restant dû, contrôlé dès l'échéance 37 puis chaque mois ; nouvelle réduction possible 36 mois après la précédente": "يقسم النسبة على اثنين (قرض لأكثر من 84 شهرًا) عندما تتجاوز فوائد الأشهر الـ36 الأخيرة 8 % من رأس المال المتبقي، مع المراقبة ابتداءً من القسط 37 ثم كل شهر؛ ويمكن تخفيض جديد بعد 36 شهرًا من السابق",
   "Données insuffisantes pour évaluer l'éligibilité.": "المعطيات غير كافية لتقييم الأهلية.",
   "Dossier client": "ملف الحريف",
   "Durée": "المدة",
@@ -1999,6 +2008,9 @@ var AR = {
   "Intérêts": "الفوائد",
   "Intérêts (médiane)": "الفوائد (الوسيط)",
   "Intérêts (scénario défavorable)": "الفوائد (سيناريو غير ملائم)",
+  "Intérêts 36 mois": "فوائد 36 شهرًا",
+  "Intérêts cumulés (36 mois)": "الفوائد المتراكمة (36 شهرًا)",
+  "Intérêts des 36 derniers mois / capital restant dû, vérifié dès l'échéance 37 puis chaque mois jusqu'à ce qu'il dépasse 8 % ; après une réduction, nouveau contrôle 36 mois plus tard.": "فوائد الأشهر الـ36 الأخيرة / رأس المال المتبقي، تُراقب ابتداءً من القسط 37 ثم كل شهر إلى أن تتجاوز 8 %؛ وبعد كل تخفيض تُعاد المراقبة بعد 36 شهرًا.",
   "Intérêts des 36 premiers mois / capital restant dû à 36 mois": "فوائد الأشهر الـ36 الأولى / رأس المال المتبقي عند الشهر 36",
   "Intérêts les plus faibles :": "أقل فوائد:",
   "Intérêts payés": "الفوائد المدفوعة",
@@ -2036,6 +2048,7 @@ var AR = {
   "Le lien de simulation est incomplet ou invalide.": "رابط المحاكاة غير مكتمل أو غير صالح.",
   "Le lissage ne s'applique pas quand le prêt principal a un différé.": "لا تنطبق التسوية عندما يتضمن القرض الرئيسي فترة إمهال.",
   "Le nouveau taux s'applique à partir de l'échéance 37 (4e année).": "تُطبَّق النسبة الجديدة ابتداءً من القسط 37 (السنة الرابعة).",
+  "Le ratio ne dépasse jamais strictement 8 % sur la durée du crédit.": "لا تتجاوز النسبة 8 % أبدًا طوال مدة القرض.",
   "Le simulateur accepte 300 mois au maximum : réduisez la durée pour l'utiliser.": "يقبل المحاكي 300 شهر كحد أقصى: قلّص المدة لاستعمالها.",
   "Le simulateur s'ouvre alors comme une application, depuis l'écran d'accueil, même sans connexion.": "يفتح المحاكي عندها كتطبيق من الشاشة الرئيسية، حتى دون اتصال.",
   "Le taux": "النسبة",
@@ -2171,7 +2184,9 @@ var AR = {
   "Rapport client": "تقرير الحريف",
   "Rapport client premium : couverture, synthèse, conseils, échéancier et signatures": "تقرير حريف متميز: غلاف، ملخص، نصائح، جدول أقساط وإمضاءات",
   "Rapport client téléchargé.": "تم تنزيل تقرير الحريف.",
+  "Ratio": "النسبة",
   "Ratio d'au moins 8 %": "نسبة لا تقل عن 8 %",
+  "Ratio strictement supérieur à 8 %": "نسبة أكبر تمامًا من 8 %",
   "Rechercher une action": "البحث عن إجراء",
   "Rechercher une action (Ctrl + K)": "البحث عن إجراء (Ctrl + K)",
   "Rechercher une action ou un outil…": "ابحث عن إجراء أو أداة…",
@@ -2207,6 +2222,7 @@ var AR = {
   "Règles d'éligibilité": "قواعد الأهلية",
   "Règles modifiables dans « Agence ». Indications, pas une décision de la banque.": "قواعد قابلة للتعديل في «الوكالة». مؤشرات فقط، وليست قرار البنك.",
   "Réduction de taux annulée.": "تم إلغاء تخفيض النسبة.",
+  "Réductions de taux ({n})": "تخفيضات النسبة ({n})",
   "Réduire l'échéance": "تخفيض القسط",
   "Réduire la durée": "تقليص المدة",
   "Réduire le taux": "تخفيض النسبة",
@@ -2308,7 +2324,9 @@ var AR = {
   "Taux moyen": "متوسط النسبة",
   "Taux ou marge ({n})": "النسبة أو الهامش ({n})",
   "Taux réduit (dès l'échéance 37)": "النسبة المخفّضة (ابتداءً من القسط 37)",
+  "Taux réduit 1 fois": "تم تخفيض النسبة مرة واحدة",
   "Taux réduit : {a} → {b} à partir de l'échéance 37.": "النسبة المخفّضة: {a} ← {b} ابتداءً من القسط 37.",
+  "Taux réduit {n} fois": "تم تخفيض النسبة {n} مرات",
   "Taux, frais, assurance et TEG": "النسبة والمصاريف والتأمين والنسبة الفعلية",
   "Tendance par an": "الاتجاه السنوي",
   "Texte lu : vérifiez les valeurs ci-dessous.": "تمت قراءة النص: تحقق من القيم أدناه.",
@@ -2415,12 +2433,16 @@ var AR = {
   "taux fixe {m}": "نسبة قارة {m}",
   "taux nominal {v}": "النسبة الاسمية {v}",
   "taux réduit": "نسبة مخفّضة",
+  "taux réduit 1 fois": "تخفيض النسبة مرة واحدة",
+  "taux réduit n° {n}": "تخفيض النسبة رقم {n}",
+  "taux réduit {n} fois": "تخفيض النسبة {n} مرات",
   "taux {m}": "نسبة {m}",
   "{a} (intérêts seuls), puis {b} à la dernière échéance": "{a} (الفوائد فقط)، ثم {b} في آخر قسط",
   "{a} ans": "{a} سنة",
   "{a} et plus": "{a} فأكثر",
   "{a} si le TMM ne bouge pas": "{a} إذا بقي المعدل ثابتًا",
   "{a} à la première échéance, puis dégressive jusqu'à {b}": "{a} في القسط الأول، ثم متناقص حتى {b}",
+  "{a} → {b} dès l'échéance {n}": "{a} → {b} ابتداءً من القسط {n}",
   "{d} point(s) dès l'échéance {n}": "{d} نقطة ابتداءً من القسط {n}",
   "{m} / mois": "{m} / شهر",
   "{m} après l'échéance {n}": "{m} بعد القسط رقم {n}",
@@ -2441,6 +2463,7 @@ var AR = {
   "{n}, partiel (intérêts payés)": "{n}، جزئي (دفع الفوائد)",
   "{n}, total (intérêts capitalisés)": "{n}، كلي (فوائد مضافة إلى رأس المال)",
   "{p} · {n}": "{p} · {n}",
+  "{p} à 36 mois": "{p} عند 36 شهرًا",
   "{taux} par an sur le {base} : {m} la 1re échéance": "{taux} سنويًا على {base}: {m} في القسط الأول",
   "{v} / an": "{v} / سنة",
   "{v} / mois": "{v} / شهر",
@@ -2462,6 +2485,7 @@ var AR = {
   "Échéances constantes": "أقساط ثابتة",
   "Économie (intérêts et assurance)": "التوفير (الفوائد والتأمين)",
   "Économie d'intérêts": "التوفير في الفوائد",
+  "Économie d'intérêts : {m}.": "توفير في الفوائد: {m}.",
   "Économie nette sur toute la durée": "التوفير الصافي على كامل المدة",
   "Économie réelle d'un nouveau crédit": "التوفير الفعلي لقرض جديد",
   "Édité le {d}": "حُرّر في {d}",
@@ -2559,6 +2583,7 @@ var AR = {
   function fmtTexte(v) { return enArabe() ? fmtMoney(v) : nfMontant.format(v).replace(/[  ]/g, ' ') + ' TND'; }
   function fmtPct(v, d) { return iso(espaces(new Intl.NumberFormat('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d }).format(v)) + ' %'); }
   function fmtTaux(v) { return iso(fmtSaisie(v) + ' %'); }
+  function fmtTauxPrecis(v) { return iso(espaces(new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 6 }).format(v)) + ' %'); }
   function fmtTm(v) { return iso(nf6.format(v) + ' %'); }
   function fmtSigne(v) { return iso((v > 0 ? '+' : v < 0 ? '-' : '') + fmtSaisie(Math.abs(v))); }
   function fmtCompact(v) { return new Intl.NumberFormat('fr-FR', { notation: 'compact', maximumFractionDigits: 1 }).format(v); }
@@ -2759,23 +2784,42 @@ var AR = {
     var v = e.variation || null;
     var ras = e.ras || [], vers = e.versement || null, indemPct = e.indemnite || 0, modeRa = e.raMode === 'mensualite' ? 'mensualite' : 'duree';
     var ass = e.assurance || null;
-    var reduc = !!reduire && e.mois > 36;
+    /* Réduction de moitié du taux (crédit de plus de 84 mois) : avant chaque
+       échéance testée, intérêts des 36 derniers mois / capital restant dû
+       strictement supérieur à 8 %. Premier test à l'échéance 37 ; en cas
+       d'échec, nouveau test à l'échéance suivante (fenêtre glissante) ;
+       après une réduction, prochain test 36 mois plus tard. */
+    var fen = 36 / p;
+    var reduc = !!reduire && e.mois > 84 && fen === Math.round(fen);
     var parAn = 12 / p;
-    var lignes = [], paliers = [], raListe = [];
+    var lignes = [], paliers = [], raListe = [], reductions = [];
     var reste = C, totI = 0, totP = 0, totM = 0, totIndem = 0, totAss = 0, totRA = 0;
     var M = NaN, P = NaN, tmCourant = NaN, recalcul = false, fini = false, M2 = null, apresRa = false;
+    var facteur = 1, prochainTest = fen + 1, int36 = 0;
 
-    /* La réduction de taux s'applique aux échéances qui commencent après le 36e mois */
-    function reduit(k) { return reduc && k >= 1 && (k - 1) * p >= 36; }
-    function tauxDuPeriode(k) {
+    function tauxBase(k) {
       var ta = e.taux + (v && k >= v.des ? v.delta : 0);
-      if (ta < 0) ta = 0;
-      return reduit(k) ? ta / 2 : ta;
+      return ta < 0 ? 0 : ta;
     }
+    function tauxDuPeriode(k) { return tauxBase(k) * facteur; }
     /* Taux réduit non arrondi, comme dans la version d'origine */
-    function tmDuPeriode(k) { var ta = tauxDuPeriode(k); return reduit(k) ? ta * p / 12 : tauxPeriodePct(ta, p); }
+    function tmDuPeriode(k) { var ta = tauxDuPeriode(k); return facteur < 1 ? ta * p / 12 : tauxPeriodePct(ta, p); }
 
     for (var k = 1; k <= nFin && !fini; k++) {
+      var nouvelleReduc = false, test = null;
+      if (reduc && k >= prochainTest && k > D) {
+        var ratioT = reste > 0 ? int36 / reste : 0;
+        test = { ratio: ratioT, ok: ratioT > 0.08 };
+        lignes[k - 2].test = test;
+        if (test.ok) {
+          var avant = tauxDuPeriode(k);
+          facteur /= 2;
+          nouvelleReduc = true;
+          prochainTest = k + fen;
+          reductions.push({ mois: k, date: debut ? new Date(debut.getFullYear(), debut.getMonth() + (k - 1) * p, 1) : null,
+            avant: avant, apres: tauxDuPeriode(k), ratio: ratioT, interets: int36, reste: reste, M: NaN });
+        } else prochainTest = k + 1;
+      }
       var tm = tmDuPeriode(k), r = tm / 100;
       var enDiff = k <= D;
       var resteAvant = reste;
@@ -2785,13 +2829,12 @@ var AR = {
         if (diffTotal) { principal = roundPrec(-interet); paiement = 0; }
         else { principal = 0; paiement = interet; }
       } else {
-        var debutReduc = reduit(k) && !reduit(k - 1);
-        if (k === D + 1 || tm !== tmCourant || recalcul || debutReduc) {
+        if (k === D + 1 || tm !== tmCourant || recalcul || nouvelleReduc) {
           if (amort === 'constant') M = mensualite(reste, tm, nFin - k + 1);
           else if (amort === 'lineaire' && (k === D + 1 || recalcul)) P = roundPrec(reste / (nFin - k + 1));
           tmCourant = tm;
           recalcul = false;
-          if (debutReduc && amort === 'constant') M2 = M;
+          if (nouvelleReduc && amort === 'constant') { reductions[reductions.length - 1].M = M; if (M2 === null) M2 = M; }
           if (amort === 'constant' && (!paliers.length || paliers[paliers.length - 1].M !== M)) paliers.push({ mois: k, M: M, taux: tauxDuPeriode(k) });
         }
         if (amort === 'constant') { principal = roundPrec(M - interet); paiement = M; }
@@ -2813,9 +2856,10 @@ var AR = {
         mois: k,
         date: debut ? new Date(debut.getFullYear(), debut.getMonth() + (k - 1) * p, 1) : null,
         paiement: paiement, interet: interet, principal: principal, assurance: prime, reste: reste,
-        reduit: reduit(k), revise: !!(v && k === v.des), differe: enDiff
+        reduit: facteur < 1, reduction: nouvelleReduc ? reductions.length : 0, revise: !!(v && k === v.des), differe: enDiff
       };
       lignes.push(ligne);
+      int36 = roundPrec(int36 + interet - (k > fen ? lignes[k - 1 - fen].interet : 0));
 
       /* Remboursements anticipés ponctuels et versements réguliers, après l'échéance k */
       if (!fini && reste > 0) {
@@ -2854,17 +2898,26 @@ var AR = {
       }
     }
 
+    if (reduc) {
+      var cumul = 0;
+      lignes.forEach(function (l, i) {
+        cumul = roundPrec(cumul + l.interet - (i >= fen ? lignes[i - fen].interet : 0));
+        l.int36 = i + 1 >= fen ? cumul : null;
+        var crd = resteFin(l);
+        l.ratio = i + 1 >= fen && crd > 0 ? cumul / crd : null;
+      });
+    }
     var frais = fraisTotal(e);
     var premiere = lignes[Math.min(D, lignes.length - 1)];
     var res = {
       lignes: lignes, paliers: paliers,
       M1: amort === 'constant' && paliers.length ? paliers[0].M : (premiere ? premiere.paiement : NaN),
-      M2: M2, ta2: reduc ? e.taux / 2 : null,
+      M2: M2, ta2: reductions.length ? reductions[0].apres : null, reductions: reductions,
       totI: totI, totP: totP, totM: totM, totIndem: totIndem, totAss: totAss, totRA: totRA, frais: frais,
       coutTotal: roundPrec(C + totI + totAss + totIndem + frais),
       coutCredit: roundPrec(totI + totAss + totIndem + frais),
       n: lignes.length, nPrevu: Math.round(e.mois / p), C: C, p: p, amort: amort, D: D, diffTotal: diffTotal,
-      tm: tauxPeriodePct(e.taux, p), debut: debut, ras: raListe, reduc: reduc
+      tm: tauxPeriodePct(e.taux, p), debut: debut, ras: raListe, reduc: reduc && reductions.length > 0, reducDemandee: reduc
     };
     res.teg = calculerTEG(res);
     return res;
@@ -2918,22 +2971,11 @@ var AR = {
     return out;
   }
 
-  /* Éligibilité : durée > 84 mois et (intérêts des 36 premiers mois / capital restant dû à 36 mois) ≥ 8 % */
-  function evaluerReduction(e) {
-    var tm = tauxMensuelPct(e.taux), n = e.mois, C = e.capital;
-    var r = tm / 100, M = mensualite(C, tm, n);
-    var reste = C, int36 = 0, reste36 = NaN;
-    for (var mois = 1; mois <= n; mois++) {
-      var interet = roundPrec(reste * r);
-      var principal = roundPrec(M - interet);
-      if (mois === n) principal = roundPrec(reste);
-      reste = roundPrec(reste - principal);
-      if (mois <= 36) int36 = roundPrec(int36 + interet);
-      if (mois === 36) reste36 = reste;
-    }
-    if (!isFinite(reste36)) reste36 = reste;
-    var ratio = reste36 > 0 ? int36 / reste36 : NaN;
-    return { condDuree: n > 84, ratio: ratio, condRatio: ratio >= 0.08, valide: isFinite(ratio) && reste36 > 0 };
+  /* Réductions de taux successives : « 2,25 % → 1,125 % dès l'échéance 103 (09/2031) » */
+  function texteReductions(r) {
+    return r.reductions.map(function (x) {
+      return t('{a} → {b} dès l\'échéance {n}', { a: fmtTauxPrecis(x.avant), b: fmtTauxPrecis(x.apres), n: x.mois }) + (x.date ? ' (' + moisAnnee(x.date) + ')' : '');
+    }).join(' ; ');
   }
 
   /* Description des échéances : « 1 000 TND puis 900 TND dès l'échéance 37 »,
@@ -3245,7 +3287,7 @@ var AR = {
           '<button class="btn btn-primary btn-block" id="' + k + '-calculer">' + ico('calc') + T('Calculer et enregistrer') + '</button>' +
           '<div class="form-actions-row">' +
             '<button class="btn btn-ghost" id="' + k + '-reset">' + ico('reset') + T('Réinitialiser') + '</button>' +
-            '<button class="btn btn-orange" id="' + k + '-reduire"' + A('title', 'Divise le taux par deux à partir de la 4e année, si la durée dépasse 84 mois et si le ratio intérêts des 36 premiers mois / capital restant dû à 36 mois atteint 8 %') + '>' + ico('down') + T('Réduire le taux') + '</button>' +
+            '<button class="btn btn-orange" id="' + k + '-reduire"' + A('title', 'Divise le taux par deux (crédit de plus de 84 mois) dès que les intérêts des 36 derniers mois dépassent strictement 8 % du capital restant dû, contrôlé dès l\'échéance 37 puis chaque mois ; nouvelle réduction possible 36 mois après la précédente') + '>' + ico('down') + T('Réduire le taux') + '</button>' +
           '</div>' +
         '</div>' +
       '</section>' +
@@ -3657,7 +3699,7 @@ var AR = {
       if (r.reduc) {
         n.hidden = false;
         n.innerHTML = '<span class="pastille">' + ico('down', 'ico-sm') + '</span>' +
-          '<span>' + t('Taux réduit : {a} → {b} à partir de l\'échéance 37.', { a: '<strong class="num">' + echapper(fmtTaux(e.taux)) + '</strong>', b: '<strong class="num">' + echapper(fmtTaux(r.ta2)) + '</strong>' }) + '</span>' +
+          '<span><strong>' + echapper(r.reductions.length === 1 ? t('Taux réduit 1 fois') : t('Taux réduit {n} fois', { n: r.reductions.length })) + '</strong> : ' + echapper(texteReductions(r)) + '.</span>' +
           '<button class="btn btn-ghost btn-sm" data-annuler-reduc>' + ico('x', 'ico-sm') + echapper(t('Annuler la réduction')) + '</button>';
       } else {
         n.hidden = true;
@@ -3790,23 +3832,33 @@ var AR = {
       var annuel = sc.vue === 'annuel';
       var lignes = lignesVue();
       var avecAss = r.totAss > 0;
+      var avecRatio = !annuel && r.reducDemandee;
       f('ech-sub').textContent = annuel
         ? t('{n} de remboursement', { n: libAnnees(lignes.length) })
-        : t(infoPeriodicite(r.p).pluriel, { n: libEcheances(r.n) }) + (r.debut ? ' · ' + t('à partir de {d}', { d: moisLong(r.debut) }) : '');
+        : t(infoPeriodicite(r.p).pluriel, { n: libEcheances(r.n) }) + (r.debut ? ' · ' + t('à partir de {d}', { d: moisLong(r.debut) }) : '') +
+          (r.reducDemandee ? ' · ' + (r.reductions.length === 1 ? t('taux réduit 1 fois') : t('taux réduit {n} fois', { n: r.reductions.length })) : '');
 
+      f('thead').parentNode.classList.toggle('avec-ratio', avecRatio);
       f('thead').innerHTML = '<tr>' +
         '<th scope="col">' + echapper(annuel ? t('Année') : t('Échéance')) + '</th>' +
         '<th scope="col">' + echapper(annuel ? t('Total payé') : (avecAss ? t('Échéance totale') : nomEcheance())) + '</th>' +
         '<th scope="col"><span class="cle" style="background:#ec4899"></span>' + echapper(t('Intérêts')) + '</th>' +
         '<th scope="col"><span class="cle" style="background:#7c3aed"></span>' + echapper(t('Principal')) + '</th>' +
         (avecAss ? '<th scope="col"><span class="cle" style="background:#0891b2"></span>' + echapper(t('Assurance')) + '</th>' : '') +
-        '<th scope="col">' + echapper(t('Capital restant dû')) + '</th></tr>';
+        '<th scope="col">' + echapper(t('Capital restant dû')) + '</th>' +
+        (avecRatio ? '<th scope="col" title="' + echapper(t('Intérêts cumulés (36 mois)')) + '">' + echapper(t('Intérêts 36 mois')) + '</th><th scope="col">' + echapper(t('Ratio')) + '</th>' : '') + '</tr>';
+      function cellsRatio(l) {
+        if (!avecRatio) return '';
+        if (l.int36 == null) return '<td class="cum">—</td><td>—</td>';
+        var cl = l.test ? (l.test.ok ? ' class="ratio ok"' : ' class="ratio ko"') : '';
+        return '<td class="cum">' + fmtNombre(l.int36) + '</td><td' + cl + '>' + (l.ratio != null ? echapper(fmtPct(l.ratio * 100, 3)) : '—') + '</td>';
+      }
 
       function ligneRA(x) {
         return '<tr class="ra-row"><td class="per">' + echapper(t('Remboursement anticipé')) +
           (x.indemnite > 0 ? '<small>' + echapper(t('dont indemnité {m}', { m: fmtMoney(x.indemnite) })) + '</small>' : '') + '</td>' +
           '<td class="pay">' + fmtNombre(roundPrec(x.montant + x.indemnite)) + '</td><td class="int">—</td>' +
-          '<td class="pri">' + fmtNombre(x.montant) + '</td>' + (avecAss ? '<td class="ass">—</td>' : '') + '<td>' + fmtNombre(x.reste) + '</td></tr>';
+          '<td class="pri">' + fmtNombre(x.montant) + '</td>' + (avecAss ? '<td class="ass">—</td>' : '') + '<td>' + fmtNombre(x.reste) + '</td>' + (avecRatio ? '<td></td><td></td>' : '') + '</tr>';
       }
       function badge(txt) { return txt ? ' data-badge="' + echapper(txt) + '"' : ''; }
 
@@ -3825,17 +3877,18 @@ var AR = {
           var cls = [];
           if (parAn > 1 && l.mois > 1 && (l.mois - 1) % parAn === 0) cls.push('an');
           if (l.differe) cls.push('diff');
-          var b = l.differe ? (l.mois === 1 ? t('différé') : '') : ((l.reduit && (l.mois === 1 || !r.lignes[l.mois - 2].reduit)) ? t('taux réduit') : (l.revise ? t('TMM révisé') : ''));
+          var b = l.differe ? (l.mois === 1 ? t('différé') : '') : (l.reduction ? t('taux réduit n° {n}', { n: l.reduction }) : (l.revise ? t('TMM révisé') : ''));
+          if (l.reduction) cls.push('reduc');
           html += '<tr' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '><td class="per"' + badge(b) + '><span class="n">' + l.mois + '</span>' +
             (l.date ? moisAnnee(l.date) : '') + '</td>' +
             '<td class="pay">' + fmtNombre(totalLigne(l)) + '</td><td class="int">' + fmtNombre(l.interet) + '</td>' +
-            '<td class="pri">' + fmtNombre(l.principal) + '</td>' + (avecAss ? '<td class="ass">' + fmtNombre(l.assurance) + '</td>' : '') + '<td>' + fmtNombre(l.reste) + '</td></tr>';
+            '<td class="pri">' + fmtNombre(l.principal) + '</td>' + (avecAss ? '<td class="ass">' + fmtNombre(l.assurance) + '</td>' : '') + '<td>' + fmtNombre(l.reste) + '</td>' + cellsRatio(l) + '</tr>';
           if (l.ra) html += ligneRA(l.ra);
         });
       }
       f('tbody').innerHTML = html;
       f('tfoot').innerHTML = '<tr><td>' + echapper(t('Total')) + '</td><td>' + fmtNombre(r.totM) + '</td><td>' + fmtNombre(r.totI) +
-        '</td><td>' + fmtNombre(r.totP) + '</td>' + (avecAss ? '<td>' + fmtNombre(r.totAss) + '</td>' : '') + '<td>' + echapper(unite()) + '</td></tr>';
+        '</td><td>' + fmtNombre(r.totP) + '</td>' + (avecAss ? '<td>' + fmtNombre(r.totAss) + '</td>' : '') + '<td>' + echapper(unite()) + '</td>' + (avecRatio ? '<td></td><td></td>' : '') + '</tr>';
 
       if (sc.aff === 'graphique') rendreGraphique();
     }
@@ -4022,31 +4075,36 @@ var AR = {
         toast(t('La réduction de taux s\'applique aux crédits mensuels à échéances constantes, sans différé.'), 'erreur', 4500);
         return;
       }
-      var ev = evaluerReduction(e);
-      if (!ev.valide) { toast(t('Données insuffisantes pour évaluer l\'éligibilité.'), 'erreur'); return; }
+      var x = calculerEcheancier(e, true);
+      var l36 = x.lignes[35], ratio37 = l36 && l36.ratio != null ? l36.ratio : NaN;
+      var condDuree = e.mois > 84, nb = x.reductions.length;
       var liste =
         '<div class="checklist">' +
-          '<div class="check-row"><span class="etat ' + (ev.condDuree ? 'ok' : 'ko') + '">' + ico(ev.condDuree ? 'check' : 'x', 'ico-sm') + '</span>' +
+          '<div class="check-row"><span class="etat ' + (condDuree ? 'ok' : 'ko') + '">' + ico(condDuree ? 'check' : 'x', 'ico-sm') + '</span>' +
             '<span class="txt">' + echapper(t('Durée supérieure à 84 mois')) + '<small>' + echapper(t('Plus de 7 ans de remboursement')) + '</small></span><span class="val">' + echapper(libMois(e.mois)) + '</span></div>' +
-          '<div class="check-row"><span class="etat ' + (ev.condRatio ? 'ok' : 'ko') + '">' + ico(ev.condRatio ? 'check' : 'x', 'ico-sm') + '</span>' +
-            '<span class="txt">' + echapper(t('Ratio d\'au moins 8 %')) + '<small>' + echapper(t('Intérêts des 36 premiers mois / capital restant dû à 36 mois')) + '</small></span><span class="val">' + echapper(fmtPct(ev.ratio * 100, 2)) + '</span></div>' +
+          '<div class="check-row"><span class="etat ' + (nb ? 'ok' : 'ko') + '">' + ico(nb ? 'check' : 'x', 'ico-sm') + '</span>' +
+            '<span class="txt">' + echapper(t('Ratio strictement supérieur à 8 %')) + '<small>' + echapper(t('Intérêts des 36 derniers mois / capital restant dû, vérifié dès l\'échéance 37 puis chaque mois jusqu\'à ce qu\'il dépasse 8 % ; après une réduction, nouveau contrôle 36 mois plus tard.')) + '</small></span>' +
+            '<span class="val">' + (isFinite(ratio37) ? echapper(t('{p} à 36 mois', { p: fmtPct(ratio37 * 100, 3) })) : '') + '</span></div>' +
         '</div>';
-      if (ev.condDuree && ev.condRatio) {
+      if (condDuree && nb) {
         sc.reduction = true;
         mettreAJour();
+        var tableau = '<div class="sensi-wrap"><table class="sensi-t"><thead><tr><th>' + echapper(t('N°')) + '</th><th>' + echapper(t('Dès l\'échéance')) + '</th><th>' + echapper(t('Ratio')) + '</th><th>' + echapper(t('Taux')) + '</th><th>' + echapper(t('Mensualité')) + '</th></tr></thead><tbody>' +
+          x.reductions.map(function (z, i) {
+            return '<tr><td>' + (i + 1) + '</td><td>' + z.mois + (z.date ? ' · ' + echapper(moisAnnee(z.date)) : '') + '</td><td>' + echapper(fmtPct(z.ratio * 100, 3)) + '</td>' +
+              '<td>' + echapper(fmtTauxPrecis(z.avant)) + ' → <b>' + echapper(fmtTauxPrecis(z.apres)) + '</b></td><td><b>' + echapper(fmtMoney(z.M)) + '</b></td></tr>';
+          }).join('') + '</tbody></table></div>';
         ouvrirDialogue({
-          titre: t('Éligible : taux réduit de moitié'),
-          sousTitre: echapper(t('Le nouveau taux s\'applique à partir de l\'échéance 37 (4e année).')),
-          icone: 'check', ton: 'green',
-          corps: '<div class="taux-change"><div class="t"><span>' + echapper(t('Ancien taux annuel')) + '</span><strong class="num">' + echapper(fmtTaux(e.taux)) + '</strong></div>' +
-                 '<span class="fl">' + ico('arrow') + '</span>' +
-                 '<div class="t new"><span>' + echapper(t('Nouveau taux annuel')) + '</span><strong class="num">' + echapper(fmtTaux(e.taux / 2)) + '</strong></div></div>' + liste,
+          titre: nb === 1 ? t('Taux réduit 1 fois') : t('Taux réduit {n} fois', { n: nb }),
+          sousTitre: echapper(t('Économie d\'intérêts : {m}.', { m: fmtMoney(roundPrec(calculerEcheancier(e, false).totI - x.totI)) })),
+          icone: 'check', ton: 'green', large: true,
+          corps: tableau + liste,
           pied: '<button class="btn btn-primary" data-fermer>' + echapper(t('Voir l\'échéancier')) + '</button>'
         });
       } else {
         ouvrirDialogue({
           titre: t('Non éligible à la réduction'),
-          sousTitre: echapper(t('Les deux conditions doivent être remplies.')),
+          sousTitre: echapper(condDuree ? t('Le ratio ne dépasse jamais strictement 8 % sur la durée du crédit.') : t('Les deux conditions doivent être remplies.')),
           icone: 'x', ton: 'red',
           corps: liste,
           pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button>'
@@ -4241,16 +4299,19 @@ var AR = {
     var libMontant = annuel ? t('Total payé') : (avecAss ? t('Échéance totale') : t(infoPeriodicite(r.p).echeance));
     var entete = annuel ? [t('Année'), t('Période')] : (avecDate ? [t('N°'), t('Échéance')] : [t('N°')]);
     var decal = entete.length;
-    entete = entete.concat([libMontant, t('Intérêts'), t('Principal')], avecAss ? [t('Assurance')] : [], [t('Capital restant dû')]);
+    var avecRatio = !annuel && r.reducDemandee;
+    entete = entete.concat([libMontant, t('Intérêts'), t('Principal')], avecAss ? [t('Assurance')] : [], [t('Capital restant dû')], avecRatio ? [t('Intérêts cumulés (36 mois)'), t('Ratio')] : []);
     var lignes = [];
-    function montants(pay, int, pri, ass, reste) { return [pay, int, pri].concat(avecAss ? [ass] : [], [reste]); }
+    function montants(pay, int, pri, ass, reste, l) {
+      return [pay, int, pri].concat(avecAss ? [ass] : [], [reste], avecRatio ? (l && l.int36 != null ? [l.int36, l.ratio != null ? fmtPct(l.ratio * 100, 3) + (l.test && l.test.ok ? ' ✓' : '') : ''] : ['', '']) : []);
+    }
     if (annuel) {
       agregerAnnuel(r).forEach(function (a) {
         lignes.push([a.annee, a.debut ? moisAnnee(a.debut) + ' – ' + moisAnnee(a.fin) : libEcheances(a.nb)].concat(montants(a.paiement, a.interet, a.principal, a.assurance, a.reste)));
       });
     } else {
       r.lignes.forEach(function (l) {
-        lignes.push((avecDate ? [l.mois, moisAnnee(l.date)] : [l.mois]).concat(montants(totalLigne(l), l.interet, l.principal, l.assurance, l.reste)));
+        lignes.push((avecDate ? [l.mois, moisAnnee(l.date)] : [l.mois]).concat(montants(totalLigne(l), l.interet, l.principal, l.assurance, l.reste, l)));
         if (l.ra) {
           var x = l.ra;
           lignes.push((avecDate ? [t('RA'), t('Remb. anticipé')] : [t('RA')]).concat(montants(roundPrec(x.montant + x.indemnite), '', x.montant, '', x.reste)));
@@ -4290,7 +4351,7 @@ var AR = {
       : fmtTaux(e.taux)]);
     s.push([r.p === 1 ? t('Taux d\'intérêt mensuel') : t('Taux de la période'), fmtTm(r.tm)]);
     if (e.variation) s.push([t('Évolution du TMM'), t('{d} point(s) dès l\'échéance {n}', { d: fmtSigne(e.variation.delta), n: e.variation.des })]);
-    if (r.reduc) s.push([t('Taux réduit (dès l\'échéance 37)'), fmtTaux(r.ta2)]);
+    if (r.reduc) s.push([t('Réductions de taux ({n})', { n: r.reductions.length }), texteReductions(r)]);
     s.push([t('Date de début'), e.dateDebut ? dateCourte(e.dateDebut) : t('Non précisée')]);
     s.push([t(infoP.echeance) + (r.totAss > 0 ? ' ' + t('(hors assurance)') : ''), texteEcheances(r)]);
     if (r.totAss > 0) {
