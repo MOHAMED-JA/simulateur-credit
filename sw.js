@@ -1,7 +1,7 @@
 /* Service worker du simulateur de crédit : application installable et
    utilisable hors connexion. Changer VERSION à chaque mise en ligne pour
    que les utilisateurs reçoivent la nouvelle version. */
-var VERSION = '2026-10-01-3';
+var VERSION = '2026-10-01-4';
 var CACHE_APP = 'simulateur-app-' + VERSION;
 var CACHE_EXT = 'simulateur-externe-v1';
 
