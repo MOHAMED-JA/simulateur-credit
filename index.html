@@ -1530,6 +1530,199 @@ dialog.palette .dlg-head { display: none; }
   :root.aurora .amort tfoot td { background: #ffffff; }
   :root.aurora { --bg: #ffffff; --surface: #ffffff; --surface-2: #f4f2fb; --surface-3: #ebe8f7; --border: #e4e0f0; --border-strong: #d3cde6; --track: #e6e2f3; }
 }
+/* =====================================================================
+   Barre latérale de navigation par rubriques
+   Écran large : panneau complet (repliable en rail d'icônes) ;
+   écran moyen : rail d'icônes ; téléphone : tiroir.
+   ===================================================================== */
+:root { --haut-barre: 65px; --larg-nav: 264px; --larg-rail: 76px; }
+.coque { display: flex; align-items: flex-start; max-width: 1720px; margin: 0 auto; }
+.coque > .page { flex: 1; min-width: 0; margin: 0; max-width: none; }
+.nav-lat {
+  position: sticky; top: var(--haut-barre); z-index: 40;
+  flex: none; width: var(--larg-nav); height: calc(100vh - var(--haut-barre)); height: calc(100dvh - var(--haut-barre));
+  display: flex; flex-direction: column;
+  padding: 18px 10px 12px 16px;
+  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+html[dir="rtl"] .nav-lat { padding: 18px 16px 12px 10px; }
+.nl-defile {
+  flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
+  margin-inline-end: -6px; padding-inline-end: 6px;
+  scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
+}
+.nl-defile::-webkit-scrollbar { width: 6px; }
+.nl-defile::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
+
+/* Résumé vivant du scénario actif */
+.nl-resume {
+  position: relative; overflow: hidden; display: grid; gap: 2px;
+  padding: 14px 14px 12px; margin-bottom: 14px; border-radius: 16px; color: #fff;
+  background: var(--grad-main); box-shadow: 0 16px 34px -20px rgba(124, 58, 237, 0.75);
+  text-align: start; border: 0; cursor: pointer; width: 100%;
+  transition: transform 260ms var(--ease), box-shadow 260ms var(--ease);
+}
+.nl-resume:hover { transform: translateY(-1px); box-shadow: 0 20px 40px -20px rgba(124, 58, 237, 0.85); }
+.nl-resume::after { content: ""; position: absolute; width: 120px; height: 120px; inset-inline-end: -40px; top: -50px; border-radius: 50%; background: rgba(255, 255, 255, 0.14); pointer-events: none; }
+.nl-resume .r-lib { font-size: 11.5px; font-weight: 600; color: rgba(255, 255, 255, 0.82); display: flex; align-items: center; gap: 6px; }
+.nl-resume .r-sc { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 6px; background: rgba(255, 255, 255, 0.22); font-weight: 800; font-size: 11px; color: #fff; }
+.nl-resume .r-val { font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; line-height: 1.2; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nl-resume .r-sous { font-size: 11.5px; color: rgba(255, 255, 255, 0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nl-resume.vide { background: var(--surface-2); color: var(--text); box-shadow: none; border: 1px dashed var(--border-strong); }
+.nl-resume.vide .r-lib, .nl-resume.vide .r-sous { color: var(--muted); }
+.nl-resume.vide .r-val { font-size: 14px; }
+.nl-resume.vide::after { display: none; }
+.nl-resume .r-mini { display: none; }
+
+/* Groupes repliables */
+.nl-groupe + .nl-groupe { margin-top: 10px; }
+.nl-titre {
+  display: flex; align-items: center; gap: 8px; width: 100%; padding: 6px 8px; margin: 0;
+  border: 0; background: none; cursor: pointer; border-radius: 8px;
+  font-size: 11.5px; font-weight: 700; color: var(--muted); text-align: start;
+}
+.nl-titre:hover { color: var(--text); }
+.nl-titre .chev { width: 14px; height: 14px; margin-inline-start: auto; transition: transform 320ms var(--ease); }
+.nl-groupe[data-ouvert="false"] .nl-titre .chev { transform: rotate(-90deg); }
+html[dir="rtl"] .nl-groupe[data-ouvert="false"] .nl-titre .chev { transform: rotate(90deg); }
+.nl-corps { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 380ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms var(--ease); }
+.nl-groupe[data-ouvert="false"] .nl-corps { grid-template-rows: 0fr; opacity: 0; }
+.nl-liste { min-height: 0; overflow: hidden; position: relative; display: grid; gap: 1px; padding: 2px 0; }
+
+/* Rail de progression et indicateur glissant (section en cours) */
+.nl-liste.espion::before {
+  content: ""; position: absolute; inset-inline-start: 21px; top: 14px; bottom: 14px; width: 2px; border-radius: 2px;
+  background: var(--track);
+}
+.nl-progres {
+  position: absolute; inset-inline-start: 21px; top: 14px; width: 2px; height: 0; border-radius: 2px;
+  background: linear-gradient(180deg, var(--primary), #ec4899);
+  transition: height 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.nl-indic {
+  position: absolute; inset-inline: 0; top: 0; height: 40px; border-radius: 12px; pointer-events: none;
+  background: var(--primary-soft);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 22%, transparent), 0 8px 18px -12px color-mix(in srgb, var(--primary) 70%, transparent);
+  opacity: 0; transform: translateY(0);
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1), height 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms var(--ease);
+}
+.nl-indic.on { opacity: 1; }
+
+.nl-item {
+  position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px;
+  padding: 6px 8px; border: 0; border-radius: 12px; background: none; cursor: pointer; text-align: start;
+  color: var(--text-2); font-size: 13.5px; font-weight: 600; text-decoration: none;
+  transition: color 200ms var(--ease), background-color 200ms var(--ease);
+}
+.nl-item:hover { color: var(--text); background: color-mix(in srgb, var(--surface-3) 60%, transparent); }
+.nl-item .nl-ico {
+  width: 28px; height: 28px; flex: none; display: grid; place-items: center; border-radius: 9px;
+  background: var(--surface); color: var(--muted); box-shadow: 0 0 0 1px var(--border);
+  transition: color 260ms var(--ease), background 260ms var(--ease), box-shadow 260ms var(--ease), transform 260ms var(--ease);
+}
+.nl-item .nl-ico .ico { width: 15px; height: 15px; }
+.nl-item:hover .nl-ico { color: var(--primary); transform: scale(1.06); }
+.nl-item .nl-txt { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nl-item .nl-meta { flex: none; max-width: 92px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+.nl-item[aria-current="true"] { color: var(--primary); }
+.nl-item[aria-current="true"] .nl-ico { color: #fff; background: var(--grad-main); box-shadow: 0 6px 14px -6px rgba(124, 58, 237, 0.7); }
+.nl-item[aria-current="true"] .nl-meta { color: var(--primary); }
+.nl-item[aria-disabled="true"] { opacity: 0.45; }
+.nl-item[aria-disabled="true"]:hover { background: none; color: var(--text-2); }
+.nl-item[aria-disabled="true"]:hover .nl-ico { transform: none; color: var(--muted); }
+.nl-item:focus-visible { outline: 3px solid var(--ring); outline-offset: -1px; }
+.nl-item.arrivee .nl-ico { animation: nl-pop 520ms cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes nl-pop { 0% { transform: scale(0.6); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+
+/* Pied : repli du panneau */
+.nl-pied { flex: none; padding-top: 10px; margin-top: 8px; border-top: 1px solid var(--border); }
+.nl-replier { justify-content: flex-start; color: var(--muted); }
+.nl-replier .nl-ico .ico { transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1); }
+html[dir="rtl"] .nl-replier .nl-ico .ico { transform: scaleX(-1); }
+
+/* Rail d'icônes */
+.nav-lat.rail { width: var(--larg-rail); padding-inline: 12px; }
+.nav-lat.rail .nl-txt, .nav-lat.rail .nl-meta, .nav-lat.rail .nl-titre span, .nav-lat.rail .nl-titre .chev,
+.nav-lat.rail .nl-resume .r-lib, .nav-lat.rail .nl-resume .r-val, .nav-lat.rail .nl-resume .r-sous { display: none; }
+.nav-lat.rail .nl-resume { padding: 10px 0; place-items: center; }
+.nav-lat.rail .nl-resume .r-mini { display: block; font-family: var(--font-display); font-weight: 800; font-size: 13px; }
+.nav-lat.rail .nl-titre { justify-content: center; padding: 4px 0; pointer-events: none; }
+.nav-lat.rail .nl-titre::before { content: ""; width: 22px; height: 1px; background: var(--border-strong); }
+.nav-lat.rail .nl-groupe[data-ouvert="false"] .nl-corps { grid-template-rows: 1fr; opacity: 1; }
+.nav-lat.rail .nl-item { justify-content: center; padding: 6px 0; }
+.nav-lat.rail .nl-liste.espion::before, .nav-lat.rail .nl-progres { display: none; }
+.nav-lat.rail .nl-replier .nl-ico .ico { transform: rotate(180deg); }
+html[dir="rtl"] .nav-lat.rail .nl-replier .nl-ico .ico { transform: none; }
+.nl-bulle {
+  position: fixed; z-index: 95; padding: 6px 10px; border-radius: 9px; white-space: nowrap; font-size: 12.5px; font-weight: 600;
+  color: #fff; background: #1b1830; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.5); pointer-events: none;
+  opacity: 0; transform: translateX(-4px); transition: opacity 160ms var(--ease), transform 220ms var(--ease);
+}
+html[dir="rtl"] .nl-bulle { transform: translateX(4px); }
+.nl-bulle.on { opacity: 1; transform: none; }
+
+
+/* Bouton d'ouverture (téléphone) */
+.btn-nav { display: none; }
+.nl-fermer { display: none !important; }
+.nl-fond { display: none; }
+
+/* Sections ciblées : ne pas passer sous la barre supérieure */
+.scenario .card, .scenario .kpis, .scenario .schedule { scroll-margin-top: calc(var(--haut-barre) + 18px); }
+.scenario .cible-flash { animation: cible-flash 1100ms var(--ease); }
+@keyframes cible-flash {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 0%, transparent), var(--shadow); }
+  30% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 35%, transparent), var(--shadow); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 0%, transparent), var(--shadow); }
+}
+
+/* Écran large : les doublons de la barre supérieure passent dans le panneau */
+@media (min-width: 900px) {
+  .top-actions .outils, #btnHistorique, #btnComparer, #btnAgence { display: none; }
+}
+@media (min-width: 1281px) and (max-width: 1600px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Téléphone et petite tablette : tiroir */
+@media (max-width: 899px) {
+  .btn-nav { display: inline-flex; }
+  .nav-lat, .nav-lat.rail {
+    position: fixed; top: 0; bottom: 0; inset-inline-start: 0; height: auto; z-index: 90;
+    width: min(320px, 86vw); padding: 18px 14px 14px;
+    background: var(--surface); box-shadow: 0 30px 70px -20px rgba(22, 18, 41, 0.45);
+    border-start-end-radius: 22px; border-end-end-radius: 22px;
+    transform: translateX(-104%); visibility: hidden;
+    transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 460ms;
+  }
+  html[dir="rtl"] .nav-lat, html[dir="rtl"] .nav-lat.rail { transform: translateX(104%); }
+  .nav-lat.ouvert, html[dir="rtl"] .nav-lat.ouvert { transform: none; visibility: visible; transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s; }
+  .nav-lat .nl-pied { display: none; }
+  .nl-fermer { display: inline-flex !important; }
+  .nl-fond {
+    display: block; position: fixed; inset: 0; z-index: 85; background: rgba(12, 10, 26, 0.42);
+    -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+    opacity: 0; visibility: hidden; transition: opacity 360ms var(--ease), visibility 0s linear 360ms;
+  }
+  .nl-fond.on { opacity: 1; visibility: visible; transition: opacity 360ms var(--ease), visibility 0s; }
+  :root[data-theme="dark"] .nav-lat { background: #15131f; }
+  :root.aurora .nav-lat { background: rgba(16, 14, 38, 0.94); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+}
+.nl-tete-tiroir { display: none; }
+@media (max-width: 899px) {
+  .nl-tete-tiroir { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+  .nl-tete-tiroir strong { font-family: var(--font-display); font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-lat, .nl-indic, .nl-progres, .nl-corps, .nl-fond, .nl-titre .chev { transition: none !important; }
+  .nl-item.arrivee .nl-ico, .scenario .cible-flash { animation: none; }
+}
+@media print {
+  .nav-lat, .nl-fond, .btn-nav { display: none !important; }
+  .coque { display: block; max-width: none; }
+}
 </style>
 
 <!-- Bibliothèques : Excel (SheetJS), graphiques (Chart.js), PDF (jsPDF + autoTable), QR code (qrcode-generator).
@@ -1598,12 +1791,17 @@ dialog.palette .dlg-head { display: none; }
     <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7.5 6.5H4a2 2 0 0 0-2 2V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2h-3.5Z"/><circle cx="12" cy="13" r="3.5"/></symbol>
     <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 9h10M7 12h10M7 15h6"/></symbol>
     <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.2 13.7 7 22l5-3 5 3-1.2-8.3"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h16"/></symbol>
+    <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16M15.5 10 13.5 12l2 2"/></symbol>
     <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5M12 3v12"/></symbol>
   </defs>
 </svg>
 
 <header class="topbar">
   <div class="topbar-in">
+    <button class="btn btn-quiet btn-sm btn-icon btn-nav" id="btnNav" aria-controls="nav-lat" aria-expanded="false" aria-label="Rubriques" data-t-aria-label="Rubriques" title="Rubriques" data-t-title="Rubriques">
+      <svg class="ico"><use href="#i-menu"/></svg>
+    </button>
     <a class="brand" href="#" aria-label="Simulateur de crédit, accueil" data-t-aria-label="Simulateur de crédit, accueil">
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg>
@@ -1642,6 +1840,8 @@ dialog.palette .dlg-head { display: none; }
   </div>
 </header>
 
+<div class="coque">
+<aside class="nav-lat" id="nav-lat" aria-label="Rubriques"></aside>
 <main class="page">
   <section class="hero" aria-labelledby="titre-app">
     <div class="hero-in">
@@ -1692,6 +1892,8 @@ dialog.palette .dlg-head { display: none; }
     <span>© <span id="annee-courante"></span> · <a href="https://www.linkedin.com/in/mohamed-aziz-jaouadi-%C2%AEpsm-i-%C2%AEpspo-l-%C2%AEistqb-851009115/" target="_blank" rel="noopener noreferrer">Mohamed Aziz Jaouadi</a></span>
   </footer>
 </main>
+</div>
+<div class="nl-fond" id="nl-fond" aria-hidden="true"></div>
 
 <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
 
@@ -1881,6 +2083,7 @@ var AR = {
   "Divise le taux par deux (crédit de plus de 84 mois) dès que les intérêts des 36 derniers mois dépassent strictement 8 % du capital restant dû, contrôlé dès l'échéance 37 puis chaque mois ; nouvelle réduction possible 36 mois après la précédente": "يقسم النسبة على اثنين (قرض لأكثر من 84 شهرًا) عندما تتجاوز فوائد الأشهر الـ36 الأخيرة 8 % من رأس المال المتبقي، مع المراقبة ابتداءً من القسط 37 ثم كل شهر؛ ويمكن تخفيض جديد بعد 36 شهرًا من السابق",
   "Données insuffisantes pour évaluer l'éligibilité.": "المعطيات غير كافية لتقييم الأهلية.",
   "Dossier client": "ملف الحريف",
+  "Dossier et documents": "الملف والوثائق",
   "Durée": "المدة",
   "Durée ({n})": "المدة ({n})",
   "Durée du crédit": "مدة القرض",
@@ -1898,6 +2101,7 @@ var AR = {
   "Début {d}": "البداية {d}",
   "Décrire mon crédit en une phrase": "وصف قرضي في جملة",
   "Décrivez votre crédit en une phrase": "صف قرضك في جملة واحدة",
+  "Déplier le panneau": "فتح اللوحة",
   "Effacer tout l'historique": "مسح كامل السجل",
   "Effacer tout l'historique ?": "مسح كامل السجل؟",
   "Elle fait économiser {m} par rapport à « {n} ».": "يوفّر {m} مقارنة بـ«{n}».",
@@ -2219,17 +2423,20 @@ var AR = {
   "Rien à payer (total)": "لا شيء للدفع (كلي)",
   "Risque de dépasser {m}": "خطر تجاوز {m}",
   "Rouge": "أحمر",
+  "Rubriques": "الأقسام",
   "Règles d'éligibilité": "قواعد الأهلية",
   "Règles modifiables dans « Agence ». Indications, pas une décision de la banque.": "قواعد قابلة للتعديل في «الوكالة». مؤشرات فقط، وليست قرار البنك.",
   "Réduction de taux annulée.": "تم إلغاء تخفيض النسبة.",
   "Réductions de taux ({n})": "تخفيضات النسبة ({n})",
   "Réduire l'échéance": "تخفيض القسط",
   "Réduire la durée": "تقليص المدة",
+  "Réduire le panneau": "طي اللوحة",
   "Réduire le taux": "تخفيض النسبة",
   "Référence du dossier": "مرجع الملف",
   "Réinitialiser": "إعادة تعيين",
   "Répartition du coût": "توزيع الكلفة",
   "Répartition du coût des intérêts": "توزيع كلفة الفوائد",
+  "Résultats": "النتائج",
   "Saisissez d'abord un crédit complet.": "أدخل أولًا قرضًا كاملًا.",
   "Saisissez les offres reçues des banques : elles sont classées selon le coût réel et le TEG.": "أدخل العروض الواردة من البنوك: يتم ترتيبها حسب الكلفة الفعلية والنسبة الفعلية الجملية.",
   "Saisissez un TMM valide (ex. 7,5).": "أدخل معدل سوق نقدية صالحًا (مثال: 7,5).",
@@ -2260,6 +2467,7 @@ var AR = {
   "Simulateur de crédit": "محاكي القروض",
   "Simulateur de crédit en Dinar Tunisien": "محاكي القروض بالدينار التونسي",
   "Simulateur de crédit, accueil": "محاكي القروض، الصفحة الرئيسية",
+  "Simulation": "المحاكاة",
   "Simulation #{n}": "المحاكاة رقم {n}",
   "Simulation chargée dans le scénario A.": "تم تحميل المحاكاة في السيناريو A.",
   "Simulation de crédit": "محاكاة قرض",
@@ -2460,6 +2668,7 @@ var AR = {
   "{n} simulations enregistrées": "{n} محاكاة محفوظة",
   "{n} simulations enregistrées dans ce navigateur (les 200 plus récentes).": "{n} محاكاة محفوظة في هذا المتصفح (أحدث 200).",
   "{n} trimestrielles": "{n}",
+  "{n} · TEG {t}": "{n} · النسبة الفعلية {t}",
   "{n}, partiel (intérêts payés)": "{n}، جزئي (دفع الفوائد)",
   "{n}, total (intérêts capitalisés)": "{n}، كلي (فوائد مضافة إلى رأس المال)",
   "{p} · {n}": "{p} · {n}",
@@ -3620,6 +3829,7 @@ var AR = {
         f('vide').hidden = false;
         f('res').hidden = true;
         majVersus();
+        majNav();
         return;
       }
       var r = calculerEcheancier(e, sc.reduction);
@@ -3636,6 +3846,7 @@ var AR = {
       rendreAvance(sc);
       rendreEcheancier();
       majVersus();
+      majNav();
       if (window.revelerNouveaux) window.revelerNouveaux();
     }
     sc.mettreAJour = mettreAJour;
@@ -4038,6 +4249,7 @@ var AR = {
         return;
       }
       var ok = sauvegarderSimulation(sc);
+      majNav();
       ['k1', 'k2'].forEach(function (id) {
         var el = f(id); el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
       });
@@ -5835,6 +6047,9 @@ var AR = {
     });
     var sc = scenarios[k];
     if (sc && sc.chart) sc.rendreGraphique();
+    nav.courant = null;
+    majNav();
+    choisirCourant();
   }
 
   function afficherB(visible) {
@@ -7054,6 +7269,277 @@ var AR = {
   }
 
   /* ===================================================================
+     Barre latérale : rubriques, section en cours, résumé vivant
+     =================================================================== */
+  var CLE_NAV = 'navigationReduite', CLE_NAV_GROUPES = 'navigationGroupes';
+  var nav = { construite: false, observateur: null, visibles: {}, courant: null };
+  var mqTiroir = window.matchMedia ? matchMedia('(max-width: 899px)') : { matches: false, addEventListener: function () {} };
+  var mqRail = window.matchMedia ? matchMedia('(min-width: 900px) and (max-width: 1280px)') : { matches: false, addEventListener: function () {} };
+
+  /* Sections du scénario actif (id suffixe, libellé, icône, valeur affichée) */
+  var SECTIONS = [
+    { cle: 'parametres', nom: 'Paramètres du crédit', ico: 'sliders', cible: function (k) { var el = $('#' + k + '-titre'); return el && el.closest('.form-card'); }, toujours: true },
+    { cle: 'resultats', nom: 'Résultats', ico: 'calendar', cible: function (k) { var el = $('#' + k + '-res'); return el && $('.kpis', el); } },
+    { cle: 'cout', nom: 'Coût du crédit et TEG', ico: 'coins', cible: function (k) { return $('#' + k + '-cout'); } },
+    { cle: 'visu', nom: 'Analyse visuelle', ico: 'sparkle', cible: function (k) { return $('#' + k + '-visu'); } },
+    { cle: 'elig', nom: 'Éligibilité', ico: 'check', cible: function (k) { return $('#' + k + '-elig'); }, siVisible: true },
+    { cle: 'ra', nom: 'Remboursements anticipés', ico: 'fast', cible: function (k) { return $('#' + k + '-racard'); }, siVisible: true },
+    { cle: 'sensi', nom: 'Sensibilité au TMM', ico: 'trend', cible: function (k) { return $('#' + k + '-sensi'); }, siVisible: true },
+    { cle: 'temps', nom: 'Voyage dans le temps', ico: 'clock', cible: function (k) { return $('#' + k + '-temps'); } },
+    { cle: 'echeancier', nom: 'Tableau d\'amortissement', ico: 'table', cible: function (k) { var el = $('#' + k + '-titre-ech'); return el && el.closest('.schedule'); },
+      meta: function (sc) { return String(sc.resultat.n); } }
+  ];
+  var DOSSIER = [
+    { cle: 'historique', nom: 'Historique', ico: 'history', fn: function () { ouvrirHistorique(); }, meta: function () { var n = lireHistorique().length; return n ? String(n) : ''; } },
+    { cle: 'comparer', nom: 'Comparer', ico: 'compare', fn: function () { ouvrirComparaison(); } },
+    { cle: 'rapport', nom: 'Rapport client', ico: 'award', fn: function () { exporterRapport(scenarioActif()); } },
+    { cle: 'pdf', nom: 'Exporter PDF', ico: 'file', fn: function () { exporterPDF(scenarioActif()); } },
+    { cle: 'excel', nom: 'Exporter Excel', ico: 'sheet', fn: function () { exporterExcel(scenarioActif()); } },
+    { cle: 'agence', nom: 'Agence et paramètres', ico: 'building', fn: function () { ouvrirAgence(); } }
+  ];
+
+  function groupesOuverts() {
+    var g = { simulation: true, outils: true, dossier: true };
+    try { var b = JSON.parse(stock.lire(CLE_NAV_GROUPES, 'null')); if (b && typeof b === 'object') Object.keys(g).forEach(function (k) { if (typeof b[k] === 'boolean') g[k] = b[k]; }); } catch (e) { /* valeurs par défaut */ }
+    return g;
+  }
+
+  function itemHtml(o, type) {
+    return '<button type="button" class="nl-item" data-nav-' + type + '="' + o.cle + '" data-tip="' + echapper(t(o.nom)) + '">' +
+      '<span class="nl-ico" aria-hidden="true">' + ico(o.ico) + '</span><span class="nl-txt">' + echapper(t(o.nom)) + '</span><span class="nl-meta num"></span></button>';
+  }
+  function groupeHtml(cle, titre, contenu, ouvert, espion) {
+    return '<div class="nl-groupe" data-groupe="' + cle + '" data-ouvert="' + ouvert + '">' +
+      '<button type="button" class="nl-titre" aria-expanded="' + ouvert + '" aria-controls="nl-g-' + cle + '"><span>' + echapper(t(titre)) + '</span>' + ico('chevron', 'chev') + '</button>' +
+      '<div class="nl-corps" id="nl-g-' + cle + '"><div class="nl-liste' + (espion ? ' espion' : '') + '">' +
+        (espion ? '<span class="nl-progres" aria-hidden="true"></span><span class="nl-indic" aria-hidden="true"></span>' : '') + contenu +
+      '</div></div></div>';
+  }
+
+  function construireNav() {
+    var aside = $('#nav-lat');
+    if (!aside) return;
+    var g = groupesOuverts();
+    aside.setAttribute('aria-label', t('Rubriques'));
+    aside.innerHTML =
+      '<div class="nl-tete-tiroir"><strong>' + echapper(t('Rubriques')) + '</strong>' +
+        '<button type="button" class="btn btn-quiet btn-sm btn-icon nl-fermer" data-nav-fermer aria-label="' + echapper(t('Fermer')) + '">' + ico('x') + '</button></div>' +
+      '<button type="button" class="nl-resume vide" data-nav-ancre="resultats" data-tip="' + echapper(t('Résultats')) + '">' +
+        '<span class="r-lib"><span class="r-sc"></span><span class="r-titre"></span></span><span class="r-val num"></span><span class="r-sous"></span><span class="r-mini"></span></button>' +
+      '<nav class="nl-defile" aria-label="' + echapper(t('Rubriques')) + '">' +
+        groupeHtml('simulation', 'Simulation', SECTIONS.map(function (s) { return itemHtml(s, 'ancre'); }).join(''), g.simulation, true) +
+        groupeHtml('outils', 'Outils', OUTILS.map(function (o) { return itemHtml(o, 'outil'); }).join(''), g.outils, false) +
+        groupeHtml('dossier', 'Dossier et documents', DOSSIER.map(function (o) { return itemHtml(o, 'action'); }).join(''), g.dossier, false) +
+      '</nav>' +
+      '<div class="nl-pied"><button type="button" class="nl-item nl-replier" data-nav-replier data-tip="' + echapper(t('Déplier le panneau')) + '">' +
+        '<span class="nl-ico" aria-hidden="true">' + ico('panel') + '</span><span class="nl-txt">' + echapper(t('Réduire le panneau')) + '</span></button></div>';
+    nav.construite = true;
+    majModeNav();
+    majNav();
+  }
+
+  function navReduite() { return stock.lire(CLE_NAV, '0') === '1'; }
+  function majModeNav() {
+    var aside = $('#nav-lat');
+    if (!aside) return;
+    var rail = !mqTiroir.matches && (mqRail.matches || navReduite());
+    aside.classList.toggle('rail', rail);
+    var r = $('[data-nav-replier]', aside);
+    if (r) {
+      r.setAttribute('aria-label', rail ? t('Déplier le panneau') : t('Réduire le panneau'));
+      r.setAttribute('aria-expanded', String(!rail));
+      r.hidden = mqRail.matches;
+    }
+    $$('.nl-item', aside).forEach(function (b) {
+      if (rail) b.setAttribute('aria-label', b.dataset.tip || ''); else if (!b.hasAttribute('data-nav-replier')) b.removeAttribute('aria-label');
+    });
+    if (!mqTiroir.matches) fermerTiroir(true);
+    placerIndicateur();
+  }
+
+  /* Valeurs vivantes, disponibilité des sections, observation du défilement */
+  function majNav() {
+    if (!nav.construite) return;
+    var aside = $('#nav-lat'), sc = scenarioActif();
+    if (!aside || !sc) return;
+    var r = sc.resultat, k = sc.cle;
+    var resume = $('.nl-resume', aside);
+    resume.classList.toggle('vide', !r);
+    $('.r-sc', resume).textContent = sc.nom;
+    $('.r-titre', resume).textContent = r ? t(infoPeriodicite(r.p).echeance) : t('Scénario {n}', { n: sc.nom });
+    $('.r-val', resume).textContent = r ? fmtMoney(r.M1) : t('Votre simulation apparaîtra ici');
+    $('.r-sous', resume).textContent = r ? t('{n} · TEG {t}', { n: libEcheances(r.n), t: isFinite(r.teg) ? fmtPct(r.teg, 2) : '—' }) : t('Complétez le capital, la durée et le taux pour calculer.');
+    $('.r-mini', resume).textContent = sc.nom;
+    resume.setAttribute('aria-label', r ? t('Résultats') + ' : ' + fmtMoney(r.M1) : t('Votre simulation apparaîtra ici'));
+    SECTIONS.forEach(function (s) {
+      var b = $('.nl-liste [data-nav-ancre="' + s.cle + '"]', aside), cible = s.cible(k);
+      if (!b) return;
+      var dispo = !!cible && (s.toujours || (!!r && !(s.siVisible && cible.hidden)));
+      b.hidden = !!s.siVisible && (!r || !cible || cible.hidden);
+      b.setAttribute('aria-disabled', String(!dispo));
+      $('.nl-meta', b).textContent = dispo && r && s.meta ? s.meta(sc) : '';
+    });
+    DOSSIER.forEach(function (o) {
+      var b = $('[data-nav-action="' + o.cle + '"]', aside);
+      if (b && o.meta) $('.nl-meta', b).textContent = o.meta();
+    });
+    observerSections();
+    placerIndicateur();
+  }
+
+  function observerSections() {
+    if (!('IntersectionObserver' in window)) return;
+    if (nav.observateur) nav.observateur.disconnect();
+    nav.visibles = {};
+    var sc = scenarioActif();
+    nav.observateur = new IntersectionObserver(function (entrees) {
+      entrees.forEach(function (en) { nav.visibles[en.target.dataset.navSection] = en.isIntersecting ? en.intersectionRatio + (en.boundingClientRect.top < window.innerHeight * 0.4 ? 1 : 0) : 0; });
+      choisirCourant();
+    }, { rootMargin: '-' + Math.round(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--haut-barre')) || 65) + 'px 0px -45% 0px', threshold: [0, 0.2, 0.5, 1] });
+    SECTIONS.forEach(function (s) {
+      var c = s.cible(sc.cle);
+      if (!c || c.hidden || (c.closest('[hidden]'))) return;
+      c.dataset.navSection = s.cle;
+      nav.observateur.observe(c);
+    });
+  }
+
+  function choisirCourant() {
+    var meilleur = null, score = 0;
+    SECTIONS.forEach(function (s) { var v = nav.visibles[s.cle] || 0; if (v > score) { score = v; meilleur = s.cle; } });
+    /* En haut de page : la première rubrique ; en bas : la dernière visible */
+    if (window.scrollY < 40) meilleur = 'parametres';
+    else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4 && scenarioActif().resultat) meilleur = 'echeancier';
+    if (meilleur && meilleur !== nav.courant) {
+      nav.courant = meilleur;
+      $$('#nav-lat [data-nav-ancre]').forEach(function (b) {
+        var on = b.dataset.navAncre === meilleur && !b.classList.contains('nl-resume');
+        if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+      });
+      placerIndicateur();
+    }
+  }
+
+  function placerIndicateur() {
+    var aside = $('#nav-lat');
+    if (!aside) return;
+    var indic = $('.nl-indic', aside), prog = $('.nl-progres', aside);
+    if (!indic) return;
+    var actifB = $('.nl-liste [aria-current="true"]', aside);
+    if (!actifB || actifB.hidden) { indic.classList.remove('on'); if (prog) prog.style.height = '0px'; return; }
+    indic.style.transform = 'translateY(' + actifB.offsetTop + 'px)';
+    indic.style.height = actifB.offsetHeight + 'px';
+    indic.classList.add('on');
+    if (prog) prog.style.height = Math.max(0, actifB.offsetTop + actifB.offsetHeight / 2 - 14) + 'px';
+  }
+
+  function allerA(cle) {
+    var sc = scenarioActif(), s = SECTIONS.filter(function (x) { return x.cle === cle; })[0];
+    var cible = s && s.cible(sc.cle);
+    var bouton = $('#nav-lat [data-nav-ancre="' + cle + '"]:not(.nl-resume)');
+    if (!cible || (bouton && bouton.getAttribute('aria-disabled') === 'true')) {
+      toast(t('Saisissez d\'abord un crédit complet.'), 'info');
+      allerA('parametres');
+      return;
+    }
+    fermerTiroir();
+    cible.scrollIntoView({ behavior: mouvementReduit.matches ? 'auto' : 'smooth', block: 'start' });
+    cible.classList.remove('cible-flash');
+    void cible.offsetWidth;
+    cible.classList.add('cible-flash');
+    setTimeout(function () { cible.classList.remove('cible-flash'); }, 1200);
+    if (bouton) { bouton.classList.remove('arrivee'); void bouton.offsetWidth; bouton.classList.add('arrivee'); }
+  }
+
+  /* Tiroir (téléphone) */
+  var dernierFocusNav = null;
+  function ouvrirTiroir() {
+    var aside = $('#nav-lat');
+    dernierFocusNav = document.activeElement;
+    majNav();
+    aside.classList.add('ouvert');
+    $('#nl-fond').classList.add('on');
+    $('#btnNav').setAttribute('aria-expanded', 'true');
+    ['.topbar', '.coque > .page'].forEach(function (sel) { var el = $(sel); if (el) el.inert = true; });
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(function () { var b = $('[data-nav-fermer]', aside); if (b) b.focus(); }, 60);
+    vibrer();
+  }
+  function fermerTiroir(silencieux) {
+    var aside = $('#nav-lat');
+    if (!aside || !aside.classList.contains('ouvert')) return;
+    aside.classList.remove('ouvert');
+    $('#nl-fond').classList.remove('on');
+    $('#btnNav').setAttribute('aria-expanded', 'false');
+    ['.topbar', '.coque > .page'].forEach(function (sel) { var el = $(sel); if (el) el.inert = false; });
+    document.documentElement.style.overflow = '';
+    if (!silencieux && dernierFocusNav && dernierFocusNav.focus) dernierFocusNav.focus();
+  }
+
+  /* Bulle d'aide du rail d'icônes */
+  function bulleNav(b, montrer) {
+    var bulle = $('#nl-bulle');
+    if (!bulle) { bulle = document.createElement('div'); bulle.id = 'nl-bulle'; bulle.className = 'nl-bulle'; bulle.setAttribute('aria-hidden', 'true'); document.body.appendChild(bulle); }
+    if (!montrer) { bulle.classList.remove('on'); return; }
+    var r = b.getBoundingClientRect(), rtl = document.documentElement.dir === 'rtl';
+    bulle.textContent = b.dataset.tip;
+    bulle.style.top = (r.top + r.height / 2 - 15) + 'px';
+    if (rtl) { bulle.style.left = ''; bulle.style.right = (window.innerWidth - r.left + 10) + 'px'; }
+    else { bulle.style.right = ''; bulle.style.left = (r.right + 10) + 'px'; }
+    bulle.classList.add('on');
+  }
+
+  function initialiserNav() {
+    var aside = $('#nav-lat');
+    if (!aside) return;
+    var barre = $('.topbar');
+    function hauteur() { document.documentElement.style.setProperty('--haut-barre', barre.offsetHeight + 'px'); }
+    hauteur();
+    if ('ResizeObserver' in window) new ResizeObserver(function () { hauteur(); placerIndicateur(); }).observe(barre);
+    construireNav();
+    aside.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button');
+      if (!b) return;
+      if (b.hasAttribute('data-nav-fermer')) { fermerTiroir(); return; }
+      if (b.hasAttribute('data-nav-replier')) {
+        stock.ecrire(CLE_NAV, navReduite() ? '0' : '1');
+        bulleNav(b, false);
+        majModeNav();
+        return;
+      }
+      if (b.classList.contains('nl-titre')) {
+        var gr = b.closest('.nl-groupe'), ouvert = gr.dataset.ouvert !== 'true';
+        gr.dataset.ouvert = String(ouvert);
+        b.setAttribute('aria-expanded', String(ouvert));
+        var etat = groupesOuverts(); etat[gr.dataset.groupe] = ouvert;
+        stock.ecrire(CLE_NAV_GROUPES, JSON.stringify(etat));
+        setTimeout(placerIndicateur, 400);
+        return;
+      }
+      if (b.dataset.navAncre) { allerA(b.dataset.navAncre); return; }
+      var o = b.dataset.navOutil ? OUTILS.filter(function (x) { return x.cle === b.dataset.navOutil; })[0]
+        : (b.dataset.navAction ? DOSSIER.filter(function (x) { return x.cle === b.dataset.navAction; })[0] : null);
+      if (o) { fermerTiroir(true); bulleNav(b, false); setTimeout(o.fn, mqTiroir.matches ? 200 : 0); }
+    });
+    aside.addEventListener('pointerover', function (ev) { var b = ev.target.closest('.nl-item, .nl-resume'); if (b && aside.classList.contains('rail')) bulleNav(b, true); });
+    aside.addEventListener('pointerout', function (ev) { var b = ev.target.closest('.nl-item, .nl-resume'); if (b && !b.contains(ev.relatedTarget)) bulleNav(b, false); });
+    aside.addEventListener('focusin', function (ev) { var b = ev.target.closest('.nl-item, .nl-resume'); if (b && aside.classList.contains('rail') && ev.target.matches(':focus-visible')) bulleNav(b, true); });
+    aside.addEventListener('focusout', function () { bulleNav(null, false); });
+    $('.nl-defile', aside).addEventListener('scroll', function () { bulleNav(null, false); }, { passive: true });
+    $('#btnNav').addEventListener('click', ouvrirTiroir);
+    $('#nl-fond').addEventListener('click', function () { fermerTiroir(); });
+    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && aside.classList.contains('ouvert')) fermerTiroir(); });
+    [mqTiroir, mqRail].forEach(function (m) { if (m.addEventListener) m.addEventListener('change', majModeNav); else if (m.addListener) m.addListener(majModeNav); });
+    var attente = false;
+    window.addEventListener('scroll', function () {
+      if (attente) return;
+      attente = true;
+      requestAnimationFrame(function () { attente = false; choisirCourant(); });
+    }, { passive: true });
+    choisirCourant();
+  }
+
+  /* ===================================================================
      Thème et langue
      =================================================================== */
   function appliquerLangue() {
@@ -7071,6 +7557,7 @@ var AR = {
     stock.ecrire(CLE_LANGUE, LANGUE);
     appliquerLangue();
     majBoutonTheme();
+    construireNav();
     Object.keys(scenarios).forEach(function (k) { if (scenarios[k]) scenarios[k].mettreAJour(); });
     majVersus();
     toast(LANGUE === 'ar' ? 'تم التحويل إلى العربية. تبقى ملفات PDF و Excel بالفرنسية.' : 'Interface en français.', 'info', 4200);
@@ -7312,6 +7799,7 @@ var AR = {
     $('#btnLangue').addEventListener('click', changerLangue);
     $('#btnTheme').addEventListener('click', themeSuivant);
     initialiserAvance();
+    initialiserNav();
     window.addEventListener('beforeprint', function () { preparerImpression(scenarios[actif]); });
     lireLienPartage();
     initialiserPWA();
