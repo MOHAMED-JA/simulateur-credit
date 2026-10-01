@@ -2,7 +2,7 @@
 <html lang="fr" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Simulateur de crédit en Dinar Tunisien</title>
 <meta name="description" content="Simulez votre crédit en dinars tunisiens : mensualité, coût des intérêts, tableau d'amortissement, capacité d'emprunt et comparaison de scénarios.">
 <meta name="theme-color" content="#7c3aed">
@@ -52,14 +52,16 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* =====================================================================
    Jetons de design
    ===================================================================== */
 :root {
-  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif;
 
   --bg: #f5f4fb;
   --surface: #ffffff;
@@ -493,6 +495,7 @@ a { color: inherit; }
 .range:hover::-webkit-slider-thumb { transform: scale(1.12); }
 .range:active::-webkit-slider-thumb { transform: scale(1.2); box-shadow: 0 0 0 6px var(--ring); }
 .range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px var(--ring); }
+.range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 6px var(--ring); }
 .range-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; }
 
 .form-actions { margin-top: 22px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
@@ -784,7 +787,7 @@ dialog.dlg.fermeture::backdrop { animation: fondu-out 180ms ease-in both; }
 .cmp-opt .box::before {
   content: ""; position: absolute; inset-inline-start: 14px; top: 50%; width: 20px; height: 20px; margin-top: -10px;
   border-radius: 7px; border: 2px solid var(--border-strong); background: var(--surface);
-  transition: all var(--t-fast) var(--ease);
+  transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
 .cmp-opt input:checked + .box { border-color: var(--primary); background: var(--primary-soft); }
 .cmp-opt input:checked + .box::before {
@@ -984,7 +987,7 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
 .check-box {
   width: 22px; height: 22px; border-radius: 7px; flex: none; display: grid; place-items: center;
   border: 2px solid var(--border-strong); background: var(--surface); color: transparent;
-  transition: all var(--t-fast) var(--ease);
+  transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
 .check input:checked + .check-box { border-color: transparent; background: var(--grad-main); color: #fff; }
 .check input:focus-visible + .check-box { box-shadow: 0 0 0 4px var(--ring); }
@@ -1111,10 +1114,10 @@ table.sensi-t { width: 100%; min-width: 560px; border-collapse: collapse; font-s
 /* =====================================================================
    Arabe (de droite à gauche)
    ===================================================================== */
-html[lang="ar"] body { font-family: "Noto Sans Arabic", var(--font); }
+html[lang="ar"] body { font-family: "IBM Plex Sans Arabic", var(--font); }
 html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3, html[lang="ar"] h4,
 html[lang="ar"] .brand-name, html[lang="ar"] .kpi-value, html[lang="ar"] .badge-sc,
-html[lang="ar"] .dlg-title, html[lang="ar"] .result-box .rb-main strong { font-family: "Noto Sans Arabic", var(--font-display); }
+html[lang="ar"] .dlg-title, html[lang="ar"] .result-box .rb-main strong { font-family: "IBM Plex Sans Arabic", var(--font-display); }
 html[lang="ar"] *, html[lang="ar"] *::before, html[lang="ar"] *::after { letter-spacing: 0 !important; }
 html[dir="rtl"] .range, html[dir="rtl"] .range-scale { direction: ltr; }
 html[dir="rtl"] .input-wrap input:not([data-texte]):not([type="date"]) { direction: ltr; text-align: right; }
@@ -1206,6 +1209,7 @@ html[dir="rtl"] .hero::after { mask-image: linear-gradient(270deg, transparent 3
   transition: background-color var(--t-fast) var(--ease);
 }
 .menu-item:hover, .menu-item:focus-visible { background: var(--surface-2); outline: none; }
+.menu-item:focus-visible { box-shadow: inset 0 0 0 2px var(--ring); }
 .menu-ico { width: 34px; height: 34px; border-radius: 10px; flex: none; display: grid; place-items: center; color: #fff; background: var(--grad-main); }
 .menu-txt { display: grid; min-width: 0; }
 .menu-txt strong { font-size: 13.5px; font-weight: 700; }
@@ -1654,6 +1658,7 @@ html[dir="rtl"] .nl-replier .nl-ico .ico { transform: scaleX(-1); }
 .nav-lat.rail .nl-liste.espion::before, .nav-lat.rail .nl-progres { display: none; }
 .nav-lat.rail .nl-replier .nl-ico .ico { transform: rotate(180deg); }
 html[dir="rtl"] .nav-lat.rail .nl-replier .nl-ico .ico { transform: none; }
+.nl-bulle:not(.on) { visibility: hidden; }
 .nl-bulle {
   position: fixed; z-index: 95; padding: 6px 10px; border-radius: 9px; white-space: nowrap; font-size: 12.5px; font-weight: 600;
   color: #fff; background: #1b1830; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.5); pointer-events: none;
@@ -1722,6 +1727,271 @@ html[dir="rtl"] .nl-bulle { transform: translateX(4px); }
 @media print {
   .nav-lat, .nl-fond, .btn-nav { display: none !important; }
   .coque { display: block; max-width: none; }
+}
+/* =====================================================================
+   Fondations : lien d'évitement, toucher, zones sûres, sélection
+   ===================================================================== */
+.lien-evitement {
+  position: fixed; top: 10px; inset-inline-start: 10px; z-index: 200; padding: 10px 16px; border-radius: 12px;
+  background: var(--text); color: var(--bg); font-weight: 700; text-decoration: none;
+  transform: translateY(-160%); transition: transform 220ms var(--ease);
+}
+.lien-evitement:focus { transform: none; }
+#contenu:focus { outline: none; }
+html { -webkit-tap-highlight-color: transparent; }
+button, a, input, label, select, textarea, [role="button"] { touch-action: manipulation; }
+::selection { background: color-mix(in srgb, var(--primary) 26%, transparent); color: var(--text); }
+input { caret-color: var(--primary); }
+.topbar-in { padding-inline: max(24px, env(safe-area-inset-left)) max(24px, env(safe-area-inset-right)); padding-top: max(12px, env(safe-area-inset-top)); }
+.toasts { padding-bottom: env(safe-area-inset-bottom); }
+.page { padding-bottom: max(40px, env(safe-area-inset-bottom)); }
+@media (max-width: 720px) { .topbar-in { padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right)); padding-top: max(10px, env(safe-area-inset-top)); } }
+.hero h1, .dlg-title, .card-title, .gd-q { text-wrap: balance; }
+.amort tbody tr.surligne td { animation: surligne 2.2s var(--ease); }
+@keyframes surligne { 0%, 40% { background: color-mix(in srgb, var(--primary) 22%, transparent); } 100% { background: transparent; } }
+.chart-wrap canvas { cursor: default; }
+
+/* =====================================================================
+   Transitions entre vues et thème (révélation circulaire)
+   ===================================================================== */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 380ms; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+.vt-cercle::view-transition-old(root) { animation: none; z-index: 1; }
+.vt-cercle::view-transition-new(root) { animation: vt-cercle 620ms cubic-bezier(0.22, 1, 0.36, 1); z-index: 2; }
+@keyframes vt-cercle { from { clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0)); } to { clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 0)); } }
+
+/* =====================================================================
+   Compteur à rouleaux
+   ===================================================================== */
+.odo { display: inline-flex; align-items: baseline; line-height: 1.15; }
+.odo-c { display: inline-block; height: 1.15em; overflow: hidden; vertical-align: bottom; }
+.odo-s { display: block; text-align: center; transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; }
+.odo-x { white-space: pre; }
+html[dir="rtl"] .kpi-value .odo { direction: ltr; unicode-bidi: isolate; }
+
+/* =====================================================================
+   Bandeau : accès à la simulation guidée
+   ===================================================================== */
+.hero-guide {
+  display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 20px 8px 14px; text-align: start;
+  border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.4); cursor: pointer; color: #fff;
+  background: rgba(255, 255, 255, 0.16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: 0 14px 30px -16px rgba(22, 18, 41, 0.6);
+  transition: transform 260ms var(--ease), background-color 260ms var(--ease), box-shadow 260ms var(--ease);
+}
+.hero-guide:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.24); box-shadow: 0 20px 36px -16px rgba(22, 18, 41, 0.7); }
+.hero-guide .ico { width: 26px; height: 26px; flex: none; }
+.hero-guide strong { display: block; font-family: var(--font-display); font-size: 15.5px; }
+.hero-guide small { display: block; font-size: 12px; opacity: 0.86; }
+.nl-guide { margin-bottom: 12px; color: var(--primary); background: var(--primary-soft); font-weight: 700; }
+.nl-guide .nl-ico { color: #fff; background: var(--grad-main); box-shadow: none; }
+.nl-guide:hover { background: color-mix(in srgb, var(--primary) 16%, transparent); color: var(--primary); }
+.nl-bascule { flex: none; width: 30px; height: 18px; border-radius: 99px; background: var(--track); position: relative; transition: background-color 240ms var(--ease); }
+.nl-bascule::after { content: ""; position: absolute; top: 2px; inset-inline-start: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1); }
+#btnLisible[aria-pressed="true"] .nl-bascule { background: var(--primary); }
+#btnLisible[aria-pressed="true"] .nl-bascule::after { transform: translateX(12px); }
+html[dir="rtl"] #btnLisible[aria-pressed="true"] .nl-bascule::after { transform: translateX(-12px); }
+.nav-lat.rail .nl-bascule { display: none; }
+
+/* =====================================================================
+   Simulation guidée
+   ===================================================================== */
+dialog.guide { width: min(760px, calc(100vw - 24px)); }
+.guide .dlg-body { padding-top: 10px; }
+.gd-etapes { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); position: relative; }
+.gd-etapes::before, .gd-etapes::after { content: ""; position: absolute; top: 14px; inset-inline-start: 8.33%; height: 3px; border-radius: 3px; }
+.gd-etapes::before { inset-inline-end: 8.33%; background: var(--track); }
+.gd-etapes::after { width: calc(var(--gd-pct, 0%) * 0.8333); background: var(--grad-main); transition: width 560ms cubic-bezier(0.22, 1, 0.36, 1); }
+.gd-etapes li { position: relative; z-index: 1; display: grid; justify-items: center; gap: 6px; text-align: center; }
+.gd-pt { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 13px; background: var(--surface); color: var(--muted); box-shadow: 0 0 0 2px var(--border-strong); transition: background-color 300ms var(--ease), color 300ms var(--ease), box-shadow 300ms var(--ease), transform 300ms var(--ease); }
+.gd-lib { font-size: 11.5px; font-weight: 600; color: var(--muted); }
+.gd-etapes li.fait .gd-pt { background: var(--primary); color: #fff; box-shadow: none; }
+.gd-etapes li.actif .gd-pt { background: var(--grad-main); color: #fff; box-shadow: 0 0 0 5px var(--primary-soft); transform: scale(1.08); }
+.gd-etapes li.actif .gd-lib { color: var(--text); }
+.gd-scene { min-height: 300px; }
+.gd-anim { animation: gd-entree 460ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes gd-entree { from { opacity: 0; transform: translateX(22px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+html[dir="rtl"] .gd-anim { animation-name: gd-entree-rtl; }
+@keyframes gd-entree-rtl { from { opacity: 0; transform: translateX(-22px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+.gd-q { font-size: clamp(20px, 3vw, 26px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
+.gd-cartes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.gd-cartes.deux { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 16px; }
+.gd-carte {
+  display: grid; justify-items: start; align-content: start; gap: 6px; padding: 16px; text-align: start; cursor: pointer;
+  border-radius: 18px; border: 1.5px solid var(--border); background: var(--surface-2); color: var(--text);
+  transition: transform 240ms var(--ease), border-color 240ms var(--ease), box-shadow 240ms var(--ease), background-color 240ms var(--ease);
+}
+.gd-carte:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 45%, transparent); box-shadow: 0 16px 30px -20px rgba(124, 58, 237, 0.55); }
+.gd-carte[aria-pressed="true"] { border-color: var(--primary); background: var(--primary-soft); }
+.gd-c-ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: var(--grad-main); margin-bottom: 4px; }
+.gd-c-ico .ico { width: 22px; height: 22px; }
+.gd-carte strong { font-family: var(--font-display); font-size: 16px; }
+.gd-carte small { color: var(--muted); font-size: 12.5px; line-height: 1.35; }
+.gd-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.gd-champ { display: grid; grid-template-columns: minmax(0, 1fr); gap: 7px; font-size: 13.5px; font-weight: 700; margin-bottom: 12px; min-width: 0; }
+.gd-champ small { font-weight: 500; color: var(--muted); font-size: 12.5px; }
+.gd-input { display: flex; align-items: center; gap: 10px; padding: 0 16px; height: 62px; border-radius: 16px; border: 1.5px solid var(--border-strong); background: var(--surface); transition: border-color 200ms var(--ease), box-shadow 200ms var(--ease); }
+.gd-input:focus-within { border-color: var(--primary); box-shadow: 0 0 0 4px var(--ring); }
+.gd-input input { flex: 1; min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; font: 700 24px var(--font-display); color: var(--text); font-variant-numeric: tabular-nums; direction: ltr; }
+html[dir="rtl"] .gd-input input { text-align: right; }
+.gd-input b { color: var(--muted); font-size: 14px; }
+.gd-puces { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 14px; }
+.gd-puce { padding: 9px 16px; border-radius: 999px; border: 1.5px solid var(--border); background: var(--surface-2); font-weight: 700; font-size: 14px; cursor: pointer; color: var(--text-2); transition: background-color 200ms var(--ease), border-color 200ms var(--ease), color 200ms var(--ease), transform 200ms var(--ease); }
+.gd-puce:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--primary) 40%, transparent); }
+.gd-puce[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
+.gd-curseur { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; }
+.gd-curseur output { font-family: var(--font-display); font-weight: 800; font-size: 20px; min-width: 70px; text-align: end; }
+.gd-note { color: var(--muted); font-size: 13.5px; margin-top: 6px; min-height: 1.4em; }
+.gd-apercu { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: 16px; padding: 12px 16px; border-radius: 14px; background: var(--primary-soft); animation: entrer 300ms var(--ease) both; }
+.gd-apercu span { font-size: 13px; font-weight: 600; color: var(--text-2); }
+.gd-apercu strong { font-family: var(--font-display); font-size: 22px; color: var(--primary); }
+.gd-apercu small { color: var(--muted); font-size: 12.5px; }
+.gd-jauge { margin-top: 6px; }
+.gd-j-barre { position: relative; height: 12px; border-radius: 99px; background: var(--track); overflow: visible; margin-bottom: 8px; }
+.gd-j-barre span { display: block; height: 100%; border-radius: inherit; background: var(--grad-green); transition: width 500ms cubic-bezier(0.22, 1, 0.36, 1); }
+.gd-jauge.ko .gd-j-barre span { background: linear-gradient(90deg, #f59e0b, #e11d48); }
+.gd-j-barre i { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--text); border-radius: 2px; }
+.gd-jauge p { font-size: 13.5px; color: var(--text-2); }
+.gd-resultat { text-align: center; }
+.gd-r-lib { font-size: 14px; font-weight: 700; color: var(--muted); }
+.gd-r-val { font-family: var(--font-display); font-weight: 800; font-size: clamp(38px, 7vw, 58px); letter-spacing: -0.03em; color: var(--primary); margin: 2px 0 14px; }
+.gd-r-val .unit { font-size: 0.4em; margin-inline-start: 6px; opacity: 0.75; }
+.gd-r-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; text-align: start; }
+.gd-r-stats > div { padding: 10px 12px; border-radius: 14px; background: var(--surface-2); min-width: 0; }
+.gd-r-stats span { display: block; font-size: 12px; font-weight: 600; color: var(--muted); }
+.gd-r-stats b { display: block; font-size: 15px; overflow-wrap: anywhere; }
+.gd-r-stats .ok { background: rgba(16, 185, 129, 0.12); }
+.gd-r-stats .ko { background: rgba(244, 63, 94, 0.12); }
+.gd-conseils { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; text-align: start; }
+.gd-conseils li { position: relative; padding: 10px 12px 10px 38px; border-radius: 12px; background: var(--surface-2); font-size: 13.5px; line-height: 1.45; }
+html[dir="rtl"] .gd-conseils li { padding: 10px 38px 10px 12px; }
+.gd-conseils li::before { content: ""; position: absolute; inset-inline-start: 14px; top: 15px; width: 10px; height: 10px; border-radius: 50%; background: var(--grad-main); }
+.gd-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
+.guide .dlg-foot { justify-content: space-between; }
+.gd-retour { transform: scaleX(-1); }
+html[dir="rtl"] .gd-retour { transform: none; }
+html[dir="rtl"] #gd-suiv .ico { transform: scaleX(-1); }
+#gd-suiv:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* =====================================================================
+   Graphiques des nouveaux outils
+   ===================================================================== */
+.graphe-l .grille { stroke: var(--grid); }
+.graphe-l .axe { font-size: 11px; fill: var(--muted); font-weight: 600; }
+.graphe-l .ref { stroke: #e11d48; stroke-width: 1.6; stroke-dasharray: 5 4; }
+.graphe-l .zone-ok { fill: rgba(16, 185, 129, 0.13); }
+.graphe-l .curseur { stroke: var(--text); stroke-width: 1.5; }
+.pastille-sc { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; color: #fff; font-weight: 800; }
+.cmp td.best { color: #047857; font-weight: 800; }
+:root[data-theme="dark"] .cmp td.best { color: #6ee7b7; }
+#qr-r { margin: 12px 0 4px; }
+.mc-check { align-self: end; padding-bottom: 12px; }
+.mc-reducs { display: grid; gap: 8px; }
+.mc-reduc { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; background: rgba(16, 185, 129, 0.1); }
+.mc-n { width: 30px; height: 30px; flex: none; border-radius: 10px; display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--grad-green); }
+.mc-reduc strong { display: block; text-transform: capitalize; }
+.mc-reduc small { display: block; color: var(--muted); font-size: 12.5px; }
+
+/* Calendrier */
+.cal { display: grid; gap: 4px; overflow-x: auto; padding-bottom: 4px; }
+.cal-ligne { display: grid; grid-template-columns: 52px repeat(12, minmax(18px, 1fr)); gap: 4px; align-items: center; min-width: 340px; }
+.cal-tete span { text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+.cal-an { font-size: 12px; font-weight: 700; color: var(--text-2); }
+.cal-c {
+  aspect-ratio: 1.6; border: 0; padding: 0; border-radius: 6px; cursor: pointer; position: relative;
+  background: color-mix(in srgb, #db2777 calc(var(--p) * 100%), #7c3aed);
+  opacity: calc(0.35 + var(--p) * 0.65);
+  transition: transform 160ms var(--ease), box-shadow 160ms var(--ease);
+}
+.cal-c:hover, .cal-c:focus-visible { transform: scale(1.18); z-index: 1; box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.5); opacity: 1; }
+.cal-c.vide { background: var(--surface-2); opacity: 1; cursor: default; }
+.cal-c.ra::after, .cal-k.ra { content: ""; position: absolute; inset: 0; margin: auto; width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 2px #fff; }
+.cal-c.red { box-shadow: 0 0 0 2px #10b981; opacity: 1; }
+.cal-c.auj { outline: 2.5px solid var(--text); outline-offset: 1px; opacity: 1; }
+.cal-leg { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 12px; font-size: 12px; color: var(--muted); }
+.cal-leg i { width: 120px; height: 10px; border-radius: 99px; background: linear-gradient(90deg, rgba(124, 58, 237, 0.4), #db2777); }
+.cal-k { position: relative; display: inline-block; width: 12px; height: 12px; }
+.cal-k.ra { position: relative; margin: 0; }
+.cal-k.red { border-radius: 4px; box-shadow: 0 0 0 2px #10b981; }
+
+/* Signature */
+.sig-grille { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.sig { display: grid; gap: 8px; min-width: 0; }
+.sig-tete { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.sig-pad { width: 100%; height: 170px; border-radius: 16px; border: 2px dashed var(--border-strong); background: #fff; touch-action: none; cursor: crosshair; }
+.sig-pad.signe { border-style: solid; border-color: var(--primary); }
+.sig small { color: var(--muted); }
+
+/* =====================================================================
+   Mode présentation
+   ===================================================================== */
+.presentation {
+  position: fixed; inset: 0; z-index: 300; display: grid; grid-template-rows: auto 1fr auto auto; gap: 18px;
+  padding: max(24px, env(safe-area-inset-top)) max(28px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(28px, env(safe-area-inset-left));
+  color: #fff; overflow: auto;
+  background: radial-gradient(70vmax 60vmax at 10% 0%, rgba(167, 139, 250, 0.5), transparent 60%), radial-gradient(60vmax 50vmax at 100% 100%, rgba(236, 72, 153, 0.42), transparent 60%), #0d0a24;
+  animation: pr-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.presentation.sortie { animation: pr-out 260ms ease-in both; }
+@keyframes pr-in { from { opacity: 0; transform: scale(1.03); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes pr-out { to { opacity: 0; transform: scale(0.98); } }
+.pr-haut { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.pr-marque { display: flex; align-items: center; gap: 14px; }
+.pr-marque img { max-height: 54px; max-width: 160px; width: auto; height: auto; object-fit: contain; background: #fff; border-radius: 12px; padding: 6px; }
+.pr-marque strong { display: block; font-family: var(--font-display); font-size: 20px; }
+.pr-marque small { display: block; opacity: 0.78; font-size: 14px; }
+.pr-ctrl { display: flex; align-items: center; gap: 8px; }
+.pr-sc { padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.35); background: transparent; color: #fff; font-weight: 700; cursor: pointer; }
+.pr-sc[aria-pressed="true"] { background: #fff; color: #4c1d95; }
+.pr-x { color: #fff; border-color: rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.08); }
+.pr-centre { align-self: center; text-align: center; }
+.pr-lib { font-size: clamp(16px, 2vw, 22px); opacity: 0.85; font-weight: 600; }
+.pr-val { font-family: var(--font-display); font-weight: 800; font-size: clamp(54px, 11vw, 132px); letter-spacing: -0.04em; line-height: 1.05; margin: 6px 0; filter: drop-shadow(0 10px 30px rgba(124, 58, 237, 0.45)); }
+.pr-val .unit { font-size: 0.3em; margin-inline-start: 10px; opacity: 0.8; }
+.pr-sous { opacity: 0.8; font-size: clamp(14px, 1.6vw, 18px); max-width: 60ch; margin: 0 auto; }
+.pr-barre { height: 14px; max-width: 760px; margin: 26px auto 10px; border-radius: 99px; background: linear-gradient(90deg, #f472b6, #fb923c); overflow: hidden; }
+.pr-barre span { display: block; height: 100%; width: var(--w); background: linear-gradient(90deg, #a78bfa, #7c3aed); border-radius: 99px; animation: pr-barre 1200ms cubic-bezier(0.22, 1, 0.36, 1) both 200ms; }
+@keyframes pr-barre { from { width: 0; } }
+.pr-legende { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; font-size: 15px; opacity: 0.9; }
+.pr-legende i { display: inline-block; width: 12px; height: 12px; border-radius: 4px; margin-inline-end: 8px; vertical-align: -1px; }
+.pr-legende i.c { background: #a78bfa; } .pr-legende i.i { background: #f472b6; }
+.pr-tuiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.pr-tuiles > div { padding: 18px 20px; border-radius: 20px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.14); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); animation: entrer 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.pr-tuiles > div:nth-child(2) { animation-delay: 60ms; } .pr-tuiles > div:nth-child(3) { animation-delay: 120ms; } .pr-tuiles > div:nth-child(4) { animation-delay: 180ms; } .pr-tuiles > div:nth-child(5) { animation-delay: 240ms; }
+.pr-tuiles span { display: block; font-size: 14px; opacity: 0.75; font-weight: 600; }
+.pr-tuiles b { display: block; font-family: var(--font-display); font-size: clamp(20px, 2.4vw, 30px); margin-top: 4px; }
+.pr-tuiles .ok b { color: #6ee7b7; } .pr-tuiles .ko b { color: #fda4af; }
+.pr-pied { text-align: center; opacity: 0.6; font-size: 12.5px; }
+
+/* =====================================================================
+   Mode haute lisibilité
+   ===================================================================== */
+html.lisible .coque, html.lisible .topbar, html.lisible dialog.dlg { zoom: 1.12; }
+html.lisible { --muted: var(--text-2); --border: var(--border-strong); }
+html.lisible:not([data-theme="dark"]) { --text-2: #241f3d; --border-strong: #a9a1c7; }
+html.lisible[data-theme="dark"] { --text-2: #ece9f7; --border-strong: #6b6590; }
+html.lisible.aurora body::before { animation: none; }
+html.lisible.aurora body::after { display: none; }
+html.lisible .revele { opacity: 1; transform: none; }
+html.lisible .field label, html.lisible .kpi-label { font-size: 14.5px; }
+
+@media (max-width: 720px) {
+  .gd-cartes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gd-duo, .sig-grille { grid-template-columns: minmax(0, 1fr); }
+  .gd-lib { display: none; }
+  .gd-etapes { margin-bottom: 14px; }
+  .gd-input { height: 56px; }
+  .gd-input input { font-size: 21px; }
+  .hero-guide { width: 100%; }
+  .gd-scene { min-height: 0; }
+  .pr-tuiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html.lisible .coque, html.lisible .topbar, html.lisible dialog.dlg { zoom: 1.06; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gd-anim, .presentation, .pr-barre span, .pr-tuiles > div { animation: none !important; }
+  .odo-s { transition: none; }
+}
+@media print {
+  .lien-evitement, .hero-guide, .presentation { display: none !important; }
 }
 </style>
 
@@ -1797,6 +2067,7 @@ html[dir="rtl"] .nl-bulle { transform: translateX(4px); }
   </defs>
 </svg>
 
+<a class="lien-evitement" href="#contenu" data-t="Aller au contenu">Aller au contenu</a>
 <header class="topbar">
   <div class="topbar-in">
     <button class="btn btn-quiet btn-sm btn-icon btn-nav" id="btnNav" aria-controls="nav-lat" aria-expanded="false" aria-label="Rubriques" data-t-aria-label="Rubriques" title="Rubriques" data-t-title="Rubriques">
@@ -1806,7 +2077,7 @@ html[dir="rtl"] .nl-bulle { transform: translateX(4px); }
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg>
       </span>
-      <span class="brand-name"><span data-t="Simulateur de crédit">Simulateur de crédit</span> <span class="brand-tag" data-t="TND">TND</span></span>
+      <span class="brand-name"><span data-t="Simulateur de crédit">Simulateur de crédit</span> <span class="brand-tag" data-t="TND" translate="no">TND</span></span>
       <span class="brand-agence" id="brand-agence" hidden></span>
     </a>
     <nav class="top-actions" aria-label="Outils" data-t-aria-label="Outils">
@@ -1842,7 +2113,7 @@ html[dir="rtl"] .nl-bulle { transform: translateX(4px); }
 
 <div class="coque">
 <aside class="nav-lat" id="nav-lat" aria-label="Rubriques"></aside>
-<main class="page">
+<main class="page" id="contenu" tabindex="-1">
   <section class="hero" aria-labelledby="titre-app">
     <div class="hero-in">
       <div>
@@ -1850,6 +2121,9 @@ html[dir="rtl"] .nl-bulle { transform: translateX(4px); }
         <p class="lead" data-t="Mensualité, coût des intérêts et tableau d'amortissement détaillé, mis à jour en temps réel. Taux fixe ou indexé sur le TMM, remboursement anticipé, exports Excel et PDF, comparaison de scénarios.">Mensualité, coût des intérêts et tableau d'amortissement détaillé, mis à jour en temps réel. Taux fixe ou indexé sur le TMM, remboursement anticipé, exports Excel et PDF, comparaison de scénarios.</p>
       </div>
       <div class="hero-actions">
+        <button class="hero-guide" id="btnGuide">
+          <svg class="ico"><use href="#i-sparkle"/></svg><span><strong data-t="Simulation guidée">Simulation guidée</strong><small data-t="5 questions simples, sans jargon">5 questions simples, sans jargon</small></span>
+        </button>
         <button class="hero-install" id="btnInstaller" hidden>
           <svg class="ico"><use href="#i-phone"/></svg><span data-t="Installer l'application">Installer l'application</span>
         </button>
@@ -1927,11 +2201,14 @@ var AR = {
   "250 k": "250 ألف",
   "3. Suivez les indications : « Installer » ou « Sur l'écran d'accueil ».": "3. اتبع التعليمات: «تثبيت» أو «إضافة إلى الشاشة الرئيسية».",
   "4 prêts au maximum.": "4 قروض كحد أقصى.",
+  "5 questions simples, sans jargon": "5 أسئلة بسيطة، دون مصطلحات معقدة",
   "500 k": "500 ألف",
+  "8 % ou moins : refusée": "8 % أو أقل: مرفوض",
   "9 cas sur 10": "9 حالات من 10",
   "9 fois sur 10 sous {m}": "9 مرات من 10 أقل من {m}",
   "A contre B": "A مقابل B",
   "Achat": "الشراء",
+  "Achat, construction ou terrain": "شراء أو بناء أو أرض",
   "Acheter est plus avantageux : au bout de {n} ans, votre patrimoine est supérieur de {m}.": "الشراء أفضل: بعد {n} سنة تكون ثروتك أعلى بـ {m}.",
   "Actuel": "الحالي",
   "Affiche A4 (PNG)": "ملصق A4 (PNG)",
@@ -1947,6 +2224,7 @@ var AR = {
   "Ajouter un remboursement": "إضافة عملية سداد",
   "Ajouter un scénario": "إضافة سيناريو",
   "Ajouter à l'écran d'accueil": "إضافة إلى الشاشة الرئيسية",
+  "Aller au contenu": "الانتقال إلى المحتوى",
   "Aller au tableau d'amortissement": "الانتقال إلى جدول الاستهلاك",
   "Amortissement": "طريقة الاستهلاك",
   "Amortissement constant": "استهلاك قار لأصل الدين",
@@ -1963,6 +2241,7 @@ var AR = {
   "Année {n}": "السنة {n}",
   "Application faite par": "تطبيق من إنجاز",
   "Application installée : elle fonctionne aussi hors connexion.": "تم تثبيت التطبيق: يعمل أيضًا دون اتصال.",
+  "Appliquer la règle automatique": "تطبيق القاعدة التلقائية",
   "Appliquée aux boutons, dégradés et au rapport client PDF.": "تُطبَّق على الأزرار والتدرجات وتقرير الحريف PDF.",
   "Apport de {p} du prix : capital emprunté {c}.": "مساهمة بنسبة {p} من الثمن: مبلغ القرض {c}.",
   "Apport minimal": "الحد الأدنى للمساهمة الذاتية",
@@ -1982,18 +2261,23 @@ var AR = {
   "Assurance la 1re échéance": "التأمين في القسط الأول",
   "Assurance payée": "التأمين المدفوع",
   "Au départ": "في البداية",
+  "Au-dessus de zéro : B a coûté plus cher que A jusqu'à ce mois ; en dessous : B est moins cher.": "فوق الصفر: كلّف السيناريو B أكثر من A حتى هذا الشهر؛ تحته: B أرخص.",
   "Aucun logo": "لا يوجد شعار",
   "Aucune action ne correspond.": "لا يوجد إجراء مطابق.",
+  "Aucune réduction de taux possible : le ratio ne dépasse pas 8 % ou la durée initiale est de 84 mois ou moins.": "لا يمكن تخفيض النسبة: لا تتجاوز النسبة 8 % أو أن المدة الأصلية 84 شهرًا أو أقل.",
   "Aucune simulation dans l'historique : calculez et enregistrez d'abord vos simulations.": "لا توجد أي محاكاة في السجل: احسب محاكاتك واحفظها أولًا.",
   "Aucune simulation enregistrée": "لا توجد محاكاة محفوظة",
   "Aucune valeur reconnue : vérifiez la photo ou collez le texte.": "لم يتم التعرف على أي قيمة: تحقق من الصورة أو الصق النص.",
   "Auto": "سيارة",
   "Autorisez l'accès au micro pour dicter votre crédit.": "اسمح بالوصول إلى الميكروفون لإملاء قرضك.",
   "Autre :": "أخرى:",
+  "Autre projet": "مشروع آخر",
   "Autres charges mensuelles": "أعباء شهرية أخرى",
+  "Autres crédits et charges / mois": "قروض وأعباء أخرى / شهر",
   "Autres frais": "مصاريف أخرى",
   "Avec remboursement anticipé": "مع سداد مسبق",
   "Avec une périodicité {x}, la durée doit être un multiple de {p} mois.": "مع دورية {x}، يجب أن تكون المدة من مضاعفات {p} أشهر.",
+  "Avec vos revenus, nous vérifions si la mensualité reste supportable.": "بمداخيلك، نتحقق مما إذا كان القسط الشهري قابلًا للتحمل.",
   "Basculer le thème clair / sombre": "التبديل بين الوضع الفاتح والداكن",
   "Bleu": "أزرق",
   "Bleu nuit": "أزرق داكن",
@@ -2004,6 +2288,7 @@ var AR = {
   "Calculer et enregistrer": "احسب واحفظ",
   "Calculs indicatifs : taux mensuel = taux annuel ÷ 12, montants arrondis au millime à chaque échéance.": "حسابات تقريبية: النسبة الشهرية = النسبة السنوية ÷ 12، والمبالغ مدوّرة إلى المليم في كل قسط.",
   "Calculée sur": "محسوب على",
+  "Calendrier des échéances": "رزنامة الأقساط",
   "Capacité d'emprunt": "القدرة على الاقتراض",
   "Capacité d'emprunt, calcul inverse, plan de financement, offres, renégociation": "القدرة على الاقتراض، الحساب العكسي، خطة التمويل، العروض، إعادة التفاوض",
   "Capacité d'endettement ({p})": "قدرة التداين ({p})",
@@ -2016,12 +2301,16 @@ var AR = {
   "Capital moyen": "متوسط رأس المال",
   "Capital remboursé": "رأس المال المسدد",
   "Capital restant dû": "رأس المال المتبقي",
+  "Capital restant dû au point de départ": "رأس المال المتبقي عند نقطة الانطلاق",
+  "Capital restant dû aujourd'hui": "رأس المال المتبقي اليوم",
+  "Capital restant dû et écart cumulé de paiements, mois par mois.": "رأس المال المتبقي والفارق المتراكم في المدفوعات، شهرًا بشهر.",
   "Capital total": "رأس المال الجملي",
   "Capital {c}, intérêts {i}": "رأس المال {c}، الفوائد {i}",
   "Capital, durée ou taux pour une mensualité": "رأس المال أو المدة أو النسبة لقسط معيّن",
   "Ces frais et l'assurance entrent dans le coût total et dans le TEG.": "تدخل هذه المصاريف والتأمين في الكلفة الجملية وفي النسبة الفعلية الجملية.",
   "Cette mensualité ne couvre pas les intérêts du premier mois ({m}) : le crédit ne serait jamais remboursé.": "هذا القسط لا يغطي فوائد الشهر الأول ({m}): لن يُسدَّد القرض أبدًا.",
   "Changer de thème": "تغيير المظهر",
+  "Chaque case est une échéance : plus elle est foncée, plus elle est composée d'intérêts. Touchez une case pour la voir dans le tableau.": "كل خانة قسط: كلما كانت أغمق كانت حصة الفوائد فيها أكبر. المس خانة لرؤيتها في الجدول.",
   "Chargement de la reconnaissance de texte…": "جارٍ تحميل التعرف على النص…",
   "Charger": "تحميل",
   "Charges du propriétaire": "أعباء المالك",
@@ -2031,10 +2320,13 @@ var AR = {
   "Choisissez": "اختر",
   "Choisissez une échéance entre 1 et {n}.": "اختر قسطًا بين 1 و {n}.",
   "Choisissez une échéance entre 2 et {n}.": "اختر قسطًا بين 2 و {n}.",
+  "Cinq questions simples, puis votre résultat, sans jargon.": "خمسة أسئلة بسيطة، ثم نتيجتك، دون مصطلحات معقدة.",
   "Client": "الحريف",
   "Cliquez sur l'icône d'installation à droite de la barre d'adresse, ou ouvrez le menu du navigateur.": "انقر على أيقونة التثبيت يمين شريط العنوان، أو افتح قائمة المتصفح.",
   "Cliquez sur « Calculer et enregistrer » pour conserver une simulation ici.": "انقر على «احسب واحفظ» للاحتفاظ بمحاكاة هنا.",
+  "Combien souhaitez-vous emprunter ?": "كم تريد أن تقترض؟",
   "Compagnie ou agence": "الشركة أو الوكالة",
+  "Comparateur A / B": "مقارنة A / B",
   "Compare votre patrimoine si vous achetez à crédit ou si vous restez locataire en plaçant votre apport.": "يقارن ثروتك إذا اشتريت بقرض أو بقيت مستأجرًا مع استثمار مساهمتك.",
   "Comparer": "مقارنة",
   "Comparer des offres": "مقارنة العروض",
@@ -2052,11 +2344,14 @@ var AR = {
   "Confirmez avec": "أكّد بـ",
   "Conseiller": "المستشار",
   "Conseiller : {n}": "المستشار: {n}",
+  "Conseillé : au moins {m} ({p} du prix).": "يُنصح بما لا يقل عن {m} ({p} من الثمن).",
   "Consommation": "استهلاكي",
+  "Continuer": "متابعة",
   "Copie impossible : sélectionnez le lien et copiez-le.": "تعذّر النسخ: حدّد الرابط وانسخه.",
   "Copier": "نسخ",
   "Couleur personnalisée": "لون مخصص",
   "Couleur principale": "اللون الرئيسي",
+  "Courbes et écart cumulé des deux scénarios": "منحنيات السيناريوهين والفارق المتراكم بينهما",
   "Coût de l'assurance": "كلفة التأمين",
   "Coût de l'opération (indemnité et frais)": "كلفة العملية (الغرامة والمصاريف)",
   "Coût des intérêts": "كلفة الفوائد",
@@ -2072,10 +2367,14 @@ var AR = {
   "Critère": "المعيار",
   "Crédit complémentaire": "قرض تكميلي",
   "Crédit en cours": "القرض الحالي",
+  "Crédit ouvert dans le scénario A.": "تم فتح القرض في السيناريو A.",
   "Crédit principal": "القرض الرئيسي",
+  "Créer le scénario B": "إنشاء السيناريو B",
   "Date": "التاريخ",
   "Date de début": "تاريخ البداية",
   "Date de début du crédit": "تاريخ بداية القرض",
+  "Date de la 1re échéance suivante": "تاريخ القسط الموالي الأول",
+  "Demande à l'échéance {n}": "الطلب عند القسط {n}",
   "Dernière échéance": "آخر قسط",
   "Dicter mon crédit (micro)": "إملاء قرضي (ميكروفون)",
   "Différé": "فترة الإمهال",
@@ -2088,8 +2387,10 @@ var AR = {
   "Durée ({n})": "المدة ({n})",
   "Durée du crédit": "مدة القرض",
   "Durée du différé": "مدة الإمهال",
+  "Durée en années": "المدة بالسنوات",
   "Durée en années, curseur": "المدة بالسنوات، شريط التمرير",
   "Durée et taux appliqués quand on choisit un type dans le formulaire (taux fixe, ou marge ajoutée au TMM).": "المدة والنسبة المطبّقتان عند اختيار نوع في الاستمارة (نسبة قارة، أو هامش يُضاف إلى معدل السوق النقدية).",
+  "Durée initiale du crédit": "المدة الأصلية للقرض",
   "Durée moyenne": "متوسط المدة",
   "Durée nécessaire": "المدة اللازمة",
   "Durée restante": "المدة المتبقية",
@@ -2102,10 +2403,12 @@ var AR = {
   "Décrire mon crédit en une phrase": "وصف قرضي في جملة",
   "Décrivez votre crédit en une phrase": "صف قرضك في جملة واحدة",
   "Déplier le panneau": "فتح اللوحة",
+  "Effacer": "مسح",
   "Effacer tout l'historique": "مسح كامل السجل",
   "Effacer tout l'historique ?": "مسح كامل السجل؟",
   "Elle fait économiser {m} par rapport à « {n} ».": "يوفّر {m} مقارنة بـ«{n}».",
   "Emprunteur et éligibilité": "المقترض والأهلية",
+  "Endettement": "التداين",
   "Enregistrement impossible : stockage du navigateur plein ou désactivé.": "تعذّر الحفظ: ذاكرة المتصفح ممتلئة أو معطّلة.",
   "Enregistrer": "حفظ",
   "Enregistrez au moins deux simulations pour les comparer.": "احفظ محاكاتين على الأقل لمقارنتهما.",
@@ -2117,13 +2420,16 @@ var AR = {
   "Ex. 1 000": "مثال: 1 000",
   "Ex. 1 500": "مثال: 1 500",
   "Ex. 10": "مثال: 10",
+  "Ex. 102 816,611": "مثال: 102 816,611",
   "Ex. 12": "مثال: 12",
   "Ex. 120": "مثال: 120",
   "Ex. 13": "مثال: 13",
   "Ex. 150": "مثال: 150",
   "Ex. 150 000 sur 20 ans à TMM + 2,5": "مثال: 150000 على 20 سنة بنسبة TMM + 2,5",
+  "Ex. 155": "مثال: 155",
   "Ex. 2": "مثال: 2",
   "Ex. 2 000": "مثال: 2 000",
+  "Ex. 2,25": "مثال: 2,25",
   "Ex. 2,5": "مثال: 2,5",
   "Ex. 20": "مثال: 20",
   "Ex. 200": "مثال: 200",
@@ -2160,6 +2466,7 @@ var AR = {
   "Exporter PDF": "تصدير PDF",
   "Faites défiler et choisissez": "مرّر واختر",
   "Faites glisser pour voir où en sera le crédit à chaque échéance.": "اسحب لترى وضع القرض عند كل قسط.",
+  "Faites signer le client et le conseiller à l'écran (au doigt ou à la souris), ou générez le rapport sans signature.": "اطلب من الحريف والمستشار الإمضاء على الشاشة (بالإصبع أو بالفأرة)، أو أنشئ التقرير دون إمضاء.",
   "Fermer": "إغلاق",
   "Fichier Excel téléchargé.": "تم تنزيل ملف Excel.",
   "Fin": "النهاية",
@@ -2179,13 +2486,18 @@ var AR = {
   "Garantie et hypothèque": "الضمان والرهن",
   "Graphique": "رسم بياني",
   "Graphique de l'amortissement": "الرسم البياني للاستهلاك",
+  "Générer le rapport": "إنشاء التقرير",
   "Hausse des loyers": "ارتفاع الكراء",
+  "Haute lisibilité": "وضوح عالٍ",
+  "Haute lisibilité activée : textes agrandis et contrastes renforcés.": "تم تفعيل الوضوح العالي: نصوص أكبر وتباين أقوى.",
+  "Haute lisibilité désactivée.": "تم إلغاء الوضوح العالي.",
   "Historique": "السجل",
   "Historique des simulations": "سجل المحاكاة",
   "Historique effacé.": "تم مسح السجل.",
   "Hypothèses simplifiées : l'écart entre les dépenses d'achat et le loyer est épargné (ou prélevé) chaque mois au rendement indiqué.": "فرضيات مبسطة: الفارق بين مصاريف الشراء والكراء يُدّخر (أو يُسحب) كل شهر بالمردود المذكور.",
   "Identité": "الهوية",
   "Il faudrait plus de 300 mois : augmentez la mensualité.": "يتطلب ذلك أكثر من 300 شهر: ارفع القسط.",
+  "Il faut deux scénarios calculés. Créez le scénario B (copie de A) puis modifiez la durée, le taux ou l'apport.": "يلزم سيناريوهان محسوبان. أنشئ السيناريو B (نسخة من A) ثم غيّر المدة أو النسبة أو المساهمة.",
   "Il manque le capital, la durée ou le taux : complétez les champs.": "ينقص رأس المال أو المدة أو النسبة: أكمل الخانات.",
   "Image du QR code": "صورة رمز QR",
   "Image du QR code téléchargée.": "تم تنزيل صورة رمز QR.",
@@ -2239,18 +2551,21 @@ var AR = {
   "La nouvelle durée est plus longue : la mensualité baisse, mais vous payez plus longtemps.": "المدة الجديدة أطول: ينخفض القسط، لكنك تدفع لمدة أطول.",
   "La réduction de taux s'applique aux crédits mensuels à échéances constantes, sans différé.": "يُطبَّق تخفيض النسبة على القروض الشهرية ذات الأقساط الثابتة ودون فترة إمهال.",
   "La saisie vocale n'est pas disponible dans ce navigateur (essayez Chrome).": "الإدخال الصوتي غير متاح في هذا المتصفح (جرّب كروم).",
+  "Laissez vide si vous n'avez pas d'apport.": "اتركه فارغًا إن لم تكن لديك مساهمة.",
   "Le QR code figure aussi sur la première page de l'export PDF et sur l'impression.": "يظهر رمز QR أيضًا في الصفحة الأولى من ملف PDF وفي النسخة المطبوعة.",
   "Le bouton « Installer maintenant » apparaît ici dès que le navigateur est prêt.": "يظهر زر «ثبّت الآن» هنا بمجرد أن يصبح المتصفح جاهزًا.",
   "Le capital": "رأس المال",
   "Le capital doit être supérieur à 0.": "يجب أن يكون مبلغ القرض أكبر من 0.",
   "Le capital emprunté est le prix du bien moins l'apport.": "مبلغ القرض هو ثمن العقار ناقص المساهمة الذاتية.",
   "Le crédit est soldé après l'échéance {n}.": "يُسدَّد القرض بالكامل بعد القسط رقم {n}.",
+  "Le crédit se terminerait à {a} ans : au-delà de {m} ans, les banques refusent souvent.": "سينتهي القرض في سن {a}: بعد {m} سنة غالبًا ما ترفض البنوك.",
   "Le différé doit être plus court que la durée du crédit.": "يجب أن تكون فترة الإمهال أقصر من مدة القرض.",
   "Le différé doit être un multiple de {p} mois.": "يجب أن تكون فترة الإمهال من مضاعفات {p} أشهر.",
   "Le différé est compris dans la durée du crédit. En différé total, les intérêts s'ajoutent au capital.": "فترة الإمهال محتسبة ضمن مدة القرض. في الإمهال الكلي، تُضاف الفوائد إلى رأس المال.",
   "Le graphique nécessite une connexion Internet (bibliothèque Chart.js).": "يتطلب الرسم البياني اتصالًا بالإنترنت (مكتبة Chart.js).",
   "Le lien de simulation est incomplet ou invalide.": "رابط المحاكاة غير مكتمل أو غير صالح.",
   "Le lissage ne s'applique pas quand le prêt principal a un différé.": "لا تنطبق التسوية عندما يتضمن القرض الرئيسي فترة إمهال.",
+  "Le même taux jusqu'à la fin": "نفس النسبة حتى النهاية",
   "Le nouveau taux s'applique à partir de l'échéance 37 (4e année).": "تُطبَّق النسبة الجديدة ابتداءً من القسط 37 (السنة الرابعة).",
   "Le ratio ne dépasse jamais strictement 8 % sur la durée du crédit.": "لا تتجاوز النسبة 8 % أبدًا طوال مدة القرض.",
   "Le simulateur accepte 300 mois au maximum : réduisez la durée pour l'utiliser.": "يقبل المحاكي 300 شهر كحد أقصى: قلّص المدة لاستعمالها.",
@@ -2272,6 +2587,7 @@ var AR = {
   "Lissage impossible : les autres prêts dépassent à eux seuls la mensualité lissée.": "التسوية غير ممكنة: أقساط القروض الأخرى وحدها تتجاوز القسط المسوّى.",
   "Lisser les mensualités (le prêt le plus long s'ajuste)": "تسوية الأقساط (يتكيّف القرض الأطول)",
   "Location et marché": "الكراء والسوق",
+  "Logement": "مسكن",
   "Logo de l'agence": "شعار الوكالة",
   "Louer ou acheter ?": "الكراء أم الشراء؟",
   "Loyer de départ": "الكراء في البداية",
@@ -2286,6 +2602,7 @@ var AR = {
   "Mensualité annoncée": "القسط الشهري المعلن",
   "Mensualité avec assurance": "القسط الشهري مع التأمين",
   "Mensualité du crédit": "القسط الشهري للقرض",
+  "Mensualité estimée": "القسط الشهري التقديري",
   "Mensualité globale": "القسط الشهري الجملي",
   "Mensualité la plus basse :": "أدنى قسط شهري:",
   "Mensualité lissée : {m} pendant {n}. Le lissage modifie les intérêts de {d}.": "القسط المسوّى: {m} لمدة {n}. تغيّر التسوية الفوائد بـ {d}.",
@@ -2303,17 +2620,22 @@ var AR = {
   "Mensuelle": "شهرية",
   "Minimum conseillé : {m} du prix du bien": "الحد الأدنى المنصوح به: {m} من ثمن العقار",
   "Modalités de remboursement": "طرق السداد",
+  "Mode présentation": "وضع العرض",
   "Mois {a}": "الشهر {a}",
   "Mois {a} à {b}": "من الشهر {a} إلى {b}",
+  "Mon crédit en cours": "قرضي الجاري",
   "Montant": "المبلغ",
   "Montant du versement": "مبلغ الدفعة",
   "Montant empruntable selon vos revenus": "المبلغ القابل للاقتراض حسب مداخيلك",
   "Montant empruntable sur {n}": "المبلغ القابل للاقتراض على {n}",
+  "Montant libre": "مبلغ حر",
   "Montant limité au capital restant dû.": "المبلغ محدود برأس المال المتبقي.",
   "Montant remboursé": "المبلغ المسدَّد",
   "Montant remboursé par anticipation": "المبلغ المسدَّد مسبقًا",
   "Montant total simulé": "المبلغ الجملي المحاكى",
+  "Montant à emprunter": "المبلغ المراد اقتراضه",
   "Médiane": "الوسيط",
+  "Neuve ou d'occasion": "جديدة أو مستعملة",
   "Nom de la banque": "اسم البنك",
   "Nom du client": "اسم الحريف",
   "Nom du prêt": "اسم القرض",
@@ -2326,6 +2648,7 @@ var AR = {
   "Nouveau taux annuel": "النسبة السنوية الجديدة",
   "Nouvelle durée": "المدة الجديدة",
   "Nouvelle durée : {a} au lieu de {b}, soit {c} de moins.": "المدة الجديدة: {a} بدلًا من {b}، أي أقل بـ {c}.",
+  "Nouvelle mensualité": "القسط الشهري الجديد",
   "Nulle": "منعدمة",
   "N°": "رقم",
   "Offre appliquée au scénario {n}.": "تم تطبيق العرض على السيناريو {n}.",
@@ -2334,7 +2657,9 @@ var AR = {
   "Option choisie": "الخيار المعتمد",
   "Orange": "برتقالي",
   "Ou collez le texte de l'offre": "أو الصق نص العرض",
+  "Outil réservé aux crédits mensuels à échéances constantes, sans différé, de plus de 84 mois.": "أداة مخصصة للقروض الشهرية بأقساط ثابتة، دون إمهال، لأكثر من 84 شهرًا.",
   "Outils": "الأدوات",
+  "Ouvrir dans le scénario A": "فتح في السيناريو A",
   "PDF téléchargé : joignez « {f} » (dossier Téléchargements) à l'e-mail avant l'envoi.": "تم تنزيل ملف PDF: أرفق «{f}» (مجلد التنزيلات) بالبريد قبل الإرسال.",
   "PDF téléchargé.": "تم تنزيل ملف PDF.",
   "Par année ({u})": "حسب السنة ({u})",
@@ -2349,9 +2674,11 @@ var AR = {
   "Part du capital dans le coût total": "حصة رأس المال من الكلفة الجملية",
   "Partager": "مشاركة",
   "Partager par e-mail": "مشاركة عبر البريد",
+  "Pas de proposition encore ? Gardez la valeur courante pour ce type de crédit.": "لا عرض بعد؟ احتفظ بالقيمة المعتادة لهذا النوع من القروض.",
   "Passer au thème Aurora": "التحويل إلى مظهر أورورا",
   "Passer au thème clair": "التحويل إلى المظهر الفاتح",
   "Passer au thème sombre": "التحويل إلى المظهر الداكن",
+  "Passer et voir le résultat": "تخطٍّ ورؤية النتيجة",
   "Patrimoine comparé sur la durée du crédit": "مقارنة الثروة على مدة القرض",
   "Patrimoine selon le choix": "الثروة حسب الاختيار",
   "Patrimoine si vous achetez (bien − capital restant dû)": "الثروة إذا اشتريت (العقار − رأس المال المتبقي)",
@@ -2361,17 +2688,29 @@ var AR = {
   "Photo ou texte de l'offre : valeurs repérées": "صورة العرض أو نصه: استخراج القيم",
   "Photographiez l'offre ou collez son texte : le taux, la durée, le montant et les frais sont repérés automatiquement.": "صوّر العرض أو الصق نصه: تُستخرج النسبة والمدة والمبلغ والمصاريف تلقائيًا.",
   "Plan de financement": "خطة التمويل",
+  "Plein écran pour un rendez-vous client": "ملء الشاشة لموعد مع حريف",
   "Plus de 7 ans de remboursement": "أكثر من 7 سنوات من السداد",
+  "Plus la demande est tôt, plus l'économie est grande : première date possible à l'échéance {n}.": "كلما كان الطلب مبكرًا كان التوفير أكبر: أول تاريخ ممكن عند القسط {n}.",
+  "Plus la durée est longue, plus l'échéance baisse, mais plus les intérêts augmentent.": "كلما طالت المدة انخفض القسط، لكن ارتفعت الفوائد.",
   "Plus tard": "لاحقًا",
   "Plusieurs prêts (par exemple crédit principal et crédit d'autofinancement) : mensualité globale, paliers et lissage.": "عدة قروض (مثلًا قرض رئيسي وقرض للتمويل الذاتي): القسط الجملي والمراحل والتسوية.",
   "Plusieurs prêts, paliers et lissage": "عدة قروض، مراحل وتسوية",
+  "Point de départ : le début du crédit, ou la date de la dernière réduction de taux (le contrôle suivant a lieu 36 mois plus tard).": "نقطة الانطلاق: بداية القرض أو تاريخ آخر تخفيض للنسبة (تتم المراقبة الموالية بعد 36 شهرًا).",
+  "Position actuelle, réductions à venir et rappels": "الوضع الحالي والتخفيضات القادمة والتذكيرات",
   "Position dans le temps": "الموضع في الزمن",
+  "Pour rester sous {p} d'endettement, l'échéance ne doit pas dépasser {m}.": "للبقاء تحت {p} من التداين، يجب ألا يتجاوز القسط {m}.",
   "Première mensualité globale": "أول قسط شهري جملي",
   "Prendre ou choisir une photo": "التقاط صورة أو اختيارها",
   "Principal": "أصل الدين",
   "Prix du bien": "ثمن العقار",
   "Prix du bien et apport": "ثمن العقار والمساهمة الذاتية",
+  "Prochaine date possible": "أقرب تاريخ ممكن",
+  "Prochaine échéance": "القسط القادم",
+  "Prochaine échéance de {m} le {d}.": "القسط القادم بقيمة {m} في {d}.",
+  "Prochaines réductions de taux": "التخفيضات القادمة للنسبة",
+  "Précédent": "السابق",
   "Préparation…": "التحضير…",
+  "Prévoir les réductions de taux": "توقّع تخفيضات النسبة",
   "Prêt {n}": "القرض {n}",
   "Prêts mensuels à échéances constantes. Le différé est partiel : seuls les intérêts sont payés.": "قروض بأقساط شهرية ثابتة. فترة الإمهال جزئية: تُدفع الفوائد فقط.",
   "Période": "الفترة",
@@ -2382,19 +2721,30 @@ var AR = {
   "QR code d'installation": "رمز QR للتثبيت",
   "QR code de la simulation": "رمز QR للمحاكاة",
   "QR code indisponible : bibliothèque non chargée (connexion requise).": "رمز QR غير متاح: المكتبة غير محمّلة (يتطلب اتصالًا بالإنترنت).",
+  "Quand demander la réduction ?": "متى تطلب التخفيض؟",
   "Que voulez-vous calculer ?": "ماذا تريد أن تحسب؟",
   "Que voulez-vous faire ?": "ماذا تريد أن تفعل؟",
+  "Quel est le prix de la voiture ?": "ما هو ثمن السيارة؟",
+  "Quel est le prix du logement ?": "ما هو ثمن المسكن؟",
+  "Quel est votre projet ?": "ما هو مشروعك؟",
+  "Quel taux la banque vous propose-t-elle ?": "ما النسبة التي يقترحها عليك البنك؟",
+  "Quitter la présentation": "الخروج من العرض",
   "RA": "RA",
+  "Rappels des échéances": "تذكير بالأقساط",
   "Rapport client": "تقرير الحريف",
   "Rapport client premium : couverture, synthèse, conseils, échéancier et signatures": "تقرير حريف متميز: غلاف، ملخص، نصائح، جدول أقساط وإمضاءات",
   "Rapport client téléchargé.": "تم تنزيل تقرير الحريف.",
   "Ratio": "النسبة",
   "Ratio d'au moins 8 %": "نسبة لا تقل عن 8 %",
+  "Ratio intérêts des 36 derniers mois / capital restant dû, à chaque échéance. La réduction est possible au-dessus de 8 % (zones vertes).": "نسبة فوائد الأشهر الـ36 الأخيرة إلى رأس المال المتبقي عند كل قسط. التخفيض ممكن فوق 8 % (المناطق الخضراء).",
   "Ratio strictement supérieur à 8 %": "نسبة أكبر تمامًا من 8 %",
+  "Ratio {r} · {a} → {b} · mensualité {m}": "النسبة {r} · {a} → {b} · القسط {m}",
+  "Ratio à chaque échéance et économie selon la date": "النسبة عند كل قسط والتوفير حسب التاريخ",
   "Rechercher une action": "البحث عن إجراء",
   "Rechercher une action (Ctrl + K)": "البحث عن إجراء (Ctrl + K)",
   "Rechercher une action ou un outil…": "ابحث عن إجراء أو أداة…",
   "Recommandation": "التوصية",
+  "Recommencer": "إعادة البدء",
   "Reconnaissance du texte dans le navigateur (première fois : téléchargement d'environ 5 Mo).": "التعرف على النص داخل المتصفح (أول مرة: تنزيل حوالي 5 ميغابايت).",
   "Relancer la simulation": "إعادة المحاكاة",
   "Remb. anticipé": "سداد مسبق",
@@ -2405,6 +2755,7 @@ var AR = {
   "Remplir": "ملء",
   "Remplir le formulaire": "ملء الاستمارة",
   "Rendement de l'épargne": "مردود الادخار",
+  "Renseignez le capital restant dû, la date, le nombre d'échéances et le taux.": "أدخل رأس المال المتبقي والتاريخ وعدد الأقساط والنسبة.",
   "Renseignez le capital, la durée et le taux : la mensualité, le coût du crédit et l'échéancier s'affichent instantanément.": "أدخل مبلغ القرض والمدة والنسبة: يظهر القسط الشهري وكلفة القرض وجدول الأقساط فورًا.",
   "Renseignez le capital, la durée et le taux de chaque prêt.": "أدخل مبلغ ومدة ونسبة كل قرض.",
   "Renseignez le crédit en cours et le nouveau taux : la comparaison s'affiche aussitôt.": "أدخل القرض الحالي والنسبة الجديدة: تظهر المقارنة فورًا.",
@@ -2412,6 +2763,7 @@ var AR = {
   "Renseignez les trois autres valeurs : le résultat s'affiche aussitôt.": "أدخل القيم الثلاث الأخرى: تظهر النتيجة فورًا.",
   "Renseignez vos revenus, la durée et le taux : le montant empruntable s'affiche aussitôt.": "أدخل مداخيلك والمدة والنسبة: يظهر المبلغ القابل للاقتراض فورًا.",
   "Renégociation ou rachat": "إعادة التفاوض أو إعادة الشراء",
+  "Reprenez les chiffres de votre tableau d'amortissement bancaire : position actuelle, prochaines réductions de taux et rappels.": "انقل أرقام جدول الاستهلاك البنكي: الوضع الحالي، التخفيضات القادمة والتذكيرات.",
   "Repris sur les PDF, les impressions et les e-mails. Enregistrés dans ce navigateur.": "تظهر في ملفات PDF والمطبوعات والرسائل. تُحفظ في هذا المتصفح.",
   "Restant dû": "المتبقي",
   "Reste à vivre": "المتبقي للعيش",
@@ -2464,6 +2816,8 @@ var AR = {
   "Sensibilité au TMM": "الحساسية لمعدل السوق النقدية",
   "Si vous achetez": "إذا اشتريت",
   "Si vous louez": "إذا استأجرت",
+  "Signature du client": "إمضاء الحريف",
+  "Signature du conseiller": "إمضاء المستشار",
   "Simulateur de crédit": "محاكي القروض",
   "Simulateur de crédit en Dinar Tunisien": "محاكي القروض بالدينار التونسي",
   "Simulateur de crédit, accueil": "محاكي القروض، الصفحة الرئيسية",
@@ -2472,11 +2826,16 @@ var AR = {
   "Simulation chargée dans le scénario A.": "تم تحميل المحاكاة في السيناريو A.",
   "Simulation de crédit": "محاكاة قرض",
   "Simulation enregistrée dans l'historique.": "تم حفظ المحاكاة في السجل.",
+  "Simulation guidée": "محاكاة موجّهة",
+  "Simulation indicative, ne constitue pas une offre de prêt.": "محاكاة تقديرية، لا تمثل عرض قرض.",
   "Simulation ouverte depuis le lien partagé.": "تم فتح المحاكاة من الرابط المشارك.",
+  "Simulation placée dans le scénario {n} : affinez-la avec les options.": "تم وضع المحاكاة في السيناريو {n}: دقّقها بالخيارات.",
   "Simulations": "المحاكاة",
   "Simulations par mois": "المحاكاة حسب الشهر",
   "Simulez votre crédit en dinars tunisiens : mensualité, coût des intérêts, tableau d'amortissement, capacité d'emprunt et comparaison de scénarios.": "احسب قرضك بالدينار التونسي: القسط الشهري، كلفة الفوائد، جدول الاستهلاك، القدرة على الاقتراض ومقارنة السيناريوهات.",
   "Solde": "تصفية",
+  "Solution 1 : emprunter au plus {m} sur {a}.": "الحل 1: اقتراض {m} كحد أقصى على {a}.",
+  "Solution 2 : allonger la durée à {a}.": "الحل 2: تمديد المدة إلى {a}.",
   "Statistiques des simulations enregistrées": "إحصائيات المحاكاة المحفوظة",
   "Stress test": "اختبار الضغط",
   "Stress test du TMM": "اختبار ضغط معدل السوق النقدية",
@@ -2485,9 +2844,12 @@ var AR = {
   "Supprimer ce remboursement": "حذف عملية السداد هذه",
   "Supprimer la simulation #{n}": "حذف المحاكاة رقم {n}",
   "Sur Android, un bouton « Installer maintenant » s'affiche ; sur iPhone, les deux gestes à faire sont indiqués. Aucun téléphone n'autorise une installation sans confirmation de l'utilisateur.": "على أندرويد يظهر زر «ثبّت الآن»، وعلى آيفون تظهر الخطوتان اللازمتان. لا يسمح أي هاتف بالتثبيت دون تأكيد المستخدم.",
+  "Sur combien d'années voulez-vous rembourser ?": "على كم سنة تريد السداد؟",
   "Sur l'écran d'accueil": "إضافة إلى الشاشة الرئيسية",
   "Sur téléphone, scannez le QR code d'installation pour l'avoir dans votre poche.": "على الهاتف، امسح رمز QR الخاص بالتثبيت ليكون التطبيق دائمًا معك.",
   "Surcoût net sur toute la durée": "الكلفة الإضافية الصافية على كامل المدة",
+  "Surtout des intérêts": "فوائد في الغالب",
+  "Surtout du capital": "رأس مال في الغالب",
   "Sélectionnez 2 ou 3 simulations de l'historique.": "اختر محاكاتين أو ثلاثًا من السجل.",
   "TEG": "النسبة الفعلية الجملية",
   "TEG (échelle de 0 à 20 %)": "النسبة الفعلية الإجمالية (من 0 إلى 20 %)",
@@ -2497,6 +2859,7 @@ var AR = {
   "TEG {v}": "النسبة الفعلية {v}",
   "TMM": "معدل السوق النقدية",
   "TMM +": "م.س.ن +",
+  "TMM + marge": "TMM + هامش",
   "TMM + {m}": "معدل السوق النقدية + {m}",
   "TMM actuel": "معدل السوق النقدية الحالي",
   "TMM de départ": "معدل السوق النقدية في البداية",
@@ -2515,12 +2878,14 @@ var AR = {
   "Taux = TMM + marge de la banque": "النسبة = معدل السوق النقدية + هامش البنك",
   "Taux actuel": "النسبة الحالية",
   "Taux annuel": "النسبة السنوية",
+  "Taux annuel actuel": "النسبة السنوية الحالية",
   "Taux annuel maximal": "أقصى نسبة سنوية",
   "Taux annuel, curseur": "النسبة السنوية، شريط التمرير",
   "Taux appliqué": "النسبة المطبّقة",
   "Taux d'assurance annuel": "نسبة التأمين السنوية",
   "Taux d'endettement": "نسبة التداين",
   "Taux d'endettement (max. {m})": "نسبة التداين (الأقصى {m})",
+  "Taux d'endettement : {p}": "نسبة التداين: {p}",
   "Taux d'endettement maximal": "أقصى نسبة تداين",
   "Taux d'endettement maximum : {m} des revenus nets.": "الحد الأقصى لنسبة التداين: {m} من المداخيل الصافية.",
   "Taux d'intérêt": "نسبة الفائدة",
@@ -2528,19 +2893,23 @@ var AR = {
   "Taux d'intérêt mensuel": "نسبة الفائدة الشهرية",
   "Taux de la période": "نسبة الفترة",
   "Taux du crédit": "نسبة القرض",
+  "Taux fixe": "نسبة قارة",
   "Taux indexé sur le TMM": "نسبة مرتبطة بمعدل السوق النقدية",
   "Taux moyen": "متوسط النسبة",
   "Taux ou marge ({n})": "النسبة أو الهامش ({n})",
+  "Taux réduit": "نسبة مخفّضة",
   "Taux réduit (dès l'échéance 37)": "النسبة المخفّضة (ابتداءً من القسط 37)",
   "Taux réduit 1 fois": "تم تخفيض النسبة مرة واحدة",
   "Taux réduit : {a} → {b} à partir de l'échéance 37.": "النسبة المخفّضة: {a} ← {b} ابتداءً من القسط 37.",
   "Taux réduit {n} fois": "تم تخفيض النسبة {n} مرات",
+  "Taux variable, revu avec le TMM": "نسبة متغيرة تُراجع مع معدل السوق النقدية",
   "Taux, frais, assurance et TEG": "النسبة والمصاريف والتأمين والنسبة الفعلية",
   "Tendance par an": "الاتجاه السنوي",
   "Texte lu : vérifiez les valeurs ci-dessous.": "تمت قراءة النص: تحقق من القيم أدناه.",
   "Thème clair / sombre": "الوضع الفاتح / الداكن",
   "Total": "المجموع",
   "Total payé": "المبلغ المدفوع",
+  "Total remboursé": "المجموع المسدد",
   "Total restant à payer": "المتبقي للدفع",
   "Touchez": "المس",
   "Touchez le bouton": "المس زر",
@@ -2559,6 +2928,7 @@ var AR = {
   "Tél. : {n}": "الهاتف: {n}",
   "Télécharger l'image": "تنزيل الصورة",
   "Téléphone": "الهاتف",
+  "Un apport d'au moins {p} du prix facilite l'accord de la banque.": "مساهمة لا تقل عن {p} من الثمن تسهّل موافقة البنك.",
   "Un prêt incomplet ou invalide est ignoré (durée de 1 à 300 mois, différé plus court que la durée).": "يتم تجاهل القرض غير المكتمل أو غير الصالح (مدة من 1 إلى 300 شهر، وإمهال أقصر من المدة).",
   "Un seul geste : touchez « Installer maintenant », puis confirmez.": "خطوة واحدة: المس «ثبّت الآن» ثم أكّد.",
   "Une fois par an": "مرة في السنة",
@@ -2575,14 +2945,29 @@ var AR = {
   "Veuillez d'abord saisir un crédit valide.": "يرجى أولًا إدخال قرض صالح.",
   "Violet": "بنفسجي",
   "Voir l'échéancier": "عرض جدول الأقساط",
+  "Voir la simulation détaillée": "عرض المحاكاة المفصلة",
+  "Voir le résultat": "عرض النتيجة",
+  "Voiture": "سيارة",
   "Volatilité annuelle": "التقلب السنوي",
   "Vos charges ({a}) atteignent ou dépassent {p} de vos revenus ({b}).": "أعباؤك ({a}) تبلغ أو تتجاوز {p} من مداخيلك ({b}).",
+  "Vos charges actuelles dépassent déjà le maximum d'endettement.": "أعباؤك الحالية تتجاوز بالفعل الحد الأقصى للتداين.",
+  "Votre apport personnel": "مساهمتك الشخصية",
+  "Votre mensualité": "قسطك الشهري",
   "Votre messagerie va s'ouvrir avec le résumé de la simulation.": "سيفتح بريدك الإلكتروني مع ملخّص المحاكاة.",
+  "Votre projet de crédit": "مشروع قرضك",
+  "Votre projet est cohérent. Passez à la simulation détaillée pour l'assurance, les frais et le TEG.": "مشروعك متماسك. انتقل إلى المحاكاة المفصلة للتأمين والمصاريف والنسبة الفعلية الإجمالية.",
   "Votre simulation apparaîtra ici": "ستظهر محاكاتك هنا",
+  "Votre âge": "سنّك",
+  "Vous empruntez": "تقترض",
+  "Vous empruntez {m}.": "تقترض {m}.",
   "Voyage dans le temps": "رحلة عبر الزمن",
+  "Vue annuelle colorée selon la part d'intérêts": "عرض سنوي ملوّن حسب حصة الفوائد",
   "Vérifiez les durées (1 à 25 ans) et les taux des types de crédit.": "تحقّق من المدد (من 1 إلى 25 سنة) ومن نسب أنواع القروض.",
   "Vérifiez les valeurs : nombres positifs, volatilité de 0 à 10 points.": "تحقق من القيم: أعداد موجبة، وتقلب من 0 إلى 10 نقاط.",
+  "Vérifions votre budget (facultatif)": "لنتحقق من ميزانيتك (اختياري)",
   "WhatsApp": "واتساب",
+  "Zone de signature du client": "منطقة إمضاء الحريف",
+  "Zone de signature du conseiller": "منطقة إمضاء المستشار",
   "ans": "سنة",
   "apport {m}": "مساهمة {m}",
   "après inflation, hors capital": "بعد التضخم، دون رأس المال",
@@ -2590,12 +2975,17 @@ var AR = {
   "assurance": "التأمين",
   "assurance et frais {a}": "التأمين والمصاريف {a}",
   "assurance {m}": "تأمين {m}",
+  "au lieu de {m}": "بدلًا من {m}",
   "au lieu de {m} en valeur nominale": "بدلًا من {m} بالقيمة الاسمية",
+  "au-dessus de 8 % : recevable": "فوق 8 %: مقبول",
+  "au-dessus du maximum de {m}": "فوق الحد الأقصى {m}",
   "aucun paiement pendant le différé ({n}, intérêts capitalisés)": "لا دفع أثناء فترة الإمهال ({n}، فوائد مضافة إلى رأس المال)",
+  "aucune": "لا شيء",
   "capital": "رأس المال",
   "capital initial": "رأس المال الأصلي",
   "capital restant dû": "رأس المال المتبقي",
   "capital {m}": "رأس مال {m}",
+  "dernière : {d}": "الأخير: {d}",
   "des 1 000 scénarios": "من 1000 سيناريو",
   "des revenus": "من المداخيل",
   "différé": "إمهال",
@@ -2607,6 +2997,7 @@ var AR = {
   "en haut à droite du navigateur.": "أعلى يمين المتصفح.",
   "en {n} versements": "على {n} دفعات",
   "endettement": "التداين",
+  "fin {d}": "نهاية {d}",
   "frais": "المصاريف",
   "frais de dossier {m}": "مصاريف ملف {m}",
   "hors capital": "دون رأس المال",
@@ -2636,6 +3027,7 @@ var AR = {
   "simulation {n} ({m})": "المحاكاة {n} ({m})",
   "soit {p} du capital": "أي {p} من رأس المال",
   "solde après l'échéance {n}": "تصفية بعد القسط رقم {n}",
+  "sous le maximum de {m}": "تحت الحد الأقصى {m}",
   "sur le capital initial": "على رأس المال الأصلي",
   "sur le capital restant dû": "على رأس المال المتبقي",
   "taux fixe {m}": "نسبة قارة {m}",
@@ -2649,6 +3041,7 @@ var AR = {
   "{a} ans": "{a} سنة",
   "{a} et plus": "{a} فأكثر",
   "{a} si le TMM ne bouge pas": "{a} إذا بقي المعدل ثابتًا",
+  "{a} · taux {b}": "{a} · نسبة {b}",
   "{a} à la première échéance, puis dégressive jusqu'à {b}": "{a} في القسط الأول، ثم متناقص حتى {b}",
   "{a} → {b} dès l'échéance {n}": "{a} → {b} ابتداءً من القسط {n}",
   "{d} point(s) dès l'échéance {n}": "{d} نقطة ابتداءً من القسط {n}",
@@ -2671,6 +3064,7 @@ var AR = {
   "{n} · TEG {t}": "{n} · النسبة الفعلية {t}",
   "{n}, partiel (intérêts payés)": "{n}، جزئي (دفع الفوائد)",
   "{n}, total (intérêts capitalisés)": "{n}، كلي (فوائد مضافة إلى رأس المال)",
+  "{p} remboursé depuis le point de départ": "{p} مسدد منذ نقطة الانطلاق",
   "{p} · {n}": "{p} · {n}",
   "{p} à 36 mois": "{p} عند 36 شهرًا",
   "{taux} par an sur le {base} : {m} la 1re échéance": "{taux} سنويًا على {base}: {m} في القسط الأول",
@@ -2685,13 +3079,17 @@ var AR = {
   "Âge maximal en fin de crédit": "أقصى سن عند نهاية القرض",
   "Âge, revenus et charges : endettement et reste à vivre": "السن والمداخيل والأعباء: التداين والمتبقي للعيش",
   "Écart": "الفارق",
+  "Écart cumulé de paiements (B − A)": "الفارق المتراكم في المدفوعات (B − A)",
   "Écart de B par rapport à A": "فارق B مقارنة بـ A",
   "Échéance": "القسط",
   "Échéance après le dernier remboursement : {a} au lieu de {b}.": "القسط بعد آخر عملية سداد: {a} بدلًا من {b}.",
   "Échéance avec assurance": "القسط مع التأمين",
+  "Échéance de la demande": "قسط الطلب",
   "Échéance et intérêts si le TMM varie dès aujourd'hui (marge de {m}).": "القسط والفوائد إذا تغيّر معدل السوق النقدية ابتداءً من اليوم (هامش {m}).",
   "Échéance totale": "القسط الجملي",
+  "Échéance {n}": "القسط {n}",
   "Échéances constantes": "أقساط ثابتة",
+  "Échéances restantes": "الأقساط المتبقية",
   "Économie (intérêts et assurance)": "التوفير (الفوائد والتأمين)",
   "Économie d'intérêts": "التوفير في الفوائد",
   "Économie d'intérêts : {m}.": "توفير في الفوائد: {m}.",
@@ -2701,10 +3099,15 @@ var AR = {
   "Éligibilité": "الأهلية",
   "Éligible : taux réduit de moitié": "مؤهل: تخفيض النسبة إلى النصف",
   "Émeraude": "زمردي",
+  "Équipement, études, travaux…": "تجهيزات، دراسة، أشغال…",
+  "Étapes": "المراحل",
+  "Étude préparée pour {n}": "دراسة معدّة لـ {n}",
   "Évolution du TMM": "تطوّر معدل السوق النقدية",
   "Évolution du TMM (facultatif)": "تطوّر معدل السوق النقدية (اختياري)",
+  "Évolution du ratio": "تطور النسبة",
   "Évolution possible du TMM": "التطور المحتمل لمعدل السوق النقدية",
   "à partir de {d}": "ابتداءً من {d}",
+  "échéance {n}": "القسط {n}",
   "العربية": "Français",
   "ع": "FR"
 };
@@ -2999,7 +3402,7 @@ var AR = {
        d'échec, nouveau test à l'échéance suivante (fenêtre glissante) ;
        après une réduction, prochain test 36 mois plus tard. */
     var fen = 36 / p;
-    var reduc = !!reduire && e.mois > 84 && fen === Math.round(fen);
+    var reduc = !!reduire && (e.dureeTotale || e.mois) > 84 && fen === Math.round(fen);
     var parAn = 12 / p;
     var lignes = [], paliers = [], raListe = [], reductions = [];
     var reste = C, totI = 0, totP = 0, totM = 0, totIndem = 0, totAss = 0, totRA = 0;
@@ -3858,9 +4261,9 @@ var AR = {
       var rendu = function (v) { return fmtMoneyHtml(v); };
       f('k1-lib').textContent = nomEcheance();
       if (premier) { f('mens').dataset.val = r.M1; f('int').dataset.val = r.totI; f('tot').dataset.val = r.coutTotal; }
-      animer(f('mens'), r.M1, rendu);
-      animer(f('int'), r.totI, rendu);
-      animer(f('tot'), r.coutTotal, rendu);
+      odometre(f('mens'), r.M1);
+      odometre(f('int'), r.totI);
+      odometre(f('tot'), r.coutTotal);
 
       var parts = [];
       if (r.D > 0) parts.push(t('après un différé de {n}', { n: libEcheances(r.D) }));
@@ -4078,7 +4481,7 @@ var AR = {
         lignes.forEach(function (a) {
           var per = a.debut ? '<small>' + moisAnnee(a.debut) + ' – ' + moisAnnee(a.fin) + '</small>' : '<small>' + echapper(libEcheances(a.nb)) + '</small>';
           var b = a.ra ? t('remb. anticipé') : (a.differe ? t('différé') : (a.reduit ? t('taux réduit') : ''));
-          html += '<tr' + (a.ra ? ' class="avec-ra"' : '') + '><td class="per"' + badge(b) + '>' + echapper(t('Année {n}', { n: a.annee })) + per + '</td>' +
+          html += '<tr data-i="' + a.annee + '"' + (a.ra ? ' class="avec-ra"' : '') + '><td class="per"' + badge(b) + '>' + echapper(t('Année {n}', { n: a.annee })) + per + '</td>' +
             '<td class="pay">' + fmtNombre(a.paiement) + '</td><td class="int">' + fmtNombre(a.interet) + '</td>' +
             '<td class="pri">' + fmtNombre(a.principal) + '</td>' + (avecAss ? '<td class="ass">' + fmtNombre(a.assurance) + '</td>' : '') + '<td>' + fmtNombre(a.reste) + '</td></tr>';
         });
@@ -4090,7 +4493,7 @@ var AR = {
           if (l.differe) cls.push('diff');
           var b = l.differe ? (l.mois === 1 ? t('différé') : '') : (l.reduction ? t('taux réduit n° {n}', { n: l.reduction }) : (l.revise ? t('TMM révisé') : ''));
           if (l.reduction) cls.push('reduc');
-          html += '<tr' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '><td class="per"' + badge(b) + '><span class="n">' + l.mois + '</span>' +
+          html += '<tr data-i="' + l.mois + '"' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '><td class="per"' + badge(b) + '><span class="n">' + l.mois + '</span>' +
             (l.date ? moisAnnee(l.date) : '') + '</td>' +
             '<td class="pay">' + fmtNombre(totalLigne(l)) + '</td><td class="int">' + fmtNombre(l.interet) + '</td>' +
             '<td class="pri">' + fmtNombre(l.principal) + '</td>' + (avecAss ? '<td class="ass">' + fmtNombre(l.assurance) + '</td>' : '') + '<td>' + fmtNombre(l.reste) + '</td>' + cellsRatio(l) + '</tr>';
@@ -4122,7 +4525,7 @@ var AR = {
       var annuel = sc.vue === 'annuel';
       var lignes = lignesVue();
       var rtl = enArabe();
-      var police = rtl ? 'Noto Sans Arabic' : 'Inter';
+      var police = rtl ? 'IBM Plex Sans Arabic' : 'IBM Plex Sans';
       var labels = lignes.map(function (l) {
         if (annuel) return t('Année {n}', { n: l.annee });
         return l.date ? moisAnnee(l.date) : String(l.mois);
@@ -4161,6 +4564,8 @@ var AR = {
           responsive: true, maintainAspectRatio: false,
           animation: { duration: mouvementReduit.matches ? 0 : 550, easing: 'easeOutCubic' },
           interaction: { mode: 'index', intersect: false },
+          onClick: function (evt, els) { if (els && els.length) { var l = lignes[els[0].index]; sc.allerLigne(annuel ? l.annee : l.mois, annuel); } },
+          onHover: function (evt, els) { evt.native.target.style.cursor = els && els.length ? 'pointer' : ''; },
           plugins: {
             legend: { position: 'top', align: 'end', rtl: rtl, labels: { sort: function (a, b) { return a.datasetIndex - b.datasetIndex; }, color: fort, usePointStyle: true, pointStyle: 'rectRounded', boxWidth: 10, boxHeight: 10, padding: 16, font: { family: police, weight: '600', size: 12 } } },
             tooltip: {
@@ -4182,6 +4587,28 @@ var AR = {
       });
     }
     sc.rendreGraphique = function () { if (sc.resultat && sc.aff === 'graphique') rendreGraphique(); };
+
+    function afficherVue(aff) {
+      sc.aff = aff;
+      $$('[data-aff]', racine).forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.aff === aff)); });
+      f('twrap').hidden = aff !== 'tableau';
+      f('cwrap').hidden = aff !== 'graphique';
+      if (aff === 'graphique') rendreGraphique();
+    }
+    /* Affiche une échéance (ou une année) dans le tableau et la met en évidence */
+    sc.allerLigne = function (cle, annuel) {
+      if (!sc.resultat) return;
+      if (sc.aff !== 'tableau') afficherVue('tableau');
+      if (!annuel && sc.vue === 'annuel') { sc.vue = 'mensuel'; $$('[data-vue]', racine).forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.vue === 'mensuel')); }); rendreEcheancier(); }
+      ecrireEtatUrl();
+      var tr = $('#' + k + '-tbody tr[data-i="' + cle + '"]');
+      if (!tr) return;
+      var wrap = f('twrap');
+      wrap.scrollTop = tr.offsetTop - wrap.clientHeight / 2;
+      f('titre-ech').closest('.schedule').scrollIntoView({ behavior: mouvementReduit.matches ? 'auto' : 'smooth', block: 'start' });
+      tr.classList.remove('surligne'); void tr.offsetWidth; tr.classList.add('surligne');
+      setTimeout(function () { tr.classList.remove('surligne'); }, 2200);
+    };
 
     /* --- Événements --- */
     var attente = null;
@@ -4366,18 +4793,17 @@ var AR = {
       }
       var bv = ev.target.closest('[data-vue]');
       if (bv) {
-        sc.vue = bv.dataset.vue;
-        $$('[data-vue]', racine).forEach(function (b) { b.setAttribute('aria-pressed', String(b === bv)); });
-        if (sc.resultat) rendreEcheancier();
+        transition(function () {
+          sc.vue = bv.dataset.vue;
+          $$('[data-vue]', racine).forEach(function (b) { b.setAttribute('aria-pressed', String(b === bv)); });
+          if (sc.resultat) rendreEcheancier();
+          ecrireEtatUrl();
+        });
         return;
       }
       var ba = ev.target.closest('[data-aff]');
       if (ba) {
-        sc.aff = ba.dataset.aff;
-        $$('[data-aff]', racine).forEach(function (b) { b.setAttribute('aria-pressed', String(b === ba)); });
-        f('twrap').hidden = sc.aff !== 'tableau';
-        f('cwrap').hidden = sc.aff !== 'graphique';
-        if (sc.aff === 'graphique') rendreGraphique();
+        transition(function () { afficherVue(ba.dataset.aff); ecrireEtatUrl(); });
       }
     });
 
@@ -4407,7 +4833,7 @@ var AR = {
 
     f('xlsx').addEventListener('click', function () { exporterExcel(sc); });
     f('pdf').addEventListener('click', function () { exporterPDF(sc); });
-    f('rapport').addEventListener('click', function () { exporterRapport(sc); });
+    f('rapport').addEventListener('click', function () { preparerRapport(sc); });
     f('print').addEventListener('click', function () { imprimer(sc); });
     f('mail').addEventListener('click', function () { partagerParEmail(sc); });
     f('wa').addEventListener('click', function () { partagerWhatsApp(sc); });
@@ -5676,6 +6102,11 @@ var AR = {
     { cle: 'louer', nom: 'Louer ou acheter ?', aide: 'Patrimoine comparé sur la durée du crédit', ico: 'home', fn: ouvrirLouerAcheter },
     { cle: 'ocr', nom: 'Lire une offre bancaire', aide: 'Photo ou texte de l\'offre : valeurs repérées', ico: 'scan', fn: ouvrirLectureOffre },
     { cle: 'tableau', nom: 'Tableau de bord', aide: 'Statistiques des simulations enregistrées', ico: 'chart', fn: ouvrirTableauBord },
+    { cle: 'quand', nom: 'Quand demander la réduction ?', aide: 'Ratio à chaque échéance et économie selon la date', ico: 'down', fn: ouvrirQuandReduire },
+    { cle: 'moncredit', nom: 'Mon crédit en cours', aide: 'Position actuelle, réductions à venir et rappels', ico: 'wallet', fn: ouvrirMonCredit },
+    { cle: 'ab', nom: 'Comparateur A / B', aide: 'Courbes et écart cumulé des deux scénarios', ico: 'compare', fn: ouvrirComparateurAB },
+    { cle: 'calendrier', nom: 'Calendrier des échéances', aide: 'Vue annuelle colorée selon la part d\'intérêts', ico: 'calendar', fn: ouvrirCalendrier },
+    { cle: 'presentation', nom: 'Mode présentation', aide: 'Plein écran pour un rendez-vous client', ico: 'layers', fn: ouvrirPresentation },
     { cle: 'installer', nom: 'QR code d\'installation', aide: 'À scanner pour installer l\'application sur un téléphone', ico: 'phone', fn: ouvrirQRInstallation }
   ];
 
@@ -6048,6 +6479,11 @@ var AR = {
      =================================================================== */
   function activer(k) {
     if (k === 'b' && $('#tab-b').hidden) return;
+    if (k !== actif && document.startViewTransition && !mouvementReduit.matches && demarre) { transition(function () { activerDirect(k); }); return; }
+    activerDirect(k);
+  }
+  var demarre = false;
+  function activerDirect(k) {
     actif = k;
     ['a', 'b'].forEach(function (c) {
       var on = c === k;
@@ -6060,6 +6496,7 @@ var AR = {
     nav.courant = null;
     majNav();
     choisirCourant();
+    ecrireEtatUrl();
   }
 
   function afficherB(visible) {
@@ -6890,14 +7327,15 @@ var AR = {
     return out;
   }
 
-  function exporterRapport(sc) {
+  function exporterRapport(sc, signatures) {
     if (!exigerResultat(sc)) return;
     if (!window.jspdf || !window.jspdf.jsPDF) { toast(t('Export PDF indisponible : bibliothèque non chargée (connexion requise).'), 'erreur'); return; }
-    enFrancais(function () { construireRapport(sc); });
+    enFrancais(function () { construireRapport(sc, signatures || {}); });
     toast(t('Rapport client téléchargé.'));
   }
 
-  function construireRapport(sc) {
+  function construireRapport(sc, signatures) {
+    signatures = signatures || {};
     var jsPDF = window.jspdf.jsPDF;
     var doc = new jsPDF({ unit: 'mm', format: 'a4', compress: true });
     var L = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
@@ -7034,6 +7472,13 @@ var AR = {
       doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.text(s[0], x + 5, 90);
       doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(gris[0], gris[1], gris[2]); doc.text(s[1], x + 5, 96);
       doc.setTextColor(encre[0], encre[1], encre[2]);
+      var img = i === 0 ? signatures.client : signatures.conseiller;
+      if (img) {
+        try { doc.addImage(img, 'PNG', x + 5, 99, lw2 - 10, 30); } catch (err) { /* signature ignorée */ }
+        doc.setFontSize(7.5); doc.setTextColor(gris[0], gris[1], gris[2]);
+        doc.text('Signé électroniquement le ' + new Date().toLocaleDateString('fr-FR'), x + 5, 132);
+        doc.setTextColor(encre[0], encre[1], encre[2]);
+      }
     });
     var qr = matriceQR(lienSimulation(sc));
     if (qr) {
@@ -7124,9 +7569,12 @@ var AR = {
     var lib = th === 'light' ? t('Passer au thème sombre') : th === 'dark' ? t('Passer au thème Aurora') : t('Passer au thème clair');
     b.setAttribute('title', lib); b.setAttribute('aria-label', lib);
   }
-  function themeSuivant() {
+  function themeSuivant(ev) {
     var ordre = ['light', 'dark', 'aurora'], th = themeCourant();
-    appliquerTheme(ordre[(ordre.indexOf(th) + 1) % 3]);
+    var b = $('#btnTheme'), o = null;
+    if (ev && ev.clientX) o = [ev.clientX, ev.clientY];
+    else if (b) { var r = b.getBoundingClientRect(); o = [r.left + r.width / 2, r.top + r.height / 2]; }
+    transition(function () { appliquerTheme(ordre[(ordre.indexOf(th) + 1) % 3]); }, o);
     vibrer();
   }
 
@@ -7178,7 +7626,9 @@ var AR = {
       { nom: 'Décrire mon crédit en une phrase', ico: 'sparkle', fn: function () { var i = $('#' + sc.cle + '-nl'); i.focus(); i.scrollIntoView({ block: 'center', behavior: mouvementReduit.matches ? 'auto' : 'smooth' }); } },
       { nom: 'Dicter mon crédit (micro)', ico: 'mic', fn: function () { dicter(sc, $('#' + sc.cle + ' [data-nl-micro]') || $('[data-nl-micro]')); }, si: vocalDisponible },
       { nom: 'Exporter PDF', ico: 'file', fn: function () { exporterPDF(sc); } },
-      { nom: 'Rapport client', ico: 'award', fn: function () { exporterRapport(sc); } },
+      { nom: 'Rapport client', ico: 'award', fn: function () { preparerRapport(sc); } },
+      { nom: 'Simulation guidée', ico: 'sparkle', fn: ouvrirGuide },
+      { nom: 'Haute lisibilité', ico: 'globe', fn: basculerLisibilite },
       { nom: 'Exporter Excel', ico: 'sheet', fn: function () { exporterExcel(sc); } },
       { nom: 'Imprimer', ico: 'printer', fn: function () { imprimer(sc); } },
       { nom: 'QR code', ico: 'qr', fn: function () { ouvrirQR(sc); } },
@@ -7281,6 +7731,735 @@ var AR = {
   }
 
   /* ===================================================================
+     Outils graphiques communs (SVG, sens gauche → droite)
+     =================================================================== */
+  function grapheLignes(series, o) {
+    o = o || {};
+    var L = o.L || 640, H = o.H || 220, g = o.g || 62, d = 14, h = 14, b = 26;
+    var tous = [];
+    series.forEach(function (s) { s.pts.forEach(function (p) { tous.push(p[1]); }); });
+    if (o.ref != null) tous.push(o.ref);
+    var max = Math.max.apply(null, tous.concat([o.min0 === false ? -Infinity : 0])), min = o.min0 === false ? Math.min.apply(null, tous) : Math.min(0, Math.min.apply(null, tous));
+    if (max - min < 1e-9) max = min + 1;
+    var xmax = Math.max.apply(null, series.map(function (s) { return s.pts.length ? s.pts[s.pts.length - 1][0] : 1; })) || 1;
+    var xmin = o.xmin != null ? o.xmin : 0;
+    function X(x) { return g + (x - xmin) / ((xmax - xmin) || 1) * (L - g - d); }
+    function Y(v) { return h + (1 - (v - min) / (max - min)) * (H - h - b); }
+    var out = '';
+    for (var k = 0; k <= 4; k++) {
+      var v = min + (max - min) * k / 4;
+      out += '<line x1="' + g + '" x2="' + (L - d) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" class="grille"/>' +
+        '<text x="' + (g - 6) + '" y="' + (Y(v) + 4).toFixed(1) + '" text-anchor="end" class="axe">' + echapper(o.fmtY ? o.fmtY(v) : fmtCompact(v)) + '</text>';
+    }
+    (o.xTicks || []).forEach(function (tk) { out += '<text x="' + X(tk[0]).toFixed(1) + '" y="' + (H - 7) + '" text-anchor="middle" class="axe">' + echapper(tk[1]) + '</text>'; });
+    (o.zones || []).forEach(function (z) { out += '<rect x="' + X(z[0]).toFixed(1) + '" y="' + h + '" width="' + Math.max(1, X(z[1]) - X(z[0])).toFixed(1) + '" height="' + (H - h - b) + '" class="zone-ok"/>'; });
+    if (o.ref != null) out += '<line x1="' + g + '" x2="' + (L - d) + '" y1="' + Y(o.ref).toFixed(1) + '" y2="' + Y(o.ref).toFixed(1) + '" class="ref"/>';
+    series.forEach(function (s) {
+      if (!s.pts.length) return;
+      var p = s.pts.map(function (q, i) { return (i ? 'L' : 'M') + X(q[0]).toFixed(1) + ' ' + Y(q[1]).toFixed(1); }).join(' ');
+      if (s.aire) out += '<path d="' + p + ' L' + X(s.pts[s.pts.length - 1][0]).toFixed(1) + ' ' + Y(Math.max(min, 0)).toFixed(1) + ' L' + X(s.pts[0][0]).toFixed(1) + ' ' + Y(Math.max(min, 0)).toFixed(1) + ' Z" fill="' + s.c + '" opacity=".14"/>';
+      out += '<path d="' + p + '" fill="none" stroke="' + s.c + '" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"' + (s.tirets ? ' stroke-dasharray="7 5"' : '') + ' class="trace"/>';
+    });
+    if (o.curseur != null) out += '<line x1="' + X(o.curseur).toFixed(1) + '" x2="' + X(o.curseur).toFixed(1) + '" y1="' + h + '" y2="' + (H - b) + '" class="curseur"/>';
+    return '<svg viewBox="0 0 ' + L + ' ' + H + '" class="graphe-l" role="img" style="direction:ltr" aria-label="' + echapper(o.aria || '') + '">' + out + '</svg>';
+  }
+  function ticksAnnees(n, p, debut) {
+    var parAn = 12 / (p || 1), nbA = Math.ceil(n / parAn), pas = Math.max(1, Math.ceil(nbA / 7)), out = [];
+    for (var a = 0; a <= nbA; a += pas) out.push([a * parAn, debut ? String(debut.getFullYear() + a) : t('An {n}', { n: a })]);
+    return out;
+  }
+
+  /* ===================================================================
+     Simulation guidée, pas à pas
+     =================================================================== */
+  var GUIDE_TYPES = [
+    { cle: 'immo', nom: 'Logement', aide: 'Achat, construction ou terrain', ico: 'home' },
+    { cle: 'auto', nom: 'Voiture', aide: 'Neuve ou d\'occasion', ico: 'car' },
+    { cle: 'conso', nom: 'Consommation', aide: 'Équipement, études, travaux…', ico: 'bag' },
+    { cle: 'libre', nom: 'Autre projet', aide: 'Montant libre', ico: 'sliders' }
+  ];
+  var GUIDE_ETAPES = ['Projet', 'Montant', 'Durée', 'Taux', 'Budget', 'Résultat'];
+
+  function ouvrirGuide() {
+    var sc = scenarioActif();
+    var g = { etape: 0, type: null, prix: null, apport: null, montant: null, ans: null, mode: 'fixe', taux: null, tmm: agence.tmm, marge: null, revenus: null, charges: null, age: null };
+    var d = ouvrirDialogue({
+      titre: t('Simulation guidée'),
+      sousTitre: echapper(t('Cinq questions simples, puis votre résultat, sans jargon.')),
+      icone: 'sparkle', large: true,
+      corps: '<ol class="gd-etapes" aria-label="' + echapper(t('Étapes')) + '">' + GUIDE_ETAPES.map(function (n, i) {
+          return '<li data-i="' + i + '"><span class="gd-pt">' + (i + 1) + '</span><span class="gd-lib">' + echapper(t(n)) + '</span></li>';
+        }).join('') + '</ol>' +
+        '<div class="gd-scene" id="gd-scene" aria-live="polite"></div>' +
+        '<div class="gd-apercu" id="gd-apercu" hidden></div>',
+      pied: '<button class="btn btn-ghost" id="gd-prec">' + ico('arrow', 'ico-sm gd-retour') + echapper(t('Précédent')) + '</button>' +
+            '<button class="btn btn-primary" id="gd-suiv">' + echapper(t('Continuer')) + ico('arrow', 'ico-sm') + '</button>'
+    });
+    var el = d.el;
+    el.classList.add('guide');
+    function prof() { return agence.types[g.type] || null; }
+    function capital() {
+      if (g.type === 'immo' || g.type === 'auto') return g.prix > 0 ? roundPrec(g.prix - (g.apport || 0)) : NaN;
+      return g.montant;
+    }
+    function tauxEff() { return g.mode === 'tmm' ? (isFinite(g.tmm) && isFinite(g.marge) ? round6(g.tmm + g.marge) : NaN) : g.taux; }
+    function calcul() {
+      var C = capital(), ta = tauxEff();
+      if (!(C > 0) || !(g.ans > 0) || !isFinite(ta)) return null;
+      return calculerEcheancier({ capital: C, mois: Math.round(g.ans * 12), taux: ta, dateDebut: aujourdHui() }, false);
+    }
+    function valide(i) {
+      if (i === 0) return !!g.type;
+      if (i === 1) return capital() > 0 && capital() <= 1e8 && (!(g.type === 'immo' || g.type === 'auto') || !(g.apport >= g.prix));
+      if (i === 2) return g.ans > 0 && g.ans <= 25;
+      if (i === 3) return isFinite(tauxEff()) && tauxEff() >= 0 && tauxEff() < 100;
+      return true;
+    }
+    function champ(id, lib, val, suffixe, aide, mode) {
+      return '<label class="gd-champ" for="' + id + '"><span>' + echapper(lib) + '</span>' +
+        '<span class="gd-input"><input id="' + id + '" type="text" inputmode="' + (mode || 'decimal') + '" autocomplete="off" value="' + (val != null && isFinite(val) ? echapper(fmtSaisie(val)) : '') + '"><b>' + echapper(suffixe) + '</b></span>' +
+        (aide ? '<small>' + echapper(aide) + '</small>' : '') + '</label>';
+    }
+    function puces(attr, valeurs, actuel, fmt) {
+      return '<div class="gd-puces">' + valeurs.map(function (v) {
+        return '<button type="button" class="gd-puce" data-' + attr + '="' + v + '" aria-pressed="' + (actuel === v) + '">' + echapper(fmt(v)) + '</button>';
+      }).join('') + '</div>';
+    }
+    function scene() {
+      var i = g.etape, h = '';
+      if (i === 0) {
+        h = '<h3 class="gd-q">' + echapper(t('Quel est votre projet ?')) + '</h3><div class="gd-cartes">' + GUIDE_TYPES.map(function (ty) {
+          return '<button type="button" class="gd-carte" data-type="' + ty.cle + '" aria-pressed="' + (g.type === ty.cle) + '"><span class="gd-c-ico">' + ico(ty.ico) + '</span><strong>' + echapper(t(ty.nom)) + '</strong><small>' + echapper(t(ty.aide)) + '</small></button>';
+        }).join('') + '</div>';
+      } else if (i === 1) {
+        if (g.type === 'immo' || g.type === 'auto') {
+          var sugg = g.prix > 0 ? roundPrec(g.prix * agence.apportMin / 100) : null;
+          h = '<h3 class="gd-q">' + echapper(g.type === 'immo' ? t('Quel est le prix du logement ?') : t('Quel est le prix de la voiture ?')) + '</h3>' +
+            '<div class="gd-duo">' + champ('gd-prix', t('Prix du bien'), g.prix, unite(), '') +
+            champ('gd-apport', t('Votre apport personnel'), g.apport, unite(), sugg ? t('Conseillé : au moins {m} ({p} du prix).', { m: fmtMoney(sugg), p: fmtPct(agence.apportMin, 0) }) : t('Laissez vide si vous n\'avez pas d\'apport.')) + '</div>' +
+            puces('prix', g.type === 'immo' ? [150000, 200000, 250000, 350000] : [30000, 45000, 60000, 90000], g.prix, function (v) { return iso(fmtCompact(v)); });
+        } else {
+          h = '<h3 class="gd-q">' + echapper(t('Combien souhaitez-vous emprunter ?')) + '</h3>' + champ('gd-montant', t('Montant à emprunter'), g.montant, unite(), '') +
+            puces('montant', [10000, 20000, 30000, 50000], g.montant, function (v) { return iso(fmtCompact(v)); });
+        }
+        var C = capital();
+        h += '<p class="gd-note">' + (C > 0 ? echapper(t('Vous empruntez {m}.', { m: fmtMoney(C) })) : '&nbsp;') + '</p>';
+      } else if (i === 2) {
+        var pr = prof();
+        var choix = g.type === 'immo' ? [10, 15, 20, 25] : g.type === 'auto' ? [3, 5, 7] : [2, 3, 5, 7];
+        h = '<h3 class="gd-q">' + echapper(t('Sur combien d\'années voulez-vous rembourser ?')) + '</h3>' +
+          puces('ans', choix, g.ans, function (v) { return libAns(v); }) +
+          '<div class="gd-curseur"><input type="range" class="range" id="gd-ans-r" min="1" max="25" step="1" value="' + (g.ans || (pr ? pr.duree : 7)) + '" aria-label="' + echapper(t('Durée en années')) + '"><output id="gd-ans-o">' + echapper(libAns(g.ans || (pr ? pr.duree : 7))) + '</output></div>' +
+          '<p class="gd-note">' + echapper(t('Plus la durée est longue, plus l\'échéance baisse, mais plus les intérêts augmentent.')) + '</p>';
+      } else if (i === 3) {
+        h = '<h3 class="gd-q">' + echapper(t('Quel taux la banque vous propose-t-elle ?')) + '</h3>' +
+          '<div class="gd-cartes deux">' +
+            '<button type="button" class="gd-carte" data-mode="fixe" aria-pressed="' + (g.mode === 'fixe') + '"><span class="gd-c-ico">' + ico('percent') + '</span><strong>' + echapper(t('Taux fixe')) + '</strong><small>' + echapper(t('Le même taux jusqu\'à la fin')) + '</small></button>' +
+            '<button type="button" class="gd-carte" data-mode="tmm" aria-pressed="' + (g.mode === 'tmm') + '"><span class="gd-c-ico">' + ico('trend') + '</span><strong>' + echapper(t('TMM + marge')) + '</strong><small>' + echapper(t('Taux variable, revu avec le TMM')) + '</small></button>' +
+          '</div>' +
+          (g.mode === 'fixe'
+            ? champ('gd-taux', t('Taux annuel'), g.taux, '%', t('Pas de proposition encore ? Gardez la valeur courante pour ce type de crédit.'))
+            : '<div class="gd-duo">' + champ('gd-tmm', t('TMM actuel'), g.tmm, '%', '') + champ('gd-marge', t('Marge de la banque'), g.marge, '%', '') + '</div>');
+      } else if (i === 4) {
+        h = '<h3 class="gd-q">' + echapper(t('Vérifions votre budget (facultatif)')) + '</h3>' +
+          '<div class="gd-duo">' + champ('gd-rev', t('Revenus mensuels nets'), g.revenus, unite(), '') + champ('gd-chg', t('Autres crédits et charges / mois'), g.charges, unite(), '') + '</div>' +
+          champ('gd-age', t('Votre âge'), g.age, t('ans'), '', 'numeric') +
+          '<div id="gd-budget"></div>';
+      } else {
+        h = resultatGuide();
+      }
+      $('#gd-scene', el).innerHTML = '<div class="gd-anim">' + h + '</div>';
+      $$('.gd-etapes li', el).forEach(function (li, k) {
+        li.classList.toggle('fait', k < i); li.classList.toggle('actif', k === i);
+        if (k === i) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+      });
+      el.style.setProperty('--gd-pct', (i / (GUIDE_ETAPES.length - 1) * 100) + '%');
+      $('#gd-prec', el).hidden = i === 0;
+      $('#gd-suiv', el).hidden = i === 5;
+      majBoutons();
+      apercu();
+      if (i === 4) budget();
+      var premier = $('#gd-scene input[type="text"]', el);
+      if (premier && window.matchMedia && matchMedia('(pointer: fine)').matches) premier.focus();
+    }
+    function majBoutons() {
+      var b = $('#gd-suiv', el);
+      b.disabled = !valide(g.etape);
+      b.lastChild.previousSibling && (b.childNodes[0].nodeValue = g.etape === 4 ? (g.revenus > 0 ? t('Voir le résultat') : t('Passer et voir le résultat')) : t('Continuer'));
+    }
+    function apercu() {
+      var r = calcul(), zone = $('#gd-apercu', el);
+      if (!r || g.etape >= 5 || g.etape < 2) { zone.hidden = true; return; }
+      zone.hidden = false;
+      zone.innerHTML = '<span>' + echapper(t('Mensualité estimée')) + '</span><strong class="num">' + echapper(fmtMoney(r.M1)) + '</strong><small>' + echapper(t('{a} · taux {b}', { a: libAns(g.ans), b: fmtTaux(tauxEff()) })) + '</small>';
+    }
+    function budget() {
+      var zone = $('#gd-budget', el), r = calcul();
+      if (!zone || !r) return;
+      if (!(g.revenus > 0)) { zone.innerHTML = '<p class="gd-note">' + echapper(t('Avec vos revenus, nous vérifions si la mensualité reste supportable.')) + '</p>'; return; }
+      var endet = (r.M1 + (g.charges || 0)) / g.revenus * 100, ok = endet <= agence.endettementMax;
+      zone.innerHTML = '<div class="gd-jauge ' + (ok ? 'ok' : 'ko') + '"><div class="gd-j-barre"><span style="width:' + Math.min(100, endet) + '%"></span><i style="inset-inline-start:' + agence.endettementMax + '%"></i></div>' +
+        '<p><strong>' + echapper(t('Taux d\'endettement : {p}', { p: fmtPct(endet, 1) })) + '</strong> · ' + echapper(ok ? t('sous le maximum de {m}', { m: fmtPct(agence.endettementMax, 0) }) : t('au-dessus du maximum de {m}', { m: fmtPct(agence.endettementMax, 0) })) + '</p></div>';
+    }
+    function resultatGuide() {
+      var r = calcul();
+      if (!r) return '';
+      var C = capital(), endet = g.revenus > 0 ? (r.M1 + (g.charges || 0)) / g.revenus * 100 : NaN;
+      var conseils = [];
+      if (isFinite(endet) && endet > agence.endettementMax) {
+        var Mmax = g.revenus * agence.endettementMax / 100 - (g.charges || 0);
+        if (Mmax > 0) {
+          var tm = tauxMensuelPct(tauxEff()) / 100, n = Math.round(g.ans * 12);
+          var Cmax = tm > 0 ? Mmax * (1 - Math.pow(1 + tm, -n)) / tm : Mmax * n;
+          var nNec = nombreEcheances(tm, Mmax, C);
+          conseils.push(t('Pour rester sous {p} d\'endettement, l\'échéance ne doit pas dépasser {m}.', { p: fmtPct(agence.endettementMax, 0), m: fmtMoney(roundPrec(Mmax)) }));
+          conseils.push(t('Solution 1 : emprunter au plus {m} sur {a}.', { m: fmtMoney(Math.floor(Cmax / 100) * 100), a: libAns(g.ans) }));
+          if (isFinite(nNec) && nNec <= 300) conseils.push(t('Solution 2 : allonger la durée à {a}.', { a: libMois(nNec) }));
+        } else conseils.push(t('Vos charges actuelles dépassent déjà le maximum d\'endettement.'));
+      }
+      if (g.age > 0 && g.age + g.ans > agence.ageMax) conseils.push(t('Le crédit se terminerait à {a} ans : au-delà de {m} ans, les banques refusent souvent.', { a: g.age + g.ans, m: agence.ageMax }));
+      if ((g.type === 'immo' || g.type === 'auto') && g.prix > 0 && (g.apport || 0) / g.prix * 100 < agence.apportMin) conseils.push(t('Un apport d\'au moins {p} du prix facilite l\'accord de la banque.', { p: fmtPct(agence.apportMin, 0) }));
+      if (!conseils.length) conseils.push(t('Votre projet est cohérent. Passez à la simulation détaillée pour l\'assurance, les frais et le TEG.'));
+      return '<div class="gd-resultat">' +
+        '<p class="gd-r-lib">' + echapper(t('Votre mensualité')) + '</p>' +
+        '<p class="gd-r-val num" id="gd-r-val"></p>' +
+        '<div class="gd-r-stats">' +
+          '<div><span>' + echapper(t('Vous empruntez')) + '</span><b class="num">' + echapper(fmtMoney(C)) + '</b></div>' +
+          '<div><span>' + echapper(t('Durée')) + '</span><b>' + echapper(libAns(g.ans)) + '</b></div>' +
+          '<div><span>' + echapper(t('Coût des intérêts')) + '</span><b class="num">' + echapper(fmtMoney(r.totI)) + '</b></div>' +
+          '<div><span>' + echapper(t('Total remboursé')) + '</span><b class="num">' + echapper(fmtMoney(r.totM)) + '</b></div>' +
+          (isFinite(endet) ? '<div class="' + (endet <= agence.endettementMax ? 'ok' : 'ko') + '"><span>' + echapper(t('Endettement')) + '</span><b>' + echapper(fmtPct(endet, 1)) + '</b></div>' : '') +
+        '</div>' +
+        '<ul class="gd-conseils">' + conseils.map(function (c) { return '<li>' + echapper(c) + '</li>'; }).join('') + '</ul>' +
+        '<div class="gd-actions">' +
+          '<button type="button" class="btn btn-primary" data-gd="detail">' + ico('table', 'ico-sm') + echapper(t('Voir la simulation détaillée')) + '</button>' +
+          '<button type="button" class="btn btn-ghost" data-gd="rapport">' + ico('award', 'ico-sm') + echapper(t('Rapport client')) + '</button>' +
+          '<button type="button" class="btn btn-quiet" data-gd="reprendre">' + ico('reset', 'ico-sm') + echapper(t('Recommencer')) + '</button>' +
+        '</div></div>';
+    }
+    function appliquer() {
+      var r = calcul();
+      if (!r) return false;
+      var v = { type: g.type, mois: Math.round(g.ans * 12), dateDebut: aujourdHui(), reduction: false, periodicite: 1, amort: 'constant', differe: null,
+        assurance: null, frais: null, ras: [], versement: null, indemnite: 0, raMode: 'duree', variation: null };
+      if (g.type === 'immo' || g.type === 'auto') { if (g.apport > 0) v.apport = { prix: g.prix, apport: g.apport }; else v.capital = g.prix; }
+      else v.capital = g.montant;
+      if (g.mode === 'tmm') v.tmm = { tmm: g.tmm, marge: g.marge }; else { v.tmm = null; v.taux = g.taux; }
+      if (g.revenus > 0 || g.age > 0) v.emprunteur = { age: g.age > 0 ? g.age : null, revenus: g.revenus > 0 ? g.revenus : null, charges: g.charges || 0 };
+      sc.appliquer(v);
+      return true;
+    }
+    function lire(id) { var i = $('#' + id, el); return i ? (i.value.trim() === '' ? null : lireNombre(i.value)) : undefined; }
+    function suivant() {
+      if (!valide(g.etape)) return;
+      if (g.etape === 0) {
+        var pr = prof();
+        if (pr) {
+          if (g.ans == null) g.ans = Math.min(25, pr.duree);
+          if (g.taux == null && g.marge == null) { if (pr.mode === 'tmm') { g.mode = 'tmm'; g.marge = pr.valeur; } else g.taux = pr.valeur; }
+        }
+        if (g.taux == null) g.taux = 9;
+      }
+      g.etape = Math.min(5, g.etape + 1);
+      scene();
+      if (g.etape === 5) {
+        var r = calcul(), cible = $('#gd-r-val', el);
+        cible.dataset.val = 0;
+        odometre(cible, r.M1);
+        vibrer();
+      }
+    }
+    el.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button');
+      if (!b || !el.contains(b)) return;
+      if (b.id === 'gd-suiv') { suivant(); return; }
+      if (b.id === 'gd-prec') { g.etape = Math.max(0, g.etape - 1); scene(); return; }
+      if (b.dataset.type) { g.type = b.dataset.type; g.ans = null; g.taux = null; g.marge = null; g.mode = 'fixe'; suivant(); return; }
+      if (b.dataset.mode) { g.mode = b.dataset.mode; if (g.mode === 'tmm' && g.marge == null) g.marge = 2.5; scene(); return; }
+      if (b.dataset.prix) { g.prix = +b.dataset.prix; scene(); return; }
+      if (b.dataset.montant) { g.montant = +b.dataset.montant; scene(); return; }
+      if (b.dataset.ans) { g.ans = +b.dataset.ans; scene(); return; }
+      var a = b.dataset.gd;
+      if (a === 'detail') { appliquer(); d.fermer(); setTimeout(function () { allerA('resultats'); }, 220); toast(t('Simulation placée dans le scénario {n} : affinez-la avec les options.', { n: sc.nom })); }
+      else if (a === 'rapport') { appliquer(); d.fermer(); setTimeout(function () { exporterRapport(sc); }, 220); }
+      else if (a === 'reprendre') { g.etape = 0; g.type = null; scene(); }
+    });
+    el.addEventListener('input', function (ev) {
+      var i = ev.target;
+      if (i.id === 'gd-ans-r') { g.ans = +i.value; $('#gd-ans-o', el).textContent = libAns(g.ans); i.style.setProperty('--pct', ((g.ans - 1) / 24 * 100) + '%'); $$('[data-ans]', el).forEach(function (p) { p.setAttribute('aria-pressed', String(+p.dataset.ans === g.ans)); }); }
+      else {
+        var map = { 'gd-prix': 'prix', 'gd-apport': 'apport', 'gd-montant': 'montant', 'gd-taux': 'taux', 'gd-tmm': 'tmm', 'gd-marge': 'marge', 'gd-rev': 'revenus', 'gd-chg': 'charges', 'gd-age': 'age' };
+        if (map[i.id]) { var v = lire(i.id); g[map[i.id]] = v != null && isFinite(v) ? v : null; }
+        if (g.etape === 1) { var C = capital(), n = $('.gd-note', el); if (n) n.textContent = C > 0 ? t('Vous empruntez {m}.', { m: fmtMoney(C) }) : ''; $$('[data-prix],[data-montant]', el).forEach(function (p) { p.setAttribute('aria-pressed', String(+(p.dataset.prix || p.dataset.montant) === (g.prix || g.montant))); }); }
+        if (g.etape === 4) budget();
+      }
+      majBoutons();
+      apercu();
+    });
+    el.addEventListener('focusout', function (ev) {
+      var i = ev.target;
+      if (i.tagName === 'INPUT' && i.type === 'text' && i.id !== 'gd-age') { var v = lireNombre(i.value); if (isFinite(v)) i.value = fmtSaisie(v); }
+    });
+    el.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' && ev.target.tagName === 'INPUT') { ev.preventDefault(); suivant(); }
+    });
+    scene();
+    var gr = $('#gd-ans-r', el); if (gr) gr.style.setProperty('--pct', '0%');
+  }
+
+  /* ===================================================================
+     Comparateur visuel A / B
+     =================================================================== */
+  function ouvrirComparateurAB() {
+    var a = scenarios.a, b = scenarios.b;
+    if (!b || $('#tab-b').hidden || !a.resultat || !b.resultat) {
+      var dd = ouvrirDialogue({
+        titre: t('Comparateur A / B'), icone: 'compare',
+        corps: '<p class="dlg-sub">' + echapper(t('Il faut deux scénarios calculés. Créez le scénario B (copie de A) puis modifiez la durée, le taux ou l\'apport.')) + '</p>',
+        pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button><button class="btn btn-primary" id="ab-creer">' + ico('plus', 'ico-sm') + echapper(t('Créer le scénario B')) + '</button>'
+      });
+      $('#ab-creer', dd.el).addEventListener('click', function () {
+        dd.fermer();
+        var ea = a.entrees;
+        afficherB(true);
+        if (a.resultat) { var v = optionsDe(ea); v.capital = ea.capital; v.mois = ea.mois; v.taux = ea.taux; v.dateDebut = ea.dateDebut; v.client = ea.client; scenarios.b.appliquer(v); }
+      });
+      return;
+    }
+    var ra = a.resultat, rb = b.resultat;
+    function crd(r) { var pts = [[0, r.C]]; r.lignes.forEach(function (l) { pts.push([l.mois * r.p, resteFin(l)]); }); return pts; }
+    function cumul(r) { var s = 0, pts = [[0, 0]]; r.lignes.forEach(function (l) { s += l.paiement + l.assurance + (l.ra ? l.ra.montant + l.ra.indemnite : 0); pts.push([l.mois * r.p, s]); }); return pts; }
+    var ca = cumul(ra), cb = cumul(rb), nMax = Math.max(ca[ca.length - 1][0], cb[cb.length - 1][0]);
+    function val(pts, m) { var v = 0; for (var i = 0; i < pts.length && pts[i][0] <= m; i++) v = pts[i][1]; return v; }
+    var ecart = [];
+    for (var m = 0; m <= nMax; m += Math.max(1, Math.round(nMax / 120))) ecart.push([m, val(cb, m) - val(ca, m)]);
+    var ticks = ticksAnnees(nMax, 1, ra.debut);
+    function ligne(lib, va, vb, fmt, moinsMieux) {
+      var mieuxA = moinsMieux ? va < vb : va > vb, egal = Math.abs(va - vb) < 0.0005;
+      return '<tr><th scope="row">' + echapper(lib) + '</th><td class="' + (!egal && mieuxA ? 'best' : '') + '">' + echapper(fmt(va)) + '</td><td class="' + (!egal && !mieuxA ? 'best' : '') + '">' + echapper(fmt(vb)) + '</td></tr>';
+    }
+    var violet = '#7c3aed', rose = '#ec4899';
+    ouvrirDialogue({
+      titre: t('Comparateur A / B'), sousTitre: echapper(t('Capital restant dû et écart cumulé de paiements, mois par mois.')), icone: 'compare', large: true,
+      corps:
+        '<div class="cmp-table-wrap"><table class="cmp"><thead><tr><th></th><th><span class="pastille-sc" style="background:' + violet + '">A</span></th><th><span class="pastille-sc" style="background:' + rose + '">B</span></th></tr></thead><tbody>' +
+          ligne(t('Mensualité'), ra.M1, rb.M1, fmtMoney, true) +
+          ligne(t('Durée'), ra.n * ra.p, rb.n * rb.p, libMois, true) +
+          ligne(t('Coût des intérêts'), ra.totI, rb.totI, fmtMoney, true) +
+          ligne(t('Coût total du crédit'), ra.coutCredit, rb.coutCredit, fmtMoney, true) +
+          ligne(t('TEG'), isFinite(ra.teg) ? ra.teg : 0, isFinite(rb.teg) ? rb.teg : 0, function (v) { return fmtPct(v, 2); }, true) +
+        '</tbody></table></div>' +
+        '<h3 class="ag-titre">' + echapper(t('Capital restant dû')) + '</h3>' +
+        '<div class="graphe-zone">' + grapheLignes([{ pts: crd(ra), c: violet, aire: true }, { pts: crd(rb), c: rose, tirets: true }], { xTicks: ticks, aria: t('Capital restant dû') }) + '</div>' +
+        '<p class="legende-g"><span class="lg" style="background:' + violet + ';height:3px"></span>' + echapper(t('Scénario A')) + ' <span class="lg" style="background:' + rose + ';height:3px"></span>' + echapper(t('Scénario B')) + '</p>' +
+        '<h3 class="ag-titre">' + echapper(t('Écart cumulé de paiements (B − A)')) + '</h3>' +
+        '<div class="graphe-zone">' + grapheLignes([{ pts: ecart, c: '#0891b2', aire: true }], { xTicks: ticks, min0: false, ref: 0, aria: t('Écart cumulé de paiements (B − A)') }) + '</div>' +
+        '<p class="ra-note">' + echapper(t('Au-dessus de zéro : B a coûté plus cher que A jusqu\'à ce mois ; en dessous : B est moins cher.')) + '</p>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button>'
+    });
+  }
+
+  /* ===================================================================
+     Réduction de taux : à quel moment la demander ?
+     =================================================================== */
+  function ouvrirQuandReduire() {
+    var sc = scenarioActif(), e = sc.entrees;
+    if (!sc.resultat) { toast(t('Saisissez d\'abord un crédit complet.'), 'erreur'); return; }
+    if (e.periodicite !== 1 || e.amort !== 'constant' || e.differe || e.mois <= 84) {
+      toast(t('Outil réservé aux crédits mensuels à échéances constantes, sans différé, de plus de 84 mois.'), 'erreur', 5000);
+      return;
+    }
+    var base = calculerEcheancier(Object.assign({}, e, { variation: null }), false), L = base.lignes, n = L.length;
+    var ratios = [];
+    var s36 = 0;
+    for (var k = 1; k <= n; k++) {
+      if (k >= 37) { var crdAv = resteFin(L[k - 2]); ratios.push([k, crdAv > 0 ? s36 / crdAv * 100 : 0]); }
+      s36 = roundPrec(s36 + L[k - 1].interet - (k > 36 ? L[k - 37].interet : 0));
+    }
+    if (!ratios.length) { toast(t('Saisissez d\'abord un crédit complet.'), 'erreur'); return; }
+    var zones = [], debutZ = null;
+    ratios.forEach(function (r, i) {
+      if (r[1] > 8 && debutZ === null) debutZ = r[0];
+      if ((r[1] <= 8 || i === ratios.length - 1) && debutZ !== null) { zones.push([debutZ, r[1] > 8 ? r[0] : r[0] - 1]); debutZ = null; }
+    });
+    var premier = ratios.filter(function (r) { return r[1] > 8; })[0];
+    var pos = premier ? premier[0] : 37;
+    /* En fin de crédit le capital tend vers 0 et le ratio explose : échelle plafonnée */
+    var plafond = Math.max(12, Math.min(60, ratios[0][1] * 1.25));
+    var affiches = ratios.map(function (r) { return [r[0], Math.min(r[1], plafond)]; });
+    var d = ouvrirDialogue({
+      titre: t('Quand demander la réduction ?'), icone: 'down', large: true,
+      sousTitre: echapper(t('Ratio intérêts des 36 derniers mois / capital restant dû, à chaque échéance. La réduction est possible au-dessus de 8 % (zones vertes).')),
+      corps: '<div class="graphe-zone" id="qr-g"></div>' +
+        '<input type="range" class="range" id="qr-r" min="37" max="' + n + '" step="1" value="' + pos + '" aria-label="' + echapper(t('Échéance de la demande')) + '">' +
+        '<div id="qr-res"></div>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button>' +
+        '<button class="btn btn-primary" id="qr-auto">' + ico('check', 'ico-sm') + echapper(t('Appliquer la règle automatique')) + '</button>'
+    });
+    var el = d.el;
+    function maj() {
+      var k = +$('#qr-r', el).value, r = ratios[k - 37], ok = r[1] > 8;
+      $('#qr-r', el).style.setProperty('--pct', ((k - 37) / Math.max(1, n - 37) * 100) + '%');
+      $('#qr-g', el).innerHTML = grapheLignes([{ pts: affiches, c: '#7c3aed' }], { ref: 8, zones: zones, curseur: k, xmin: 37, fmtY: function (v) { return fmtSaisie(Math.round(v * 10) / 10) + ' %'; },
+        xTicks: ticksAnnees(n, 1, base.debut).filter(function (x) { return x[0] >= 37; }), aria: t('Évolution du ratio') });
+      var res = '';
+      var date = L[k - 1].date;
+      if (ok) {
+        var avec = calculerEcheancier(Object.assign({}, e, { variation: { des: k, delta: -e.taux / 2 } }), false);
+        res = '<div class="ra-stats">' + statDlg(t('Demande à l\'échéance {n}', { n: k }), date ? moisLong(date) : '—', 'fort') + statDlg(t('Ratio'), fmtPct(r[1], 3), 'ok', t('au-dessus de 8 % : recevable')) +
+          statDlg(t('Nouvelle mensualité'), fmtMoney(avec.lignes[k - 1].paiement), '', t('au lieu de {m}', { m: fmtMoney(base.M1) })) + statDlg(t('Économie d\'intérêts'), fmtMoney(roundPrec(base.totI - avec.totI)), 'ok') + '</div>';
+      } else {
+        var proch = ratios.filter(function (x) { return x[0] > k && x[1] > 8; })[0];
+        res = '<div class="ra-stats">' + statDlg(t('Demande à l\'échéance {n}', { n: k }), date ? moisLong(date) : '—', 'fort') + statDlg(t('Ratio'), fmtPct(r[1], 3), 'ko', t('8 % ou moins : refusée')) +
+          statDlg(t('Prochaine date possible'), proch ? (L[proch[0] - 1].date ? moisLong(L[proch[0] - 1].date) : t('échéance {n}', { n: proch[0] })) : t('aucune'), '') + '</div>';
+      }
+      res += '<p class="ra-note">' + echapper(premier ? t('Plus la demande est tôt, plus l\'économie est grande : première date possible à l\'échéance {n}.', { n: premier[0] }) : t('Le ratio ne dépasse jamais strictement 8 % sur la durée du crédit.')) + '</p>';
+      $('#qr-res', el).innerHTML = res;
+    }
+    $('#qr-r', el).addEventListener('input', maj);
+    $('#qr-auto', el).addEventListener('click', function () { d.fermer(); $('#' + sc.cle + '-reduire').click(); });
+    maj();
+  }
+
+  /* ===================================================================
+     Mon crédit en cours : suivi, prochaines réductions, rappels
+     =================================================================== */
+  var CLE_MON_CREDIT = 'monCredit';
+  function lireMonCredit() { try { var m = JSON.parse(stock.lire(CLE_MON_CREDIT, 'null')); return m && m.capital > 0 && m.mois > 0 ? m : null; } catch (e) { return null; } }
+  function echeancierMonCredit(m) {
+    return calculerEcheancier({ capital: m.capital, mois: m.mois, taux: m.taux, dateDebut: m.date, dureeTotale: m.dureeTotale || m.mois }, !!m.reduction);
+  }
+  function ouvrirMonCredit() {
+    var m = lireMonCredit() || {};
+    var d = ouvrirDialogue({
+      titre: t('Mon crédit en cours'), icone: 'wallet', large: true,
+      sousTitre: echapper(t('Reprenez les chiffres de votre tableau d\'amortissement bancaire : position actuelle, prochaines réductions de taux et rappels.')),
+      corps: '<div class="dlg-fields trois">' +
+          champDlg('mc-cap', t('Capital restant dû au point de départ'), t('Ex. 102 816,611'), unite(), 'cash', m.capital ? fmtSaisie(m.capital) : null) +
+          '<div class="field"><label for="mc-date">' + echapper(t('Date de la 1re échéance suivante')) + '</label><div class="input-wrap">' + ico('calendar') + '<input id="mc-date" type="date" value="' + echapper(m.date || '') + '"></div></div>' +
+          champDlg('mc-n', t('Échéances restantes'), t('Ex. 155'), t('mois'), 'clock', m.mois ? String(m.mois) : null, 'numeric') +
+          champDlg('mc-taux', t('Taux annuel actuel'), t('Ex. 2,25'), '%', 'percent', m.taux != null ? fmtSaisie(m.taux) : null) +
+          champDlg('mc-total', t('Durée initiale du crédit'), t('Ex. 300'), t('mois'), 'flag', m.dureeTotale ? String(m.dureeTotale) : null, 'numeric') +
+          '<label class="check mc-check"><input type="checkbox" id="mc-red"' + (m.reduction !== false ? ' checked' : '') + '><span class="check-box" aria-hidden="true">' + ico('check', 'ico-sm') + '</span>' + echapper(t('Prévoir les réductions de taux')) + '</label>' +
+        '</div>' +
+        '<p class="opt-note" style="margin-top:8px">' + echapper(t('Point de départ : le début du crédit, ou la date de la dernière réduction de taux (le contrôle suivant a lieu 36 mois plus tard).')) + '</p>' +
+        '<div id="mc-res"></div>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button>' +
+        '<button class="btn btn-ghost" id="mc-rappel">' + ico('calendar', 'ico-sm') + echapper(t('Rappels des échéances')) + '</button>' +
+        '<button class="btn btn-primary" id="mc-ouvrir">' + ico('upload', 'ico-sm') + echapper(t('Ouvrir dans le scénario A')) + '</button>'
+    });
+    var el = d.el, courant = null;
+    function lireForm() {
+      var x = { capital: valeurDlg(el, 'mc-cap'), date: $('#mc-date', el).value, mois: lireEntier($('#mc-n', el).value), taux: valeurDlg(el, 'mc-taux'), dureeTotale: lireEntier($('#mc-total', el).value), reduction: $('#mc-red', el).checked };
+      if (!(x.dureeTotale > 0)) x.dureeTotale = x.mois;
+      return x.capital > 0 && x.mois >= 1 && x.mois <= 300 && x.taux >= 0 && x.taux < 100 && /^\d{4}-\d{2}-\d{2}$/.test(x.date) ? x : null;
+    }
+    function calculer() {
+      var x = lireForm(), zone = $('#mc-res', el);
+      courant = x;
+      if (!x) { zone.innerHTML = '<p class="dlg-sub" style="margin-top:14px">' + echapper(t('Renseignez le capital restant dû, la date, le nombre d\'échéances et le taux.')) + '</p>'; return; }
+      stock.ecrire(CLE_MON_CREDIT, JSON.stringify(x));
+      var r = echeancierMonCredit(x), auj = new Date();
+      var passees = r.lignes.filter(function (l) { return l.date && new Date(l.date.getFullYear(), l.date.getMonth() + 1, 0) < auj; }).length;
+      var proch = r.lignes[passees];
+      var crd = passees ? resteFin(r.lignes[passees - 1]) : r.C;
+      var pct = (1 - crd / r.C) * 100;
+      zone.innerHTML =
+        '<div class="ra-stats" style="margin-top:14px">' +
+          statDlg(t('Capital restant dû aujourd\'hui'), fmtMoney(crd), 'fort', t('{p} remboursé depuis le point de départ', { p: fmtPct(pct, 1) })) +
+          statDlg(t('Prochaine échéance'), proch ? fmtMoney(proch.paiement) : '—', '', proch && proch.date ? t('fin {d}', { d: moisLong(proch.date) }) : '') +
+          statDlg(t('Échéances restantes'), String(r.n - passees), '', r.lignes.length ? t('dernière : {d}', { d: moisLong(r.lignes[r.lignes.length - 1].date) }) : '') +
+          statDlg(t('Intérêts restants'), fmtMoney(roundPrec(r.lignes.slice(passees).reduce(function (s, l) { return s + l.interet; }, 0))), '') +
+        '</div>' +
+        (x.reduction ? (r.reductions.length
+          ? '<h3 class="ag-titre">' + echapper(t('Prochaines réductions de taux')) + '</h3><div class="mc-reducs">' + r.reductions.map(function (z, i) {
+              return '<div class="mc-reduc"><span class="mc-n">' + (i + 1) + '</span><div><strong>' + echapper(z.date ? moisLong(z.date) : t('échéance {n}', { n: z.mois })) + '</strong><small>' + echapper(t('Ratio {r} · {a} → {b} · mensualité {m}', { r: fmtPct(z.ratio * 100, 3), a: fmtTauxPrecis(z.avant), b: fmtTauxPrecis(z.apres), m: fmtMoney(z.M) })) + '</small></div></div>';
+            }).join('') + '</div>'
+          : '<p class="ra-note">' + echapper(t('Aucune réduction de taux possible : le ratio ne dépasse pas 8 % ou la durée initiale est de 84 mois ou moins.')) + '</p>') : '') +
+        '<div class="graphe-zone" style="margin-top:12px">' + grapheLignes([{ pts: [[0, r.C]].concat(r.lignes.map(function (l) { return [l.mois, resteFin(l)]; })), c: '#7c3aed', aire: true }], { xTicks: ticksAnnees(r.n, 1, r.debut), curseur: passees, aria: t('Capital restant dû') }) + '</div>';
+    }
+    el.addEventListener('input', function () { clearTimeout(el._t); el._t = setTimeout(calculer, 200); });
+    el.addEventListener('change', function (ev) { if (ev.target.type === 'checkbox' || ev.target.type === 'date') calculer(); });
+    $('#mc-ouvrir', el).addEventListener('click', function () {
+      if (!courant) { toast(t('Il manque le capital, la durée ou le taux : complétez les champs.'), 'erreur'); return; }
+      d.fermer();
+      activer('a');
+      scenarios.a.appliquer({ capital: courant.capital, mois: courant.mois, taux: courant.taux, dateDebut: courant.date, reduction: courant.reduction && courant.dureeTotale > 84 && courant.mois > 84, tmm: null, type: 'immo' });
+      toast(t('Crédit ouvert dans le scénario A.'));
+    });
+    $('#mc-rappel', el).addEventListener('click', function () {
+      if (!courant) { toast(t('Il manque le capital, la durée ou le taux : complétez les champs.'), 'erreur'); return; }
+      courant.rappels = true;
+      stock.ecrire(CLE_MON_CREDIT, JSON.stringify(courant));
+      if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission().then(function () { rappelEcheance(true); });
+      else rappelEcheance(true);
+      d.fermer();
+      activer('a');
+      scenarios.a.appliquer({ capital: courant.capital, mois: courant.mois, taux: courant.taux, dateDebut: courant.date, reduction: courant.reduction && courant.mois > 84, tmm: null });
+      setTimeout(function () { exporterAgenda(scenarios.a); }, 300);
+    });
+    calculer();
+  }
+
+  /* Rappel à l'ouverture de l'application : échéance dans les 5 jours */
+  function rappelEcheance(force) {
+    var m = lireMonCredit();
+    if (!m || (!m.rappels && !force)) return;
+    var r = echeancierMonCredit(m), auj = new Date(), j0 = new Date(auj.getFullYear(), auj.getMonth(), auj.getDate());
+    var proch = r.lignes.filter(function (l) { return l.date && new Date(l.date.getFullYear(), l.date.getMonth() + 1, 0) >= j0; })[0];
+    if (!proch) return;
+    var fin = new Date(proch.date.getFullYear(), proch.date.getMonth() + 1, 0);
+    var jours = Math.round((fin - j0) / 86400000);
+    var msg = t('Prochaine échéance de {m} le {d}.', { m: fmtMoney(proch.paiement), d: fin.toLocaleDateString(enArabe() ? 'ar-TN-u-nu-latn' : 'fr-FR') });
+    if (jours <= 5 || force) {
+      toast(msg, 'info', 6000);
+      if (jours <= 5 && 'Notification' in window && Notification.permission === 'granted') {
+        try { new Notification(t('Simulateur de crédit'), { body: msg, icon: 'icons/icon-192.png', tag: 'echeance-' + proch.mois }); } catch (e) { /* notifications indisponibles */ }
+      }
+    }
+  }
+
+  /* ===================================================================
+     Mode présentation client (plein écran)
+     =================================================================== */
+  function ouvrirPresentation() {
+    var cles = ['a', 'b'].filter(function (k) { return scenarios[k] && scenarios[k].resultat && !(k === 'b' && $('#tab-b').hidden); });
+    if (!cles.length) { toast(t('Saisissez d\'abord un crédit complet.'), 'erreur'); return; }
+    var idx = Math.max(0, cles.indexOf(actif));
+    var ov = document.createElement('div');
+    ov.className = 'presentation';
+    ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', t('Mode présentation'));
+    document.body.appendChild(ov);
+    var precedent = document.activeElement;
+    ['.topbar', '.coque'].forEach(function (s) { var x = $(s); if (x) x.inert = true; });
+    function rendre() {
+      var sc = scenarios[cles[idx]], r = sc.resultat, e = sc.entrees, em = e.emprunteur;
+      var lp = r.lignes[Math.min(r.D, r.lignes.length - 1)];
+      var endet = em && em.revenus ? (totalLigne(lp) / r.p + em.charges) / em.revenus * 100 : NaN;
+      var pc = r.C / (r.C + r.totI) * 100;
+      ov.innerHTML =
+        '<div class="pr-haut">' +
+          '<div class="pr-marque">' + (agence.logo ? '<img src="' + echapper(agence.logo) + '" alt="" width="' + agence.logoL + '" height="' + agence.logoH + '">' : '<span class="brand-mark">' + ico('trend') + '</span>') +
+            '<div><strong>' + echapper(agence.nom || t('Simulateur de crédit')) + '</strong><small>' + echapper(e.client.nom ? t('Étude préparée pour {n}', { n: e.client.nom }) : t('Votre projet de crédit')) + '</small></div></div>' +
+          '<div class="pr-ctrl">' + (cles.length > 1 ? cles.map(function (k, i) { return '<button type="button" class="pr-sc" data-i="' + i + '" aria-pressed="' + (i === idx) + '">' + echapper(t('Scénario {n}', { n: scenarios[k].nom })) + '</button>'; }).join('') : '') +
+            '<button type="button" class="btn btn-ghost btn-icon pr-x" data-pr-fermer aria-label="' + echapper(t('Quitter la présentation')) + '">' + ico('x') + '</button></div>' +
+        '</div>' +
+        '<div class="pr-centre">' +
+          '<p class="pr-lib">' + echapper(t(infoPeriodicite(r.p).echeance)) + '</p>' +
+          '<p class="pr-val num" id="pr-val"></p>' +
+          '<p class="pr-sous">' + echapper(r.paliers.length > 1 || r.D || r.amort !== 'constant' ? texteEcheances(r, fmtMoney) : t('pendant {n}', { n: r.p === 1 ? libMois(r.n) : libEcheances(r.n) })) + '</p>' +
+          '<div class="pr-barre" role="img" aria-label="' + echapper(t('Capital {c}, intérêts {i}', { c: fmtPct(pc, 1), i: fmtPct(100 - pc, 1) })) + '"><span style="--w:' + pc + '%"></span></div>' +
+          '<div class="pr-legende"><span><i class="c"></i>' + echapper(t('Capital')) + ' ' + echapper(fmtMoney(r.C)) + '</span><span><i class="i"></i>' + echapper(t('Intérêts')) + ' ' + echapper(fmtMoney(r.totI)) + '</span></div>' +
+        '</div>' +
+        '<div class="pr-tuiles">' +
+          '<div><span>' + echapper(t('Durée')) + '</span><b>' + echapper(libMois(r.n * r.p)) + '</b></div>' +
+          '<div><span>' + echapper(t('Taux annuel')) + '</span><b>' + echapper(fmtTaux(e.taux)) + '</b></div>' +
+          '<div><span>' + echapper(t('TEG')) + '</span><b>' + echapper(isFinite(r.teg) ? fmtPct(r.teg, 2) : '—') + '</b></div>' +
+          '<div><span>' + echapper(t('Coût du crédit')) + '</span><b>' + echapper(fmtMoney(r.coutCredit)) + '</b></div>' +
+          (isFinite(endet) ? '<div class="' + (endet <= agence.endettementMax ? 'ok' : 'ko') + '"><span>' + echapper(t('Endettement')) + '</span><b>' + echapper(fmtPct(endet, 1)) + '</b></div>' : '') +
+        '</div>' +
+        '<p class="pr-pied">' + echapper(t('Simulation indicative, ne constitue pas une offre de prêt.')) + (ligneAgence() ? ' · ' + echapper(ligneAgence()) : '') + '</p>';
+      var v = $('#pr-val', ov);
+      v.dataset.val = 0;
+      odometre(v, r.M1);
+    }
+    function fermer() {
+      document.removeEventListener('keydown', clavier);
+      if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {});
+      ov.classList.add('sortie');
+      ['.topbar', '.coque'].forEach(function (s) { var x = $(s); if (x) x.inert = false; });
+      setTimeout(function () { ov.remove(); if (precedent && precedent.focus) precedent.focus(); }, mouvementReduit.matches ? 0 : 260);
+    }
+    function clavier(ev) {
+      if (ev.key === 'Escape') fermer();
+      else if ((ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') && cles.length > 1) { idx = (idx + 1) % cles.length; rendre(); }
+    }
+    ov.addEventListener('click', function (ev) {
+      if (ev.target.closest('[data-pr-fermer]')) { fermer(); return; }
+      var b = ev.target.closest('.pr-sc');
+      if (b) { idx = +b.dataset.i; rendre(); }
+    });
+    document.addEventListener('keydown', clavier);
+    document.addEventListener('fullscreenchange', function surSortie() { if (!document.fullscreenElement && ov.isConnected && ov._plein) { document.removeEventListener('fullscreenchange', surSortie); fermer(); } });
+    rendre();
+    if (ov.requestFullscreen) ov.requestFullscreen().then(function () { ov._plein = true; }).catch(function () {});
+    setTimeout(function () { var x = $('[data-pr-fermer]', ov); if (x) x.focus(); }, 60);
+  }
+
+  /* ===================================================================
+     Calendrier visuel des échéances (part d'intérêts de chaque échéance)
+     =================================================================== */
+  function ouvrirCalendrier() {
+    var sc = scenarioActif(), r = sc.resultat;
+    if (!r) { toast(t('Saisissez d\'abord un crédit complet.'), 'erreur'); return; }
+    var debut = r.debut, auj = new Date(), parAn = 12 / r.p;
+    var annees = {}, ordre = [];
+    r.lignes.forEach(function (l) {
+      var an = l.date ? l.date.getFullYear() : Math.ceil(l.mois / parAn), mo = l.date ? l.date.getMonth() : ((l.mois - 1) % parAn) * r.p;
+      if (!annees[an]) { annees[an] = {}; ordre.push(an); }
+      annees[an][mo] = l;
+    });
+    var noms = [];
+    for (var m = 0; m < 12; m++) noms.push(new Date(2026, m, 1).toLocaleDateString(enArabe() ? 'ar-TN-u-nu-latn' : 'fr-FR', { month: 'narrow' }));
+    var html = '<div class="cal" style="direction:ltr"><div class="cal-ligne cal-tete"><span></span>' + noms.map(function (n) { return '<span>' + echapper(n) + '</span>'; }).join('') + '</div>' +
+      ordre.map(function (an) {
+        return '<div class="cal-ligne"><span class="cal-an">' + echapper(debut ? String(an) : t('An {n}', { n: an })) + '</span>' + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function (mo) {
+          var l = annees[an][mo];
+          if (!l) return '<span class="cal-c vide"></span>';
+          var tot = l.paiement > 0 ? l.paiement : 1, part = Math.max(0, Math.min(1, l.interet / tot));
+          var cls = 'cal-c' + (l.ra ? ' ra' : '') + (l.reduction ? ' red' : '') + (l.date && l.date.getFullYear() === auj.getFullYear() && l.date.getMonth() === auj.getMonth() ? ' auj' : '');
+          var tip = (l.date ? moisAnnee(l.date) + ' · ' : '') + t('Échéance {n}', { n: l.mois }) + ' · ' + t('Intérêts') + ' ' + fmtMoney(l.interet) + ' · ' + t('Principal') + ' ' + fmtMoney(l.principal);
+          return '<button type="button" class="' + cls + '" data-m="' + l.mois + '" style="--p:' + part.toFixed(3) + '" title="' + echapper(tip) + '" aria-label="' + echapper(tip) + '"></button>';
+        }).join('') + '</div>';
+      }).join('') + '</div>';
+    var d = ouvrirDialogue({
+      titre: t('Calendrier des échéances'), icone: 'calendar', large: true,
+      sousTitre: echapper(t('Chaque case est une échéance : plus elle est foncée, plus elle est composée d\'intérêts. Touchez une case pour la voir dans le tableau.')),
+      corps: html + '<div class="cal-leg"><span>' + echapper(t('Surtout du capital')) + '</span><i></i><span>' + echapper(t('Surtout des intérêts')) + '</span>' +
+        (r.ras.length ? '<span class="cal-k ra"></span>' + echapper(t('Remboursement anticipé')) : '') + (r.reductions && r.reductions.length ? '<span class="cal-k red"></span>' + echapper(t('Taux réduit')) : '') + '</div>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button>'
+    });
+    d.el.addEventListener('click', function (ev) {
+      var c = ev.target.closest('[data-m]');
+      if (!c) return;
+      d.fermer();
+      setTimeout(function () { sc.allerLigne(+c.dataset.m); }, 200);
+    });
+  }
+
+  /* ===================================================================
+     Signature électronique du rapport client
+     =================================================================== */
+  function padSignature(canvas) {
+    var ctx = canvas.getContext('2d'), dessine = false, vide = true, dernier = null;
+    function taille() {
+      var r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(r.width * dpr); canvas.height = Math.round(r.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#161229'; ctx.lineWidth = 2.4;
+    }
+    taille();
+    function point(ev) { var r = canvas.getBoundingClientRect(); return [ev.clientX - r.left, ev.clientY - r.top]; }
+    canvas.addEventListener('pointerdown', function (ev) { dessine = true; dernier = point(ev); canvas.setPointerCapture(ev.pointerId); ev.preventDefault(); });
+    canvas.addEventListener('pointermove', function (ev) {
+      if (!dessine) return;
+      var p = point(ev);
+      ctx.beginPath(); ctx.moveTo(dernier[0], dernier[1]); ctx.lineTo(p[0], p[1]); ctx.stroke();
+      dernier = p; vide = false; canvas.classList.add('signe');
+    });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (n) { canvas.addEventListener(n, function () { dessine = false; }); });
+    return {
+      effacer: function () { ctx.clearRect(0, 0, canvas.width, canvas.height); vide = true; canvas.classList.remove('signe'); },
+      image: function () { return vide ? null : canvas.toDataURL('image/png'); }
+    };
+  }
+
+  function preparerRapport(sc) {
+    if (!exigerResultat(sc)) return;
+    var d = ouvrirDialogue({
+      titre: t('Rapport client'), icone: 'award', large: true,
+      sousTitre: echapper(t('Faites signer le client et le conseiller à l\'écran (au doigt ou à la souris), ou générez le rapport sans signature.')),
+      corps: '<div class="sig-grille">' +
+          '<div class="sig"><div class="sig-tete"><strong>' + echapper(t('Signature du client')) + '</strong><button type="button" class="btn btn-quiet btn-sm" data-sig-effacer="0">' + ico('reset', 'ico-sm') + echapper(t('Effacer')) + '</button></div><canvas class="sig-pad" aria-label="' + echapper(t('Zone de signature du client')) + '"></canvas><small>' + echapper(sc.entrees.client.nom || '') + '</small></div>' +
+          '<div class="sig"><div class="sig-tete"><strong>' + echapper(t('Signature du conseiller')) + '</strong><button type="button" class="btn btn-quiet btn-sm" data-sig-effacer="1">' + ico('reset', 'ico-sm') + echapper(t('Effacer')) + '</button></div><canvas class="sig-pad" aria-label="' + echapper(t('Zone de signature du conseiller')) + '"></canvas><small>' + echapper(agence.conseiller || '') + '</small></div>' +
+        '</div>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Annuler')) + '</button>' +
+            '<button class="btn btn-primary" id="sig-ok">' + ico('award', 'ico-sm') + echapper(t('Générer le rapport')) + '</button>'
+    });
+    var pads = $$('.sig-pad', d.el).map(padSignature);
+    d.el.addEventListener('click', function (ev) { var b = ev.target.closest('[data-sig-effacer]'); if (b) pads[+b.dataset.sigEffacer].effacer(); });
+    $('#sig-ok', d.el).addEventListener('click', function () {
+      var signatures = { client: pads[0].image(), conseiller: pads[1].image() };
+      d.fermer();
+      exporterRapport(sc, signatures);
+    });
+  }
+
+  /* ===================================================================
+     Chiffres qui défilent (compteur à rouleaux)
+     =================================================================== */
+  function odometre(el, v) {
+    var texte = fmtNombre(v).replace(/[⁦-⁩]/g, '');
+    el.dataset.val = v;
+    if (mouvementReduit.matches) { el.innerHTML = fmtMoneyHtml(v); return; }
+    var zone = el.querySelector('.odo');
+    var gabarit = texte.replace(/\d/g, '0');
+    if (!zone || zone.dataset.gabarit !== gabarit) {
+      el.innerHTML = '<span class="sr-only odo-lu"></span><span class="odo" aria-hidden="true" dir="ltr" data-gabarit="' + echapper(gabarit) + '">' + texte.split('').map(function (c) {
+        return /\d/.test(c) ? '<span class="odo-c"><span class="odo-s" style="transform:translateY(0)">0<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9</span></span>' : '<span class="odo-x">' + echapper(c) + '</span>';
+      }).join('') + '</span><span class="unit" aria-hidden="true">' + echapper(unite()) + '</span>';
+      zone = el.querySelector('.odo');
+      void zone.offsetWidth;
+    }
+    el.querySelector('.odo-lu').textContent = fmtMoney(v);
+    var col = zone.querySelectorAll('.odo-s'), j = 0;
+    texte.split('').forEach(function (c) { if (/\d/.test(c)) { col[j].style.transform = 'translateY(-' + (+c * 10) + '%)'; col[j].style.transitionDelay = (j * 18) + 'ms'; j++; } });
+  }
+
+  /* ===================================================================
+     Transitions fluides entre les vues (View Transitions)
+     =================================================================== */
+  function transition(fn, origine) {
+    if (!document.startViewTransition || mouvementReduit.matches) { fn(); return; }
+    if (origine) {
+      document.documentElement.style.setProperty('--vt-x', origine[0] + 'px');
+      document.documentElement.style.setProperty('--vt-y', origine[1] + 'px');
+      document.documentElement.classList.add('vt-cercle');
+    }
+    var vt = document.startViewTransition(fn);
+    vt.finished.then(function () { document.documentElement.classList.remove('vt-cercle'); }, function () { document.documentElement.classList.remove('vt-cercle'); });
+  }
+
+  /* ===================================================================
+     État de l'affichage dans l'adresse (#vue=annuel&aff=graphique&sc=b)
+     =================================================================== */
+  function ecrireEtatUrl() {
+    var sc = scenarioActif();
+    if (!sc) return;
+    var p = [];
+    if (actif === 'b') p.push('sc=b');
+    if (sc.vue === 'annuel') p.push('vue=annuel');
+    if (sc.aff === 'graphique') p.push('aff=graphique');
+    var h = p.length ? '#' + p.join('&') : '';
+    if (location.hash !== h) { try { history.replaceState(null, '', location.pathname + location.search + h); } catch (e) { /* adresse non modifiable */ } }
+  }
+  function lireEtatUrl() {
+    var h = (location.hash || '').replace(/^#/, '');
+    if (!/(^|&)(vue|aff|sc)=/.test(h)) return;
+    var q = {};
+    h.split('&').forEach(function (x) { var kv = x.split('='); q[kv[0]] = kv[1]; });
+    if (q.sc === 'b' && scenarios.b && !$('#tab-b').hidden) activer('b');
+    var sc = scenarioActif(), racine = sc.racine;
+    if (q.vue === 'annuel') { var bv = $('[data-vue="annuel"]', racine); if (bv) bv.click(); }
+    if (q.aff === 'graphique') { var ba = $('[data-aff="graphique"]', racine); if (ba) ba.click(); }
+  }
+
+  /* ===================================================================
+     Mode haute lisibilité
+     =================================================================== */
+  var CLE_LISIBLE = 'hauteLisibilite';
+  function appliquerLisibilite(on) {
+    document.documentElement.classList.toggle('lisible', on);
+    stock.ecrire(CLE_LISIBLE, on ? '1' : '0');
+    var b = $('#btnLisible');
+    if (b) { b.setAttribute('aria-pressed', String(on)); }
+    setTimeout(function () { if (typeof placerIndicateur === 'function') placerIndicateur(); }, 60);
+  }
+  function basculerLisibilite() {
+    var on = !document.documentElement.classList.contains('lisible');
+    appliquerLisibilite(on);
+    toast(on ? t('Haute lisibilité activée : textes agrandis et contrastes renforcés.') : t('Haute lisibilité désactivée.'), 'info');
+  }
+
+  function initialiserComplet() {
+    if (stock.lire(CLE_LISIBLE, '0') === '1') appliquerLisibilite(true);
+    var bg = $('#btnGuide');
+    if (bg) bg.addEventListener('click', ouvrirGuide);
+    lireEtatUrl();
+    setTimeout(function () { rappelEcheance(false); }, 1500);
+  }
+
+  /* ===================================================================
      Barre latérale : rubriques, section en cours, résumé vivant
      =================================================================== */
   var CLE_NAV = 'navigationReduite', CLE_NAV_GROUPES = 'navigationGroupes';
@@ -7304,7 +8483,7 @@ var AR = {
   var DOSSIER = [
     { cle: 'historique', nom: 'Historique', ico: 'history', fn: function () { ouvrirHistorique(); }, meta: function () { var n = lireHistorique().length; return n ? String(n) : ''; } },
     { cle: 'comparer', nom: 'Comparer', ico: 'compare', fn: function () { ouvrirComparaison(); } },
-    { cle: 'rapport', nom: 'Rapport client', ico: 'award', fn: function () { exporterRapport(scenarioActif()); } },
+    { cle: 'rapport', nom: 'Rapport client', ico: 'award', fn: function () { preparerRapport(scenarioActif()); } },
     { cle: 'pdf', nom: 'Exporter PDF', ico: 'file', fn: function () { exporterPDF(scenarioActif()); } },
     { cle: 'excel', nom: 'Exporter Excel', ico: 'sheet', fn: function () { exporterExcel(scenarioActif()); } },
     { cle: 'agence', nom: 'Agence et paramètres', ico: 'building', fn: function () { ouvrirAgence(); } }
@@ -7338,12 +8517,15 @@ var AR = {
         '<button type="button" class="btn btn-quiet btn-sm btn-icon nl-fermer" data-nav-fermer aria-label="' + echapper(t('Fermer')) + '">' + ico('x') + '</button></div>' +
       '<button type="button" class="nl-resume vide" data-nav-ancre="resultats" data-tip="' + echapper(t('Résultats')) + '">' +
         '<span class="r-lib"><span class="r-sc"></span><span class="r-titre"></span></span><span class="r-val num"></span><span class="r-sous"></span><span class="r-mini"></span></button>' +
+      '<button type="button" class="nl-item nl-guide" data-nav-guide data-tip="' + echapper(t('Simulation guidée')) + '"><span class="nl-ico" aria-hidden="true">' + ico('sparkle') + '</span><span class="nl-txt">' + echapper(t('Simulation guidée')) + '</span></button>' +
       '<nav class="nl-defile" aria-label="' + echapper(t('Rubriques')) + '">' +
         groupeHtml('simulation', 'Simulation', SECTIONS.map(function (s) { return itemHtml(s, 'ancre'); }).join(''), g.simulation, true) +
         groupeHtml('outils', 'Outils', OUTILS.map(function (o) { return itemHtml(o, 'outil'); }).join(''), g.outils, false) +
         groupeHtml('dossier', 'Dossier et documents', DOSSIER.map(function (o) { return itemHtml(o, 'action'); }).join(''), g.dossier, false) +
       '</nav>' +
-      '<div class="nl-pied"><button type="button" class="nl-item nl-replier" data-nav-replier data-tip="' + echapper(t('Déplier le panneau')) + '">' +
+      '<div class="nl-pied"><button type="button" class="nl-item" id="btnLisible" aria-pressed="' + document.documentElement.classList.contains('lisible') + '" data-tip="' + echapper(t('Haute lisibilité')) + '">' +
+        '<span class="nl-ico" aria-hidden="true">' + ico('globe') + '</span><span class="nl-txt">' + echapper(t('Haute lisibilité')) + '</span><span class="nl-bascule" aria-hidden="true"></span></button>' +
+        '<button type="button" class="nl-item nl-replier" data-nav-replier data-tip="' + echapper(t('Déplier le panneau')) + '">' +
         '<span class="nl-ico" aria-hidden="true">' + ico('panel') + '</span><span class="nl-txt">' + echapper(t('Réduire le panneau')) + '</span></button></div>';
     nav.construite = true;
     majModeNav();
@@ -7513,6 +8695,8 @@ var AR = {
       var b = ev.target.closest('button');
       if (!b) return;
       if (b.hasAttribute('data-nav-fermer')) { fermerTiroir(); return; }
+      if (b.hasAttribute('data-nav-guide')) { fermerTiroir(true); bulleNav(b, false); ouvrirGuide(); return; }
+      if (b.id === 'btnLisible') { basculerLisibilite(); return; }
       if (b.hasAttribute('data-nav-replier')) {
         stock.ecrire(CLE_NAV, navReduite() ? '0' : '1');
         bulleNav(b, false);
@@ -7655,7 +8839,7 @@ var AR = {
     var cv = document.createElement('canvas');
     cv.width = L; cv.height = H;
     var c = cv.getContext('2d');
-    var police = enArabe() ? '"Noto Sans Arabic", sans-serif' : '"Plus Jakarta Sans", Inter, sans-serif';
+    var police = enArabe() ? '"IBM Plex Sans Arabic", sans-serif' : '"Bricolage Grotesque", "IBM Plex Sans", sans-serif';
     var rtl = enArabe();
     c.direction = rtl ? 'rtl' : 'ltr';
     c.fillStyle = '#ffffff'; c.fillRect(0, 0, L, H);
@@ -7812,6 +8996,8 @@ var AR = {
     $('#btnTheme').addEventListener('click', themeSuivant);
     initialiserAvance();
     initialiserNav();
+    initialiserComplet();
+    demarre = true;
     window.addEventListener('beforeprint', function () { preparerImpression(scenarios[actif]); });
     lireLienPartage();
     initialiserPWA();
