@@ -2131,6 +2131,69 @@ html { overscroll-behavior-y: none; }
 @media (prefers-reduced-motion: reduce) {
   dialog.dlg[open], dialog.dlg.fermeture { animation: none; }
 }
+/* =====================================================================
+   Lien vers le simulateur d'assurance vie (identité indigo de l'application)
+   ===================================================================== */
+.av-vitrine {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 22px;
+  margin: 28px 0 8px; padding: 22px 26px; border-radius: 26px; text-decoration: none; color: #fff;
+  background: linear-gradient(120deg, #1e1b4b 0%, #312e81 38%, #4c1d95 72%, #701a75 100%);
+  box-shadow: 0 30px 60px -32px rgba(49, 46, 129, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.av-vitrine::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(60% 120% at 0% 0%, rgba(129, 140, 248, 0.45), transparent 60%), radial-gradient(50% 120% at 100% 100%, rgba(217, 70, 239, 0.35), transparent 60%);
+}
+.av-vitrine::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: linear-gradient(120deg, rgba(165, 180, 252, 0.7), rgba(255, 255, 255, 0.08) 40%, rgba(240, 171, 252, 0.6));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+}
+.av-aura { position: absolute; z-index: -1; width: 240px; height: 240px; inset-inline-end: 8%; top: -140px; border-radius: 50%; background: radial-gradient(circle, rgba(167, 139, 250, 0.55), transparent 65%); filter: blur(10px); animation: av-flotte 9s ease-in-out infinite alternate; }
+@keyframes av-flotte { to { transform: translate(-40px, 40px) scale(1.15); } }
+.av-logo { width: 72px; height: 72px; flex: none; border-radius: 20px; box-shadow: 0 16px 30px -12px rgba(79, 70, 229, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.18); transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1); }
+.av-texte { display: grid; gap: 4px; min-width: 0; }
+.av-sur { font-size: 12.5px; font-weight: 600; color: #c7d2fe; }
+.av-titre { font-family: var(--font-display); font-size: clamp(19px, 2.2vw, 24px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+.av-desc { font-size: 14px; color: rgba(238, 242, 255, 0.86); max-width: 62ch; }
+.av-puces { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.av-puces span { padding: 4px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #e0e7ff; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(199, 210, 254, 0.25); }
+.av-cta {
+  display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 22px; border-radius: 999px; flex: none;
+  font-weight: 800; color: #312e81; background: #fff; box-shadow: 0 14px 28px -14px rgba(0, 0, 0, 0.6);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.av-cta .ico { transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1); }
+html[dir="rtl"] .av-cta .ico { transform: scaleX(-1); }
+.av-vitrine:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 3px; }
+.av-vitrine:active { transform: scale(0.99); }
+@media (hover: hover) and (pointer: fine) {
+  .av-vitrine:hover { transform: translateY(-3px); box-shadow: 0 40px 70px -32px rgba(79, 70, 229, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.14); }
+  .av-vitrine:hover .av-logo { transform: rotate(-6deg) scale(1.06); }
+  .av-vitrine:hover .av-cta { box-shadow: 0 18px 32px -14px rgba(0, 0, 0, 0.7); }
+  .av-vitrine:hover .av-cta .ico { transform: translate(3px, -3px); }
+  html[dir="rtl"] .av-vitrine:hover .av-cta .ico { transform: scaleX(-1) translate(3px, -3px); }
+}
+.nl-av { margin-bottom: 8px; padding: 8px; border-radius: 14px; background: linear-gradient(120deg, rgba(79, 70, 229, 0.12), rgba(192, 38, 211, 0.1)); border: 1px solid rgba(99, 102, 241, 0.22); text-decoration: none; }
+.nl-av .nl-av-ico { width: 34px; height: 34px; background: none; box-shadow: none; padding: 0; }
+.nl-av .av-logo { width: 34px; height: 34px; border-radius: 10px; box-shadow: 0 6px 14px -6px rgba(79, 70, 229, 0.8); }
+.nl-av .nl-txt { display: grid; line-height: 1.25; }
+.nl-av .nl-txt b { font-size: 13px; color: var(--text); }
+.nl-av .nl-txt small { font-size: 11.5px; color: var(--muted); font-weight: 500; overflow: hidden; text-overflow: ellipsis; }
+.nl-av-fl { color: #6366f1; flex: none; }
+html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
+.nav-lat.rail .nl-av { padding: 6px 0; background: none; border-color: transparent; }
+.nav-lat.rail .nl-av-fl { display: none; }
+@media (hover: hover) and (pointer: fine) { .nl-av:hover { background: linear-gradient(120deg, rgba(79, 70, 229, 0.2), rgba(192, 38, 211, 0.16)); } .nl-av:hover .nl-av-fl { transform: translate(2px, -2px); } }
+@media (max-width: 720px) {
+  .av-vitrine { grid-template-columns: auto minmax(0, 1fr); gap: 14px; padding: 18px; border-radius: 22px; }
+  .av-logo { width: 54px; height: 54px; border-radius: 15px; }
+  .av-cta { grid-column: 1 / -1; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .av-aura { animation: none; } }
+@media print { .av-vitrine, .nl-av { display: none !important; } }
 </style>
 
 <!-- Bibliothèques : Excel (SheetJS), graphiques (Chart.js), PDF (jsPDF + autoTable), QR code (qrcode-generator).
@@ -2201,6 +2264,7 @@ html { overscroll-behavior-y: none; }
     <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.2 13.7 7 22l5-3 5 3-1.2-8.3"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h16"/></symbol>
     <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16M15.5 10 13.5 12l2 2"/></symbol>
+    <symbol id="i-externe" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
     <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5M12 3v12"/></symbol>
   </defs>
 </svg>
@@ -2298,6 +2362,18 @@ html { overscroll-behavior-y: none; }
 
   <section class="scenario" id="scenario-a" role="tabpanel" aria-labelledby="tab-a"></section>
   <section class="scenario" id="scenario-b" role="tabpanel" aria-labelledby="tab-b" hidden></section>
+
+  <a class="av-vitrine" href="https://mohamed-ja.github.io/simulateur-assurance-vie/" target="_blank" rel="noopener" aria-describedby="av-desc">
+    <span class="av-aura" aria-hidden="true"></span>
+    <svg class="av-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="av-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset=".55" stop-color="#7c3aed"/><stop offset="1" stop-color="#c026d3"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#av-g)"/><g fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 54s16-8 16-20V20l-16-6-16 6v14c0 12 16 20 16 20z"/><path d="m25 33 5 5 9-9"/></g></svg>
+    <span class="av-texte">
+      <span class="av-sur" data-t="Une autre application de Mohamed Aziz Jaouadi">Une autre application de Mohamed Aziz Jaouadi</span>
+      <strong class="av-titre" data-t="Simulateur Assurance Vie et CEA">Simulateur Assurance Vie et CEA</strong>
+      <span class="av-desc" id="av-desc" data-t="Économie d'impôt, montant optimal à investir, projection du capital et rachat anticipé, en dinars tunisiens.">Économie d'impôt, montant optimal à investir, projection du capital et rachat anticipé, en dinars tunisiens.</span>
+      <span class="av-puces"><span data-t="Économie d'impôt">Économie d'impôt</span><span data-t="Projection du capital">Projection du capital</span><span data-t="Rapport PDF">Rapport PDF</span></span>
+    </span>
+    <span class="av-cta"><span data-t="Ouvrir">Ouvrir</span><svg class="ico"><use href="#i-externe"/></svg></span>
+  </a>
 
   <footer class="foot">
     <span data-t="Calculs indicatifs : taux mensuel = taux annuel ÷ 12, montants arrondis au millime à chaque échéance.">Calculs indicatifs : taux mensuel = taux annuel ÷ 12, montants arrondis au millime à chaque échéance.</span>
@@ -2407,6 +2483,7 @@ var AR = {
   "Assurance et frais": "التأمين والمصاريف",
   "Assurance la 1re échéance": "التأمين في القسط الأول",
   "Assurance payée": "التأمين المدفوع",
+  "Assurance vie": "تأمين الحياة",
   "Attendus": "المتوقعة",
   "Attention": "تنبيه",
   "Au départ": "في البداية",
@@ -2437,6 +2514,7 @@ var AR = {
   "Basculer le thème clair / sombre": "التبديل بين الوضع الفاتح والداكن",
   "Bleu": "أزرق",
   "Bleu nuit": "أزرق داكن",
+  "CEA, épargne et impôt": "حساب الادخار، الادخار والضريبة",
   "Calcul effectué (historique indisponible dans ce navigateur).": "تم الحساب (السجل غير متاح في هذا المتصفح).",
   "Calcul inverse": "الحساب العكسي",
   "Calcul pour un crédit mensuel à échéances constantes, sans frais ni assurance.": "حساب لقرض بأقساط شهرية ثابتة، دون مصاريف أو تأمين.",
@@ -2873,6 +2951,7 @@ var AR = {
   "Ou glissez-les ici. Tout reste sur votre appareil : rien n'est envoyé sur Internet.": "أو اسحبها إلى هنا. يبقى كل شيء على جهازك: لا يُرسل أي شيء عبر الإنترنت.",
   "Outil réservé aux crédits mensuels à échéances constantes, sans différé, de plus de 84 mois.": "أداة مخصصة للقروض الشهرية بأقساط ثابتة، دون إمهال، لأكثر من 84 شهرًا.",
   "Outils": "الأدوات",
+  "Ouvrir": "فتح",
   "Ouvrir dans le scénario A": "فتح في السيناريو A",
   "PDF ou photo du tableau : chaque ligne recalculée au millime": "PDF أو صورة الجدول: إعادة حساب كل سطر بالمليم",
   "PDF scanné : reconnaissance du texte des pages…": "PDF ممسوح: التعرف على نص الصفحات…",
@@ -2927,6 +3006,7 @@ var AR = {
   "Prochaine échéance": "القسط القادم",
   "Prochaine échéance de {m} le {d}.": "القسط القادم بقيمة {m} في {d}.",
   "Prochaines réductions de taux": "التخفيضات القادمة للنسبة",
+  "Projection du capital": "توقع رأس المال",
   "Précédent": "السابق",
   "Préparation…": "التحضير…",
   "Préparer la lettre": "تحضير الرسالة",
@@ -2952,6 +3032,7 @@ var AR = {
   "Quitter la présentation": "الخروج من العرض",
   "RA": "RA",
   "Rappels des échéances": "تذكير بالأقساط",
+  "Rapport PDF": "تقرير PDF",
   "Rapport client": "تقرير الحريف",
   "Rapport client premium : couverture, synthèse, conseils, échéancier et signatures": "تقرير حريف متميز: غلاف، ملخص، نصائح، جدول أقساط وإمضاءات",
   "Rapport client téléchargé.": "تم تنزيل تقرير الحريف.",
@@ -3051,6 +3132,7 @@ var AR = {
   "Si vous louez": "إذا استأجرت",
   "Signature du client": "إمضاء الحريف",
   "Signature du conseiller": "إمضاء المستشار",
+  "Simulateur Assurance Vie et CEA": "محاكي تأمين الحياة وحساب الادخار في الأسهم",
   "Simulateur de crédit": "محاكي القروض",
   "Simulateur de crédit en Dinar Tunisien": "محاكي القروض بالدينار التونسي",
   "Simulateur de crédit, accueil": "محاكي القروض، الصفحة الرئيسية",
@@ -3174,6 +3256,7 @@ var AR = {
   "Un apport d'au moins {p} du prix facilite l'accord de la banque.": "مساهمة لا تقل عن {p} من الثمن تسهّل موافقة البنك.",
   "Un prêt incomplet ou invalide est ignoré (durée de 1 à 300 mois, différé plus court que la durée).": "يتم تجاهل القرض غير المكتمل أو غير الصالح (مدة من 1 إلى 300 شهر، وإمهال أقصر من المدة).",
   "Un seul geste : touchez « Installer maintenant », puis confirmez.": "خطوة واحدة: المس «ثبّت الآن» ثم أكّد.",
+  "Une autre application de Mohamed Aziz Jaouadi": "تطبيق آخر من إنجاز محمد عزيز الجوادي",
   "Une fois par an": "مرة في السنة",
   "Utiliser": "استعمال",
   "Utiliser dans le scénario {n}": "استعمال في السيناريو {n}",
@@ -3364,6 +3447,8 @@ var AR = {
   "Échéances constantes": "أقساط ثابتة",
   "Échéances restantes": "الأقساط المتبقية",
   "Économie (intérêts et assurance)": "التوفير (الفوائد والتأمين)",
+  "Économie d'impôt": "التوفير الجبائي",
+  "Économie d'impôt, montant optimal à investir, projection du capital et rachat anticipé, en dinars tunisiens.": "التوفير الجبائي، المبلغ الأمثل للاستثمار، توقع رأس المال والاسترداد المسبق، بالدينار التونسي.",
   "Économie d'intérêts": "التوفير في الفوائد",
   "Économie d'intérêts : {m}.": "توفير في الفوائد: {m}.",
   "Économie nette sur toute la durée": "التوفير الصافي على كامل المدة",
@@ -7909,6 +7994,7 @@ var AR = {
       { nom: 'Rapport client', ico: 'award', fn: function () { preparerRapport(sc); } },
       { nom: 'Simulation guidée', ico: 'sparkle', fn: ouvrirGuide },
       { nom: 'Haute lisibilité', ico: 'globe', fn: basculerLisibilite },
+      { nom: 'Simulateur Assurance Vie et CEA', ico: 'shield', fn: function () { window.open('https://mohamed-ja.github.io/simulateur-assurance-vie/', '_blank', 'noopener'); } },
       { nom: 'Exporter Excel', ico: 'sheet', fn: function () { exporterExcel(sc); } },
       { nom: 'Imprimer', ico: 'printer', fn: function () { imprimer(sc); } },
       { nom: 'QR code', ico: 'qr', fn: function () { ouvrirQR(sc); } },
@@ -9675,6 +9761,9 @@ var AR = {
         groupeHtml('outils', 'Outils', OUTILS.map(function (o) { return itemHtml(o, 'outil'); }).join(''), g.outils, false) +
         groupeHtml('dossier', 'Dossier et documents', DOSSIER.map(function (o) { return itemHtml(o, 'action'); }).join(''), g.dossier, false) +
       '</nav>' +
+      '<a class="nl-item nl-av" href="https://mohamed-ja.github.io/simulateur-assurance-vie/" target="_blank" rel="noopener" data-tip="' + echapper(t('Simulateur Assurance Vie et CEA')) + '">' +
+        '<span class="nl-ico nl-av-ico" aria-hidden="true"><svg class="av-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="av-g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset=".55" stop-color="#7c3aed"/><stop offset="1" stop-color="#c026d3"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#av-g2)"/><g fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 54s16-8 16-20V20l-16-6-16 6v14c0 12 16 20 16 20z"/><path d="m25 33 5 5 9-9"/></g></svg></span>' +
+        '<span class="nl-txt"><b>' + echapper(t('Assurance vie')) + '</b><small>' + echapper(t('CEA, épargne et impôt')) + '</small></span>' + ico('externe', 'ico-sm nl-av-fl') + '</a>' +
       '<div class="nl-pied"><button type="button" class="nl-item" id="btnLisible" aria-pressed="' + document.documentElement.classList.contains('lisible') + '" data-tip="' + echapper(t('Haute lisibilité')) + '">' +
         '<span class="nl-ico" aria-hidden="true">' + ico('globe') + '</span><span class="nl-txt">' + echapper(t('Haute lisibilité')) + '</span><span class="nl-bascule" aria-hidden="true"></span></button>' +
         '<button type="button" class="nl-item nl-replier" data-nav-replier data-tip="' + echapper(t('Déplier le panneau')) + '">' +
