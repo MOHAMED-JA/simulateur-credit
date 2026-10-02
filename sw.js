@@ -1,7 +1,7 @@
 /* Service worker du simulateur de crédit : application installable et
    utilisable hors connexion. Changer VERSION à chaque mise en ligne pour
    que les utilisateurs reçoivent la nouvelle version. */
-var VERSION = '2026-10-02-2';
+var VERSION = '2026-10-02-3';
 var CACHE_APP = 'simulateur-app-' + VERSION;
 var CACHE_EXT = 'simulateur-externe-v1';
 
@@ -47,6 +47,21 @@ self.addEventListener('activate', function (ev) {
 
 self.addEventListener('fetch', function (ev) {
   var req = ev.request;
+  var url0 = new URL(req.url);
+
+  /* Fichier partagé vers l'application (menu Partager du téléphone) :
+     mis de côté puis ouvert dans l'audit du tableau d'amortissement */
+  if (req.method === 'POST' && url0.origin === self.location.origin && /\/partage-cible$/.test(url0.pathname)) {
+    ev.respondWith(req.formData().then(function (fd) {
+      var fichiers = fd.getAll('fichiers').filter(function (f) { return f && f.size; });
+      return caches.open('simulateur-partage').then(function (c) {
+        return Promise.all(fichiers.map(function (f, i) {
+          return c.put('./partage/' + i + '-' + encodeURIComponent(f.name || 'tableau.pdf'), new Response(f, { headers: { 'Content-Type': f.type || 'application/octet-stream' } }));
+        }));
+      });
+    }).then(function () { return Response.redirect('./?partage=1', 303); }, function () { return Response.redirect('./', 303); }));
+    return;
+  }
   if (req.method !== 'GET') return;
   var url = new URL(req.url);
 

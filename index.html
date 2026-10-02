@@ -2,7 +2,7 @@
 <html lang="fr" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Simulateur de crédit en Dinar Tunisien</title>
 <meta name="description" content="Simulez votre crédit en dinars tunisiens : mensualité, coût des intérêts, tableau d'amortissement, capacité d'emprunt et comparaison de scénarios.">
 <meta name="theme-color" content="#7c3aed">
@@ -272,7 +272,7 @@ a { color: inherit; }
   background-position: 0% 50%;
   box-shadow: var(--shadow-glow);
 }
-.btn-primary:hover { background-position: 100% 50%; box-shadow: 0 18px 40px -12px rgba(192, 38, 211, 0.6); }
+@media (hover: hover) and (pointer: fine) { .btn-primary:hover { background-position: 100% 50%; box-shadow: 0 18px 40px -12px rgba(192, 38, 211, 0.6); } }
 
 .btn-ghost {
   background: var(--surface);
@@ -280,29 +280,29 @@ a { color: inherit; }
   color: var(--text-2);
   box-shadow: var(--shadow-sm);
 }
-.btn-ghost:hover { border-color: var(--border-strong); color: var(--text); background: var(--surface-2); }
+@media (hover: hover) and (pointer: fine) { .btn-ghost:hover { border-color: var(--border-strong); color: var(--text); background: var(--surface-2); } }
 
 .btn-quiet { background: transparent; color: var(--text-2); }
-.btn-quiet:hover { background: var(--surface-3); color: var(--text); }
+@media (hover: hover) and (pointer: fine) { .btn-quiet:hover { background: var(--surface-3); color: var(--text); } }
 
 .btn-orange { color: #c2410c; background: rgba(249, 115, 22, 0.12); border-color: rgba(249, 115, 22, 0.22); }
-.btn-orange:hover { background: rgba(249, 115, 22, 0.2); }
+@media (hover: hover) and (pointer: fine) { .btn-orange:hover { background: rgba(249, 115, 22, 0.2); } }
 :root[data-theme="dark"] .btn-orange { color: #fdba74; }
 
 .btn-green { color: #047857; background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.24); }
-.btn-green:hover { background: rgba(16, 185, 129, 0.2); }
+@media (hover: hover) and (pointer: fine) { .btn-green:hover { background: rgba(16, 185, 129, 0.2); } }
 :root[data-theme="dark"] .btn-green { color: #6ee7b7; }
 
 .btn-red { color: #b91c1c; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.22); }
-.btn-red:hover { background: rgba(239, 68, 68, 0.18); }
+@media (hover: hover) and (pointer: fine) { .btn-red:hover { background: rgba(239, 68, 68, 0.18); } }
 :root[data-theme="dark"] .btn-red { color: #fca5a5; }
 
 .btn-blue { color: #1d4ed8; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.22); }
-.btn-blue:hover { background: rgba(59, 130, 246, 0.18); }
+@media (hover: hover) and (pointer: fine) { .btn-blue:hover { background: rgba(59, 130, 246, 0.18); } }
 :root[data-theme="dark"] .btn-blue { color: #93c5fd; }
 
 .btn-violet { color: #6d28d9; background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.24); }
-.btn-violet:hover { background: rgba(139, 92, 246, 0.18); }
+@media (hover: hover) and (pointer: fine) { .btn-violet:hover { background: rgba(139, 92, 246, 0.18); } }
 :root[data-theme="dark"] .btn-violet { color: #c4b5fd; }
 
 .btn-icon { width: var(--h); padding: 0; }
@@ -349,7 +349,7 @@ a { color: inherit; }
   text-decoration: none; font-size: 13px; font-weight: 600;
   transition: background-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
 }
-.hero-author:hover { background: rgba(255, 255, 255, 0.26); }
+@media (hover: hover) and (pointer: fine) { .hero-author:hover { background: rgba(255, 255, 255, 0.26); } }
 .hero-author .li {
   width: 28px; height: 28px; border-radius: 999px; background: #fff; display: grid; place-items: center;
 }
@@ -372,15 +372,15 @@ a { color: inherit; }
   cursor: pointer;
   transition: background-color var(--t) var(--ease), color var(--t) var(--ease), box-shadow var(--t) var(--ease);
 }
-.tab:hover { color: var(--text); }
+@media (hover: hover) and (pointer: fine) { .tab:hover { color: var(--text); } }
 .tab[aria-selected="true"] { color: #fff; background: var(--grad-main); box-shadow: var(--shadow-glow); }
 .tab .dot { width: 8px; height: 8px; border-radius: 99px; background: currentColor; opacity: 0.55; }
 .tab-close {
   display: inline-grid; place-items: center; width: 20px; height: 20px; margin-inline-end: -6px;
   border-radius: 6px; opacity: 0.75;
 }
-.tab-close:hover { opacity: 1; background: rgba(255, 255, 255, 0.22); }
-.tab[aria-selected="false"] .tab-close:hover { background: var(--surface-3); }
+@media (hover: hover) and (pointer: fine) { .tab-close:hover { opacity: 1; background: rgba(255, 255, 255, 0.22); } }
+@media (hover: hover) and (pointer: fine) { .tab[aria-selected="false"] .tab-close:hover { background: var(--surface-3); } }
 
 /* Comparatif A / B */
 .versus {
@@ -446,7 +446,7 @@ a { color: inherit; }
   border: 1.5px solid transparent;
   transition: border-color var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
-.input-wrap:hover { border-color: var(--border-strong); }
+@media (hover: hover) and (pointer: fine) { .input-wrap:hover { border-color: var(--border-strong); } }
 .input-wrap:focus-within { background: var(--surface); border-color: var(--primary); box-shadow: 0 0 0 4px var(--ring); }
 .input-wrap .ico { margin-inline-start: 14px; color: var(--muted); transition: color var(--t-fast); }
 .input-wrap:focus-within .ico { color: var(--primary); }
@@ -492,7 +492,7 @@ a { color: inherit; }
   background: #fff; border: 3px solid var(--violet);
   box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
 }
-.range:hover::-webkit-slider-thumb { transform: scale(1.12); }
+@media (hover: hover) and (pointer: fine) { .range:hover::-webkit-slider-thumb { transform: scale(1.12); } }
 .range:active::-webkit-slider-thumb { transform: scale(1.2); box-shadow: 0 0 0 6px var(--ring); }
 .range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px var(--ring); }
 .range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 6px var(--ring); }
@@ -528,7 +528,7 @@ a { color: inherit; }
   min-width: 0; container-type: inline-size;
   transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
 }
-.kpi:hover { transform: translateY(-2px); }
+@media (hover: hover) and (pointer: fine) { .kpi:hover { transform: translateY(-2px); } }
 .kpi-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
 .kpi-label .pastille { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; background: var(--surface-3); color: var(--primary); }
 .kpi-value {
@@ -587,7 +587,7 @@ a { color: inherit; }
   background: transparent; color: var(--muted); font-weight: 600; font-size: 13px; cursor: pointer;
   transition: background-color var(--t) var(--ease), color var(--t) var(--ease), box-shadow var(--t) var(--ease);
 }
-.seg button:hover { color: var(--text); }
+@media (hover: hover) and (pointer: fine) { .seg button:hover { color: var(--text); } }
 .seg button[aria-pressed="true"] { background: var(--surface); color: var(--primary); box-shadow: var(--shadow-sm), 0 0 0 1px var(--border); }
 :root[data-theme="dark"] .seg button[aria-pressed="true"] { background: var(--surface-3); box-shadow: none; }
 
@@ -644,7 +644,7 @@ table.amort { width: 100%; min-width: 640px; border-collapse: separate; border-s
 .amort tbody td { border-bottom: 1px solid var(--border); color: var(--text-2); }
 .amort tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 55%, transparent); }
 .amort tbody tr { transition: background-color var(--t-fast); }
-.amort tbody tr:hover td { background: var(--primary-soft); }
+@media (hover: hover) and (pointer: fine) { .amort tbody tr:hover td { background: var(--primary-soft); } }
 .amort tbody tr.an td { border-top: 2px solid var(--border-strong); }
 .amort td.per { color: var(--text); font-weight: 600; }
 .amort td.per .n { display: inline-block; min-width: 30px; color: var(--muted); font-weight: 500; font-size: 12.5px; }
@@ -683,7 +683,7 @@ table.amort { width: 100%; min-width: 640px; border-collapse: separate; border-s
   font-size: 12.5px; color: var(--muted);
 }
 .foot a { color: var(--primary); font-weight: 600; text-decoration: none; }
-.foot a:hover { text-decoration: underline; }
+@media (hover: hover) and (pointer: fine) { .foot a:hover { text-decoration: underline; } }
 
 /* =====================================================================
    Boîtes de dialogue
@@ -691,6 +691,7 @@ table.amort { width: 100%; min-width: 640px; border-collapse: separate; border-s
 dialog.dlg {
   width: min(560px, calc(100vw - 32px));
   max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
   padding: 0; border: 0; border-radius: var(--radius-xl);
   background: var(--surface); color: var(--text);
   box-shadow: var(--shadow-lg);
@@ -701,7 +702,7 @@ dialog.dlg[open] { animation: dlg-in 320ms var(--ease) both; }
 dialog.dlg.fermeture { animation: dlg-out 180ms ease-in both; }
 dialog.dlg::backdrop { background: rgba(10, 8, 20, 0.52); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); animation: fondu 260ms var(--ease) both; }
 dialog.dlg.fermeture::backdrop { animation: fondu-out 180ms ease-in both; }
-.dlg-in { display: flex; flex-direction: column; max-height: calc(100vh - 48px); }
+.dlg-in { display: flex; flex-direction: column; max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px); }
 .dlg-head { display: flex; align-items: flex-start; gap: 14px; padding: 22px 22px 0; }
 .dlg-ico { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; flex: none; color: #fff; background: var(--grad-main); box-shadow: var(--shadow-glow); }
 .dlg-ico.warm { background: var(--grad-warm); box-shadow: 0 12px 28px -12px rgba(249, 115, 22, 0.6); }
@@ -711,7 +712,7 @@ dialog.dlg.fermeture::backdrop { animation: fondu-out 180ms ease-in both; }
 .dlg-title { font-size: 19px; font-weight: 800; }
 .dlg-sub { color: var(--muted); font-size: 13.5px; margin-top: 3px; }
 .dlg-x { margin-inline-start: auto; margin-top: -4px; margin-inline-end: -6px; }
-.dlg-body { padding: 18px 22px; overflow: auto; }
+.dlg-body { padding: 18px 22px; overflow: auto; overscroll-behavior: contain; }
 .dlg-foot { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; padding: 14px 22px 20px; border-top: 1px solid var(--border); background: var(--surface-2); }
 
 .dlg-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -757,7 +758,7 @@ dialog.dlg.fermeture::backdrop { animation: fondu-out 180ms ease-in both; }
   padding: 14px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface);
   transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast) var(--ease), opacity var(--t) var(--ease);
 }
-.hist-item:hover { border-color: var(--border-strong); box-shadow: var(--shadow); }
+@media (hover: hover) and (pointer: fine) { .hist-item:hover { border-color: var(--border-strong); box-shadow: var(--shadow); } }
 .hist-item.sortie { opacity: 0; transform: translateX(16px); }
 .hist-num { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; font-weight: 800; font-family: var(--font-display); color: var(--primary); background: var(--primary-soft); font-size: 14px; }
 .hist-main { min-width: 0; }
@@ -926,7 +927,7 @@ table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; font-varian
   font-size: 13px; font-weight: 600; cursor: pointer;
   transition: background-color var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease), box-shadow var(--t) var(--ease), transform var(--t-fast) var(--ease);
 }
-.type-chip:hover { border-color: var(--border-strong); color: var(--text); }
+@media (hover: hover) and (pointer: fine) { .type-chip:hover { border-color: var(--border-strong); color: var(--text); } }
 .type-chip:active { transform: scale(0.97); }
 .type-chip[aria-pressed="true"] { color: #fff; border-color: transparent; background: var(--grad-main); box-shadow: var(--shadow-glow); }
 
@@ -1061,7 +1062,7 @@ table.sensi-t { width: 100%; min-width: 560px; border-collapse: collapse; font-s
   color: #6d28d9; background: #fff; box-shadow: 0 12px 26px -12px rgba(22, 18, 41, 0.5);
   transition: transform var(--t-fast) var(--ease), box-shadow var(--t) var(--ease);
 }
-.hero-install:hover { transform: translateY(-1px); box-shadow: 0 16px 30px -12px rgba(22, 18, 41, 0.55); }
+@media (hover: hover) and (pointer: fine) { .hero-install:hover { transform: translateY(-1px); box-shadow: 0 16px 30px -12px rgba(22, 18, 41, 0.55); } }
 
 /* =====================================================================
    Paramètres de l'agence
@@ -1208,7 +1209,8 @@ html[dir="rtl"] .hero::after { mask-image: linear-gradient(270deg, transparent 3
   text-align: start; cursor: pointer; color: var(--text);
   transition: background-color var(--t-fast) var(--ease);
 }
-.menu-item:hover, .menu-item:focus-visible { background: var(--surface-2); outline: none; }
+.menu-item:focus-visible { background: var(--surface-2); outline: none; }
+@media (hover: hover) and (pointer: fine) { .menu-item:hover { background: var(--surface-2); outline: none; } }
 .menu-item:focus-visible { box-shadow: inset 0 0 0 2px var(--ring); }
 .menu-ico { width: 34px; height: 34px; border-radius: 10px; flex: none; display: grid; place-items: center; color: #fff; background: var(--grad-main); }
 .menu-txt { display: grid; min-width: 0; }
@@ -1268,7 +1270,7 @@ html[dir="rtl"] .hero::after { mask-image: linear-gradient(270deg, transparent 3
 :root[data-theme="dark"] .amort td.ass { color: #67e8f9; }
 .amort tbody tr.diff td { background: color-mix(in srgb, var(--cyan) 7%, transparent); }
 .btn-whatsapp { color: #047857; background: rgba(37, 211, 102, 0.12); border-color: rgba(37, 211, 102, 0.28); }
-.btn-whatsapp:hover { background: rgba(37, 211, 102, 0.2); }
+@media (hover: hover) and (pointer: fine) { .btn-whatsapp:hover { background: rgba(37, 211, 102, 0.2); } }
 :root[data-theme="dark"] .btn-whatsapp { color: #86efac; }
 
 /* =====================================================================
@@ -1353,7 +1355,7 @@ html[dir="rtl"] .hero::after { mask-image: linear-gradient(270deg, transparent 3
 :root.aurora .dlg-in { background: rgba(16, 14, 38, 0.86); }
 :root.aurora .menu { background: rgba(16, 14, 38, 0.9); }
 :root.aurora .topbar { background: rgba(7, 6, 26, 0.55); }
-:root.aurora .card:hover, :root.aurora .kpi:not(.vif):hover { border-color: rgba(167, 139, 250, 0.45); box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.14), 0 18px 50px -18px rgba(124, 58, 237, 0.55); }
+@media (hover: hover) and (pointer: fine) { :root.aurora .card:hover, :root.aurora .kpi:not(.vif):hover { border-color: rgba(167, 139, 250, 0.45); box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.14), 0 18px 50px -18px rgba(124, 58, 237, 0.55); } }
 :root.aurora .kpi.vif { box-shadow: 0 0 34px -6px rgba(192, 38, 211, 0.7), 0 18px 40px -16px rgba(192, 38, 211, 0.6); }
 :root.aurora .btn-primary { box-shadow: 0 0 22px -4px rgba(167, 139, 250, 0.75); }
 :root.aurora .brand-mark { box-shadow: 0 0 24px rgba(167, 139, 250, 0.8); }
@@ -1411,7 +1413,7 @@ html[dir="rtl"] .hero::after { mask-image: linear-gradient(270deg, transparent 3
 .flux-svg .flux-val { font-size: 11.5px; font-weight: 600; fill: var(--muted); }
 .flux-svg .flux-tot { font-size: 13px; font-weight: 800; fill: var(--primary); }
 .flux-svg .flux-bande { transition: opacity var(--t-fast); }
-.flux-svg .flux-bande:hover { opacity: 0.5; }
+@media (hover: hover) and (pointer: fine) { .flux-svg .flux-bande:hover { opacity: 0.5; } }
 .inflation { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin-top: 12px; align-items: stretch; }
 .infl-champ { display: grid; gap: 6px; align-content: center; font-size: 12px; font-weight: 600; color: var(--muted); padding: 10px 12px; border-radius: 12px; background: var(--surface-2); }
 .inflation .ra-stat small { white-space: normal; }
@@ -1443,7 +1445,8 @@ dialog.palette .dlg-head { display: none; }
 .palette-recherche input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 16px; color: var(--text); padding: 8px 0; }
 .palette-liste { display: grid; gap: 2px; max-height: min(60vh, 460px); overflow-y: auto; margin-top: 10px; }
 .pal-item { display: flex; align-items: center; gap: 12px; width: 100%; padding: 8px 10px; border: 0; border-radius: 12px; background: transparent; text-align: start; cursor: pointer; }
-.pal-item:hover, .pal-item[aria-selected="true"] { background: var(--primary-soft); }
+.pal-item[aria-selected="true"] { background: var(--primary-soft); }
+@media (hover: hover) and (pointer: fine) { .pal-item:hover { background: var(--primary-soft); } }
 .pal-item[aria-selected="true"] .menu-ico { box-shadow: var(--shadow-glow); }
 
 /* =====================================================================
@@ -1484,7 +1487,8 @@ dialog.palette .dlg-head { display: none; }
 /* Lecture d'une offre (photo ou texte) */
 .ocr-choix { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 12px; }
 .ocr-photo { display: grid; place-items: center; align-content: center; gap: 6px; padding: 18px; text-align: center; border-radius: 16px; border: 2px dashed var(--border-strong); background: var(--surface-2); cursor: pointer; color: var(--primary); }
-.ocr-photo:hover, .ocr-photo:focus-within { border-color: var(--primary); background: var(--primary-soft); }
+.ocr-photo:focus-within { border-color: var(--primary); background: var(--primary-soft); }
+@media (hover: hover) and (pointer: fine) { .ocr-photo:hover { border-color: var(--primary); background: var(--primary-soft); } }
 .ocr-photo .ico { width: 30px; height: 30px; }
 .ocr-photo strong { color: var(--text); font-size: 14px; }
 .ocr-photo small { color: var(--muted); font-size: 12px; }
@@ -1566,7 +1570,7 @@ html[dir="rtl"] .nav-lat { padding: 18px 16px 12px 10px; }
   text-align: start; border: 0; cursor: pointer; width: 100%;
   transition: transform 260ms var(--ease), box-shadow 260ms var(--ease);
 }
-.nl-resume:hover { transform: translateY(-1px); box-shadow: 0 20px 40px -20px rgba(124, 58, 237, 0.85); }
+@media (hover: hover) and (pointer: fine) { .nl-resume:hover { transform: translateY(-1px); box-shadow: 0 20px 40px -20px rgba(124, 58, 237, 0.85); } }
 .nl-resume::after { content: ""; position: absolute; width: 120px; height: 120px; inset-inline-end: -40px; top: -50px; border-radius: 50%; background: rgba(255, 255, 255, 0.14); pointer-events: none; }
 .nl-resume .r-lib { font-size: 11.5px; font-weight: 600; color: rgba(255, 255, 255, 0.82); display: flex; align-items: center; gap: 6px; }
 .nl-resume .r-sc { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 6px; background: rgba(255, 255, 255, 0.22); font-weight: 800; font-size: 11px; color: #fff; }
@@ -1585,7 +1589,7 @@ html[dir="rtl"] .nav-lat { padding: 18px 16px 12px 10px; }
   border: 0; background: none; cursor: pointer; border-radius: 8px;
   font-size: 11.5px; font-weight: 700; color: var(--muted); text-align: start;
 }
-.nl-titre:hover { color: var(--text); }
+@media (hover: hover) and (pointer: fine) { .nl-titre:hover { color: var(--text); } }
 .nl-titre .chev { width: 14px; height: 14px; margin-inline-start: auto; transition: transform 320ms var(--ease); }
 .nl-groupe[data-ouvert="false"] .nl-titre .chev { transform: rotate(-90deg); }
 html[dir="rtl"] .nl-groupe[data-ouvert="false"] .nl-titre .chev { transform: rotate(90deg); }
@@ -1619,22 +1623,22 @@ html[dir="rtl"] .nl-groupe[data-ouvert="false"] .nl-titre .chev { transform: rot
   color: var(--text-2); font-size: 13.5px; font-weight: 600; text-decoration: none;
   transition: color 200ms var(--ease), background-color 200ms var(--ease);
 }
-.nl-item:hover { color: var(--text); background: color-mix(in srgb, var(--surface-3) 60%, transparent); }
+@media (hover: hover) and (pointer: fine) { .nl-item:hover { color: var(--text); background: color-mix(in srgb, var(--surface-3) 60%, transparent); } }
 .nl-item .nl-ico {
   width: 28px; height: 28px; flex: none; display: grid; place-items: center; border-radius: 9px;
   background: var(--surface); color: var(--muted); box-shadow: 0 0 0 1px var(--border);
   transition: color 260ms var(--ease), background 260ms var(--ease), box-shadow 260ms var(--ease), transform 260ms var(--ease);
 }
 .nl-item .nl-ico .ico { width: 15px; height: 15px; }
-.nl-item:hover .nl-ico { color: var(--primary); transform: scale(1.06); }
+@media (hover: hover) and (pointer: fine) { .nl-item:hover .nl-ico { color: var(--primary); transform: scale(1.06); } }
 .nl-item .nl-txt { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .nl-item .nl-meta { flex: none; max-width: 92px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
 .nl-item[aria-current="true"] { color: var(--primary); }
 .nl-item[aria-current="true"] .nl-ico { color: #fff; background: var(--grad-main); box-shadow: 0 6px 14px -6px rgba(124, 58, 237, 0.7); }
 .nl-item[aria-current="true"] .nl-meta { color: var(--primary); }
 .nl-item[aria-disabled="true"] { opacity: 0.45; }
-.nl-item[aria-disabled="true"]:hover { background: none; color: var(--text-2); }
-.nl-item[aria-disabled="true"]:hover .nl-ico { transform: none; color: var(--muted); }
+@media (hover: hover) and (pointer: fine) { .nl-item[aria-disabled="true"]:hover { background: none; color: var(--text-2); } }
+@media (hover: hover) and (pointer: fine) { .nl-item[aria-disabled="true"]:hover .nl-ico { transform: none; color: var(--muted); } }
 .nl-item:focus-visible { outline: 3px solid var(--ring); outline-offset: -1px; }
 .nl-item.arrivee .nl-ico { animation: nl-pop 520ms cubic-bezier(0.22, 1, 0.36, 1); }
 @keyframes nl-pop { 0% { transform: scale(0.6); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
@@ -1778,7 +1782,7 @@ html[dir="rtl"] .kpi-value .odo { direction: ltr; unicode-bidi: isolate; }
   transition: transform 260ms var(--ease), box-shadow 260ms var(--ease);
   animation: guide-appel 2.8s ease-out 1.2s 3;
 }
-.hero-guide:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -14px rgba(22, 18, 41, 0.75), 0 0 0 4px rgba(255, 255, 255, 0.35); }
+@media (hover: hover) and (pointer: fine) { .hero-guide:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -14px rgba(22, 18, 41, 0.75), 0 0 0 4px rgba(255, 255, 255, 0.35); } }
 .hero-guide:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .hero-guide .g-ico { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 13px; color: #fff; background: var(--grad-main); box-shadow: 0 8px 18px -8px rgba(124, 58, 237, 0.8); }
 .hero-guide .ico { width: 22px; height: 22px; }
@@ -1792,7 +1796,7 @@ html[dir="rtl"] .kpi-value .odo { direction: ltr; unicode-bidi: isolate; }
 @media (prefers-reduced-motion: reduce) { .hero-guide { animation: none; } }
 .nl-guide { margin-bottom: 12px; color: var(--primary); background: var(--primary-soft); font-weight: 700; }
 .nl-guide .nl-ico { color: #fff; background: var(--grad-main); box-shadow: none; }
-.nl-guide:hover { background: color-mix(in srgb, var(--primary) 16%, transparent); color: var(--primary); }
+@media (hover: hover) and (pointer: fine) { .nl-guide:hover { background: color-mix(in srgb, var(--primary) 16%, transparent); color: var(--primary); } }
 .nl-bascule { flex: none; width: 30px; height: 18px; border-radius: 99px; background: var(--track); position: relative; transition: background-color 240ms var(--ease); }
 .nl-bascule::after { content: ""; position: absolute; top: 2px; inset-inline-start: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1); }
 #btnLisible[aria-pressed="true"] .nl-bascule { background: var(--primary); }
@@ -1828,7 +1832,7 @@ html[dir="rtl"] .gd-anim { animation-name: gd-entree-rtl; }
   border-radius: 18px; border: 1.5px solid var(--border); background: var(--surface-2); color: var(--text);
   transition: transform 240ms var(--ease), border-color 240ms var(--ease), box-shadow 240ms var(--ease), background-color 240ms var(--ease);
 }
-.gd-carte:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 45%, transparent); box-shadow: 0 16px 30px -20px rgba(124, 58, 237, 0.55); }
+@media (hover: hover) and (pointer: fine) { .gd-carte:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 45%, transparent); box-shadow: 0 16px 30px -20px rgba(124, 58, 237, 0.55); } }
 .gd-carte[aria-pressed="true"] { border-color: var(--primary); background: var(--primary-soft); }
 .gd-c-ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: var(--grad-main); margin-bottom: 4px; }
 .gd-c-ico .ico { width: 22px; height: 22px; }
@@ -1844,7 +1848,7 @@ html[dir="rtl"] .gd-input input { text-align: right; }
 .gd-input b { color: var(--muted); font-size: 14px; }
 .gd-puces { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 14px; }
 .gd-puce { padding: 9px 16px; border-radius: 999px; border: 1.5px solid var(--border); background: var(--surface-2); font-weight: 700; font-size: 14px; cursor: pointer; color: var(--text-2); transition: background-color 200ms var(--ease), border-color 200ms var(--ease), color 200ms var(--ease), transform 200ms var(--ease); }
-.gd-puce:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--primary) 40%, transparent); }
+@media (hover: hover) and (pointer: fine) { .gd-puce:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--primary) 40%, transparent); } }
 .gd-puce[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
 .gd-curseur { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; }
 .gd-curseur output { font-family: var(--font-display); font-weight: 800; font-size: 20px; min-width: 70px; text-align: end; }
@@ -1910,7 +1914,8 @@ html[dir="rtl"] #gd-suiv .ico { transform: scaleX(-1); }
   opacity: calc(0.35 + var(--p) * 0.65);
   transition: transform 160ms var(--ease), box-shadow 160ms var(--ease);
 }
-.cal-c:hover, .cal-c:focus-visible { transform: scale(1.18); z-index: 1; box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.5); opacity: 1; }
+.cal-c:focus-visible { transform: scale(1.18); z-index: 1; box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.5); opacity: 1; }
+@media (hover: hover) and (pointer: fine) { .cal-c:hover { transform: scale(1.18); z-index: 1; box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.5); opacity: 1; } }
 .cal-c.vide { background: var(--surface-2); opacity: 1; cursor: default; }
 .cal-c.ra::after, .cal-k.ra { content: ""; position: absolute; inset: 0; margin: auto; width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 2px #fff; }
 .cal-c.red { box-shadow: 0 0 0 2px #10b981; opacity: 1; }
@@ -2000,6 +2005,131 @@ html.lisible .field label, html.lisible .kpi-label { font-size: 14.5px; }
 }
 @media print {
   .lien-evitement, .hero-guide, .presentation { display: none !important; }
+}
+/* =====================================================================
+   Audit du tableau bancaire
+   ===================================================================== */
+.audit-depot {
+  display: grid; place-items: center; gap: 6px; padding: 26px 18px; text-align: center; cursor: pointer;
+  border-radius: 18px; border: 2px dashed var(--border-strong); background: var(--surface-2); color: var(--primary);
+  transition: border-color 200ms var(--ease), background-color 200ms var(--ease), transform 200ms var(--ease);
+}
+.audit-depot .ico { width: 30px; height: 30px; }
+.audit-depot strong { color: var(--text); font-size: 15px; }
+.audit-depot small { color: var(--muted); font-size: 12.5px; max-width: 46ch; }
+.audit-depot.survol, .audit-depot:focus-within { border-color: var(--primary); background: var(--primary-soft); transform: scale(1.01); }
+.au-coller { margin-top: 10px; }
+.au-coller summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--primary); padding: 6px 0; }
+.au-coller textarea { width: 100%; min-height: 110px; margin: 6px 0 8px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; resize: vertical; }
+.au-verdict { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 16px; margin-top: 14px; }
+.au-verdict > .ico { width: 26px; height: 26px; flex: none; margin-top: 2px; }
+.au-verdict strong { display: block; font-size: 15px; }
+.au-verdict small { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+.au-verdict.ok { background: rgba(16, 185, 129, 0.12); }
+.au-verdict.ok > .ico { color: #059669; }
+.au-verdict.ko { background: rgba(244, 63, 94, 0.1); }
+.au-verdict.ko > .ico { color: #e11d48; }
+.au-chance { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; padding: 14px 16px; border-radius: 16px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(124, 58, 237, 0.1)); }
+.au-chance > .ico { width: 24px; height: 24px; color: #059669; flex: none; }
+.au-chance > div { flex: 1; min-width: 200px; }
+.au-chance strong { display: block; text-transform: none; }
+.au-chance small { color: var(--muted); font-size: 12.5px; }
+.au-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-height: 300px; overflow: auto; overscroll-behavior: contain; }
+.au-ano { display: flex; gap: 10px; align-items: flex-start; padding: 9px 12px; border-radius: 12px; background: var(--surface-2); font-size: 13px; line-height: 1.45; cursor: pointer; }
+@media (hover: hover) and (pointer: fine) { .au-ano:hover { background: var(--surface-3); } }
+.au-tag { flex: none; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; color: #fff; }
+.au-ano.ko .au-tag { background: #e11d48; }
+.au-ano.att .au-tag { background: #f59e0b; }
+.au-ano.lec .au-tag { background: #64748b; }
+.au-ano.inf .au-tag { background: #0891b2; }
+.au-tab-wrap { max-height: 360px; overflow: auto; border: 1px solid var(--border); border-radius: 14px; overscroll-behavior: contain; }
+table.au-tab { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.au-tab th, .au-tab td { padding: 7px 9px; text-align: end; white-space: nowrap; border-bottom: 1px solid var(--border); }
+.au-tab th:nth-child(-n+2), .au-tab td:nth-child(-n+2) { text-align: start; }
+.au-tab thead th { position: sticky; top: 0; background: var(--surface-2); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; z-index: 1; }
+.au-tab tr.ko td { background: rgba(244, 63, 94, 0.08); }
+.au-tab tr.lec td { background: rgba(100, 116, 139, 0.1); }
+.au-tab tr.inf td { background: rgba(8, 145, 178, 0.08); }
+.au-tab tr.red td { background: rgba(16, 185, 129, 0.12); font-weight: 700; }
+.au-tab td.ecart { color: #be123c; font-weight: 800; }
+.au-tab tr.surligne td { animation: surligne 2.2s var(--ease); }
+.cmp td.au-ko { color: #be123c; font-weight: 800; }
+.cmp td.au-nv { color: var(--muted); }
+.au-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+/* =====================================================================
+   Lettre à la banque
+   ===================================================================== */
+.cr-types { margin-bottom: 4px; }
+.cr-apercu {
+  padding: 26px 30px; border-radius: 14px; background: #fff; color: #1a1630; border: 1px solid var(--border);
+  font: 13.5px/1.6 Georgia, "Times New Roman", serif; max-height: 380px; overflow: auto; overscroll-behavior: contain;
+  box-shadow: 0 20px 40px -30px rgba(22, 18, 41, 0.6);
+}
+.cr-apercu p { margin: 0 0 12px; text-align: justify; }
+.cr-apercu .cr-bloc { font-weight: 600; }
+.cr-apercu .cr-bloc-d { text-align: end; }
+.cr-apercu .cr-droite { text-align: end; margin-bottom: 20px; }
+.cr-apercu .cr-objet { font-weight: 700; }
+.cr-apercu .cr-petit { font-size: 12px; color: #6e6989; }
+.cr-apercu .cr-signature { text-align: end; font-weight: 700; margin-top: 28px; }
+.cr-tab { width: 100%; border-collapse: collapse; margin: 0 0 14px; font-family: var(--font); font-size: 13px; }
+.cr-tab th, .cr-tab td { padding: 6px 10px; border: 1px solid #ddd8ef; text-align: start; }
+.cr-tab th { background: #f4f2fb; font-weight: 600; width: 58%; }
+.cr-tab td { font-weight: 700; text-align: end; }
+html[dir="rtl"] .cr-apercu { direction: ltr; text-align: left; }
+
+/* =====================================================================
+   Optimiseur
+   ===================================================================== */
+.op-nuage .op-pt { fill: #c4b5fd; opacity: 0.75; }
+.op-nuage .op-pt.hors { fill: #fda4af; opacity: 0.5; }
+.op-nuage .op-hors { fill: rgba(244, 63, 94, 0.08); }
+.op-nuage .op-front { fill: none; stroke: #7c3aed; stroke-width: 2.4; stroke-linejoin: round; }
+.op-nuage .op-sol { fill: #fff; stroke: #7c3aed; stroke-width: 2.5; }
+.op-nuage .op-sol.top { fill: #7c3aed; stroke: #fff; stroke-width: 2.5; }
+.op-nuage .op-actuel { fill: #ec4899; stroke: #fff; stroke-width: 2; }
+:root[data-theme="dark"] .op-nuage .op-pt { fill: #8b5cf6; opacity: 0.5; }
+:root[data-theme="dark"] .op-nuage .op-sol { fill: #14121c; }
+
+/* =====================================================================
+   Téléphone : feuilles du bas, balayage, saisie, appui
+   ===================================================================== */
+@media (max-width: 720px) {
+  dialog.dlg, dialog.dlg.large, dialog.guide {
+    width: 100vw; max-width: 100vw; margin: auto 0 0; border-radius: 24px 24px 0 0;
+    max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px);
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  dialog.dlg[open] { animation: feuille-in 420ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+  dialog.dlg.fermeture { animation: feuille-out 170ms ease-in both; }
+  dialog.dlg.glisse { transition: none; animation: none; }
+  .dlg-in { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); }
+  .dlg-head { position: relative; padding-top: 26px; touch-action: none; cursor: grab; }
+  .dlg-head::before { content: ""; position: absolute; top: 9px; left: 50%; width: 42px; height: 5px; margin-left: -21px; border-radius: 99px; background: var(--border-strong); }
+  .dlg-foot { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+  .cr-apercu { padding: 18px; }
+}
+@keyframes feuille-in { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes feuille-out { to { transform: translateY(100%); } }
+html[data-balayage="gauche"]::view-transition-old(root) { animation: balaye-sort-g 320ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+html[data-balayage="gauche"]::view-transition-new(root) { animation: balaye-entre-g 320ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+html[data-balayage="droite"]::view-transition-old(root) { animation: balaye-sort-d 320ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+html[data-balayage="droite"]::view-transition-new(root) { animation: balaye-entre-d 320ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes balaye-sort-g { to { transform: translateX(-18%); opacity: 0; } }
+@keyframes balaye-entre-g { from { transform: translateX(18%); opacity: 0; } }
+@keyframes balaye-sort-d { to { transform: translateX(18%); opacity: 0; } }
+@keyframes balaye-entre-d { from { transform: translateX(-18%); opacity: 0; } }
+@media (pointer: coarse) {
+  .input-wrap.sm input, .nl-champ input, .ocr-texte textarea, .au-coller textarea, .input-wrap input[type="date"] { font-size: 16px; }
+}
+button, [role="button"], .tab, .type-chip, .gd-puce, .gd-carte, .nl-item, .seg button, .menu-item, .pal-item {
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+.gd-carte:active, .nl-item:active, .gd-puce:active, .type-chip:active, .menu-item:active, .pal-item:active { transform: scale(0.97); }
+html { overscroll-behavior-y: none; }
+@media (prefers-reduced-motion: reduce) {
+  dialog.dlg[open], dialog.dlg.fermeture { animation: none; }
 }
 </style>
 
@@ -2219,6 +2349,7 @@ var AR = {
   "Achat, construction ou terrain": "شراء أو بناء أو أرض",
   "Acheter est plus avantageux : au bout de {n} ans, votre patrimoine est supérieur de {m}.": "الشراء أفضل: بعد {n} سنة تكون ثروتك أعلى بـ {m}.",
   "Actuel": "الحالي",
+  "Adresse": "العنوان",
   "Affiche A4 (PNG)": "ملصق A4 (PNG)",
   "Affiche téléchargée : imprimez-la et posez-la à l'accueil de l'agence.": "تم تنزيل الملصق: اطبعه وضعه في استقبال الوكالة.",
   "Afficher en arabe": "العرض بالفرنسية",
@@ -2234,11 +2365,13 @@ var AR = {
   "Ajouter à l'écran d'accueil": "إضافة إلى الشاشة الرئيسية",
   "Aller au contenu": "الانتقال إلى المحتوى",
   "Aller au tableau d'amortissement": "الانتقال إلى جدول الاستهلاك",
+  "Amort.": "الاستهلاك",
   "Amortissement": "طريقة الاستهلاك",
   "Amortissement constant": "استهلاك قار لأصل الدين",
   "Amortissement constant : le capital remboursé est le même à chaque échéance, qui diminue avec les intérêts. In fine : seuls les intérêts sont payés, le capital est remboursé à la dernière échéance.": "استهلاك قار: يُسدَّد نفس المبلغ من أصل الدين في كل قسط، فيتناقص القسط مع الفوائد. السداد في النهاية: تُدفع الفوائد فقط، ويُسدَّد أصل الدين مع آخر قسط.",
   "An {n}": "س {n}",
   "Analyse visuelle": "تحليل مرئي",
+  "Analyser le texte": "تحليل النص",
   "Ancien taux annuel": "النسبة السنوية السابقة",
   "Annuel": "سنوي",
   "Annuelle": "سنوية",
@@ -2247,18 +2380,24 @@ var AR = {
   "Annuler la réduction": "إلغاء التخفيض",
   "Année": "السنة",
   "Année {n}": "السنة {n}",
+  "Aperçu": "معاينة",
   "Application faite par": "تطبيق من إنجاز",
   "Application installée : elle fonctionne aussi hors connexion.": "تم تثبيت التطبيق: يعمل أيضًا دون اتصال.",
+  "Appliquer": "تطبيق",
   "Appliquer la règle automatique": "تطبيق القاعدة التلقائية",
   "Appliquée aux boutons, dégradés et au rapport client PDF.": "تُطبَّق على الأزرار والتدرجات وتقرير الحريف PDF.",
   "Apport de {p} du prix : capital emprunté {c}.": "مساهمة بنسبة {p} من الثمن: مبلغ القرض {c}.",
+  "Apport disponible au maximum": "أقصى مساهمة متاحة",
   "Apport minimal": "الحد الأدنى للمساهمة الذاتية",
   "Apport personnel": "المساهمة الذاتية",
   "Après application, comparez le TEG calculé par le simulateur avec le TEG annoncé ({v}).": "بعد التطبيق، قارن النسبة الفعلية الإجمالية المحسوبة بالنسبة المعلنة ({v}).",
   "Après chaque remboursement": "بعد كل عملية سداد",
   "Après l'échéance": "بعد القسط",
   "Après l'échéance {n}": "بعد القسط {n}",
+  "Après l'échéance {n} ({d}) : le capital baisse de {m} de plus que l'amortissement : remboursement anticipé.": "بعد القسط {n} ({d}): ينخفض رأس المال بـ {m} أكثر من الاستهلاك: سداد مسبق.",
+  "Après l'échéance {n} ({d}) : le capital restant dû augmente de {m} sans explication.": "بعد القسط {n} ({d}): يرتفع رأس المال المتبقي بـ {m} دون تفسير.",
   "Après l'échéance {n} · {d}": "بعد القسط {n} · {d}",
+  "Après le remboursement": "بعد السداد",
   "Après n°": "بعد رقم",
   "Assurance": "التأمين",
   "Assurance annuelle": "التأمين السنوي",
@@ -2268,14 +2407,22 @@ var AR = {
   "Assurance et frais": "التأمين والمصاريف",
   "Assurance la 1re échéance": "التأمين في القسط الأول",
   "Assurance payée": "التأمين المدفوع",
+  "Attendus": "المتوقعة",
+  "Attention": "تنبيه",
   "Au départ": "في البداية",
   "Au-dessus de zéro : B a coûté plus cher que A jusqu'à ce mois ; en dessous : B est moins cher.": "فوق الصفر: كلّف السيناريو B أكثر من A حتى هذا الشهر؛ تحته: B أرخص.",
+  "Aucun constat.": "لا ملاحظات.",
   "Aucun logo": "لا يوجد شعار",
   "Aucune action ne correspond.": "لا يوجد إجراء مطابق.",
+  "Aucune combinaison ne respecte une échéance de {m} : augmentez le budget ou l'apport.": "لا توجد توليفة تحترم قسطًا بـ {m}: ارفع الميزانية أو المساهمة.",
+  "Aucune erreur de calcul dans les lignes lues ; {n} ligne(s) à vérifier à la main (lecture).": "لا خطأ في حساب الأسطر المقروءة؛ {n} سطر(أسطر) للتحقق يدويًا (القراءة).",
+  "Aucune ligne d'échéance reconnue (date jj/mm/aaaa suivie des montants). Vérifiez le fichier ou collez le texte.": "لم يتم التعرف على أي سطر قسط (تاريخ يي/شش/سسسس متبوع بالمبالغ). تحقق من الملف أو الصق النص.",
   "Aucune réduction de taux possible : le ratio ne dépasse pas 8 % ou la durée initiale est de 84 mois ou moins.": "لا يمكن تخفيض النسبة: لا تتجاوز النسبة 8 % أو أن المدة الأصلية 84 شهرًا أو أقل.",
   "Aucune simulation dans l'historique : calculez et enregistrez d'abord vos simulations.": "لا توجد أي محاكاة في السجل: احسب محاكاتك واحفظها أولًا.",
   "Aucune simulation enregistrée": "لا توجد محاكاة محفوظة",
   "Aucune valeur reconnue : vérifiez la photo ou collez le texte.": "لم يتم التعرف على أي قيمة: تحقق من الصورة أو الصق النص.",
+  "Audit d'un tableau d'amortissement": "تدقيق جدول استهلاك",
+  "Audit du tableau de la banque": "تدقيق جدول البنك",
   "Auto": "سيارة",
   "Autorisez l'accès au micro pour dicter votre crédit.": "اسمح بالوصول إلى الميكروفون لإملاء قرضك.",
   "Autre :": "أخرى:",
@@ -2286,6 +2433,7 @@ var AR = {
   "Avec remboursement anticipé": "مع سداد مسبق",
   "Avec une périodicité {x}, la durée doit être un multiple de {p} mois.": "مع دورية {x}، يجب أن تكون المدة من مضاعفات {p} أشهر.",
   "Avec vos revenus, nous vérifions si la mensualité reste supportable.": "بمداخيلك، نتحقق مما إذا كان القسط الشهري قابلًا للتحمل.",
+  "Banque et agence": "البنك والفرع",
   "Basculer le thème clair / sombre": "التبديل بين الوضع الفاتح والداكن",
   "Bleu": "أزرق",
   "Bleu nuit": "أزرق داكن",
@@ -2302,6 +2450,8 @@ var AR = {
   "Capacité d'endettement ({p})": "قدرة التداين ({p})",
   "Capital": "رأس المال",
   "Capital = prix du bien − apport personnel": "مبلغ القرض = ثمن العقار − المساهمة الذاتية",
+  "Capital amorti": "رأس المال المستهلك",
+  "Capital dû": "رأس المال المستحق",
   "Capital empruntable": "المبلغ القابل للاقتراض",
   "Capital emprunté": "مبلغ القرض",
   "Capital emprunté, curseur": "مبلغ القرض، شريط التمرير",
@@ -2315,6 +2465,7 @@ var AR = {
   "Capital total": "رأس المال الجملي",
   "Capital {c}, intérêts {i}": "رأس المال {c}، الفوائد {i}",
   "Capital, durée ou taux pour une mensualité": "رأس المال أو المدة أو النسبة لقسط معيّن",
+  "Ce document ne ressemble pas à un tableau d'amortissement détaillé (taux différent à chaque ligne). Utilisez le tableau complet fourni par la banque, échéance par échéance.": "لا يبدو هذا المستند جدول استهلاك مفصلًا (نسبة مختلفة في كل سطر). استعمل الجدول الكامل الذي يقدمه البنك، قسطًا بقسط.",
   "Ces frais et l'assurance entrent dans le coût total et dans le TEG.": "تدخل هذه المصاريف والتأمين في الكلفة الجملية وفي النسبة الفعلية الجملية.",
   "Cette mensualité ne couvre pas les intérêts du premier mois ({m}) : le crédit ne serait jamais remboursé.": "هذا القسط لا يغطي فوائد الشهر الأول ({m}): لن يُسدَّد القرض أبدًا.",
   "Changer de thème": "تغيير المظهر",
@@ -2324,8 +2475,11 @@ var AR = {
   "Charges du propriétaire": "أعباء المالك",
   "Charges mensuelles": "الأعباء الشهرية",
   "Charges {p}": "الأعباء {p}",
+  "Chiffres repris de : {s}. Vérifiez-les avec votre tableau et la référence légale exacte avant envoi.": "الأرقام مأخوذة من: {s}. تحقق منها مع جدولك والمرجع القانوني الدقيق قبل الإرسال.",
+  "Choisir le PDF ou les photos du tableau": "اختيار ملف PDF أو صور الجدول",
   "Choisir un logo": "اختيار شعار",
   "Choisissez": "اختر",
+  "Choisissez le courrier : il est rempli avec vos chiffres et téléchargé au format Word, prêt à imprimer et signer.": "اختر الرسالة: تُملأ بأرقامك وتُنزّل بصيغة Word، جاهزة للطباعة والإمضاء.",
   "Choisissez une échéance entre 1 et {n}.": "اختر قسطًا بين 1 و {n}.",
   "Choisissez une échéance entre 2 et {n}.": "اختر قسطًا بين 2 و {n}.",
   "Cinq questions simples, puis votre résultat, sans jargon.": "خمسة أسئلة بسيطة، ثم نتيجتك، دون مصطلحات معقدة.",
@@ -2354,9 +2508,12 @@ var AR = {
   "Conseiller : {n}": "المستشار: {n}",
   "Conseillé : au moins {m} ({p} du prix).": "يُنصح بما لا يقل عن {m} ({p} من الثمن).",
   "Consommation": "استهلاكي",
+  "Constats ({n})": "الملاحظات ({n})",
   "Continuer": "متابعة",
+  "Contrôle": "المراقبة",
   "Copie impossible : sélectionnez le lien et copiez-le.": "تعذّر النسخ: حدّد الرابط وانسخه.",
   "Copier": "نسخ",
+  "Copier le texte": "نسخ النص",
   "Couleur personnalisée": "لون مخصص",
   "Couleur principale": "اللون الرئيسي",
   "Courbes et écart cumulé des deux scénarios": "منحنيات السيناريوهين والفارق المتراكم بينهما",
@@ -2372,18 +2529,24 @@ var AR = {
   "Coût total du crédit": "الكلفة الجملية للقرض",
   "Coût total du crédit, capital et intérêts": "الكلفة الجملية للقرض، رأس المال والفوائد",
   "Coût total le plus bas :": "أقل كلفة جملية:",
+  "Coût total selon l'échéance": "الكلفة الجملية حسب القسط",
   "Critère": "المعيار",
   "Crédit complémentaire": "قرض تكميلي",
   "Crédit en cours": "القرض الحالي",
   "Crédit ouvert dans le scénario A.": "تم فتح القرض في السيناريو A.",
   "Crédit principal": "القرض الرئيسي",
+  "Crédit repris depuis {d} : {m} restant dû.": "تم استئناف القرض منذ {d}: {m} متبقٍّ.",
   "Créer le scénario B": "إنشاء السيناريو B",
   "Date": "التاريخ",
   "Date de début": "تاريخ البداية",
   "Date de début du crédit": "تاريخ بداية القرض",
   "Date de la 1re échéance suivante": "تاريخ القسط الموالي الأول",
+  "Date souhaitée": "التاريخ المرغوب",
+  "Demande d'un tableau d'amortissement actualisé (taux, capital restant dû, échéances restantes) et d'un relevé des intérêts payés.": "طلب جدول استهلاك محيّن (النسبة، رأس المال المتبقي، الأقساط المتبقية) وكشف بالفوائد المدفوعة.",
   "Demande à l'échéance {n}": "الطلب عند القسط {n}",
+  "Depuis": "منذ",
   "Dernière échéance": "آخر قسط",
+  "Des centaines de combinaisons (durée, apport, versements anticipés) sont calculées pour trouver le crédit le moins cher qui respecte votre budget.": "تُحسب مئات التوليفات (المدة، المساهمة، الدفعات المسبقة) لإيجاد القرض الأرخص الذي يحترم ميزانيتك.",
   "Dicter mon crédit (micro)": "إملاء قرضي (ميكروفون)",
   "Différé": "فترة الإمهال",
   "Différé de remboursement (facultatif)": "فترة إمهال السداد (اختياري)",
@@ -2402,15 +2565,18 @@ var AR = {
   "Durée moyenne": "متوسط المدة",
   "Durée nécessaire": "المدة اللازمة",
   "Durée restante": "المدة المتبقية",
+  "Durée réelle": "المدة الفعلية",
   "Durée souhaitée": "المدة المرغوبة",
   "Durée supérieure à 84 mois": "مدة تتجاوز 84 شهرًا",
   "Durée totale": "المدة الجملية",
+  "Durée, apport et versements : le crédit le moins cher": "المدة والمساهمة والدفعات: القرض الأرخص",
   "Dès l'échéance": "ابتداءً من القسط",
   "Début": "البداية",
   "Début {d}": "البداية {d}",
   "Décrire mon crédit en une phrase": "وصف قرضي في جملة",
   "Décrivez votre crédit en une phrase": "صف قرضك في جملة واحدة",
   "Déplier le panneau": "فتح اللوحة",
+  "Déposez le tableau de votre banque (PDF, même scanné, ou photos) : chaque ligne est recalculée au millime.": "أودع جدول بنكك (PDF ولو ممسوحًا، أو صورًا): يُعاد حساب كل سطر بالمليم.",
   "Effacer": "مسح",
   "Effacer tout l'historique": "مسح كامل السجل",
   "Effacer tout l'historique ?": "مسح كامل السجل؟",
@@ -2420,16 +2586,23 @@ var AR = {
   "Enregistrement impossible : stockage du navigateur plein ou désactivé.": "تعذّر الحفظ: ذاكرة المتصفح ممتلئة أو معطّلة.",
   "Enregistrer": "حفظ",
   "Enregistrez au moins deux simulations pour les comparer.": "احفظ محاكاتين على الأقل لمقارنتهما.",
+  "Erreur": "خطأ",
   "Ex. +1 ou -0,5": "مثال: +1 أو -0,5",
   "Ex. 0": "مثال: 0",
   "Ex. 0,4": "مثال: 0,4",
   "Ex. 0,75": "مثال: 0,75",
+  "Ex. 01234567": "مثال: 01234567",
+  "Ex. 02/2026": "مثال: 02/2026",
+  "Ex. 03/2023": "مثال: 03/2023",
+  "Ex. 0495950100470": "مثال: 0495950100470",
   "Ex. 1": "مثال: 1",
   "Ex. 1 000": "مثال: 1 000",
   "Ex. 1 500": "مثال: 1 500",
   "Ex. 10": "مثال: 10",
+  "Ex. 102 244": "مثال: 102 244",
   "Ex. 102 816,611": "مثال: 102 816,611",
   "Ex. 12": "مثال: 12",
+  "Ex. 12 rue de Marseille, Tunis": "مثال: 12 نهج مرسيليا، تونس",
   "Ex. 120": "مثال: 120",
   "Ex. 13": "مثال: 13",
   "Ex. 150": "مثال: 150",
@@ -2440,13 +2613,17 @@ var AR = {
   "Ex. 2,25": "مثال: 2,25",
   "Ex. 2,5": "مثال: 2,5",
   "Ex. 20": "مثال: 20",
+  "Ex. 20 000": "مثال: 20 000",
+  "Ex. 20 432": "مثال: 20 432",
   "Ex. 200": "مثال: 200",
   "Ex. 250 000": "مثال: 250 000",
   "Ex. 3": "مثال: 3",
   "Ex. 3 000": "مثال: 3 000",
   "Ex. 300": "مثال: 300",
+  "Ex. 31/01/2027": "مثال: 31/01/2027",
   "Ex. 35": "مثال: 35",
   "Ex. 4": "مثال: 4",
+  "Ex. 4,5": "مثال: 4,5",
   "Ex. 40": "مثال: 40",
   "Ex. 400": "مثال: 400",
   "Ex. 5": "مثال: 5",
@@ -2454,6 +2631,7 @@ var AR = {
   "Ex. 50 000": "مثال: 50 000",
   "Ex. 500": "مثال: 500",
   "Ex. 6": "مثال: 6",
+  "Ex. 60 000": "مثال: 60 000",
   "Ex. 7": "مثال: 7",
   "Ex. 7,5": "مثال: 7,5",
   "Ex. 70": "مثال: 70",
@@ -2463,11 +2641,14 @@ var AR = {
   "Ex. 800": "مثال: 800",
   "Ex. 9": "مثال: 9",
   "Ex. 900": "مثال: 900",
+  "Ex. 98 000 000": "مثال: 98 000 000",
   "Ex. Agence Tunis Centre": "مثال: وكالة تونس المركز",
+  "Ex. BH Bank, agence Tunis Centre": "مثال: بنك الإسكان، فرع تونس المركز",
   "Ex. DOS-2026-0142": "مثال: DOS-2026-0142",
   "Ex. Mohamed Aziz Jaouadi": "مثال: محمد عزيز الجوادي",
   "Ex. Montant du prêt : 120 000 DT · Durée : 180 mois · Taux : TMM + 2,75 % · Frais de dossier : 1 %": "مثال: Montant du prêt : 120 000 DT · Durée : 180 mois · Taux : TMM + 2,75 % · Frais de dossier : 1 %",
   "Ex. Sami Ben Salah": "مثال: سامي بن صالح",
+  "Ex. Tunis": "مثال: تونس",
   "Export Excel indisponible : bibliothèque non chargée (connexion requise).": "تصدير Excel غير متاح: المكتبة غير محمّلة (يتطلب اتصالًا بالإنترنت).",
   "Export PDF indisponible : bibliothèque non chargée (connexion requise).": "تصدير PDF غير متاح: المكتبة غير محمّلة (يتطلب اتصالًا بالإنترنت).",
   "Exporter Excel": "تصدير Excel",
@@ -2512,10 +2693,12 @@ var AR = {
   "Image illisible.": "صورة غير قابلة للقراءة.",
   "Image trop lourde (5 Mo maximum).": "الصورة كبيرة جدًا (5 ميغابايت كحد أقصى).",
   "Immobilier": "سكني",
+  "Importer le tableau de la banque": "استيراد جدول البنك",
   "Imprimer": "طباعة",
   "In fine": "السداد في النهاية",
   "Indemnité": "الغرامة",
   "Indemnité de remboursement anticipé": "غرامة السداد المسبق",
+  "Indemnité estimée par le simulateur : {m}.": "الغرامة التقديرية حسب المحاكي: {m}.",
   "Indemnités": "الغرامات",
   "Indemnités de remboursement anticipé": "غرامات السداد المسبق",
   "Indiquez au moins le montant à emprunter.": "أدخل على الأقل المبلغ المراد اقتراضه.",
@@ -2525,6 +2708,7 @@ var AR = {
   "Indiquez le montant ou cochez « Solde ».": "أدخل المبلغ أو اختر «تصفية».",
   "Indiquez une date de début pour la date exacte": "أدخل تاريخ البداية لمعرفة التاريخ الدقيق",
   "Inflation annuelle prévue": "التضخم السنوي المتوقع",
+  "Info": "معلومة",
   "Installation annulée. Vous pourrez la relancer depuis le bouton « Installer l'application ».": "تم إلغاء التثبيت. يمكنك إعادة المحاولة من زر «تثبيت التطبيق».",
   "Installer": "تثبيت",
   "Installer l'application": "تثبيت التطبيق",
@@ -2534,8 +2718,10 @@ var AR = {
   "Intérêts (scénario défavorable)": "الفوائد (سيناريو غير ملائم)",
   "Intérêts 36 mois": "فوائد 36 شهرًا",
   "Intérêts cumulés (36 mois)": "الفوائد المتراكمة (36 شهرًا)",
+  "Intérêts des 36 derniers mois": "فوائد الأشهر الـ36 الأخيرة",
   "Intérêts des 36 derniers mois / capital restant dû, vérifié dès l'échéance 37 puis chaque mois jusqu'à ce qu'il dépasse 8 % ; après une réduction, nouveau contrôle 36 mois plus tard.": "فوائد الأشهر الـ36 الأخيرة / رأس المال المتبقي، تُراقب ابتداءً من القسط 37 ثم كل شهر إلى أن تتجاوز 8 %؛ وبعد كل تخفيض تُعاد المراقبة بعد 36 شهرًا.",
   "Intérêts des 36 premiers mois / capital restant dû à 36 mois": "فوائد الأشهر الـ36 الأولى / رأس المال المتبقي عند الشهر 36",
+  "Intérêts du tableau": "فوائد الجدول",
   "Intérêts les plus faibles :": "أقل فوائد:",
   "Intérêts payés": "الفوائد المدفوعة",
   "Intérêts payés (partiel)": "دفع الفوائد (جزئي)",
@@ -2545,6 +2731,7 @@ var AR = {
   "Intérêts {m}": "الفوائد {m}",
   "Je n'ai pas bien entendu, réessayez.": "لم أسمع جيدًا، أعد المحاولة.",
   "Je n'ai rien reconnu. Exemple : « 150 000 sur 20 ans à 9 % ».": "لم أتعرف على شيء. مثال: « 150000 على 20 سنة بنسبة 9 % ».",
+  "Justificatif (règle des 8 %)": "المبرّر (قاعدة 8 %)",
   "L'achat devient rentable": "يصبح الشراء مربحًا",
   "L'application est déjà installée sur cet appareil.": "التطبيق مثبّت مسبقًا على هذا الجهاز.",
   "L'apport doit être inférieur au prix du bien.": "يجب أن تكون المساهمة أقل من ثمن العقار.",
@@ -2558,8 +2745,10 @@ var AR = {
   "La mensualité est trop faible pour rembourser le capital sur cette durée, même sans intérêts.": "القسط ضعيف جدًا لسداد رأس المال على هذه المدة، حتى دون فوائد.",
   "La nouvelle durée est plus longue : la mensualité baisse, mais vous payez plus longtemps.": "المدة الجديدة أطول: ينخفض القسط، لكنك تدفع لمدة أطول.",
   "La réduction de taux s'applique aux crédits mensuels à échéances constantes, sans différé.": "يُطبَّق تخفيض النسبة على القروض الشهرية ذات الأقساط الثابتة ودون فترة إمهال.",
+  "La réduction de taux était possible dès l'échéance {n} ({d}, ratio {r}) mais n'apparaît pas dans le tableau.": "كان تخفيض النسبة ممكنًا منذ القسط {n} ({d}، النسبة {r}) لكنه لا يظهر في الجدول.",
   "La saisie vocale n'est pas disponible dans ce navigateur (essayez Chrome).": "الإدخال الصوتي غير متاح في هذا المتصفح (جرّب كروم).",
   "Laissez vide si vous n'avez pas d'apport.": "اتركه فارغًا إن لم تكن لديك مساهمة.",
+  "Lancer l'optimisation": "بدء التحسين",
   "Le QR code figure aussi sur la première page de l'export PDF et sur l'impression.": "يظهر رمز QR أيضًا في الصفحة الأولى من ملف PDF وفي النسخة المطبوعة.",
   "Le bouton « Installer maintenant » apparaît ici dès que le navigateur est prêt.": "يظهر زر «ثبّت الآن» هنا بمجرد أن يصبح المتصفح جاهزًا.",
   "Le capital": "رأس المال",
@@ -2583,14 +2772,22 @@ var AR = {
   "Le taux dépasserait 100 % : vérifiez les valeurs.": "ستتجاوز النسبة 100 %: تحقّق من القيم.",
   "Le taux ne peut pas dépasser 100 %.": "لا يمكن أن تتجاوز النسبة 100 %.",
   "Lecture": "تشغيل",
+  "Lecture de la page {a} sur {b}…": "قراءة الصفحة {a} من {b}…",
   "Lecture de la photo impossible (connexion requise la première fois). Collez le texte de l'offre.": "تعذرت قراءة الصورة (الاتصال مطلوب في المرة الأولى). الصق نص العرض.",
+  "Lecture du fichier…": "قراءة الملف…",
   "Lecture du texte…": "قراءة النص…",
+  "Lecture impossible (connexion requise la première fois pour charger les outils de lecture). Collez le texte du tableau.": "تعذرت القراءة (الاتصال مطلوب في المرة الأولى لتحميل أدوات القراءة). الصق نص الجدول.",
+  "Lecture terminée : analyse des lignes…": "انتهت القراءة: تحليل الأسطر…",
   "Les deux conditions doivent être remplies.": "يجب استيفاء الشرطين معًا.",
   "Les résultats se mettent à jour pendant la saisie.": "تُحدَّث النتائج أثناء الإدخال.",
+  "Lettre téléchargée au format Word.": "تم تنزيل الرسالة بصيغة Word.",
+  "Lettre à la banque": "رسالة إلى البنك",
   "Libre": "حر",
   "Lien copié dans le presse-papiers.": "تم نسخ الرابط.",
   "Lien d'installation": "رابط التثبيت",
   "Lien de la simulation": "رابط المحاكاة",
+  "Lignes en Excel": "الأسطر في Excel",
+  "Lignes lues et recalculées": "الأسطر المقروءة والمعاد حسابها",
   "Lire une offre bancaire": "قراءة عرض بنكي",
   "Lissage impossible : les autres prêts dépassent à eux seuls la mensualité lissée.": "التسوية غير ممكنة: أقساط القروض الأخرى وحدها تتجاوز القسط المسوّى.",
   "Lisser les mensualités (le prêt le plus long s'ajuste)": "تسوية الأقساط (يتكيّف القرض الأطول)",
@@ -2605,6 +2802,7 @@ var AR = {
   "Marge de la banque": "هامش البنك",
   "Masquer le scénario B": "إخفاء السيناريو B",
   "Maximum retenu : {m} ans": "الحد الأقصى المعتمد: {m} سنة",
+  "Meilleure stratégie : {d}": "أفضل استراتيجية: {d}",
   "Mensualité": "القسط الشهري",
   "Mensualité (hors assurance)": "القسط الشهري (دون تأمين)",
   "Mensualité annoncée": "القسط الشهري المعلن",
@@ -2633,6 +2831,7 @@ var AR = {
   "Mois {a} à {b}": "من الشهر {a} إلى {b}",
   "Mon crédit en cours": "قرضي الجاري",
   "Montant": "المبلغ",
+  "Montant du projet": "مبلغ المشروع",
   "Montant du versement": "مبلغ الدفعة",
   "Montant empruntable selon vos revenus": "المبلغ القابل للاقتراض حسب مداخيلك",
   "Montant empruntable sur {n}": "المبلغ القابل للاقتراض على {n}",
@@ -2642,11 +2841,13 @@ var AR = {
   "Montant remboursé par anticipation": "المبلغ المسدَّد مسبقًا",
   "Montant total simulé": "المبلغ الجملي المحاكى",
   "Montant à emprunter": "المبلغ المراد اقتراضه",
+  "Montant à rembourser": "المبلغ المراد سداده",
   "Médiane": "الوسيط",
   "Neuve ou d'occasion": "جديدة أو مستعملة",
   "Nom de la banque": "اسم البنك",
   "Nom du client": "اسم الحريف",
   "Nom du prêt": "اسم القرض",
+  "Nom et prénom": "الاسم واللقب",
   "Nom et référence repris sur les documents": "الاسم والمرجع يظهران في الوثائق",
   "Non précisée": "غير محدد",
   "Non éligible à la réduction": "غير مؤهل للتخفيض",
@@ -2659,15 +2860,22 @@ var AR = {
   "Nouvelle mensualité": "القسط الشهري الجديد",
   "Nulle": "منعدمة",
   "N°": "رقم",
+  "N° CIN": "رقم بطاقة التعريف",
+  "N° du crédit": "رقم القرض",
   "Offre appliquée au scénario {n}.": "تم تطبيق العرض على السيناريو {n}.",
   "Offre {n}": "العرض {n}",
   "Offre « {n} » appliquée au scénario {s}.": "تم تطبيق العرض «{n}» على السيناريو {s}.",
+  "Optimiseur de stratégie": "محسّن الاستراتيجية",
   "Option choisie": "الخيار المعتمد",
   "Orange": "برتقالي",
+  "Ou coller le texte du tableau": "أو الصق نص الجدول",
   "Ou collez le texte de l'offre": "أو الصق نص العرض",
+  "Ou glissez-les ici. Tout reste sur votre appareil : rien n'est envoyé sur Internet.": "أو اسحبها إلى هنا. يبقى كل شيء على جهازك: لا يُرسل أي شيء عبر الإنترنت.",
   "Outil réservé aux crédits mensuels à échéances constantes, sans différé, de plus de 84 mois.": "أداة مخصصة للقروض الشهرية بأقساط ثابتة، دون إمهال، لأكثر من 84 شهرًا.",
   "Outils": "الأدوات",
   "Ouvrir dans le scénario A": "فتح في السيناريو A",
+  "PDF ou photo du tableau : chaque ligne recalculée au millime": "PDF أو صورة الجدول: إعادة حساب كل سطر بالمليم",
+  "PDF scanné : reconnaissance du texte des pages…": "PDF ممسوح: التعرف على نص الصفحات…",
   "PDF téléchargé : joignez « {f} » (dossier Téléchargements) à l'e-mail avant l'envoi.": "تم تنزيل ملف PDF: أرفق «{f}» (مجلد التنزيلات) بالبريد قبل الإرسال.",
   "PDF téléchargé.": "تم تنزيل ملف PDF.",
   "Par année ({u})": "حسب السنة ({u})",
@@ -2693,6 +2901,8 @@ var AR = {
   "Patrimoine si vous louez (épargne placée)": "الثروة إذا استأجرت (ادخار مستثمر)",
   "Pendant le différé": "أثناء فترة الإمهال",
   "Pendant {n}, l'échéance du prêt principal ne couvre pas ses intérêts : son capital augmente.": "لمدة {n}، لا يغطي قسط القرض الرئيسي فوائده: يرتفع رأس ماله.",
+  "Phase au taux de {c} : échéance {a} hors accessoires, alors que {b} solde exactement le capital sur {n}.": "مرحلة بنسبة {c}: القسط {a} دون التوابع، في حين أن {b} يسدد رأس المال بالضبط على {n}.",
+  "Phases du crédit": "مراحل القرض",
   "Photo ou texte de l'offre : valeurs repérées": "صورة العرض أو نصه: استخراج القيم",
   "Photographiez l'offre ou collez son texte : le taux, la durée, le montant et les frais sont repérés automatiquement.": "صوّر العرض أو الصق نصه: تُستخرج النسبة والمدة والمبلغ والمصاريف تلقائيًا.",
   "Plan de financement": "خطة التمويل",
@@ -2713,16 +2923,19 @@ var AR = {
   "Prix du bien": "ثمن العقار",
   "Prix du bien et apport": "ثمن العقار والمساهمة الذاتية",
   "Prochaine date possible": "أقرب تاريخ ممكن",
+  "Prochaine réduction de taux possible : {d}": "أقرب تخفيض ممكن للنسبة: {d}",
   "Prochaine échéance": "القسط القادم",
   "Prochaine échéance de {m} le {d}.": "القسط القادم بقيمة {m} في {d}.",
   "Prochaines réductions de taux": "التخفيضات القادمة للنسبة",
   "Précédent": "السابق",
   "Préparation…": "التحضير…",
+  "Préparer la lettre": "تحضير الرسالة",
   "Prévoir les réductions de taux": "توقّع تخفيضات النسبة",
   "Prêt {n}": "القرض {n}",
   "Prêts mensuels à échéances constantes. Le différé est partiel : seuls les intérêts sont payés.": "قروض بأقساط شهرية ثابتة. فترة الإمهال جزئية: تُدفع الفوائد فقط.",
   "Période": "الفترة",
   "Période d'affichage": "فترة العرض",
+  "Période du": "الفترة من",
   "Périodicité": "دورية الأقساط",
   "Périodicité, amortissement, différé": "الدورية، الاستهلاك، الإمهال",
   "QR code": "رمز QR",
@@ -2742,8 +2955,12 @@ var AR = {
   "Rapport client": "تقرير الحريف",
   "Rapport client premium : couverture, synthèse, conseils, échéancier et signatures": "تقرير حريف متميز: غلاف، ملخص، نصائح، جدول أقساط وإمضاءات",
   "Rapport client téléchargé.": "تم تنزيل تقرير الحريف.",
+  "Rapport d'audit (PDF)": "تقرير التدقيق (PDF)",
+  "Rapport d'audit téléchargé.": "تم تنزيل تقرير التدقيق.",
   "Ratio": "النسبة",
   "Ratio d'au moins 8 %": "نسبة لا تقل عن 8 %",
+  "Ratio de la règle des 8 %": "نسبة قاعدة 8 %",
+  "Ratio intérêts des 36 derniers mois / capital restant dû : {r} (plus de 8 %).": "نسبة فوائد الأشهر الـ36 الأخيرة إلى رأس المال المتبقي: {r} (أكثر من 8 %).",
   "Ratio intérêts des 36 derniers mois / capital restant dû, à chaque échéance. La réduction est possible au-dessus de 8 % (zones vertes).": "نسبة فوائد الأشهر الـ36 الأخيرة إلى رأس المال المتبقي عند كل قسط. التخفيض ممكن فوق 8 % (المناطق الخضراء).",
   "Ratio strictement supérieur à 8 %": "نسبة أكبر تمامًا من 8 %",
   "Ratio {r} · {a} → {b} · mensualité {m}": "النسبة {r} · {a} → {b} · القسط {m}",
@@ -2768,6 +2985,7 @@ var AR = {
   "Renseignez le capital, la durée et le taux de chaque prêt.": "أدخل مبلغ ومدة ونسبة كل قرض.",
   "Renseignez le crédit en cours et le nouveau taux : la comparaison s'affiche aussitôt.": "أدخل القرض الحالي والنسبة الجديدة: تظهر المقارنة فورًا.",
   "Renseignez le prix, l'apport, la durée et le loyer : la comparaison s'affiche aussitôt.": "أدخل الثمن والمساهمة والمدة والكراء: تظهر المقارنة فورًا.",
+  "Renseignez les chiffres de votre tableau d'amortissement.": "أدخل أرقام جدول الاستهلاك الخاص بك.",
   "Renseignez les trois autres valeurs : le résultat s'affiche aussitôt.": "أدخل القيم الثلاث الأخرى: تظهر النتيجة فورًا.",
   "Renseignez vos revenus, la durée et le taux : le montant empruntable s'affiche aussitôt.": "أدخل مداخيلك والمدة والنسبة: يظهر المبلغ القابل للاقتراض فورًا.",
   "Renégociation ou rachat": "إعادة التفاوض أو إعادة الشراء",
@@ -2786,13 +3004,20 @@ var AR = {
   "Rubriques": "الأقسام",
   "Règles d'éligibilité": "قواعد الأهلية",
   "Règles modifiables dans « Agence ». Indications, pas une décision de la banque.": "قواعد قابلة للتعديل في «الوكالة». مؤشرات فقط، وليست قرار البنك.",
+  "Réduction appliquée à l'échéance {n} alors que le ratio n'est que de {r}.": "تم تطبيق التخفيض عند القسط {n} في حين أن النسبة لا تتجاوز {r}.",
+  "Réduction de taux": "تخفيض النسبة",
   "Réduction de taux annulée.": "تم إلغاء تخفيض النسبة.",
+  "Réduction de taux possible depuis {d}": "تخفيض النسبة ممكن منذ {d}",
+  "Réduction de taux, remboursement anticipé (Word)": "تخفيض النسبة، سداد مسبق (Word)",
+  "Réductions": "التخفيضات",
+  "Réductions de taux": "تخفيضات النسبة",
   "Réductions de taux ({n})": "تخفيضات النسبة ({n})",
   "Réduire l'échéance": "تخفيض القسط",
   "Réduire la durée": "تقليص المدة",
   "Réduire le panneau": "طي اللوحة",
   "Réduire le taux": "تخفيض النسبة",
   "Référence du dossier": "مرجع الملف",
+  "Référence légale": "المرجع القانوني",
   "Réinitialiser": "إعادة تعيين",
   "Répartition du coût": "توزيع الكلفة",
   "Répartition du coût des intérêts": "توزيع كلفة الفوائد",
@@ -2845,8 +3070,11 @@ var AR = {
   "Solution 1 : emprunter au plus {m} sur {a}.": "الحل 1: اقتراض {m} كحد أقصى على {a}.",
   "Solution 2 : allonger la durée à {a}.": "الحل 2: تمديد المدة إلى {a}.",
   "Statistiques des simulations enregistrées": "إحصائيات المحاكاة المحفوظة",
+  "Stratégie": "الاستراتيجية",
+  "Stratégie appliquée au scénario {n}.": "تم تطبيق الاستراتيجية على السيناريو {n}.",
   "Stress test": "اختبار الضغط",
   "Stress test du TMM": "اختبار ضغط معدل السوق النقدية",
+  "Suivre ce crédit": "متابعة هذا القرض",
   "Supprimer": "حذف",
   "Supprimer ce prêt": "حذف هذا القرض",
   "Supprimer ce remboursement": "حذف عملية السداد هذه",
@@ -2878,9 +3106,12 @@ var AR = {
   "TMM {a} + {b}": "TMM {a} + {b}",
   "TND": "د.ت",
   "Tableau": "جدول",
+  "Tableau actualisé": "جدول محيّن",
+  "Tableau conforme : toutes les lignes sont exactes au millime.": "جدول مطابق: كل الأسطر صحيحة بالمليم.",
   "Tableau d'amortissement": "جدول الاستهلاك",
   "Tableau d'amortissement, défilable": "جدول الاستهلاك، قابل للتمرير",
   "Tableau de bord": "لوحة القيادة",
+  "Tableau à échéances tous les {n} mois : les contrôles de taux sont faits sur cette base.": "جدول بأقساط كل {n} أشهر: تتم مراقبة النسبة على هذا الأساس.",
   "Taux": "النسبة",
   "Taux ({n})": "النسبة ({n})",
   "Taux = TMM + marge de la banque": "النسبة = معدل السوق النقدية + هامش البنك",
@@ -2913,9 +3144,11 @@ var AR = {
   "Taux variable, revu avec le TMM": "نسبة متغيرة تُراجع مع معدل السوق النقدية",
   "Taux, frais, assurance et TEG": "النسبة والمصاريف والتأمين والنسبة الفعلية",
   "Tendance par an": "الاتجاه السنوي",
+  "Tenir compte de la réduction de taux (règle des 8 %)": "احتساب تخفيض النسبة (قاعدة 8 %)",
   "Texte lu : vérifiez les valeurs ci-dessous.": "تمت قراءة النص: تحقق من القيم أدناه.",
   "Thème clair / sombre": "الوضع الفاتح / الداكن",
   "Total": "المجموع",
+  "Total des échéances": "مجموع الأقساط",
   "Total payé": "المبلغ المدفوع",
   "Total remboursé": "المجموع المسدد",
   "Total restant à payer": "المتبقي للدفع",
@@ -2930,10 +3163,12 @@ var AR = {
   "Trouvez le capital, la durée ou le taux qui correspond à une mensualité.": "احسب رأس المال أو المدة أو النسبة المناسبة لقسط شهري معيّن.",
   "Turquoise": "فيروزي",
   "Type d'affichage": "نوع العرض",
+  "Type de courrier": "نوع الرسالة",
   "Type de crédit": "نوع القرض",
   "Type « {n} » : {d}, {t}.": "النوع «{n}»: {d}، {t}.",
   "Types de crédit préréglés": "أنواع القروض المعدّة مسبقًا",
   "Tél. : {n}": "الهاتف: {n}",
+  "Télécharger (Word)": "تنزيل (Word)",
   "Télécharger l'image": "تنزيل الصورة",
   "Téléphone": "الهاتف",
   "Un apport d'au moins {p} du prix facilite l'accord de la banque.": "مساهمة لا تقل عن {p} من الثمن تسهّل موافقة البنك.",
@@ -2951,6 +3186,7 @@ var AR = {
   "Versement régulier (facultatif)": "دفعة منتظمة (اختياري)",
   "Versements ponctuels ou réguliers en cours de crédit": "دفعات ظرفية أو منتظمة أثناء مدة القرض",
   "Veuillez d'abord saisir un crédit valide.": "يرجى أولًا إدخال قرض صالح.",
+  "Ville": "المدينة",
   "Violet": "بنفسجي",
   "Voir l'échéancier": "عرض جدول الأقساط",
   "Voir la simulation détaillée": "عرض المحاكاة المفصلة",
@@ -2959,7 +3195,9 @@ var AR = {
   "Volatilité annuelle": "التقلب السنوي",
   "Vos charges ({a}) atteignent ou dépassent {p} de vos revenus ({b}).": "أعباؤك ({a}) تبلغ أو تتجاوز {p} من مداخيلك ({b}).",
   "Vos charges actuelles dépassent déjà le maximum d'endettement.": "أعباؤك الحالية تتجاوز بالفعل الحد الأقصى للتداين.",
+  "Vos coordonnées": "بياناتك",
   "Votre apport personnel": "مساهمتك الشخصية",
+  "Votre demande": "طلبك",
   "Votre mensualité": "قسطك الشهري",
   "Votre messagerie va s'ouvrir avec le résumé de la simulation.": "سيفتح بريدك الإلكتروني مع ملخّص المحاكاة.",
   "Votre projet de crédit": "مشروع قرضك",
@@ -2971,11 +3209,13 @@ var AR = {
   "Voyage dans le temps": "رحلة عبر الزمن",
   "Vue annuelle colorée selon la part d'intérêts": "عرض سنوي ملوّن حسب حصة الفوائد",
   "Vérifiez les durées (1 à 25 ans) et les taux des types de crédit.": "تحقّق من المدد (من 1 إلى 25 سنة) ومن نسب أنواع القروض.",
+  "Vérifiez les valeurs : montants positifs, apport inférieur au montant du projet.": "تحقق من القيم: مبالغ موجبة ومساهمة أقل من مبلغ المشروع.",
   "Vérifiez les valeurs : nombres positifs, volatilité de 0 à 10 points.": "تحقق من القيم: أعداد موجبة، وتقلب من 0 إلى 10 نقاط.",
   "Vérifions votre budget (facultatif)": "لنتحقق من ميزانيتك (اختياري)",
   "WhatsApp": "واتساب",
   "Zone de signature du client": "منطقة إمضاء الحريف",
   "Zone de signature du conseiller": "منطقة إمضاء المستشار",
+  "amortissement": "الاستهلاك",
   "ans": "سنة",
   "apport {m}": "مساهمة {m}",
   "après inflation, hors capital": "بعد التضخم، دون رأس المال",
@@ -2983,16 +3223,21 @@ var AR = {
   "assurance": "التأمين",
   "assurance et frais {a}": "التأمين والمصاريف {a}",
   "assurance {m}": "تأمين {m}",
+  "au": "إلى",
   "au lieu de {m}": "بدلًا من {m}",
   "au lieu de {m} en valeur nominale": "بدلًا من {m} بالقيمة الاسمية",
   "au-dessus de 8 % : recevable": "فوق 8 %: مقبول",
   "au-dessus du maximum de {m}": "فوق الحد الأقصى {m}",
   "aucun paiement pendant le différé ({n}, intérêts capitalisés)": "لا دفع أثناء فترة الإمهال ({n}، فوائد مضافة إلى رأس المال)",
   "aucune": "لا شيء",
+  "audit du tableau": "تدقيق الجدول",
   "capital": "رأس المال",
   "capital initial": "رأس المال الأصلي",
   "capital restant dû": "رأس المال المتبقي",
   "capital {m}": "رأس مال {m}",
+  "combinaisons possibles": "التوليفات الممكنة",
+  "conforme": "مطابق",
+  "crédit n° {n}": "القرض رقم {n}",
   "dernière : {d}": "الأخير: {d}",
   "des 1 000 scénarios": "من 1000 سيناريو",
   "des revenus": "من المداخيل",
@@ -3008,6 +3253,7 @@ var AR = {
   "fin {d}": "نهاية {d}",
   "frais": "المصاريف",
   "frais de dossier {m}": "مصاريف ملف {m}",
+  "hors budget": "خارج الميزانية",
   "hors capital": "دون رأس المال",
   "identique": "مطابق",
   "indemnités": "الغرامات",
@@ -3016,8 +3262,11 @@ var AR = {
   "l'icône du simulateur apparaît sur votre écran d'accueil.": "تظهر أيقونة المحاكي على شاشتك الرئيسية.",
   "l'inflation efface le coût des intérêts": "التضخم يمحو كلفة الفوائد",
   "la {n}e année": "في السنة {n}",
+  "meilleurs compromis": "أفضل التوازنات",
   "moins cher que si le TMM restait stable": "أرخص مما لو بقي المعدل مستقرًا",
   "mois": "شهر",
+  "mon crédit en cours": "قرضي الجاري",
+  "non vérifiable": "غير قابل للتحقق",
   "n°": "رقم",
   "ou": "أو",
   "ou montant fixe": "أو مبلغ قار",
@@ -3038,6 +3287,7 @@ var AR = {
   "sous le maximum de {m}": "تحت الحد الأقصى {m}",
   "sur le capital initial": "على رأس المال الأصلي",
   "sur le capital restant dû": "على رأس المال المتبقي",
+  "sur les lignes lues": "على الأسطر المقروءة",
   "taux fixe {m}": "نسبة قارة {m}",
   "taux nominal {v}": "النسبة الاسمية {v}",
   "taux réduit": "نسبة مخفّضة",
@@ -3045,24 +3295,31 @@ var AR = {
   "taux réduit n° {n}": "تخفيض النسبة رقم {n}",
   "taux réduit {n} fois": "تخفيض النسبة {n} مرات",
   "taux {m}": "نسبة {m}",
+  "votre scénario": "سيناريوك",
   "{a} (intérêts seuls), puis {b} à la dernière échéance": "{a} (الفوائد فقط)، ثم {b} في آخر قسط",
   "{a} ans": "{a} سنة",
   "{a} et plus": "{a} فأكثر",
   "{a} si le TMM ne bouge pas": "{a} إذا بقي المعدل ثابتًا",
+  "{a} · apport {b}": "{a} · مساهمة {b}",
   "{a} · taux {b}": "{a} · نسبة {b}",
   "{a} à la première échéance, puis dégressive jusqu'à {b}": "{a} في القسط الأول، ثم متناقص حتى {b}",
   "{a} → {b} dès l'échéance {n}": "{a} → {b} ابتداءً من القسط {n}",
   "{d} point(s) dès l'échéance {n}": "{d} نقطة ابتداءً من القسط {n}",
+  "{e} de moins que votre scénario actuel": "{e} أقل من سيناريوك الحالي",
+  "{e} erreur(s) et {a} point(s) d'attention détectés.": "تم رصد {e} خطأ و{a} نقطة تنبيه.",
   "{m} / mois": "{m} / شهر",
   "{m} après l'échéance {n}": "{m} بعد القسط رقم {n}",
   "{m} avec assurance": "{m} مع التأمين",
   "{m} pendant le différé ({n}, intérêts seuls)": "{m} أثناء فترة الإمهال ({n}، الفوائد فقط)",
   "{m} une fois par an dès l'échéance {n}": "{m} مرة في السنة ابتداءً من القسط {n}",
+  "{m} versés chaque année": "{m} تُدفع كل سنة",
   "{m} à chaque échéance dès l'échéance {n}": "{m} مع كل قسط ابتداءً من القسط {n}",
   "{n} ({a} ans)": "{n} ({a} سنة)",
   "{n} / 3 sélectionnée(s)": "{n} / 3 محدّدة",
   "{n} annuelles": "{n}",
   "{n} au maximum": "{n} كحد أقصى",
+  "{n} chiffre(s) mal lu(s) corrigé(s) par recoupement (échéances {l}).": "تم تصحيح {n} رقم(أرقام) مقروءة خطأ بالمقاطعة (الأقساط {l}).",
+  "{n} combinaisons calculées en {ms} ms. Un remboursement anticipé baisse les intérêts, donc aussi le ratio des 8 % : il peut retarder ou supprimer une réduction de taux, ce qui est pris en compte ici.": "تم حساب {n} توليفة في {ms} ملي ثانية. السداد المسبق يخفض الفوائد، وبالتالي نسبة 8 %: قد يؤخر أو يلغي تخفيض النسبة، وهو ما يؤخذ بعين الاعتبار هنا.",
   "{n} de remboursement": "{n} من السداد",
   "{n} mensuelles": "{n}",
   "{n} semestrielles": "{n}",
@@ -3070,6 +3327,8 @@ var AR = {
   "{n} simulations enregistrées dans ce navigateur (les 200 plus récentes).": "{n} محاكاة محفوظة في هذا المتصفح (أحدث 200).",
   "{n} trimestrielles": "{n}",
   "{n} · TEG {t}": "{n} · النسبة الفعلية {t}",
+  "{n} échéance(s) absente(s) entre {a} et {b} : page manquante ou ligne illisible.": "{n} قسط(أقساط) مفقودة بين {a} و{b}: صفحة ناقصة أو سطر غير مقروء.",
+  "{n} échéances lues, de {a} à {b}.": "{n} قسطًا مقروءًا، من {a} إلى {b}.",
   "{n}, partiel (intérêts payés)": "{n}، جزئي (دفع الفوائد)",
   "{n}, total (intérêts capitalisés)": "{n}، كلي (فوائد مضافة إلى رأس المال)",
   "{p} remboursé depuis le point de départ": "{p} مسدد منذ نقطة الانطلاق",
@@ -3094,8 +3353,14 @@ var AR = {
   "Échéance avec assurance": "القسط مع التأمين",
   "Échéance de la demande": "قسط الطلب",
   "Échéance et intérêts si le TMM varie dès aujourd'hui (marge de {m}).": "القسط والفوائد إذا تغيّر معدل السوق النقدية ابتداءً من اليوم (هامش {m}).",
+  "Échéance maximale par mois": "أقصى قسط شهري",
+  "Échéance mensuelle": "القسط الشهري",
   "Échéance totale": "القسط الجملي",
+  "Échéance {m}, coût total {c}": "القسط {m}، الكلفة الجملية {c}",
   "Échéance {n}": "القسط {n}",
+  "Échéance {n} ({d}) : intérêts facturés {a}, attendus {b} au taux de {c} (écart {e}).": "القسط {n} ({d}): فوائد مفوترة {a}، والمتوقعة {b} بنسبة {c} (فارق {e}).",
+  "Échéance {n} ({d}) : {e} ≠ amortissement + intérêts + accessoires ({s}). Ligne mal lue ou erreur de la banque.": "القسط {n} ({d}): {e} ≠ الاستهلاك + الفوائد + التوابع ({s}). سطر مقروء خطأ أو خطأ من البنك.",
+  "Échéances": "الأقساط",
   "Échéances constantes": "أقساط ثابتة",
   "Échéances restantes": "الأقساط المتبقية",
   "Économie (intérêts et assurance)": "التوفير (الفوائد والتأمين)",
@@ -3107,6 +3372,7 @@ var AR = {
   "Éligibilité": "الأهلية",
   "Éligible : taux réduit de moitié": "مؤهل: تخفيض النسبة إلى النصف",
   "Émeraude": "زمردي",
+  "Épargne possible par mois": "الادخار الممكن شهريًا",
   "Équipement, études, travaux…": "تجهيزات، دراسة، أشغال…",
   "Étapes": "المراحل",
   "Étude préparée pour {n}": "دراسة معدّة لـ {n}",
@@ -3115,7 +3381,10 @@ var AR = {
   "Évolution du ratio": "تطور النسبة",
   "Évolution possible du TMM": "التطور المحتمل لمعدل السوق النقدية",
   "à partir de {d}": "ابتداءً من {d}",
+  "à vérifier": "للتحقق",
+  "échéance": "القسط",
   "échéance {n}": "القسط {n}",
+  "équivalent à votre scénario actuel": "مماثل لسيناريوك الحالي",
   "العربية": "Français",
   "ع": "FR"
 };
@@ -6110,6 +6379,9 @@ var AR = {
     { cle: 'louer', nom: 'Louer ou acheter ?', aide: 'Patrimoine comparé sur la durée du crédit', ico: 'home', fn: ouvrirLouerAcheter },
     { cle: 'ocr', nom: 'Lire une offre bancaire', aide: 'Photo ou texte de l\'offre : valeurs repérées', ico: 'scan', fn: ouvrirLectureOffre },
     { cle: 'tableau', nom: 'Tableau de bord', aide: 'Statistiques des simulations enregistrées', ico: 'chart', fn: ouvrirTableauBord },
+    { cle: 'audit', nom: 'Audit du tableau de la banque', aide: 'PDF ou photo du tableau : chaque ligne recalculée au millime', ico: 'scan', fn: function () { ouvrirAudit(); } },
+    { cle: 'optimiseur', nom: 'Optimiseur de stratégie', aide: 'Durée, apport et versements : le crédit le moins cher', ico: 'sliders', fn: ouvrirOptimiseur },
+    { cle: 'lettre', nom: 'Lettre à la banque', aide: 'Réduction de taux, remboursement anticipé (Word)', ico: 'file', fn: function () { ouvrirCourrier('reduction'); } },
     { cle: 'quand', nom: 'Quand demander la réduction ?', aide: 'Ratio à chaque échéance et économie selon la date', ico: 'down', fn: ouvrirQuandReduire },
     { cle: 'moncredit', nom: 'Mon crédit en cours', aide: 'Position actuelle, réductions à venir et rappels', ico: 'wallet', fn: ouvrirMonCredit },
     { cle: 'ab', nom: 'Comparateur A / B', aide: 'Courbes et écart cumulé des deux scénarios', ico: 'compare', fn: ouvrirComparateurAB },
@@ -7759,7 +8031,7 @@ var AR = {
       out += '<line x1="' + g + '" x2="' + (L - d) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" class="grille"/>' +
         '<text x="' + (g - 6) + '" y="' + (Y(v) + 4).toFixed(1) + '" text-anchor="end" class="axe">' + echapper(o.fmtY ? o.fmtY(v) : fmtCompact(v)) + '</text>';
     }
-    (o.xTicks || []).forEach(function (tk) { out += '<text x="' + X(tk[0]).toFixed(1) + '" y="' + (H - 7) + '" text-anchor="middle" class="axe">' + echapper(tk[1]) + '</text>'; });
+    (o.xTicks || []).filter(function (tk) { return tk[0] >= xmin && tk[0] <= xmax; }).forEach(function (tk) { out += '<text x="' + X(tk[0]).toFixed(1) + '" y="' + (H - 7) + '" text-anchor="middle" class="axe">' + echapper(tk[1]) + '</text>'; });
     (o.zones || []).forEach(function (z) { out += '<rect x="' + X(z[0]).toFixed(1) + '" y="' + h + '" width="' + Math.max(1, X(z[1]) - X(z[0])).toFixed(1) + '" height="' + (H - h - b) + '" class="zone-ok"/>'; });
     if (o.ref != null) out += '<line x1="' + g + '" x2="' + (L - d) + '" y1="' + Y(o.ref).toFixed(1) + '" y2="' + Y(o.ref).toFixed(1) + '" class="ref"/>';
     series.forEach(function (s) {
@@ -8153,6 +8425,7 @@ var AR = {
         '<p class="opt-note" style="margin-top:8px">' + echapper(t('Point de départ : le début du crédit, ou la date de la dernière réduction de taux (le contrôle suivant a lieu 36 mois plus tard).')) + '</p>' +
         '<div id="mc-res"></div>',
       pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button>' +
+        '<button class="btn btn-ghost" id="mc-import">' + ico('scan', 'ico-sm') + echapper(t('Importer le tableau de la banque')) + '</button>' +
         '<button class="btn btn-ghost" id="mc-rappel">' + ico('calendar', 'ico-sm') + echapper(t('Rappels des échéances')) + '</button>' +
         '<button class="btn btn-primary" id="mc-ouvrir">' + ico('upload', 'ico-sm') + echapper(t('Ouvrir dans le scénario A')) + '</button>'
     });
@@ -8188,6 +8461,7 @@ var AR = {
     }
     el.addEventListener('input', function () { clearTimeout(el._t); el._t = setTimeout(calculer, 200); });
     el.addEventListener('change', function (ev) { if (ev.target.type === 'checkbox' || ev.target.type === 'date') calculer(); });
+    $('#mc-import', el).addEventListener('click', function () { d.fermer(); setTimeout(function () { ouvrirAudit(); }, 200); });
     $('#mc-ouvrir', el).addEventListener('click', function () {
       if (!courant) { toast(t('Il manque le capital, la durée ou le taux : complétez les champs.'), 'erreur'); return; }
       d.fermer();
@@ -8465,6 +8739,876 @@ var AR = {
     if (bg) bg.addEventListener('click', ouvrirGuide);
     lireEtatUrl();
     setTimeout(function () { rappelEcheance(false); }, 1500);
+  }
+
+  /* ===================================================================
+     Lecture d'un tableau d'amortissement bancaire (PDF texte, PDF scanné,
+     photo ou texte collé) puis audit ligne par ligne
+     =================================================================== */
+  var URL_PDFJS = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
+  var URL_PDFJS_WORKER = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+  var dernierAudit = null;
+
+  function chargerPdfjs() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    return chargerScript(URL_PDFJS).then(function () {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = URL_PDFJS_WORKER;
+      return window.pdfjsLib;
+    });
+  }
+  function chargerTesseract() { return window.Tesseract ? Promise.resolve(window.Tesseract) : chargerScript(URL_TESSERACT).then(function () { return window.Tesseract; }); }
+
+  /* Texte d'un PDF : couche texte si elle existe, sinon reconnaissance de texte des pages */
+  function lireFichiersTableau(fichiers, progres) {
+    var textes = [], i = 0;
+    function suivant() {
+      if (i >= fichiers.length) return Promise.resolve(textes.join('\n'));
+      var f = fichiers[i++];
+      var estPdf = /pdf$/i.test(f.type) || /\.pdf$/i.test(f.name);
+      var p = estPdf ? lirePdf(f, progres) : ocrImages([f], progres);
+      return p.then(function (t) { textes.push(t); return suivant(); });
+    }
+    return suivant();
+  }
+  function lirePdf(fichier, progres) {
+    return chargerPdfjs().then(function (pdfjs) {
+      return fichier.arrayBuffer().then(function (buf) { return pdfjs.getDocument({ data: buf }).promise; });
+    }).then(function (pdf) {
+      var pages = [], texte = '';
+      for (var n = 1; n <= pdf.numPages; n++) pages.push(n);
+      return pages.reduce(function (pr, n) {
+        return pr.then(function () {
+          return pdf.getPage(n).then(function (pg) { return pg.getTextContent(); }).then(function (tc) {
+            var lignes = {};
+            tc.items.forEach(function (it) { var y = Math.round(it.transform[5] / 2) * 2; (lignes[y] = lignes[y] || []).push([it.transform[4], it.str]); });
+            texte += Object.keys(lignes).sort(function (a, b) { return b - a; }).map(function (y) {
+              return lignes[y].sort(function (a, b) { return a[0] - b[0]; }).map(function (x) { return x[1]; }).join(' ');
+            }).join('\n') + '\n';
+          });
+        });
+      }, Promise.resolve()).then(function () {
+        if (analyserTableau(texte).lignes.length >= 3) return texte;
+        /* PDF scanné : rendu des pages puis reconnaissance de texte */
+        progres(0.02, t('PDF scanné : reconnaissance du texte des pages…'));
+        var toiles = [];
+        return pages.reduce(function (pr, n) {
+          return pr.then(function () {
+            return pdf.getPage(n).then(function (pg) {
+              var vp = pg.getViewport({ scale: 2.2 }), c = document.createElement('canvas');
+              c.width = vp.width; c.height = vp.height;
+              return pg.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise.then(function () { toiles.push(c); });
+            });
+          });
+        }, Promise.resolve()).then(function () { return ocrImages(toiles, progres); });
+      });
+    });
+  }
+  function ocrImages(images, progres) {
+    var page = 0;
+    return chargerTesseract().then(function (T) {
+      return T.createWorker('fra', 1, {
+        logger: function (m) { if (m && m.status === 'recognizing text') progres((page + m.progress) / images.length, t('Lecture de la page {a} sur {b}…', { a: page + 1, b: images.length })); }
+      });
+    }).then(function (w) {
+      var texte = '';
+      return images.reduce(function (pr, img, k) {
+        return pr.then(function () { page = k; return w.recognize(img).then(function (r) { texte += r.data.text + '\n'; }); });
+      }, Promise.resolve()).then(function () { return w.terminate().then(function () { return texte; }, function () { return texte; }); });
+    });
+  }
+
+  /* Montant bancaire : « 102 816,611 », « 1012,500 », « 1641841 » (virgule perdue) */
+  var RE_MONTANT_BANQUE = /\d+(?:[   ]\d{3})*[,.]\d{3}(?!\d)|\d{4,}/g;
+  function montantBanque(s) {
+    var c = s.replace(/[   ]/g, '');
+    if (/[,.]\d{3}$/.test(c)) return parseFloat(c.replace(',', '.'));
+    return parseInt(c, 10) / 1000;
+  }
+
+  function analyserTableau(texte) {
+    var brut = String(texte || '');
+    var info = {};
+    var m;
+    if ((m = /dur[ée]e\s*:?\s*(\d{2,3})\s*mois/i.exec(brut))) info.dureeTotale = parseInt(m[1], 10);
+    if ((m = /cr[ée]dit\s*:?\s*(\d{6,})/i.exec(brut))) info.numero = m[1];
+    if ((m = /titulaire\s*:?\s*([A-ZÀ-Ÿ' -]{4,60})/i.exec(brut))) info.titulaire = m[1].trim().replace(/\s{2,}.*/, '');
+    if ((m = /(?:mt|montant)\s+d[ée]bloqu[ée]\s*:?\s*([\d .,]+)/i.exec(brut))) info.debloque = parseFloat(m[1].replace(/\s/g, '').replace(/[.,](\d{3})$/, '.$1'));
+    var banques = [['BH Bank', /\bBH\b|BH\s*BANK/i], ['BIAT', /\bBIAT\b/i], ['STB', /\bSTB\b|soci[ée]t[ée] tunisienne de banque/i], ['BNA', /\bBNA\b|banque nationale agricole/i], ['Attijari Bank', /attijari/i], ['Amen Bank', /amen\s*bank/i], ['UIB', /\bUIB\b/i], ['Banque de Tunisie', /banque de tunisie|\bBT\b/], ['ATB', /\bATB\b|arab tunisian bank/i], ['UBCI', /\bUBCI\b/i], ['QNB', /\bQNB\b/i], ['Banque Zitouna', /zitouna/i], ['Wifak Bank', /wifak/i], ['Al Baraka', /baraka/i], ['BTK', /\bBTK\b/i], ['BTL', /\bBTL\b/i], ['TSB', /\bTSB\b/i]];
+    banques.some(function (b) { if (b[1].test(brut)) { info.banque = b[0]; return true; } return false; });
+    var parDate = {};
+    brut.split(/\n/).forEach(function (ligne) {
+      var d = /(\d{2})\s?[\/.-]\s?(\d{2})\s?[\/.-]\s?(\d{4})/.exec(ligne), jour, mois, an, fin;
+      if (d) { jour = +d[1]; mois = +d[2]; an = +d[3]; fin = d.index + d[0].length; }
+      else if ((d = /(^|[^\d\/])(\d{2})\/(\d{4})(?!\d)/.exec(ligne))) { jour = 1; mois = +d[2]; an = +d[3]; fin = d.index + d[0].length; }
+      else return;
+      if (mois < 1 || mois > 12 || an < 1990 || an > 2100) return;
+      /* Les pourcentages (taux, ratios) ne sont pas des montants */
+      var vals = (ligne.slice(fin).replace(/\d+(?:[.,]\d+)?\s*%/g, ' ').match(RE_MONTANT_BANQUE) || []).map(montantBanque).filter(function (v) { return isFinite(v); });
+      if (vals.length < 3) return;
+      var cle = an * 12 + mois - 1;
+      parDate[cle] = { cle: cle, date: new Date(an, mois - 1, jour), vals: vals };
+    });
+    var cles = Object.keys(parDate).map(Number).sort(function (a, b) { return a - b; });
+    var lignes = cles.map(function (c) { return parDate[c]; });
+    if (lignes.length < 3) return { info: info, lignes: [] };
+    /* Rôle des colonnes, quel que soit leur ordre : on cherche la disposition
+       (capital dû, amortissement, intérêts, échéance) qui vérifie le plus
+       souvent « échéance = amortissement + intérêts + accessoires », la
+       continuité du capital, et un intérêt mensuel plausible */
+    function idx(sig, k) { return sig.map(function (x) { return x < 0 ? k + x : x; }); }
+    function sigDe(p, k) { return p.map(function (x) { return x === k - 1 ? -1 : x; }); }
+    function coherent(v, q) {
+      if (!(v[q[2]] <= (v[q[0]] + v[q[1]]) * 0.03)) return false;
+      if (Math.abs(v[q[1]] + v[q[2]] - v[q[3]]) <= 0.002) return true;
+      var ex = 0; for (var z = 0; z < v.length; z++) if (q.indexOf(z) < 0 && v[z] < v[q[3]]) ex += v[z];
+      return Math.abs(v[q[1]] + v[q[2]] + ex - v[q[3]]) <= 0.002;
+    }
+    var votes = {};
+    lignes.forEach(function (l) {
+      var k = l.vals.length, vus = {};
+      for (var c = 0; c < k; c++) for (var a2 = 0; a2 < k; a2++) for (var i2 = 0; i2 < k; i2++) for (var e2 = 0; e2 < k; e2++) {
+        if (c === a2 || c === i2 || c === e2 || a2 === i2 || a2 === e2 || i2 === e2) continue;
+        var q = [c, a2, i2, e2];
+        if (!coherent(l.vals, q)) continue;
+        var cle2 = sigDe(q, k).join(',');
+        if (!vus[cle2]) { vus[cle2] = 1; votes[cle2] = (votes[cle2] || 0) + 1; }
+      }
+    });
+    var candidats = Object.keys(votes).sort(function (x, y) { return votes[y] - votes[x]; });
+    if (!candidats.length) candidats = ['0,1,2,-1'];
+    var meilleur = null, meilleurScore = -1;
+    candidats.slice(0, 12).forEach(function (cs) {
+      var sig = cs.split(',').map(Number), score = votes[cs] * 2, stab = 0, prec = null;
+      for (var r = 0; r + 1 < lignes.length; r++) {
+        var q1 = idx(sig, lignes[r].vals.length), q2 = idx(sig, lignes[r + 1].vals.length), v1 = lignes[r].vals, v2 = lignes[r + 1].vals;
+        if (q1.some(function (x) { return x >= v1.length; }) || q2.some(function (x) { return x >= v2.length; })) continue;
+        if (Math.abs(v1[q1[0]] - v1[q1[1]] - v2[q2[0]]) <= 0.002 || Math.abs(v1[q1[0]] - v2[q2[1]] - v2[q2[0]]) <= 0.002) score += 3;
+        var rap = v1[q1[2]] / v1[q1[0]];
+        if (prec !== null && Math.abs(rap - prec) / (prec || 1) < 0.002) stab++;
+        prec = rap;
+      }
+      score += stab;
+      if (score > meilleurScore) { meilleurScore = score; meilleur = sig; }
+    });
+    lignes.forEach(function (l, n0) {
+      var v = l.vals, k = v.length, q = idx(meilleur, k);
+      if (k === 3 || q.some(function (x) { return x >= k; })) {
+        /* Échéance illisible : seules trois valeurs lues (capital, amortissement, intérêts) */
+        var q3 = idx(meilleur, 4);
+        l.crd = v[Math.min(q3[0], k - 1)]; l.am = v[Math.min(q3[1], k - 1)]; l.int = v[Math.min(q3[2], k - 1)]; l.ech = NaN; l.extras = 0; l.coherente = false;
+      } else {
+        l.crd = v[q[0]]; l.am = v[q[1]]; l.int = v[q[2]]; l.ech = v[q[3]];
+        var ex = 0; for (var z = 0; z < k; z++) if (q.indexOf(z) < 0 && v[z] < v[q[3]]) ex += v[z];
+        l.extras = Math.abs(v[q[1]] + v[q[2]] - v[q[3]]) <= 0.002 ? 0 : roundPrec(ex);
+        l.coherente = coherent(v, q);
+      }
+      l.n = n0 + 1;
+    });
+    return { info: info, lignes: lignes };
+  }
+
+  function auditerTableau(tab) {
+    var L = tab.lignes, n = L.length, anomalies = [], infos = [], i;
+    if (!n) return null;
+    /* Convention du capital restant dû : avant ou après l'échéance */
+    var avant = 0, apres = 0;
+    for (i = 0; i + 1 < n; i++) {
+      if (Math.abs(roundPrec(L[i].crd - L[i].am) - L[i + 1].crd) <= 0.002) avant++;
+      if (Math.abs(roundPrec(L[i].crd - L[i + 1].am) - L[i + 1].crd) <= 0.002) apres++;
+    }
+    var convAvant = avant >= apres;
+    /* Recoupements pour corriger les chiffres mal lus (photo, scan) :
+       chaque ligne contient une redondance (échéance = amortissement +
+       intérêts + accessoires ; capital suivant = capital − amortissement) */
+    function suit(i, j) { return L[i] && L[j] && L[j].cle - L[i].cle === 1; }
+    function echVoisine(i) { for (var d = 1; d < 5; d++) { if (L[i - d] && L[i - d].coherente) return L[i - d].ech; if (L[i + d] && L[i + d].coherente) return L[i + d].ech; } return NaN; }
+    L.forEach(function (l, i) {
+      if (l.coherente) return;
+      var somme = roundPrec(l.am + l.int + l.extras), voisine = echVoisine(i);
+      if (Math.abs(somme - voisine) <= 0.002 || (!isFinite(l.ech) && isFinite(somme))) { l.ech = somme; l.coherente = true; l.corrige = t('échéance'); return; }
+      if (Math.abs(l.ech - voisine) <= 0.002 && suit(i, i + 1)) {
+        var amC = convAvant ? roundPrec(l.crd - L[i + 1].crd) : roundPrec(l.crd - (L[i - 1] ? L[i - 1].crd : NaN));
+        if (isFinite(amC) && Math.abs(roundPrec(amC + l.int + l.extras) - l.ech) <= 0.002) { l.am = amC; l.coherente = true; l.corrige = t('amortissement'); return; }
+        var intC = roundPrec(l.ech - l.am - l.extras);
+        if (intC >= 0) { l.int = intC; l.coherente = true; l.corrige = t('intérêts'); }
+      }
+    });
+    for (i = 1; i + 1 < n; i++) {
+      var pr = L[i - 1], cu = L[i], nx = L[i + 1];
+      if (!suit(i - 1, i) || !suit(i, i + 1)) continue;
+      var att = convAvant ? roundPrec(pr.crd - pr.am) : roundPrec(pr.crd - cu.am);
+      var suivant = convAvant ? roundPrec(att - cu.am) : roundPrec(att - nx.am);
+      if (Math.abs(cu.crd - att) > 0.002 && Math.abs(suivant - nx.crd) <= 0.002) { cu.crd = att; cu.corrige = t('capital restant dû'); }
+    }
+    var corriges = L.filter(function (l) { return l.corrige; });
+    if (corriges.length) infos.push({ g: 'info', i: L.indexOf(corriges[0]), txt: t('{n} chiffre(s) mal lu(s) corrigé(s) par recoupement (échéances {l}).', { n: corriges.length, l: corriges.map(function (l) { return l.n; }).join(', ') }) });
+    L.forEach(function (l, i) { l.crdAv = convAvant ? l.crd : (i ? L[i - 1].crd : roundPrec(l.crd + l.am)); l.crdAp = roundPrec(l.crdAv - l.am); });
+    /* Mois manquants */
+    /* Périodicité du tableau (1 = mensuel, 3 = trimestriel, 12 = annuel) */
+    var ecarts = {};
+    for (i = 1; i < n; i++) { var g0 = L[i].cle - L[i - 1].cle; ecarts[g0] = (ecarts[g0] || 0) + 1; }
+    var periode = +Object.keys(ecarts).sort(function (x, y) { return ecarts[y] - ecarts[x]; })[0] || 1;
+    if (periode > 1) infos.push({ g: 'info', i: 0, txt: t('Tableau à échéances tous les {n} mois : les contrôles de taux sont faits sur cette base.', { n: periode }) });
+    for (i = 1; i < n; i++) {
+      var saut = (L[i].cle - L[i - 1].cle) / periode;
+      if (saut > 1 && saut === Math.round(saut)) anomalies.push({ g: 'lecture', i: i, txt: t('{n} échéance(s) absente(s) entre {a} et {b} : page manquante ou ligne illisible.', { n: saut - 1, a: moisAnnee(L[i - 1].date), b: moisAnnee(L[i].date) }) });
+    }
+    /* Taux de chaque ligne et phases */
+    L.forEach(function (l) { l.taux = l.crdAv > 0 && isFinite(l.int) ? l.int / l.crdAv * 1200 / periode : NaN; });
+    var phases = [], cur = null;
+    L.forEach(function (l, i) {
+      if (!l.coherente || !isFinite(l.taux)) return;
+      var tr = Math.round(l.taux * 1000) / 1000;
+      var derniereLigne = i === L.length - 1 && cur && Math.abs(tr - cur.tauxBrut) <= 0.02;
+      if (!cur || Math.abs(tr - cur.tauxBrut) > 0.02 || (Math.abs(l.ech - cur.derniere) > 0.0015 && !derniereLigne)) { cur = { debut: i, fin: i, tauxBrut: tr, valeurs: [], ech: {} }; phases.push(cur); }
+      cur.derniere = l.ech;
+      cur.fin = i; cur.valeurs.push(tr);
+      cur.ech[l.ech] = (cur.ech[l.ech] || 0) + 1;
+    });
+    phases.forEach(function (ph) {
+      var sI = 0, sC = 0;
+      for (var q = ph.debut; q <= ph.fin; q++) if (L[q].coherente && isFinite(L[q].int)) { sI += L[q].int; sC += L[q].crdAv; }
+      var moy = sC > 0 ? sI * 1200 / periode / sC : ph.valeurs[0];
+      ph.taux = Math.round(moy * 10000) / 10000;
+      [4, 3, 2, 1].forEach(function (d) { var r = Math.round(moy * Math.pow(10, d)) / Math.pow(10, d); var nb = ph.fin - ph.debut + 1; if (Math.abs(r - moy) < 0.00005 + 0.6 / Math.max(1, sC / nb) / Math.sqrt(nb)) ph.taux = r; });
+      ph.echeance = +Object.keys(ph.ech).sort(function (a, b) { return ph.ech[b] - ph.ech[a]; })[0];
+    });
+    /* Une phase d'une seule ligne prend le taux de la phase voisine au taux proche :
+       une ligne erronée ne doit pas fixer son propre taux de référence */
+    phases.forEach(function (ph, k) {
+      if (ph.fin > ph.debut) return;
+      [phases[k - 1], phases[k + 1]].some(function (vo) { if (vo && vo.fin > vo.debut && Math.abs(vo.taux - ph.taux) < 0.02) { ph.taux = vo.taux; return true; } return false; });
+    });
+    /* Taux différent presque à chaque ligne : ce n'est pas un échéancier détaillé
+       (par exemple un récapitulatif annuel) ; pas de contrôle au millime */
+    if (phases.length > Math.max(3, n / 3)) {
+      var res0 = { info: tab.info, lignes: L, phases: [], anomalies: [{ g: 'lecture', i: 0, txt: t('Ce document ne ressemble pas à un tableau d\'amortissement détaillé (taux différent à chaque ligne). Utilisez le tableau complet fourni par la banque, échéance par échéance.') }], infos: infos, reductions: [], possibles: [],
+        convAvant: convAvant, complet: false, totI: roundPrec(L.reduce(function (a, l) { return a + (l.int || 0); }, 0)), totA: roundPrec(L.reduce(function (a, l) { return a + l.am; }, 0)), totE: roundPrec(L.reduce(function (a, l) { return a + (l.ech || 0); }, 0)), dureeTotale: tab.info.dureeTotale || n, nonDetaille: true };
+      L.forEach(function (l) { l.ratio = NaN; });
+      dernierAudit = res0;
+      return res0;
+    }
+    /* Contrôles ligne par ligne */
+    var totI = 0, totA = 0, totE = 0;
+    L.forEach(function (l, i) {
+      totI += isFinite(l.int) ? l.int : 0; totA += l.am; totE += l.ech;
+      if (!l.coherente) { anomalies.push({ g: 'lecture', i: i, txt: t('Échéance {n} ({d}) : {e} ≠ amortissement + intérêts + accessoires ({s}). Ligne mal lue ou erreur de la banque.', { n: l.n, d: moisAnnee(l.date), e: fmtMoney(l.ech), s: fmtMoney(roundPrec(l.am + (l.int || 0) + l.extras)) }) }); return; }
+      var ph = phases.filter(function (p) { return i >= p.debut && i <= p.fin; })[0];
+      if (ph) {
+        l.attendu = roundPrec(l.crdAv * ph.taux * periode / 1200);
+        l.ecart = roundPrec(l.int - l.attendu);
+        if (Math.abs(l.ecart) > 0.0015) anomalies.push({ g: 'erreur', i: i, txt: t('Échéance {n} ({d}) : intérêts facturés {a}, attendus {b} au taux de {c} (écart {e}).', { n: l.n, d: moisAnnee(l.date), a: fmtMoney(l.int), b: fmtMoney(l.attendu), c: fmtTauxPrecis(ph.taux), e: fmtSigne(l.ecart) + ' ' + unite() }) });
+      }
+      if (i + 1 < n && L[i + 1].cle - l.cle === periode) {
+        var ecartCrd = roundPrec(l.crdAp - L[i + 1].crdAv);
+        if (ecartCrd > 0.002) { l.ra = ecartCrd; infos.push({ g: 'info', i: i, txt: t('Après l\'échéance {n} ({d}) : le capital baisse de {m} de plus que l\'amortissement : remboursement anticipé.', { n: l.n, d: moisAnnee(l.date), m: fmtMoney(ecartCrd) }) }); }
+        else if (ecartCrd < -0.002) anomalies.push({ g: 'erreur', i: i, txt: t('Après l\'échéance {n} ({d}) : le capital restant dû augmente de {m} sans explication.', { n: l.n, d: moisAnnee(l.date), m: fmtMoney(-ecartCrd) }) });
+      }
+    });
+    /* Mensualité théorique de chaque phase (tableau complet jusqu'au solde) */
+    var complet = Math.abs(L[n - 1].crdAp) <= 0.01;
+    phases.forEach(function (ph) {
+      var l0 = L[ph.debut], reste = n - ph.debut;
+      ph.date = l0.date; ph.lignes = ph.fin - ph.debut + 1;
+      if (complet && reste > 0 && !L.slice(ph.debut).some(function (x) { return x.ra; })) {
+        ph.theorique = mensualite(l0.crdAv, tauxPeriodePct(ph.taux, periode), reste);
+        var hors = roundPrec(ph.echeance - (l0.extras || 0));
+        if (isFinite(ph.theorique) && Math.abs(ph.theorique - hors) > 0.01 + reste * 0.0005) anomalies.push({ g: 'alerte', i: ph.debut, txt: t('Phase au taux de {c} : échéance {a} hors accessoires, alors que {b} solde exactement le capital sur {n}.', { c: fmtTauxPrecis(ph.taux), a: fmtMoney(hors), b: fmtMoney(ph.theorique), n: libMois(reste) }) });
+      }
+    });
+    /* Règle de réduction de moitié du taux : contrôle des réductions appliquées
+       et des dates où elle devient possible */
+    var dureeTot = tab.info.dureeTotale || n;
+    var reductions = [], possibles = [];
+    var cumul = [];
+    L.forEach(function (l, i) { cumul[i] = (i ? cumul[i - 1] : 0) + (isFinite(l.int) ? l.int : 0); });
+    function ratioAvant(i) { if (i < 36) return NaN; var s = cumul[i - 1] - (i > 36 ? cumul[i - 37] : 0); return L[i].crdAv > 0 ? s / L[i].crdAv : NaN; }
+    L.forEach(function (l, i) { l.ratio = ratioAvant(i); });
+    var dernier = 0;
+    for (var p = 1; p < phases.length; p++) {
+      var a = phases[p - 1], b = phases[p];
+      if (Math.abs(b.taux - a.taux / 2) < 0.01) {
+        var r = L[b.debut].ratio;
+        reductions.push({ i: b.debut, date: L[b.debut].date, avant: a.taux, apres: b.taux, ratio: r, conforme: !isFinite(r) || r > 0.08 });
+        if (isFinite(r) && r <= 0.08) anomalies.push({ g: 'alerte', i: b.debut, txt: t('Réduction appliquée à l\'échéance {n} alors que le ratio n\'est que de {r}.', { n: L[b.debut].n, r: fmtPct(r * 100, 3) }) });
+        dernier = b.debut;
+      }
+    }
+    if (dureeTot > 84) {
+      var depuis = reductions.length ? dernier + 36 : 36;
+      for (i = depuis; i < n; i++) {
+        if (isFinite(L[i].ratio) && L[i].ratio > 0.08) {
+          var dejaReduit = reductions.some(function (z) { return z.i === i; });
+          if (!dejaReduit) possibles.push({ i: i, date: L[i].date, ratio: L[i].ratio, passe: L[i].date < new Date() });
+          if (possibles.length) break;
+        }
+      }
+    }
+    possibles.forEach(function (x) {
+      if (x.passe) anomalies.push({ g: 'alerte', i: x.i, txt: t('La réduction de taux était possible dès l\'échéance {n} ({d}, ratio {r}) mais n\'apparaît pas dans le tableau.', { n: L[x.i].n, d: moisAnnee(x.date), r: fmtPct(x.ratio * 100, 3) }) });
+    });
+    var res = {
+      info: tab.info, lignes: L, phases: phases, anomalies: anomalies, infos: infos, reductions: reductions, possibles: possibles,
+      convAvant: convAvant, complet: complet, totI: roundPrec(totI), totA: roundPrec(totA), totE: roundPrec(totE), dureeTotale: dureeTot
+    };
+    dernierAudit = res;
+    return res;
+  }
+
+  function ouvrirAudit(fichiersInitiaux) {
+    var d = ouvrirDialogue({
+      titre: t('Audit d\'un tableau d\'amortissement'), icone: 'scan', large: true,
+      sousTitre: echapper(t('Déposez le tableau de votre banque (PDF, même scanné, ou photos) : chaque ligne est recalculée au millime.')),
+      corps:
+        '<label class="audit-depot" for="au-fichier" id="au-depot">' + ico('upload') + '<strong>' + echapper(t('Choisir le PDF ou les photos du tableau')) + '</strong>' +
+          '<small>' + echapper(t('Ou glissez-les ici. Tout reste sur votre appareil : rien n\'est envoyé sur Internet.')) + '</small></label>' +
+        '<input type="file" id="au-fichier" accept="application/pdf,image/*" multiple class="sr-only">' +
+        '<details class="au-coller"><summary>' + echapper(t('Ou coller le texte du tableau')) + '</summary><textarea id="au-texte" rows="6" placeholder="' + echapper(t('1  31/03/2023  270 000,000  490,966  1 012,500  1 641,841')) + '"></textarea>' +
+          '<button type="button" class="btn btn-ghost btn-sm" id="au-analyser">' + ico('calc', 'ico-sm') + echapper(t('Analyser le texte')) + '</button></details>' +
+        '<div class="ocr-progres" id="au-progres" hidden><div class="ocr-barre"><span id="au-barre"></span></div><small id="au-etat"></small></div>' +
+        '<div id="au-res"></div>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button>'
+    });
+    var el = d.el;
+    function progres(x, msg) { $('#au-progres', el).hidden = false; $('#au-barre', el).style.width = Math.max(3, Math.round(x * 100)) + '%'; if (msg) $('#au-etat', el).textContent = msg; }
+    function analyser(texte) {
+      var tab = analyserTableau(texte);
+      if (tab.lignes.length < 3) { $('#au-res', el).innerHTML = '<p class="field-err" style="margin-top:12px">' + echapper(t('Aucune ligne d\'échéance reconnue (date jj/mm/aaaa suivie des montants). Vérifiez le fichier ou collez le texte.')) + '</p>'; return; }
+      rendreAudit(el, auditerTableau(tab), d);
+    }
+    function traiter(fichiers) {
+      if (!fichiers || !fichiers.length) return;
+      $('#au-res', el).innerHTML = '';
+      progres(0.02, t('Lecture du fichier…'));
+      lireFichiersTableau(Array.prototype.slice.call(fichiers), progres).then(function (texte) {
+        progres(1, t('Lecture terminée : analyse des lignes…'));
+        $('#au-texte', el).value = texte;
+        analyser(texte);
+        setTimeout(function () { $('#au-progres', el).hidden = true; }, 600);
+      }).catch(function () {
+        $('#au-progres', el).hidden = true;
+        toast(t('Lecture impossible (connexion requise la première fois pour charger les outils de lecture). Collez le texte du tableau.'), 'erreur', 6000);
+      });
+    }
+    $('#au-fichier', el).addEventListener('change', function () { traiter(this.files); });
+    var depot = $('#au-depot', el);
+    ['dragenter', 'dragover'].forEach(function (n) { depot.addEventListener(n, function (ev) { ev.preventDefault(); depot.classList.add('survol'); }); });
+    ['dragleave', 'drop'].forEach(function (n) { depot.addEventListener(n, function (ev) { ev.preventDefault(); depot.classList.remove('survol'); }); });
+    depot.addEventListener('drop', function (ev) { traiter(ev.dataTransfer && ev.dataTransfer.files); });
+    $('#au-analyser', el).addEventListener('click', function () { analyser($('#au-texte', el).value); });
+    if (fichiersInitiaux && fichiersInitiaux.length) traiter(fichiersInitiaux);
+  }
+
+  function rendreAudit(el, a, dlg) {
+    var L = a.lignes, n = L.length;
+    var erreurs = a.anomalies.filter(function (x) { return x.g === 'erreur'; }).length;
+    var alertes = a.anomalies.filter(function (x) { return x.g === 'alerte'; }).length;
+    var lecture = a.anomalies.filter(function (x) { return x.g === 'lecture'; }).length;
+    var verdict = a.nonDetaille ? a.anomalies[0].txt : erreurs + alertes === 0
+      ? (lecture ? t('Aucune erreur de calcul dans les lignes lues ; {n} ligne(s) à vérifier à la main (lecture).', { n: lecture }) : t('Tableau conforme : toutes les lignes sont exactes au millime.'))
+      : t('{e} erreur(s) et {a} point(s) d\'attention détectés.', { e: erreurs, a: alertes });
+    var crdPts = L.map(function (l, i) { return [i, l.crdAv]; });
+    var ratioPts = L.filter(function (l) { return isFinite(l.ratio); }).map(function (l) { return [L.indexOf(l), Math.min(l.ratio * 100, 40)]; });
+    var zones = [], dz = null;
+    ratioPts.forEach(function (p, k) { if (p[1] > 8 && dz === null) dz = p[0]; if ((p[1] <= 8 || k === ratioPts.length - 1) && dz !== null) { zones.push([dz, p[1] > 8 ? p[0] : p[0] - 1]); dz = null; } });
+    var ticks = ticksAnnees(n, 1, L[0].date);
+    function ligneAno(x) {
+      var cls = { erreur: 'ko', alerte: 'att', lecture: 'lec', info: 'inf' }[x.g];
+      var lib = { erreur: t('Erreur'), alerte: t('Attention'), lecture: t('Lecture'), info: t('Info') }[x.g];
+      return '<li class="au-ano ' + cls + '" data-au-i="' + x.i + '"><span class="au-tag">' + echapper(lib) + '</span><span>' + echapper(x.txt) + '</span></li>';
+    }
+    var lignesTab = L.map(function (l, i) {
+      var c = !l.coherente ? 'lec' : (isFinite(l.ecart) && Math.abs(l.ecart) > 0.0015 ? 'ko' : (l.ra ? 'inf' : ''));
+      var red = a.reductions.some(function (z) { return z.i === i; }) ? ' red' : '';
+      return '<tr class="' + c + red + '" data-au-l="' + i + '"><td>' + l.n + '</td><td>' + echapper(moisAnnee(l.date)) + '</td><td>' + fmtNombre(l.crdAv) + '</td><td>' + fmtNombre(l.am) + '</td><td>' + (isFinite(l.int) ? fmtNombre(l.int) : '—') + '</td><td>' + (isFinite(l.attendu) ? fmtNombre(l.attendu) : '—') + '</td>' +
+        '<td class="' + (isFinite(l.ecart) && Math.abs(l.ecart) > 0.0015 ? 'ecart' : '') + '">' + (isFinite(l.ecart) ? echapper(fmtSigne(l.ecart)) : '—') + '</td><td>' + fmtNombre(l.ech) + '</td><td>' + (isFinite(l.taux) ? echapper(fmtTauxPrecis(Math.round(l.taux * 1000) / 1000)) : '—') + '</td><td>' + (isFinite(l.ratio) ? echapper(fmtPct(l.ratio * 100, 3)) : '—') + '</td></tr>';
+    }).join('');
+    $('#au-res', el).innerHTML =
+      '<div class="au-verdict ' + (erreurs + alertes || a.nonDetaille ? 'ko' : 'ok') + '">' + ico(erreurs + alertes || a.nonDetaille ? 'alert' : 'check') + '<div><strong>' + echapper(verdict) + '</strong><small>' +
+        echapper(t('{n} échéances lues, de {a} à {b}.', { n: n, a: moisLong(L[0].date), b: moisLong(L[n - 1].date) })) + (a.info.banque ? ' · ' + echapper(a.info.banque) : '') + (a.info.numero ? ' · ' + echapper(t('crédit n° {n}', { n: a.info.numero })) : '') + '</small></div></div>' +
+      '<div class="ra-stats" style="margin-top:12px">' +
+        statDlg(t('Intérêts du tableau'), fmtMoney(a.totI), '', t('sur les lignes lues')) +
+        statDlg(t('Capital amorti'), fmtMoney(a.totA), '') +
+        statDlg(t('Total des échéances'), fmtMoney(a.totE), '') +
+        statDlg(t('Réductions de taux'), String(a.reductions.length), a.reductions.length ? 'ok' : '', a.reductions.map(function (z) { return moisAnnee(z.date); }).join(', ')) +
+      '</div>' +
+      '<h3 class="ag-titre">' + echapper(t('Phases du crédit')) + '</h3>' +
+      '<div class="cmp-table-wrap"><table class="cmp"><thead><tr><th>' + echapper(t('Depuis')) + '</th><th>' + echapper(t('Taux annuel')) + '</th><th>' + echapper(t('Échéance')) + '</th><th>' + echapper(t('Échéances')) + '</th><th>' + echapper(t('Contrôle')) + '</th></tr></thead><tbody>' +
+        a.phases.map(function (ph) {
+          var ok = !isFinite(ph.theorique) || Math.abs(ph.theorique - roundPrec(ph.echeance - (L[ph.debut].extras || 0))) <= 0.01 + (n - ph.debut) * 0.0005;
+          return '<tr><td>' + echapper(moisAnnee(ph.date)) + '</td><td><b>' + echapper(fmtTauxPrecis(ph.taux)) + '</b></td><td>' + echapper(fmtMoney(ph.echeance)) + '</td><td>' + ph.lignes + '</td><td class="' + (isFinite(ph.theorique) ? (ok ? 'best' : 'au-ko') : 'au-nv') + '">' + echapper(isFinite(ph.theorique) ? (ok ? t('conforme') : t('à vérifier')) : t('non vérifiable')) + '</td></tr>';
+        }).join('') + '</tbody></table></div>' +
+      (a.possibles.length ? '<div class="au-chance">' + ico('down') + '<div><strong>' + echapper(a.possibles[0].passe ? t('Réduction de taux possible depuis {d}', { d: moisLong(a.possibles[0].date) }) : t('Prochaine réduction de taux possible : {d}', { d: moisLong(a.possibles[0].date) })) + '</strong><small>' +
+        echapper(t('Ratio intérêts des 36 derniers mois / capital restant dû : {r} (plus de 8 %).', { r: fmtPct(a.possibles[0].ratio * 100, 3) })) + '</small></div>' +
+        '<button type="button" class="btn btn-primary btn-sm" data-au="lettre">' + ico('file', 'ico-sm') + echapper(t('Préparer la lettre')) + '</button></div>' : '') +
+      '<h3 class="ag-titre">' + echapper(t('Constats ({n})', { n: a.anomalies.length + a.infos.length })) + '</h3>' +
+      ((a.anomalies.length + a.infos.length) ? '<ul class="au-liste">' + a.anomalies.concat(a.infos).sort(function (x, y) { return x.i - y.i; }).map(ligneAno).join('') + '</ul>' : '<p class="ra-note">' + echapper(t('Aucun constat.')) + '</p>') +
+      '<h3 class="ag-titre">' + echapper(t('Capital restant dû')) + '</h3><div class="graphe-zone">' + grapheLignes([{ pts: crdPts, c: '#7c3aed', aire: true }], { xTicks: ticks, aria: t('Capital restant dû') }) + '</div>' +
+      (ratioPts.length ? '<h3 class="ag-titre">' + echapper(t('Ratio de la règle des 8 %')) + '</h3><div class="graphe-zone">' + grapheLignes([{ pts: ratioPts, c: '#ec4899' }], { xTicks: ticks, ref: 8, zones: zones, xmin: ratioPts[0][0], fmtY: function (v) { return fmtSaisie(Math.round(v * 10) / 10) + ' %'; }, aria: t('Ratio de la règle des 8 %') }) + '</div>' : '') +
+      '<h3 class="ag-titre">' + echapper(t('Lignes lues et recalculées')) + '</h3>' +
+      '<div class="au-tab-wrap" translate="no"><table class="au-tab"><thead><tr><th>' + echapper(t('N°')) + '</th><th>' + echapper(t('Date')) + '</th><th>' + echapper(t('Capital dû')) + '</th><th>' + echapper(t('Amort.')) + '</th><th>' + echapper(t('Intérêts')) + '</th><th>' + echapper(t('Attendus')) + '</th><th>' + echapper(t('Écart')) + '</th><th>' + echapper(t('Échéance')) + '</th><th>' + echapper(t('Taux')) + '</th><th>' + echapper(t('Ratio')) + '</th></tr></thead><tbody>' + lignesTab + '</tbody></table></div>' +
+      '<div class="au-actions">' +
+        '<button type="button" class="btn btn-orange" data-au="pdf">' + ico('file', 'ico-sm') + echapper(t('Rapport d\'audit (PDF)')) + '</button>' +
+        '<button type="button" class="btn btn-green" data-au="excel">' + ico('sheet', 'ico-sm') + echapper(t('Lignes en Excel')) + '</button>' +
+        '<button type="button" class="btn btn-ghost" data-au="lettre">' + ico('file', 'ico-sm') + echapper(t('Lettre à la banque')) + '</button>' +
+        '<button type="button" class="btn btn-primary" data-au="suivre">' + ico('wallet', 'ico-sm') + echapper(t('Suivre ce crédit')) + '</button>' +
+      '</div>';
+    if (!el._auditClic) {
+      el._auditClic = true;
+      el.addEventListener('click', function (ev) {
+        var li = ev.target.closest('[data-au-i]');
+        if (li) { var tr = $('[data-au-l="' + li.dataset.auI + '"]', el); if (tr) { tr.scrollIntoView({ block: 'center', behavior: mouvementReduit.matches ? 'auto' : 'smooth' }); tr.classList.remove('surligne'); void tr.offsetWidth; tr.classList.add('surligne'); } return; }
+        var b = ev.target.closest('[data-au]');
+        if (!b || !dernierAudit) return;
+        var act = b.dataset.au;
+        if (act === 'pdf') rapportAuditPDF(dernierAudit);
+        else if (act === 'excel') excelAudit(dernierAudit);
+        else if (act === 'lettre') { dlg.fermer(); setTimeout(function () { ouvrirCourrier('reduction'); }, 200); }
+        else if (act === 'suivre') { dlg.fermer(); suivreDepuisAudit(dernierAudit); }
+      });
+    }
+  }
+
+  /* Point de départ de « Mon crédit en cours » : la dernière réduction de taux
+     (ou la 1re ligne lue), capital avant l'échéance */
+  function suivreDepuisAudit(a) {
+    var L = a.lignes, i0 = a.reductions.length ? a.reductions[a.reductions.length - 1].i : 0;
+    var l = L[i0], dernierePh = a.phases[a.phases.length - 1];
+    var m = { capital: l.crdAv, date: dateIso(l.date), mois: L.length - i0, taux: dernierePh ? dernierePh.taux : Math.round(l.taux * 1000) / 1000, dureeTotale: a.dureeTotale, reduction: true };
+    stock.ecrire(CLE_MON_CREDIT, JSON.stringify(m));
+    ouvrirMonCredit();
+    toast(t('Crédit repris depuis {d} : {m} restant dû.', { d: moisLong(l.date), m: fmtMoney(l.crdAv) }), 'succes', 5000);
+  }
+  function dateIso(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+
+  function rapportAuditPDF(a) {
+    if (!window.jspdf || !window.jspdf.jsPDF) { toast(t('Export PDF indisponible : bibliothèque non chargée (connexion requise).'), 'erreur'); return; }
+    enFrancais(function () {
+      var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4', compress: true }), Lg = doc.internal.pageSize.getWidth();
+      var c1 = hexVersRgb(couleurMarque()), encre = [22, 18, 41], gris = [110, 105, 137];
+      doc.setFillColor(c1[0], c1[1], c1[2]); doc.rect(0, 0, Lg, 28, 'F');
+      doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(16); doc.text('Audit du tableau d\'amortissement', 14, 13);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5);
+      doc.text([a.info.banque, a.info.numero ? 'Crédit n° ' + a.info.numero : '', a.info.titulaire, 'Édité le ' + new Date().toLocaleDateString('fr-FR')].filter(Boolean).join(' · '), 14, 21);
+      doc.setTextColor(encre[0], encre[1], encre[2]);
+      var L = a.lignes, y = 38;
+      var corps = [['Échéances lues', L.length + ' (' + moisAnnee(L[0].date) + ' – ' + moisAnnee(L[L.length - 1].date) + ')'], ['Intérêts du tableau', fmtTexte(a.totI)], ['Capital amorti', fmtTexte(a.totA)], ['Total des échéances', fmtTexte(a.totE)],
+        ['Phases', a.phases.map(function (p) { return moisAnnee(p.date) + ' : ' + fmtTauxPrecis(p.taux) + ' (' + fmtTexte(p.echeance) + ')'; }).join(' ; ')],
+        ['Réductions de taux', a.reductions.length ? a.reductions.map(function (z) { return moisAnnee(z.date) + ' : ' + fmtTauxPrecis(z.avant) + ' → ' + fmtTauxPrecis(z.apres) + (isFinite(z.ratio) ? ' (ratio ' + fmtPct(z.ratio * 100, 3) + ')' : ''); }).join(' ; ') : 'aucune'],
+        ['Prochaine réduction possible', a.possibles.length ? moisAnnee(a.possibles[0].date) + ' (ratio ' + fmtPct(a.possibles[0].ratio * 100, 3) + ')' : '—']];
+      doc.autoTable({ startY: y, body: corps, theme: 'plain', styles: { fontSize: 9.5, cellPadding: 1.8, textColor: encre }, columnStyles: { 0: { textColor: gris, cellWidth: 55 }, 1: { fontStyle: 'bold' } }, margin: { left: 14, right: 14 } });
+      y = doc.lastAutoTable.finalY + 8;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(12); doc.text('Constats', 14, y);
+      var cons = a.anomalies.concat(a.infos).sort(function (x, z) { return x.i - z.i; });
+      doc.autoTable({ startY: y + 3, head: [['Type', 'Constat']], body: cons.length ? cons.map(function (x) { return [{ erreur: 'Erreur', alerte: 'Attention', lecture: 'Lecture', info: 'Info' }[x.g], x.txt]; }) : [['—', 'Aucune anomalie : tableau conforme au millime.']],
+        theme: 'grid', headStyles: { fillColor: c1, textColor: 255 }, styles: { fontSize: 8.5, cellPadding: 1.8, textColor: encre }, columnStyles: { 0: { cellWidth: 22, fontStyle: 'bold' } }, margin: { left: 14, right: 14 } });
+      doc.addPage();
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(12); doc.text('Lignes lues et recalculées', 14, 16);
+      doc.autoTable({ startY: 20, head: [['N°', 'Date', 'Capital dû', 'Amort.', 'Intérêts', 'Attendus', 'Écart', 'Échéance', 'Ratio 36 m']],
+        body: L.map(function (l) { return [l.n, moisAnnee(l.date), fmtNombre(l.crdAv), fmtNombre(l.am), isFinite(l.int) ? fmtNombre(l.int) : '—', isFinite(l.attendu) ? fmtNombre(l.attendu) : '—', isFinite(l.ecart) ? fmtSigne(l.ecart) : '—', fmtNombre(l.ech), isFinite(l.ratio) ? fmtPct(l.ratio * 100, 3) : '—'].map(function (v) { return String(v).replace(/[  ]/g, ' '); }); }),
+        theme: 'grid', headStyles: { fillColor: c1, textColor: 255 }, styles: { fontSize: 7.4, cellPadding: 1.2, halign: 'right', textColor: encre }, columnStyles: { 0: { halign: 'left' }, 1: { halign: 'left' } }, margin: { left: 10, right: 10, bottom: 14 },
+        didParseCell: function (dd) { if (dd.section === 'body' && dd.column.index === 6 && dd.cell.raw !== '—' && Math.abs(parseFloat(String(dd.cell.raw).replace(',', '.').replace(/[^\d.-]/g, ''))) > 0.0015) { dd.cell.styles.textColor = [190, 18, 60]; dd.cell.styles.fontStyle = 'bold'; } } });
+      var nb = doc.internal.getNumberOfPages();
+      for (var p = 1; p <= nb; p++) { doc.setPage(p); doc.setFontSize(8); doc.setTextColor(gris[0], gris[1], gris[2]); var pied = 'Audit indicatif réalisé avec le Simulateur de crédit en Dinar Tunisien · Mohamed Aziz Jaouadi'; doc.text(pied, 14, doc.internal.pageSize.getHeight() - 7); lienAuteurPDF(doc, pied, 14, doc.internal.pageSize.getHeight() - 7); doc.text(p + ' / ' + nb, Lg - 14, doc.internal.pageSize.getHeight() - 7, { align: 'right' }); }
+      doc.save('audit_tableau_amortissement' + (a.info.numero ? '_' + a.info.numero : '') + '.pdf');
+    });
+    toast(t('Rapport d\'audit téléchargé.'));
+  }
+  function excelAudit(a) {
+    if (typeof XLSX === 'undefined') { toast(t('Export Excel indisponible : bibliothèque non chargée (connexion requise).'), 'erreur'); return; }
+    enFrancais(function () {
+      var lignes = [['N°', 'Date', 'Capital dû', 'Amortissement', 'Intérêts', 'Intérêts attendus', 'Écart', 'Accessoires', 'Échéance', 'Taux déduit (%)', 'Ratio 36 mois (%)', 'Ligne cohérente']].concat(a.lignes.map(function (l) {
+        return [l.n, moisAnnee(l.date), l.crdAv, l.am, isFinite(l.int) ? l.int : '', isFinite(l.attendu) ? l.attendu : '', isFinite(l.ecart) ? l.ecart : '', l.extras, l.ech, isFinite(l.taux) ? Math.round(l.taux * 1000) / 1000 : '', isFinite(l.ratio) ? Math.round(l.ratio * 100000) / 1000 : '', l.coherente ? 'oui' : 'non'];
+      }));
+      var wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(lignes);
+      ws['!cols'] = lignes[0].map(function () { return { wch: 15 }; });
+      XLSX.utils.book_append_sheet(wb, ws, 'Audit');
+      XLSX.writeFile(wb, 'audit_tableau' + (a.info.numero ? '_' + a.info.numero : '') + '.xlsx');
+    });
+    toast(t('Fichier Excel téléchargé.'));
+  }
+
+  /* ===================================================================
+     Courriers à la banque au format Word (.docx), créés dans le navigateur
+     =================================================================== */
+  var CRC_TABLE = (function () { var c, tab = []; for (var n = 0; n < 256; n++) { c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; tab[n] = c >>> 0; } return tab; })();
+  function crc32(octets) { var c = 0xFFFFFFFF; for (var i = 0; i < octets.length; i++) c = CRC_TABLE[(c ^ octets[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+  /* Archive ZIP sans compression (suffisant pour un .docx) */
+  function zipStocke(fichiers) {
+    var enc = new TextEncoder(), parts = [], central = [], offset = 0;
+    var d = new Date(), heure = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), jour = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+    function u16(v) { return [v & 255, (v >>> 8) & 255]; }
+    function u32(v) { return [v & 255, (v >>> 8) & 255, (v >>> 16) & 255, (v >>> 24) & 255]; }
+    fichiers.forEach(function (f) {
+      var nom = enc.encode(f.nom), data = enc.encode(f.contenu), crc = crc32(data);
+      var entete = [].concat(u32(0x04034b50), u16(20), u16(0x0800), u16(0), u16(heure), u16(jour), u32(crc), u32(data.length), u32(data.length), u16(nom.length), u16(0));
+      parts.push(new Uint8Array(entete), nom, data);
+      central.push(new Uint8Array([].concat(u32(0x02014b50), u16(20), u16(20), u16(0x0800), u16(0), u16(heure), u16(jour), u32(crc), u32(data.length), u32(data.length), u16(nom.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(offset))), nom);
+      offset += entete.length + nom.length + data.length;
+    });
+    var tailleCentral = central.reduce(function (s, x) { return s + x.length; }, 0);
+    var fin = new Uint8Array([].concat(u32(0x06054b50), u16(0), u16(0), u16(fichiers.length), u16(fichiers.length), u32(tailleCentral), u32(offset), u16(0)));
+    return new Blob(parts.concat(central, [fin]), { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+  }
+  function xmlEsc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  /* Paragraphe Word : morceaux [{t, b}] ou texte simple */
+  function wP(contenu, o) {
+    o = o || {};
+    var runs = (typeof contenu === 'string' ? [{ t: contenu }] : contenu).map(function (r) {
+      return '<w:r><w:rPr>' + (r.b || o.b ? '<w:b/>' : '') + (o.taille ? '<w:sz w:val="' + o.taille + '"/>' : '') + (o.couleur ? '<w:color w:val="' + o.couleur + '"/>' : '') + '</w:rPr><w:t xml:space="preserve">' + xmlEsc(r.t) + '</w:t></w:r>';
+    }).join('');
+    return '<w:p><w:pPr>' + (o.align ? '<w:jc w:val="' + o.align + '"/>' : '') + '<w:spacing w:after="' + (o.apres != null ? o.apres : 160) + '" w:line="276" w:lineRule="auto"/></w:pPr>' + runs + '</w:p>';
+  }
+  function wTable(lignes) {
+    var bord = '<w:top w:val="single" w:sz="4" w:color="C9C2E0"/><w:left w:val="single" w:sz="4" w:color="C9C2E0"/><w:bottom w:val="single" w:sz="4" w:color="C9C2E0"/><w:right w:val="single" w:sz="4" w:color="C9C2E0"/><w:insideH w:val="single" w:sz="4" w:color="C9C2E0"/><w:insideV w:val="single" w:sz="4" w:color="C9C2E0"/>';
+    return '<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblBorders>' + bord + '</w:tblBorders><w:tblCellMar><w:left w:w="100" w:type="dxa"/><w:right w:w="100" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w="5200"/><w:gridCol w:w="3800"/></w:tblGrid>' +
+      lignes.map(function (l) {
+        return '<w:tr>' + l.map(function (c, j) {
+          return '<w:tc><w:tcPr><w:tcW w:w="' + (j ? 3800 : 5200) + '" w:type="dxa"/>' + (j ? '' : '<w:shd w:val="clear" w:color="auto" w:fill="F4F2FB"/>') + '</w:tcPr>' + wP([{ t: c, b: j === 1 }], { apres: 60, align: j ? 'right' : null }) + '</w:tc>';
+        }).join('') + '</w:tr>';
+      }).join('') + '</w:tbl>';
+  }
+  function creerDocx(corpsXml) {
+    var doc = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' + corpsXml +
+      '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1300" w:right="1300" w:bottom="1300" w:left="1300" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';
+    var styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri" w:eastAsia="Calibri"/><w:sz w:val="22"/><w:szCs w:val="22"/><w:lang w:val="fr-FR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="160" w:line="276" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>';
+    return zipStocke([
+      { nom: '[Content_Types].xml', contenu: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>' },
+      { nom: '_rels/.rels', contenu: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>' },
+      { nom: 'word/_rels/document.xml.rels', contenu: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>' },
+      { nom: 'word/document.xml', contenu: doc },
+      { nom: 'word/styles.xml', contenu: styles }
+    ]);
+  }
+
+  var CLE_IDENTITE = 'courrierIdentite';
+  /* Données de la demande de réduction : dernier audit, sinon « Mon crédit en cours », sinon scénario actif */
+  function donneesReduction() {
+    var a = dernierAudit;
+    if (a && a.possibles.length) {
+      var i = a.possibles[0].i, L = a.lignes;
+      return { source: t('audit du tableau'), du: L[i - 36].date, au: L[i - 1].date, interets: roundPrec(L.slice(i - 36, i).reduce(function (s, l) { return s + (l.int || 0); }, 0)), crd: L[i].crdAv, taux: a.phases[a.phases.length - 1].taux, numero: a.info.numero, banque: a.info.banque, nom: a.info.titulaire, date: L[i].date };
+    }
+    var m = lireMonCredit(), r = null, base = null;
+    if (m) { r = echeancierMonCredit(Object.assign({}, m, { reduction: false })); base = { taux: m.taux, source: t('mon crédit en cours') }; }
+    else if (scenarioActif().resultat) { var e = scenarioActif().entrees; r = calculerEcheancier(Object.assign({}, e, { variation: null }), false); base = { taux: e.taux, source: t('scénario {n}', { n: scenarioActif().nom }), nom: e.client.nom }; }
+    if (!r || r.lignes.length < 37) return base;
+    var auj = new Date(), k = r.lignes.filter(function (l) { return l.date && l.date <= auj; }).length;
+    if (k < 36) {
+      var premier = null;
+      for (var j = 36; j < r.lignes.length; j++) { var s36 = r.lignes.slice(j - 36, j).reduce(function (s, l) { return s + l.interet; }, 0); if (s36 / resteFin(r.lignes[j - 1]) > 0.08) { premier = j; break; } }
+      k = premier || 36;
+    }
+    var fen = r.lignes.slice(k - 36, k);
+    return Object.assign(base, { du: fen[0].date, au: fen[35].date, interets: roundPrec(fen.reduce(function (s, l) { return s + l.interet; }, 0)), crd: resteFin(r.lignes[k - 1]), date: r.lignes[k] ? r.lignes[k].date : null });
+  }
+
+  function ouvrirCourrier(type) {
+    var id = {};
+    try { id = JSON.parse(stock.lire(CLE_IDENTITE, '{}')) || {}; } catch (e) { id = {}; }
+    var dr = donneesReduction() || {}, sc = scenarioActif();
+    var d = ouvrirDialogue({
+      titre: t('Lettre à la banque'), icone: 'file', large: true,
+      sousTitre: echapper(t('Choisissez le courrier : il est rempli avec vos chiffres et téléchargé au format Word, prêt à imprimer et signer.')),
+      corps:
+        '<div class="seg seg-block seg-3 cr-types" role="group" aria-label="' + echapper(t('Type de courrier')) + '">' +
+          '<button type="button" data-cr="reduction">' + echapper(t('Réduction de taux')) + '</button>' +
+          '<button type="button" data-cr="ra">' + echapper(t('Remboursement anticipé')) + '</button>' +
+          '<button type="button" data-cr="tableau">' + echapper(t('Tableau actualisé')) + '</button></div>' +
+        '<h3 class="ag-titre">' + echapper(t('Vos coordonnées')) + '</h3>' +
+        '<div class="dlg-fields trois">' +
+          champDlg('cr-nom', t('Nom et prénom'), t('Ex. Sami Ben Salah'), '', 'user', id.nom || dr.nom || sc.entrees.client.nom || null, 'text') +
+          champDlg('cr-cin', t('N° CIN'), t('Ex. 01234567'), '', 'file', id.cin || null, 'text') +
+          champDlg('cr-tel', t('Téléphone'), t('Ex. 98 000 000'), '', 'phone', id.tel || null, 'text') +
+          champDlg('cr-adr', t('Adresse'), t('Ex. 12 rue de Marseille, Tunis'), '', 'home', id.adresse || null, 'text') +
+          champDlg('cr-ville', t('Ville'), t('Ex. Tunis'), '', 'flag', id.ville || null, 'text') +
+          champDlg('cr-banque', t('Banque et agence'), t('Ex. BH Bank, agence Tunis Centre'), '', 'building', id.banque || dr.banque || null, 'text') +
+          champDlg('cr-num', t('N° du crédit'), t('Ex. 0495950100470'), '', 'file', dr.numero || id.numero || null, 'text') +
+        '</div>' +
+        '<div id="cr-specifique"></div>' +
+        '<h3 class="ag-titre">' + echapper(t('Aperçu')) + '</h3><div class="cr-apercu" id="cr-apercu"></div>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button>' +
+            '<button class="btn btn-ghost" id="cr-copier">' + ico('link', 'ico-sm') + echapper(t('Copier le texte')) + '</button>' +
+            '<button class="btn btn-primary" id="cr-word">' + ico('download', 'ico-sm') + echapper(t('Télécharger (Word)')) + '</button>'
+    });
+    var el = d.el, courant = type || 'reduction';
+    function v(idc) { var i = $('#' + idc, el); return i ? i.value.trim() : ''; }
+    function specifique() {
+      var z = $('#cr-specifique', el), h = '';
+      if (courant === 'reduction') {
+        h = '<h3 class="ag-titre">' + echapper(t('Justificatif (règle des 8 %)')) + '</h3><div class="dlg-fields trois">' +
+          champDlg('cr-int', t('Intérêts des 36 derniers mois'), t('Ex. 20 432'), unite(), 'coins', dr.interets ? fmtSaisie(dr.interets) : null) +
+          champDlg('cr-crd', t('Capital restant dû'), t('Ex. 102 244'), unite(), 'cash', dr.crd ? fmtSaisie(dr.crd) : null) +
+          champDlg('cr-taux', t('Taux actuel'), t('Ex. 4,5'), '%', 'percent', dr.taux != null ? fmtSaisie(dr.taux) : null) +
+          champDlg('cr-du', t('Période du'), t('Ex. 03/2023'), '', 'calendar', dr.du ? moisAnnee(dr.du).replace(/[⁦-⁩]/g, '') : null, 'text') +
+          champDlg('cr-au', t('au'), t('Ex. 02/2026'), '', 'calendar', dr.au ? moisAnnee(dr.au).replace(/[⁦-⁩]/g, '') : null, 'text') +
+          champDlg('cr-loi', t('Référence légale'), '', '', 'shield', id.loi || 'la loi n° 2024-41 du 2 août 2024', 'text') +
+          '</div><p class="opt-note">' + echapper(dr.source ? t('Chiffres repris de : {s}. Vérifiez-les avec votre tableau et la référence légale exacte avant envoi.', { s: dr.source }) : t('Renseignez les chiffres de votre tableau d\'amortissement.')) + '</p>';
+      } else if (courant === 'ra') {
+        var e = sc.entrees, rr = sc.resultat;
+        h = '<h3 class="ag-titre">' + echapper(t('Votre demande')) + '</h3><div class="dlg-fields trois">' +
+          champDlg('cr-mt', t('Montant à rembourser'), t('Ex. 20 000'), unite(), 'cash', e && e.ras && e.ras[0] && e.ras[0].montant ? fmtSaisie(e.ras[0].montant) : null) +
+          champDlg('cr-date', t('Date souhaitée'), t('Ex. 31/01/2027'), '', 'calendar', null, 'text') +
+          '<div class="field"><span class="seg-lib">' + echapper(t('Après le remboursement')) + '</span><div class="seg seg-block" role="group"><button type="button" data-cr-mode="duree" aria-pressed="true">' + echapper(t('Réduire la durée')) + '</button><button type="button" data-cr-mode="mensualite" aria-pressed="false">' + echapper(t('Réduire l\'échéance')) + '</button></div></div>' +
+          '</div>' + (rr && rr.totIndem > 0 ? '<p class="opt-note">' + echapper(t('Indemnité estimée par le simulateur : {m}.', { m: fmtMoney(rr.totIndem) })) + '</p>' : '');
+      } else {
+        h = '<p class="opt-note" style="margin-top:12px">' + echapper(t('Demande d\'un tableau d\'amortissement actualisé (taux, capital restant dû, échéances restantes) et d\'un relevé des intérêts payés.')) + '</p>';
+      }
+      z.innerHTML = h;
+      $$('[data-cr]', el).forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cr === courant)); });
+      apercu();
+    }
+    function paragraphes() {
+      var nom = v('cr-nom') || '…', ville = v('cr-ville') || '…', banque = v('cr-banque') || '…', num = v('cr-num') || '…';
+      var date = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+      var P = [];
+      P.push({ x: [nom, v('cr-adr'), v('cr-cin') ? 'CIN n° ' + v('cr-cin') : '', v('cr-tel') ? 'Tél. : ' + v('cr-tel') : ''].filter(Boolean), st: 'bloc' });
+      P.push({ x: ['À l\'attention de Madame, Monsieur le Directeur', banque], st: 'bloc-d' });
+      P.push({ x: [ville + ', le ' + date], st: 'droite' });
+      if (courant === 'reduction') {
+        var ti = lireNombre(v('cr-taux')), it = lireNombre(v('cr-int')), crd = lireNombre(v('cr-crd'));
+        var ratio = it > 0 && crd > 0 ? it / crd * 100 : NaN;
+        P.push({ x: ['Objet : demande de réduction du taux d\'intérêt — crédit n° ' + num], st: 'objet' });
+        P.push({ x: ['Lettre recommandée avec accusé de réception'], st: 'petit' });
+        P.push({ x: ['Madame, Monsieur,'] });
+        P.push({ x: ['Titulaire du crédit n° ' + num + ' contracté auprès de votre établissement, je vous prie de bien vouloir procéder à la réduction de moitié du taux d\'intérêt appliqué, en application des dispositions de ' + (v('cr-loi') || '…') + ' relatives aux crédits dont les intérêts payés au cours des trois dernières années dépassent 8 % du capital restant dû.'] });
+        P.push({ x: ['Les conditions sont réunies, comme le montre le calcul ci-dessous établi à partir du tableau d\'amortissement :'] });
+        P.push({ tableau: [
+          ['Période de référence', (v('cr-du') || '…') + ' à ' + (v('cr-au') || '…')],
+          ['Intérêts payés sur les 36 derniers mois', isFinite(it) ? fmtTexte(it) : '…'],
+          ['Capital restant dû', isFinite(crd) ? fmtTexte(crd) : '…'],
+          ['Rapport intérêts / capital restant dû', isFinite(ratio) ? fmtPct(ratio, 3).replace(/[⁦-⁩]/g, '') + (ratio > 8 ? ' (supérieur à 8 %)' : '') : '…'],
+          ['Taux actuel', isFinite(ti) ? fmtTauxPrecis(ti).replace(/[⁦-⁩]/g, '') : '…'],
+          ['Taux demandé', isFinite(ti) ? fmtTauxPrecis(ti / 2).replace(/[⁦-⁩]/g, '') : '…']
+        ] });
+        P.push({ x: ['Je vous remercie de bien vouloir m\'adresser le nouveau tableau d\'amortissement tenant compte de ce taux réduit, ainsi que la date de sa prise d\'effet.'] });
+      } else if (courant === 'ra') {
+        var mt = lireNombre(v('cr-mt'));
+        P.push({ x: ['Objet : demande de remboursement anticipé — crédit n° ' + num], st: 'objet' });
+        P.push({ x: ['Madame, Monsieur,'] });
+        P.push({ x: ['Je souhaite procéder à un remboursement anticipé ' + (isFinite(mt) && mt > 0 ? 'partiel de ' + fmtTexte(mt) : 'total') + ' de mon crédit n° ' + num + (v('cr-date') ? ', à la date du ' + v('cr-date') : '') + '.'] });
+        P.push({ x: ['Je vous serais reconnaissant(e) de me communiquer le décompte détaillé de l\'opération (capital, intérêts courus, indemnité éventuelle) ainsi que le nouveau tableau d\'amortissement, ' + (el._mode === 'mensualite' ? 'en réduisant le montant des échéances et en conservant la durée.' : 'en réduisant la durée du crédit et en conservant le montant des échéances.')] });
+      } else {
+        P.push({ x: ['Objet : demande de tableau d\'amortissement actualisé — crédit n° ' + num], st: 'objet' });
+        P.push({ x: ['Madame, Monsieur,'] });
+        P.push({ x: ['Je vous prie de bien vouloir m\'adresser le tableau d\'amortissement actualisé de mon crédit n° ' + num + ', indiquant le taux appliqué, le capital restant dû et les échéances restantes, ainsi qu\'un relevé des intérêts payés depuis l\'origine du crédit.'] });
+      }
+      P.push({ x: ['Dans l\'attente de votre réponse, je vous prie d\'agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.'] });
+      P.push({ x: [nom], st: 'signature' });
+      return P;
+    }
+    function apercu() {
+      $('#cr-apercu', el).innerHTML = paragraphes().map(function (p) {
+        if (p.tableau) return '<table class="cr-tab">' + p.tableau.map(function (r) { return '<tr><th>' + echapper(r[0]) + '</th><td>' + echapper(r[1]) + '</td></tr>'; }).join('') + '</table>';
+        return '<p class="cr-' + (p.st || 'p') + '">' + p.x.map(echapper).join('<br>') + '</p>';
+      }).join('');
+    }
+    function enregistrerIdentite() {
+      stock.ecrire(CLE_IDENTITE, JSON.stringify({ nom: v('cr-nom'), cin: v('cr-cin'), tel: v('cr-tel'), adresse: v('cr-adr'), ville: v('cr-ville'), banque: v('cr-banque'), numero: v('cr-num'), loi: v('cr-loi') || id.loi }));
+    }
+    el.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-cr]');
+      if (b) { courant = b.dataset.cr; specifique(); return; }
+      var m = ev.target.closest('[data-cr-mode]');
+      if (m) { el._mode = m.dataset.crMode; $$('[data-cr-mode]', el).forEach(function (x) { x.setAttribute('aria-pressed', String(x === m)); }); apercu(); }
+    });
+    el.addEventListener('input', function () { clearTimeout(el._t); el._t = setTimeout(apercu, 120); });
+    $('#cr-word', el).addEventListener('click', function () {
+      enregistrerIdentite();
+      var xml = enFrancais(function () {
+        return paragraphes().map(function (p) {
+          if (p.tableau) return wTable(p.tableau) + wP('', { apres: 120 });
+          if (p.st === 'bloc') return p.x.map(function (l, i) { return wP([{ t: l, b: i === 0 }], { apres: i === p.x.length - 1 ? 240 : 0 }); }).join('');
+          if (p.st === 'bloc-d') return p.x.map(function (l, i) { return wP([{ t: l, b: i === 1 }], { align: 'right', apres: i === p.x.length - 1 ? 240 : 0 }); }).join('');
+          if (p.st === 'droite') return wP(p.x[0], { align: 'right', apres: 360 });
+          if (p.st === 'objet') return wP([{ t: p.x[0], b: true }], { apres: 120 });
+          if (p.st === 'petit') return wP(p.x[0], { taille: 18, couleur: '6E6989', apres: 240 });
+          if (p.st === 'signature') return wP('', { apres: 600 }) + wP([{ t: p.x[0], b: true }], { align: 'right' });
+          return wP(p.x[0], { align: 'both' });
+        }).join('');
+      });
+      var blob = creerDocx(xml), url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = { reduction: 'demande_reduction_taux', ra: 'demande_remboursement_anticipe', tableau: 'demande_tableau_actualise' }[courant] + (v('cr-num') ? '_' + v('cr-num').replace(/\W+/g, '') : '') + '.docx';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      toast(t('Lettre téléchargée au format Word.'));
+    });
+    $('#cr-copier', el).addEventListener('click', function () {
+      enregistrerIdentite();
+      var txt = paragraphes().map(function (p) { return p.tableau ? p.tableau.map(function (r) { return r[0] + ' : ' + r[1]; }).join('\n') : p.x.join('\n'); }).join('\n\n');
+      copierTexte(txt);
+    });
+    specifique();
+  }
+
+  /* ===================================================================
+     Optimiseur de stratégie : durée, apport et remboursements anticipés
+     sous contrainte de budget, avec la règle de réduction du taux
+     =================================================================== */
+  function ouvrirOptimiseur() {
+    var sc = scenarioActif(), e = sc.entrees || {};
+    if (!sc.resultat) { toast(t('Saisissez d\'abord un crédit complet.'), 'erreur'); return; }
+    var em = e.emprunteur, prix = e.apport ? e.apport.prix : e.capital, apport0 = e.apport ? e.apport.apport : 0;
+    var budget0 = em && em.revenus ? roundPrec(em.revenus * agence.endettementMax / 100 - (em.charges || 0)) : roundPrec(sc.resultat.M1 * 1.1);
+    var d = ouvrirDialogue({
+      titre: t('Optimiseur de stratégie'), icone: 'sliders', large: true,
+      sousTitre: echapper(t('Des centaines de combinaisons (durée, apport, versements anticipés) sont calculées pour trouver le crédit le moins cher qui respecte votre budget.')),
+      corps: '<div class="dlg-fields trois">' +
+          champDlg('op-prix', t('Montant du projet'), t('Ex. 250 000'), unite(), 'home', fmtSaisie(prix)) +
+          champDlg('op-apmax', t('Apport disponible au maximum'), t('Ex. 60 000'), unite(), 'wallet', fmtSaisie(Math.max(apport0, 0))) +
+          champDlg('op-budget', t('Échéance maximale par mois'), t('Ex. 1 500'), unite(), 'cash', fmtSaisie(budget0)) +
+          champDlg('op-epargne', t('Épargne possible par mois'), t('Ex. 300'), unite(), 'coins', '0') +
+          champDlg('op-indem', t('Indemnité de remboursement anticipé'), t('Ex. 1'), '%', 'percent', fmtSaisie(e.indemnite || 0)) +
+          champDlg('op-taux', t('Taux annuel'), t('Ex. 9'), '%', 'percent', fmtSaisie(e.taux)) +
+        '</div>' +
+        '<label class="check" style="margin-top:6px"><input type="checkbox" id="op-reduc" checked><span class="check-box" aria-hidden="true">' + ico('check', 'ico-sm') + '</span>' + echapper(t('Tenir compte de la réduction de taux (règle des 8 %)')) + '</label>' +
+        '<div id="op-res"></div>',
+      pied: '<button class="btn btn-ghost" data-fermer>' + echapper(t('Fermer')) + '</button><button class="btn btn-primary" id="op-go">' + ico('sparkle', 'ico-sm') + echapper(t('Lancer l\'optimisation')) + '</button>'
+    });
+    var el = d.el, solutions = [];
+    function evaluer(o) {
+      var C = roundPrec(o.prix - o.apport);
+      if (!(C > 0)) return null;
+      var ent = { capital: C, mois: o.ans * 12, taux: o.taux, dateDebut: e.dateDebut || aujourdHui(), ras: [], indemnite: o.indem, raMode: 'duree',
+        versement: o.versement > 0 ? { montant: o.versement, frequence: 'annee', des: 12 } : null, assurance: e.assurance, frais: e.frais };
+      var r = calculerEcheancier(ent, o.reduc && o.ans * 12 > 84);
+      return { o: o, C: C, r: r, M: r.M1, cout: roundPrec(r.totI + r.totIndem + r.totAss + r.frais), duree: r.n, red: r.reductions ? r.reductions.length : 0 };
+    }
+    function lancer() {
+      var prixV = valeurDlg(el, 'op-prix'), apMax = valeurDlg(el, 'op-apmax'), budget = valeurDlg(el, 'op-budget'), ep = valeurDlg(el, 'op-epargne'), indem = valeurDlg(el, 'op-indem'), taux = valeurDlg(el, 'op-taux');
+      var reduc = $('#op-reduc', el).checked, zone = $('#op-res', el);
+      if (!(prixV > 0) || !(apMax >= 0) || !(budget > 0) || !(ep >= 0) || !(indem >= 0) || !(taux >= 0) || apMax >= prixV) {
+        zone.innerHTML = '<p class="field-err" style="margin-top:12px">' + echapper(t('Vérifiez les valeurs : montants positifs, apport inférieur au montant du projet.')) + '</p>'; return;
+      }
+      var t0 = performance.now(), tous = [];
+      var apports = [0, 0.25, 0.5, 0.75, 1].map(function (f) { return roundPrec(apMax * f); }).filter(function (v, i, a) { return a.indexOf(v) === i; });
+      var versements = ep > 0 ? [0, roundPrec(ep * 6), roundPrec(ep * 12)] : [0];
+      for (var ans = 3; ans <= 25; ans++) apports.forEach(function (ap) { versements.forEach(function (vs) {
+        var x = evaluer({ prix: prixV, apport: ap, ans: ans, taux: taux, indem: indem, versement: vs, reduc: reduc });
+        if (x) { x.ok = x.M <= budget + 0.0005; tous.push(x); }
+      }); });
+      var ok = tous.filter(function (x) { return x.ok; });
+      var ms = Math.round(performance.now() - t0);
+      if (!ok.length) { zone.innerHTML = '<p class="field-err" style="margin-top:12px">' + echapper(t('Aucune combinaison ne respecte une échéance de {m} : augmentez le budget ou l\'apport.', { m: fmtMoney(budget) })) + '</p>'; return; }
+      /* Front de Pareto : aucune autre solution n'a à la fois une échéance plus basse et un coût plus bas */
+      ok.sort(function (a, b) { return a.cout - b.cout; });
+      var front = [];
+      ok.slice().sort(function (a, b) { return a.M - b.M || a.cout - b.cout; }).forEach(function (x) { if (!front.length || x.cout < front[front.length - 1].cout - 0.0005) front.push(x); });
+      var meilleur = ok[0], plusSouple = front[0];
+      var actuel = evaluer({ prix: prixV, apport: e.apport ? e.apport.apport : 0, ans: Math.round(e.mois / 12), taux: taux, indem: indem, versement: 0, reduc: reduc });
+      solutions = [meilleur].concat(front.filter(function (x) { return x !== meilleur; }).slice(0, 4));
+      var L = 640, H = 260, g = 70, dd = 14, h = 14, b = 34;
+      var xs = tous.map(function (x) { return x.M; }), ys = tous.map(function (x) { return x.cout; });
+      var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs.concat([budget])), y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys);
+      function X(v) { return g + (v - x0) / ((x1 - x0) || 1) * (L - g - dd); }
+      function Y(v) { return h + (1 - (v - y0) / ((y1 - y0) || 1)) * (H - h - b); }
+      var svg = '';
+      for (var k = 0; k <= 4; k++) { var vy = y0 + (y1 - y0) * k / 4, vx = x0 + (x1 - x0) * k / 4;
+        svg += '<line x1="' + g + '" x2="' + (L - dd) + '" y1="' + Y(vy).toFixed(1) + '" y2="' + Y(vy).toFixed(1) + '" class="grille"/><text x="' + (g - 6) + '" y="' + (Y(vy) + 4).toFixed(1) + '" text-anchor="end" class="axe">' + echapper(fmtCompact(vy)) + '</text>' +
+          '<text x="' + X(vx).toFixed(1) + '" y="' + (H - 16) + '" text-anchor="middle" class="axe">' + echapper(fmtCompact(vx)) + '</text>'; }
+      svg += '<text x="' + ((g + L) / 2) + '" y="' + (H - 2) + '" text-anchor="middle" class="axe">' + echapper(t('Échéance mensuelle')) + '</text>';
+      svg += '<rect x="' + X(budget).toFixed(1) + '" y="' + h + '" width="' + Math.max(0, L - dd - X(budget)).toFixed(1) + '" height="' + (H - h - b) + '" class="op-hors"/>';
+      tous.forEach(function (x) { svg += '<circle cx="' + X(x.M).toFixed(1) + '" cy="' + Y(x.cout).toFixed(1) + '" r="2.6" class="' + (x.ok ? 'op-pt' : 'op-pt hors') + '"/>'; });
+      svg += '<path d="' + front.map(function (x, i) { return (i ? 'L' : 'M') + X(x.M).toFixed(1) + ' ' + Y(x.cout).toFixed(1); }).join(' ') + '" class="op-front"/>';
+      solutions.forEach(function (x, i) { svg += '<circle cx="' + X(x.M).toFixed(1) + '" cy="' + Y(x.cout).toFixed(1) + '" r="' + (i ? 5 : 7) + '" class="op-sol' + (i ? '' : ' top') + '"/>'; });
+      if (actuel) svg += '<circle cx="' + X(actuel.M).toFixed(1) + '" cy="' + Y(actuel.cout).toFixed(1) + '" r="6" class="op-actuel"/>';
+      function desc(x) { return t('{a} · apport {b}', { a: libAns(x.o.ans), b: fmtMoney(x.o.apport) }) + (x.o.versement ? ' · ' + t('{m} versés chaque année', { m: fmtMoney(x.o.versement) }) : ''); }
+      zone.innerHTML =
+        '<div class="au-verdict ok" style="margin-top:14px">' + ico('sparkle') + '<div><strong>' + echapper(t('Meilleure stratégie : {d}', { d: desc(meilleur) })) + '</strong><small>' +
+          echapper(t('Échéance {m}, coût total {c}', { m: fmtMoney(meilleur.M), c: fmtMoney(meilleur.cout) }) + (actuel ? ' · ' + (actuel.cout - meilleur.cout > 0.5 ? t('{e} de moins que votre scénario actuel', { e: fmtMoney(roundPrec(actuel.cout - meilleur.cout)) }) : t('équivalent à votre scénario actuel')) : '')) + '</small></div></div>' +
+        '<div class="graphe-zone" style="margin-top:12px"><svg viewBox="0 0 ' + L + ' ' + H + '" class="graphe-l op-nuage" role="img" style="direction:ltr" aria-label="' + echapper(t('Coût total selon l\'échéance')) + '">' + svg + '</svg></div>' +
+        '<p class="legende-g"><span class="lg" style="background:#c4b5fd;border-radius:50%;width:10px"></span>' + echapper(t('combinaisons possibles')) + ' <span class="lg" style="background:#7c3aed;height:3px"></span>' + echapper(t('meilleurs compromis')) + ' <span class="lg" style="background:#ec4899;border-radius:50%;width:10px"></span>' + echapper(t('votre scénario')) + ' <span class="lg" style="background:rgba(244,63,94,.18)"></span>' + echapper(t('hors budget')) + '</p>' +
+        '<div class="cmp-table-wrap" style="margin-top:10px"><table class="cmp"><thead><tr><th>' + echapper(t('Stratégie')) + '</th><th>' + echapper(t('Échéance')) + '</th><th>' + echapper(t('Durée réelle')) + '</th><th>' + echapper(t('Coût total')) + '</th><th>' + echapper(t('Réductions')) + '</th><th></th></tr></thead><tbody>' +
+          solutions.map(function (x, i) {
+            return '<tr><td>' + (i ? '' : '<b>★ </b>') + echapper(desc(x)) + '</td><td>' + echapper(fmtMoney(x.M)) + '</td><td>' + echapper(libMois(x.duree)) + '</td><td class="' + (i ? '' : 'best') + '">' + echapper(fmtMoney(x.cout)) + '</td><td>' + x.red + '</td><td><button type="button" class="btn btn-ghost btn-sm" data-op="' + i + '">' + echapper(t('Appliquer')) + '</button></td></tr>';
+          }).join('') + '</tbody></table></div>' +
+        '<p class="ra-note">' + echapper(t('{n} combinaisons calculées en {ms} ms. Un remboursement anticipé baisse les intérêts, donc aussi le ratio des 8 % : il peut retarder ou supprimer une réduction de taux, ce qui est pris en compte ici.', { n: tous.length, ms: ms })) + '</p>';
+    }
+    $('#op-go', el).addEventListener('click', lancer);
+    el.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-op]');
+      if (!b) return;
+      var x = solutions[+b.dataset.op];
+      d.fermer();
+      var v = optionsDe(e);
+      v.mois = x.o.ans * 12; v.taux = x.o.taux; v.tmm = null; v.variation = null; v.dateDebut = e.dateDebut; v.client = e.client;
+      v.apport = x.o.apport > 0 ? { prix: x.o.prix, apport: x.o.apport } : null; if (!v.apport) v.capital = x.o.prix;
+      v.ras = []; v.versement = x.o.versement > 0 ? { montant: x.o.versement, frequence: 'annee', des: 12 } : null; v.indemnite = x.o.indem; v.raMode = 'duree';
+      v.reduction = $('#op-reduc', el).checked && v.mois > 84;
+      v.periodicite = 1; v.amort = 'constant'; v.differe = null;
+      sc.appliquer(v);
+      toast(t('Stratégie appliquée au scénario {n}.', { n: sc.nom }));
+    });
+    lancer();
+  }
+
+  /* ===================================================================
+     Téléphone : feuilles du bas glissables, balayage entre scénarios,
+     fichiers partagés vers l'application
+     =================================================================== */
+  function initialiserMobile() {
+    var tactile = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+    /* Feuille du bas : glisser la poignée vers le bas pour fermer */
+    document.addEventListener('pointerdown', function (ev) {
+      var tete = ev.target.closest('dialog.dlg[open] .dlg-head');
+      if (!tete || ev.target.closest('button, input, a') || !window.matchMedia('(max-width: 720px)').matches) return;
+      var dlg = tete.closest('dialog'), y0 = ev.clientY, dy = 0, t0 = performance.now();
+      dlg.classList.add('glisse');
+      function bouge(e2) { dy = Math.max(0, e2.clientY - y0); dlg.style.transform = 'translateY(' + dy + 'px)'; }
+      function fin() {
+        document.removeEventListener('pointermove', bouge); document.removeEventListener('pointerup', fin); document.removeEventListener('pointercancel', fin);
+        dlg.classList.remove('glisse');
+        var vitesse = dy / Math.max(1, performance.now() - t0);
+        if (dy > 120 || vitesse > 0.6) { dlg.style.transform = 'translateY(100%)'; var x = dlg.querySelector('[data-fermer]'); setTimeout(function () { if (x) x.click(); else dlg.close(); }, 160); vibrer(); }
+        else dlg.style.transform = '';
+      }
+      document.addEventListener('pointermove', bouge); document.addEventListener('pointerup', fin); document.addEventListener('pointercancel', fin);
+    });
+    /* Balayage horizontal entre les scénarios A et B */
+    if (tactile) {
+      var depart = null;
+      document.addEventListener('touchstart', function (ev) {
+        var c = ev.target.closest && ev.target.closest('.scenario');
+        if (!c || ev.touches.length !== 1 || ev.target.closest('.table-wrap, .sensi-wrap, .cmp-table-wrap, .range, input, textarea, canvas, .chart-wrap, .cal, .flux-zone, .temps-card, dialog')) { depart = null; return; }
+        depart = { x: ev.touches[0].clientX, y: ev.touches[0].clientY, t: Date.now() };
+      }, { passive: true });
+      document.addEventListener('touchend', function (ev) {
+        if (!depart || $('#tab-b').hidden) { depart = null; return; }
+        var dx = ev.changedTouches[0].clientX - depart.x, dy = ev.changedTouches[0].clientY - depart.y, dt = Date.now() - depart.t;
+        depart = null;
+        if (Math.abs(dx) < 80 || Math.abs(dy) > 50 || dt > 600) return;
+        var rtl = document.documentElement.dir === 'rtl', versB = rtl ? dx > 0 : dx < 0;
+        var cible = versB ? 'b' : 'a';
+        if (cible === actif) return;
+        document.documentElement.dataset.balayage = versB ? 'gauche' : 'droite';
+        activer(cible);
+        setTimeout(function () { delete document.documentElement.dataset.balayage; }, 500);
+        vibrer();
+      }, { passive: true });
+    }
+    /* Fichier partagé vers l'application (menu Partager) ou ouvert avec elle */
+    var q = new URLSearchParams(location.search);
+    if (q.get('partage') === '1' && 'caches' in window) {
+      caches.open('simulateur-partage').then(function (c) {
+        return c.keys().then(function (cles) {
+          return Promise.all(cles.map(function (k) { return c.match(k).then(function (r) { return r.blob().then(function (b) { c.delete(k); return new File([b], decodeURIComponent(k.url.split('/').pop()) || 'tableau.pdf', { type: b.type }); }); }); }));
+        });
+      }).then(function (fichiers) {
+        try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) { /* sans effet */ }
+        if (fichiers.length) ouvrirAudit(fichiers);
+      });
+    }
+    var raccourci = q.get('raccourci');
+    if (raccourci) {
+      try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) { /* sans effet */ }
+      setTimeout(function () { if (raccourci === 'guide') ouvrirGuide(); else if (raccourci === 'audit') ouvrirAudit(); }, 300);
+    }
+    if ('launchQueue' in window) {
+      window.launchQueue.setConsumer(function (params) {
+        if (!params.files || !params.files.length) return;
+        Promise.all(params.files.map(function (h) { return h.getFile(); })).then(function (fichiers) { ouvrirAudit(fichiers); });
+      });
+    }
   }
 
   /* ===================================================================
@@ -9005,6 +10149,7 @@ var AR = {
     initialiserAvance();
     initialiserNav();
     initialiserComplet();
+    initialiserMobile();
     demarre = true;
     window.addEventListener('beforeprint', function () { preparerImpression(scenarios[actif]); });
     lireLienPartage();
