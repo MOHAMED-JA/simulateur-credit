@@ -2131,51 +2131,8 @@ html { overscroll-behavior-y: none; }
 @media (prefers-reduced-motion: reduce) {
   dialog.dlg[open], dialog.dlg.fermeture { animation: none; }
 }
-/* =====================================================================
-   Lien vers le simulateur d'assurance vie (identité indigo de l'application)
-   ===================================================================== */
-.av-vitrine {
-  position: relative; isolation: isolate; overflow: hidden;
-  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 22px;
-  margin: 28px 0 8px; padding: 22px 26px; border-radius: 26px; text-decoration: none; color: #fff;
-  background: linear-gradient(120deg, #1e1b4b 0%, #312e81 38%, #4c1d95 72%, #701a75 100%);
-  box-shadow: 0 30px 60px -32px rgba(49, 46, 129, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.av-vitrine::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(60% 120% at 0% 0%, rgba(129, 140, 248, 0.45), transparent 60%), radial-gradient(50% 120% at 100% 100%, rgba(217, 70, 239, 0.35), transparent 60%);
-}
-.av-vitrine::after {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
-  background: linear-gradient(120deg, rgba(165, 180, 252, 0.7), rgba(255, 255, 255, 0.08) 40%, rgba(240, 171, 252, 0.6));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
-}
-.av-aura { position: absolute; z-index: -1; width: 240px; height: 240px; inset-inline-end: 8%; top: -140px; border-radius: 50%; background: radial-gradient(circle, rgba(167, 139, 250, 0.55), transparent 65%); filter: blur(10px); animation: av-flotte 9s ease-in-out infinite alternate; }
-@keyframes av-flotte { to { transform: translate(-40px, 40px) scale(1.15); } }
+/* Lien de la barre latérale vers les autres simulateurs */
 .av-logo { width: 72px; height: 72px; flex: none; border-radius: 20px; box-shadow: 0 16px 30px -12px rgba(79, 70, 229, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.18); transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1); }
-.av-texte { display: grid; gap: 4px; min-width: 0; }
-.av-sur { font-size: 12.5px; font-weight: 600; color: #c7d2fe; }
-.av-titre { font-family: var(--font-display); font-size: clamp(19px, 2.2vw, 24px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
-.av-desc { font-size: 14px; color: rgba(238, 242, 255, 0.86); max-width: 62ch; }
-.av-puces { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-.av-puces span { padding: 4px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #e0e7ff; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(199, 210, 254, 0.25); }
-.av-cta {
-  display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 22px; border-radius: 999px; flex: none;
-  font-weight: 800; color: #312e81; background: #fff; box-shadow: 0 14px 28px -14px rgba(0, 0, 0, 0.6);
-  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.av-cta .ico { transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1); }
-html[dir="rtl"] .av-cta .ico { transform: scaleX(-1); }
-.av-vitrine:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 3px; }
-.av-vitrine:active { transform: scale(0.99); }
-@media (hover: hover) and (pointer: fine) {
-  .av-vitrine:hover { transform: translateY(-3px); box-shadow: 0 40px 70px -32px rgba(79, 70, 229, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.14); }
-  .av-vitrine:hover .av-logo { transform: rotate(-6deg) scale(1.06); }
-  .av-vitrine:hover .av-cta { box-shadow: 0 18px 32px -14px rgba(0, 0, 0, 0.7); }
-  .av-vitrine:hover .av-cta .ico { transform: translate(3px, -3px); }
-  html[dir="rtl"] .av-vitrine:hover .av-cta .ico { transform: scaleX(-1) translate(3px, -3px); }
-}
 .nl-av { margin-bottom: 8px; padding: 8px; border-radius: 14px; background: linear-gradient(120deg, rgba(79, 70, 229, 0.12), rgba(192, 38, 211, 0.1)); border: 1px solid rgba(99, 102, 241, 0.22); text-decoration: none; }
 .nl-av .nl-av-ico { width: 34px; height: 34px; background: none; box-shadow: none; padding: 0; }
 .nl-av .av-logo { width: 34px; height: 34px; border-radius: 10px; box-shadow: 0 6px 14px -6px rgba(79, 70, 229, 0.8); }
@@ -2187,13 +2144,74 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
 .nav-lat.rail .nl-av { padding: 6px 0; background: none; border-color: transparent; }
 .nav-lat.rail .nl-av-fl { display: none; }
 @media (hover: hover) and (pointer: fine) { .nl-av:hover { background: linear-gradient(120deg, rgba(79, 70, 229, 0.2), rgba(192, 38, 211, 0.16)); } .nl-av:hover .nl-av-fl { transform: translate(2px, -2px); } }
-@media (max-width: 720px) {
-  .av-vitrine { grid-template-columns: auto minmax(0, 1fr); gap: 14px; padding: 18px; border-radius: 22px; }
-  .av-logo { width: 54px; height: 54px; border-radius: 15px; }
-  .av-cta { grid-column: 1 / -1; justify-content: center; }
+@media print { .nl-av { display: none !important; } }
+/* ---- Les autres simulateurs (bloc commun aux trois applications) ---- */
+@property --xs-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.xsim { position: relative; isolation: isolate; margin: 30px 0 10px; padding: 26px; border-radius: 28px; color: #eef2ff; overflow: hidden;
+  background: radial-gradient(120% 140% at 0% 0%, #1c1f4a 0%, #0d1130 46%, #0a0d24 100%);
+  box-shadow: 0 34px 70px -38px rgba(30, 27, 75, .95), inset 0 1px 0 rgba(255, 255, 255, .08); }
+.xsim::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .55;
+  background-image: linear-gradient(rgba(148, 163, 255, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 255, .07) 1px, transparent 1px);
+  background-size: 34px 34px; -webkit-mask-image: radial-gradient(90% 80% at 50% 0%, #000 30%, transparent 85%); mask-image: radial-gradient(90% 80% at 50% 0%, #000 30%, transparent 85%); }
+.xsim::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: conic-gradient(from var(--xs-a), rgba(129, 140, 248, .15), rgba(56, 189, 248, .85), rgba(192, 132, 252, .9), rgba(244, 114, 182, .6), rgba(129, 140, 248, .15) 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: xs-tour 8s linear infinite; }
+@keyframes xs-tour { to { --xs-a: 360deg; } }
+.xsim-orbe { position: absolute; z-index: -1; width: 320px; height: 320px; border-radius: 50%; inset-inline-end: -90px; top: -170px; filter: blur(14px); pointer-events: none;
+  background: radial-gradient(circle, rgba(99, 102, 241, .55), rgba(56, 189, 248, .18) 45%, transparent 68%); animation: xs-flotte 10s ease-in-out infinite alternate; }
+@keyframes xs-flotte { to { transform: translate(-50px, 40px) scale(1.12); } }
+.xsim-tete { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.xsim-sur { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #a5b4fc; }
+.xsim-sur::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 0 4px rgba(56, 189, 248, .18), 0 0 14px #38bdf8; animation: xs-pouls 2.4s ease-in-out infinite; }
+@keyframes xs-pouls { 50% { box-shadow: 0 0 0 7px rgba(56, 189, 248, .05), 0 0 20px #38bdf8; } }
+.xsim-titre { font-family: var(--font-display, inherit); margin: 6px 0 0; font-size: clamp(21px, 2.6vw, 27px); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; color: #fff; }
+.xsim-grille { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.xsim-carte { --c1: #6366f1; --c2: #c026d3; position: relative; isolation: isolate; overflow: hidden; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px;
+  padding: 18px; border-radius: 20px; text-decoration: none; color: inherit; background: linear-gradient(150deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .025));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .09), 0 18px 34px -24px rgba(0, 0, 0, .8); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: transform 420ms cubic-bezier(.22, 1, .36, 1), box-shadow 420ms cubic-bezier(.22, 1, .36, 1), background 420ms; }
+.xsim-carte::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; opacity: .55; transition: opacity 420ms;
+  background: linear-gradient(130deg, var(--c1), transparent 45%, var(--c2));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+.xsim-carte::after { content: ""; position: absolute; inset: -40% -60%; z-index: -1; pointer-events: none; opacity: 0; transform: translateX(-60%);
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, .16) 50%, transparent 60%); transition: transform 900ms cubic-bezier(.22, 1, .36, 1), opacity 300ms; }
+.xsim-halo { position: absolute; z-index: -1; width: 180px; height: 180px; border-radius: 50%; inset-inline-start: -50px; top: -70px; pointer-events: none; opacity: .5;
+  background: radial-gradient(circle, var(--c1), transparent 65%); filter: blur(18px); transition: opacity 420ms, transform 600ms cubic-bezier(.22, 1, .36, 1); }
+.xsim-logo { width: 58px; height: 58px; flex: none; border-radius: 17px; box-shadow: 0 14px 28px -12px var(--c1), 0 0 0 1px rgba(255, 255, 255, .16); transition: transform 520ms cubic-bezier(.22, 1, .36, 1); }
+.xsim-txt { display: grid; gap: 4px; min-width: 0; }
+.xsim-txt strong { font-size: 16.5px; font-weight: 800; letter-spacing: -.01em; line-height: 1.25; color: #fff; }
+.xsim-txt span { font-size: 13.5px; line-height: 1.45; color: rgba(226, 232, 255, .78); }
+.xsim-fleche { width: 42px; height: 42px; flex: none; display: grid; place-items: center; border-radius: 50%; color: #fff;
+  background: linear-gradient(140deg, var(--c1), var(--c2)); box-shadow: 0 10px 22px -10px var(--c2), inset 0 1px 0 rgba(255, 255, 255, .3);
+  transition: transform 360ms cubic-bezier(.22, 1, .36, 1); }
+.xsim-fleche svg { width: 19px; height: 19px; transition: transform 360ms cubic-bezier(.22, 1, .36, 1); }
+[dir="rtl"] .xsim-fleche svg { transform: scaleX(-1); }
+[dir="rtl"] .xsim-sur { letter-spacing: 0; }
+.xsim-carte:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 3px; }
+.xsim-carte:active { transform: scale(.985); }
+.xsim--credit { --c1: #a855f7; --c2: #ec4899; }
+.xsim--vie { --c1: #6366f1; --c2: #c026d3; }
+.xsim--auto { --c1: #3b82f6; --c2: #22d3ee; }
+@media (hover: hover) and (pointer: fine) {
+  .xsim-carte:hover { transform: translateY(-4px); background: linear-gradient(150deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, .04)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), 0 26px 44px -24px var(--c1); }
+  .xsim-carte:hover::before { opacity: 1; }
+  .xsim-carte:hover::after { opacity: 1; transform: translateX(60%); }
+  .xsim-carte:hover .xsim-halo { opacity: .85; transform: scale(1.25); }
+  .xsim-carte:hover .xsim-logo { transform: rotate(-6deg) scale(1.06); }
+  .xsim-carte:hover .xsim-fleche { transform: scale(1.08); }
+  .xsim-carte:hover .xsim-fleche svg { transform: translate(2px, -2px); }
+  [dir="rtl"] .xsim-carte:hover .xsim-fleche svg { transform: scaleX(-1) translate(2px, -2px); }
 }
-@media (prefers-reduced-motion: reduce) { .av-aura { animation: none; } }
-@media print { .av-vitrine, .nl-av { display: none !important; } }
+@media (max-width: 760px) {
+  .xsim { padding: 20px 16px; border-radius: 24px; }
+  .xsim-grille { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .xsim-carte { gap: 14px; padding: 15px; }
+  .xsim-sur { font-size: 11px; letter-spacing: .1em; }
+  .xsim-logo { width: 50px; height: 50px; border-radius: 15px; }
+  .xsim-fleche { width: 38px; height: 38px; }
+}
+@media (prefers-reduced-motion: reduce) { .xsim::after, .xsim-orbe, .xsim-sur::before { animation: none; } .xsim-carte, .xsim-carte::after, .xsim-logo, .xsim-fleche, .xsim-halo { transition: none; } }
+@media print { .xsim { display: none !important; } }
 </style>
 
 <!-- Bibliothèques : Excel (SheetJS), graphiques (Chart.js), PDF (jsPDF + autoTable), QR code (qrcode-generator).
@@ -2251,6 +2269,7 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
     <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
     <symbol id="i-amort" viewBox="0 0 24 24"><path d="M5 5v14h14"/><path d="M8 8c3 .5 6 3.5 8.5 8"/><circle cx="16.6" cy="16" r=".75"/></symbol>
+    <symbol id="i-voiture" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
     <symbol id="i-pousse" viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-4.8A9 9 0 1 1 8 19.4z"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol>
@@ -2365,17 +2384,24 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
   <section class="scenario" id="scenario-a" role="tabpanel" aria-labelledby="tab-a"></section>
   <section class="scenario" id="scenario-b" role="tabpanel" aria-labelledby="tab-b" hidden></section>
 
-  <a class="av-vitrine" href="https://mohamed-ja.github.io/simulateur-assurance-vie/" target="_blank" rel="noopener" aria-describedby="av-desc">
-    <span class="av-aura" aria-hidden="true"></span>
-    <svg class="av-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="av-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset=".55" stop-color="#7c3aed"/><stop offset="1" stop-color="#c026d3"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#av-g)"/><g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(2.3) translate(-12 -12.5)"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></g></svg>
-    <span class="av-texte">
-      <span class="av-sur" data-t="Une autre application de Mohamed Aziz Jaouadi">Une autre application de Mohamed Aziz Jaouadi</span>
-      <strong class="av-titre" data-t="Simulateur Assurance Vie et CEA">Simulateur Assurance Vie et CEA</strong>
-      <span class="av-desc" id="av-desc" data-t="Économie d'impôt, montant optimal à investir, projection du capital et rachat anticipé, en dinars tunisiens.">Économie d'impôt, montant optimal à investir, projection du capital et rachat anticipé, en dinars tunisiens.</span>
-      <span class="av-puces"><span data-t="Économie d'impôt">Économie d'impôt</span><span data-t="Projection du capital">Projection du capital</span><span data-t="Rapport PDF">Rapport PDF</span></span>
-    </span>
-    <span class="av-cta"><span data-t="Ouvrir">Ouvrir</span><svg class="ico"><use href="#i-externe"/></svg></span>
-  </a>
+  <section class="xsim" aria-labelledby="xsim-titre">
+    <span class="xsim-orbe" aria-hidden="true"></span>
+    <div class="xsim-tete"><div><span class="xsim-sur" data-t="Du même auteur · gratuits et installables">Du même auteur · gratuits et installables</span><h2 class="xsim-titre" id="xsim-titre" data-t="Les autres simulateurs">Les autres simulateurs</h2></div></div>
+    <div class="xsim-grille">
+      <a class="xsim-carte xsim--vie" href="https://mohamed-ja.github.io/simulateur-assurance-vie/" target="_blank" rel="noopener">
+        <span class="xsim-halo" aria-hidden="true"></span>
+        <svg class="xsim-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="xsim-titre-vie" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset=".55" stop-color="#7c3aed"/><stop offset="1" stop-color="#c026d3"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#xsim-titre-vie)"/><g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(2.3) translate(-12 -12.5)"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></g></svg>
+        <span class="xsim-txt"><strong data-t="Simulateur Assurance Vie et CEA">Simulateur Assurance Vie et CEA</strong><span data-t="Économie d'impôt, montant optimal à investir et projection du capital.">Économie d'impôt, montant optimal à investir et projection du capital.</span></span>
+        <span class="xsim-fleche" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></span>
+      </a>
+      <a class="xsim-carte xsim--auto" href="https://mohamed-ja.github.io/simulateur-Assurance-Automobile/" target="_blank" rel="noopener">
+        <span class="xsim-halo" aria-hidden="true"></span>
+        <svg class="xsim-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="xsim-titre-auto" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f5bea"/><stop offset="1" stop-color="#1e88e5"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#xsim-titre-auto)"/><g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(2.35) translate(-12 -12.5)"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></g></svg>
+        <span class="xsim-txt"><strong data-t="Simulateur Assurance Automobile">Simulateur Assurance Automobile</strong><span data-t="Prime détaillée par garantie, offre imprimable et constat amiable.">Prime détaillée par garantie, offre imprimable et constat amiable.</span></span>
+        <span class="xsim-fleche" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></span>
+      </a>
+    </div>
+  </section>
 
   <footer class="foot">
     <span data-t="Calculs indicatifs : taux mensuel = taux annuel ÷ 12, montants arrondis au millime à chaque échéance.">Calculs indicatifs : taux mensuel = taux annuel ÷ 12, montants arrondis au millime à chaque échéance.</span>
@@ -2390,6 +2416,13 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
 <script>
 /* Traduction arabe de l'interface (clé : texte français) */
 var AR = {
+  "Les autres simulateurs": "المحاكيات الأخرى",
+  "Du même auteur · gratuits et installables": "من نفس المؤلف · مجانية وقابلة للتثبيت",
+  "Simulateur Assurance Automobile": "محاكي تأمين السيارات",
+  "Économie d'impôt, montant optimal à investir et projection du capital.": "الوفر الضريبي، المبلغ الأمثل للاستثمار وإسقاط رأس المال.",
+  "Prime détaillée par garantie, offre imprimable et constat amiable.": "قسط مفصّل حسب كل ضمان، عرض قابل للطباعة ومعاينة ودية.",
+  "Assurance auto": "تأمين السيارات",
+  "Prime, offre et constat": "القسط والعرض والمعاينة",
   " (hors indemnité)": " (دون غرامة)",
   "%": "%",
   "% / an": "% / سنة",
@@ -7997,6 +8030,7 @@ var AR = {
       { nom: 'Simulation guidée', ico: 'sparkle', fn: ouvrirGuide },
       { nom: 'Haute lisibilité', ico: 'globe', fn: basculerLisibilite },
       { nom: 'Simulateur Assurance Vie et CEA', ico: 'pousse', fn: function () { window.open('https://mohamed-ja.github.io/simulateur-assurance-vie/', '_blank', 'noopener'); } },
+      { nom: 'Simulateur Assurance Automobile', ico: 'voiture', fn: function () { window.open('https://mohamed-ja.github.io/simulateur-Assurance-Automobile/', '_blank', 'noopener'); } },
       { nom: 'Exporter Excel', ico: 'sheet', fn: function () { exporterExcel(sc); } },
       { nom: 'Imprimer', ico: 'printer', fn: function () { imprimer(sc); } },
       { nom: 'QR code', ico: 'qr', fn: function () { ouvrirQR(sc); } },
@@ -9766,6 +9800,9 @@ var AR = {
       '<a class="nl-item nl-av" href="https://mohamed-ja.github.io/simulateur-assurance-vie/" target="_blank" rel="noopener" data-tip="' + echapper(t('Simulateur Assurance Vie et CEA')) + '">' +
         '<span class="nl-ico nl-av-ico" aria-hidden="true"><svg class="av-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="av-g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset=".55" stop-color="#7c3aed"/><stop offset="1" stop-color="#c026d3"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#av-g2)"/><g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(2.3) translate(-12 -12.5)"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></g></svg></span>' +
         '<span class="nl-txt"><b>' + echapper(t('Assurance vie')) + '</b><small>' + echapper(t('CEA, épargne et impôt')) + '</small></span>' + ico('externe', 'ico-sm nl-av-fl') + '</a>' +
+      '<a class="nl-item nl-av" href="https://mohamed-ja.github.io/simulateur-Assurance-Automobile/" target="_blank" rel="noopener" data-tip="' + echapper(t('Simulateur Assurance Automobile')) + '">' +
+        '<span class="nl-ico nl-av-ico" aria-hidden="true"><svg class="av-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="av-g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f5bea"/><stop offset="1" stop-color="#1e88e5"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#av-g3)"/><g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(2.35) translate(-12 -12.5)"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></g></svg></span>' +
+        '<span class="nl-txt"><b>' + echapper(t('Assurance auto')) + '</b><small>' + echapper(t('Prime, offre et constat')) + '</small></span>' + ico('externe', 'ico-sm nl-av-fl') + '</a>' +
       '<div class="nl-pied"><button type="button" class="nl-item" id="btnLisible" aria-pressed="' + document.documentElement.classList.contains('lisible') + '" data-tip="' + echapper(t('Haute lisibilité')) + '">' +
         '<span class="nl-ico" aria-hidden="true">' + ico('globe') + '</span><span class="nl-txt">' + echapper(t('Haute lisibilité')) + '</span><span class="nl-bascule" aria-hidden="true"></span></button>' +
         '<button type="button" class="nl-item nl-replier" data-nav-replier data-tip="' + echapper(t('Déplier le panneau')) + '">' +
