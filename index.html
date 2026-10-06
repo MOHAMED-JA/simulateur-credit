@@ -2192,6 +2192,9 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
 .xsim--credit { --c1: #a855f7; --c2: #ec4899; }
 .xsim--vie { --c1: #6366f1; --c2: #c026d3; }
 .xsim--auto { --c1: #3b82f6; --c2: #22d3ee; }
+.xsim--salaire { --c1: #14b8a6; --c2: #3b82f6; }
+/* Nombre impair de cartes : la dernière occupe toute la largeur */
+@media (min-width: 761px) { .xsim-grille > .xsim-carte:last-child:nth-child(odd) { grid-column: 1 / -1; } }
 @media (hover: hover) and (pointer: fine) {
   .xsim-carte:hover { transform: translateY(-4px); background: linear-gradient(150deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, .04)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), 0 26px 44px -24px var(--c1); }
   .xsim-carte:hover::before { opacity: 1; }
@@ -2400,6 +2403,12 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
         <span class="xsim-txt"><strong data-t="Simulateur Assurance Automobile">Simulateur Assurance Automobile</strong><span data-t="Prime détaillée par garantie, offre imprimable et constat amiable.">Prime détaillée par garantie, offre imprimable et constat amiable.</span></span>
         <span class="xsim-fleche" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></span>
       </a>
+      <a class="xsim-carte xsim--salaire" href="https://mohamed-ja.github.io/portail-rh/calculateur-salaire/" target="_blank" rel="noopener">
+        <span class="xsim-halo" aria-hidden="true"></span>
+        <svg class="xsim-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="xsim-titre-salaire" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d9488"/><stop offset=".6" stop-color="#0891b2"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#xsim-titre-salaire)"/><g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(2.4) translate(-12 -12)"><path d="M4 9h14l-3.5-3.5"/><path d="M20 15H6l3.5 3.5"/></g></svg>
+        <span class="xsim-txt"><strong data-t="Calculateur de salaire brut ⇄ net">Calculateur de salaire brut ⇄ net</strong><span data-t="CNSS ou CNRPS, IRPP et CSS : du brut au net et inversement.">CNSS ou CNRPS, IRPP et CSS : du brut au net et inversement.</span></span>
+        <span class="xsim-fleche" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></span>
+      </a>
     </div>
   </section>
 
@@ -2423,6 +2432,10 @@ var AR = {
   "Prime détaillée par garantie, offre imprimable et constat amiable.": "قسط مفصّل حسب كل ضمان، عرض قابل للطباعة ومعاينة ودية.",
   "Assurance auto": "تأمين السيارات",
   "Prime, offre et constat": "القسط والعرض والمعاينة",
+  "Calculateur de salaire brut ⇄ net": "حاسبة الأجر الخام ⇄ الصافي",
+  "CNSS ou CNRPS, IRPP et CSS : du brut au net et inversement.": "الصندوق الوطني للضمان الاجتماعي أو الصندوق الوطني للتقاعد والحيطة الاجتماعية، الضريبة على الدخل والمساهمة الاجتماعية التضامنية: من الخام إلى الصافي والعكس.",
+  "Salaire brut ⇄ net": "الأجر الخام ⇄ الصافي",
+  "CNSS ou CNRPS, impôt": "الضمان أو التقاعد، الضريبة",
   " (hors indemnité)": " (دون غرامة)",
   "%": "%",
   "% / an": "% / سنة",
@@ -8031,6 +8044,7 @@ var AR = {
       { nom: 'Haute lisibilité', ico: 'globe', fn: basculerLisibilite },
       { nom: 'Simulateur Assurance Vie et CEA', ico: 'pousse', fn: function () { window.open('https://mohamed-ja.github.io/simulateur-assurance-vie/', '_blank', 'noopener'); } },
       { nom: 'Simulateur Assurance Automobile', ico: 'voiture', fn: function () { window.open('https://mohamed-ja.github.io/simulateur-Assurance-Automobile/', '_blank', 'noopener'); } },
+      { nom: 'Calculateur de salaire brut ⇄ net', ico: 'calc', fn: function () { window.open('https://mohamed-ja.github.io/portail-rh/calculateur-salaire/', '_blank', 'noopener'); } },
       { nom: 'Exporter Excel', ico: 'sheet', fn: function () { exporterExcel(sc); } },
       { nom: 'Imprimer', ico: 'printer', fn: function () { imprimer(sc); } },
       { nom: 'QR code', ico: 'qr', fn: function () { ouvrirQR(sc); } },
@@ -9803,6 +9817,9 @@ var AR = {
       '<a class="nl-item nl-av" href="https://mohamed-ja.github.io/simulateur-Assurance-Automobile/" target="_blank" rel="noopener" data-tip="' + echapper(t('Simulateur Assurance Automobile')) + '">' +
         '<span class="nl-ico nl-av-ico" aria-hidden="true"><svg class="av-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="av-g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f5bea"/><stop offset="1" stop-color="#1e88e5"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#av-g3)"/><g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(2.35) translate(-12 -12.5)"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></g></svg></span>' +
         '<span class="nl-txt"><b>' + echapper(t('Assurance auto')) + '</b><small>' + echapper(t('Prime, offre et constat')) + '</small></span>' + ico('externe', 'ico-sm nl-av-fl') + '</a>' +
+      '<a class="nl-item nl-av" href="https://mohamed-ja.github.io/portail-rh/calculateur-salaire/" target="_blank" rel="noopener" data-tip="' + echapper(t('Calculateur de salaire brut ⇄ net')) + '">' +
+        '<span class="nl-ico nl-av-ico" aria-hidden="true"><svg class="av-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="av-g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d9488"/><stop offset=".6" stop-color="#0891b2"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#av-g4)"/><g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(2.4) translate(-12 -12)"><path d="M4 9h14l-3.5-3.5"/><path d="M20 15H6l3.5 3.5"/></g></svg></span>' +
+        '<span class="nl-txt"><b>' + echapper(t('Salaire brut ⇄ net')) + '</b><small>' + echapper(t('CNSS ou CNRPS, impôt')) + '</small></span>' + ico('externe', 'ico-sm nl-av-fl') + '</a>' +
       '<div class="nl-pied"><button type="button" class="nl-item" id="btnLisible" aria-pressed="' + document.documentElement.classList.contains('lisible') + '" data-tip="' + echapper(t('Haute lisibilité')) + '">' +
         '<span class="nl-ico" aria-hidden="true">' + ico('globe') + '</span><span class="nl-txt">' + echapper(t('Haute lisibilité')) + '</span><span class="nl-bascule" aria-hidden="true"></span></button>' +
         '<button type="button" class="nl-item nl-replier" data-nav-replier data-tip="' + echapper(t('Déplier le panneau')) + '">' +
