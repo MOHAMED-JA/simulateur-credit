@@ -18,3 +18,9 @@ Dans une session Claude Code (terminal) :
 
 Répondez `y` pour ajouter le marketplace, puis choisissez la portée « user » (toutes vos sessions).
 Vérifier : `claude plugin list` (ou `/plugin`) doit lister le mod comme activé.
+
+## Activation automatique dans ce dépôt
+
+`.claude/settings.json` déclare le marketplace et active les 3 mods : toute session Claude Code
+ouverte sur ce dépôt (cloud compris) les charge sans installation. Pour un autre dépôt, copier ce fichier
+dans son dossier `.claude/`.
