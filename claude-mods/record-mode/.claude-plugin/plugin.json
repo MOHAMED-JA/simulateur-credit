@@ -1,0 +1,1 @@
+{ "name": "record-mode", "version": "0.1.0", "description": "Mode tournage : /record on masque e-mails, téléphones et montants en euros à l'écran", "types": "./types/index.d.ts" }
