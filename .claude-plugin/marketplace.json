@@ -1,0 +1,26 @@
+{
+  "name": "mods-mohamed",
+  "owner": {
+    "name": "MOHAMED-JA"
+  },
+  "plugins": [
+    {
+      "name": "next-steps",
+      "source": "./claude-mods/next-steps",
+      "description": "3 boutons de prochaine étape cliquables après chaque réponse"
+    },
+    {
+      "name": "record-mode",
+      "source": "./claude-mods/record-mode",
+      "description": "Mode tournage : /record on masque e-mails, téléphones et montants en euros"
+    },
+    {
+      "name": "progress-bar",
+      "source": "./claude-mods/progress-bar",
+      "description": "Barre de progression des tâches en plusieurs étapes"
+    }
+  ],
+  "metadata": {
+    "description": "Mods Claude Code de MOHAMED-JA : suggestions, mode tournage, barre de progression"
+  }
+}

@@ -1,0 +1,1 @@
+{ "name": "next-steps", "version": "0.1.0", "description": "3 boutons de prochaine étape cliquables après chaque réponse", "types": "./types/index.d.ts" }
