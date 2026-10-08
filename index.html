@@ -2244,6 +2244,15 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
 }
 @media (prefers-reduced-motion: reduce) { .xsim::after, .xsim-orbe, .xsim-sur::before { animation: none; } .xsim-carte, .xsim-carte::after, .xsim-logo, .xsim-fleche, .xsim-halo { transition: none; } }
 @media print { .xsim { display: none !important; } }
+
+/* Bande « Espace Finances TN » : invitation à créer son espace personnel */
+.efa { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 14px; padding: 8px 16px; background: #0A0C0F; color: #EDF0F4; border-bottom: 1px solid #262C35; font: 500 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; text-align: center; position: relative; z-index: 5; }
+.efa__badge { font-size: 12px; font-weight: 700; color: #04140F; background: #5BEBC0; padding: 2px 9px; border-radius: 999px; }
+.efa__lien { display: inline-flex; align-items: center; min-height: 32px; color: #5BEBC0; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.efa__lien:hover { color: #8FF5D6; }
+.efa__lien:focus-visible { outline: 2px solid #8FF5D6; outline-offset: 2px; border-radius: 4px; }
+.efa__cache { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+@media print { .efa { display: none; } }
 </style>
 
 <!-- Bibliothèques : Excel (SheetJS), graphiques (Chart.js), PDF (jsPDF + autoTable), QR code (qrcode-generator).
@@ -2255,6 +2264,7 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 </head>
 <body>
+<aside class="efa" aria-label="Espace Finances TN"><span class="efa__badge" data-t="Nouveau">Nouveau</span><span data-t="Enregistrez vos simulations dans votre espace personnel sécurisé.">Enregistrez vos simulations dans votre espace personnel sécurisé.</span><a class="efa__lien" href="https://espace-finances-tn.jaouadimohamedaziz.workers.dev/connexion.html?mode=inscription" target="_blank" rel="noopener"><span data-t="Créer mon espace">Créer mon espace</span><span class="efa__cache" data-t="(nouvel onglet)">(nouvel onglet)</span></a></aside>
 
 <!-- Icônes -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -2471,6 +2481,10 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
 /* Traduction arabe de l'interface (clé : texte français) */
 var AR = {
   "Les autres simulateurs": "المحاكيات الأخرى",
+  "Nouveau": "جديد",
+  "Enregistrez vos simulations dans votre espace personnel sécurisé.": "احفظ محاكاتك في فضائك الشخصي الآمن.",
+  "Créer mon espace": "أنشئ فضائي",
+  "(nouvel onglet)": "(علامة تبويب جديدة)",
   "Du même auteur · gratuits et installables": "من نفس المؤلف · مجانية وقابلة للتثبيت",
   "Simulateur Assurance Automobile": "محاكي تأمين السيارات",
   "Économie d'impôt, montant optimal à investir et projection du capital.": "الوفر الضريبي، المبلغ الأمثل للاستثمار وإسقاط رأس المال.",
