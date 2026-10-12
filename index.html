@@ -2222,6 +2222,7 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
 .xsim--vie { --c1: #6366f1; --c2: #c026d3; }
 .xsim--auto { --c1: #3b82f6; --c2: #22d3ee; }
 .xsim--salaire { --c1: #14b8a6; --c2: #3b82f6; }
+.xsim--orbite { --c1: #12B76A; --c2: #7A5AF8; }
 /* Nombre impair de cartes : la dernière occupe toute la largeur */
 @media (min-width: 761px) { .xsim-grille > .xsim-carte:last-child:nth-child(odd) { grid-column: 1 / -1; } }
 @media (hover: hover) and (pointer: fine) {
@@ -2264,7 +2265,7 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 </head>
 <body>
-<aside class="efa" aria-label="Espace Finances TN"><span class="efa__badge" data-t="Nouveau">Nouveau</span><span data-t="Enregistrez vos simulations dans votre espace personnel sécurisé.">Enregistrez vos simulations dans votre espace personnel sécurisé.</span><a class="efa__lien" href="https://espace-finances-tn.jaouadimohamedaziz.workers.dev/connexion.html?mode=inscription" target="_blank" rel="noopener"><span data-t="Créer mon espace">Créer mon espace</span><span class="efa__cache" data-t="(nouvel onglet)">(nouvel onglet)</span></a></aside>
+<aside class="efa" aria-label="Orbite"><span class="efa__badge" data-t="Nouveau">Nouveau</span><span data-t="Orbite : salaire, crédit, impôt et retraite en Tunisie, au même endroit.">Orbite : salaire, crédit, impôt et retraite en Tunisie, au même endroit.</span><a class="efa__lien" href="https://espace-finances-tn.jaouadimohamedaziz.workers.dev/" target="_blank" rel="noopener"><span data-t="Découvrir Orbite">Découvrir Orbite</span><span class="efa__cache" data-t="(nouvel onglet)">(nouvel onglet)</span></a></aside>
 
 <!-- Icônes -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -2430,6 +2431,13 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
     <span class="xsim-orbe" aria-hidden="true"></span>
     <div class="xsim-tete"><div><span class="xsim-sur" data-t="Du même auteur · gratuits et installables">Du même auteur · gratuits et installables</span><h2 class="xsim-titre" id="xsim-titre" data-t="Les autres simulateurs">Les autres simulateurs</h2></div></div>
     <div class="xsim-grille">
+      <a class="xsim-carte xsim--orbite" href="https://espace-finances-tn.jaouadimohamedaziz.workers.dev/capacite-credit-tunisie" target="_blank" rel="noopener">
+        <span class="xsim-halo" aria-hidden="true"></span>
+        <svg class="xsim-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="xsim-credit-orbite-1" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#12B76A"/><stop offset=".55" stop-color="#2F5BEA"/><stop offset="1" stop-color="#7A5AF8"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="#0A0D16"/><ellipse cx="32" cy="32" rx="21.5" ry="9" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="1.6" transform="rotate(34 32 32)"/><ellipse cx="32" cy="32" rx="21.5" ry="9" fill="none" stroke="url(#xsim-credit-orbite-1)" stroke-width="2.6" transform="rotate(-30 32 32)"/><circle cx="13.6" cy="42.6" r="3.6" fill="#12B76A"/><circle cx="50.4" cy="21.4" r="3.6" fill="#7A5AF8"/><circle cx="32" cy="32" r="6.6" fill="#fff"/></svg>
+        <span class="xsim-txt"><strong data-t="Orbite : capacité d'emprunt en Tunisie">Orbite : capacité d'emprunt en Tunisie</strong><span data-t="Combien la banque peut vous prêter avec votre salaire, et votre dossier banque en PDF.">Combien la banque peut vous prêter avec votre salaire, et votre dossier banque en PDF.</span></span>
+        <span class="xsim-fleche" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></span>
+      </a>
+
       <a class="xsim-carte xsim--vie" href="https://mohamed-ja.github.io/simulateur-assurance-vie/" target="_blank" rel="noopener">
         <span class="xsim-halo" aria-hidden="true"></span>
         <svg class="xsim-logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="xsim-titre-vie" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset=".55" stop-color="#7c3aed"/><stop offset="1" stop-color="#c026d3"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#xsim-titre-vie)"/><g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(32 32) scale(2.3) translate(-12 -12.5)"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></g></svg>
@@ -2464,7 +2472,8 @@ html[dir="rtl"] .nl-av-fl { transform: scaleX(-1); }
     </a>
     <nav class="mj-sig__nav" aria-label="Simulateurs du même auteur" data-t-aria-label="Simulateurs du même auteur">
       <ul class="mj-sig__apps">
-        <li><a class="mj-sig__app" style="--mj-c: #a855f7" href="https://mohamed-ja.github.io/simulateur-credit/" aria-current="page" data-t="Crédit">Crédit</a></li>
+        <li><a class="mj-sig__app" style="--mj-c: #7A5AF8" href="https://espace-finances-tn.jaouadimohamedaziz.workers.dev/" target="_blank" rel="noopener" translate="no">Orbite</a></li>
+                <li><a class="mj-sig__app" style="--mj-c: #a855f7" href="https://mohamed-ja.github.io/simulateur-credit/" aria-current="page" data-t="Crédit">Crédit</a></li>
         <li><a class="mj-sig__app" style="--mj-c: #6366f1" href="https://mohamed-ja.github.io/simulateur-assurance-vie/" target="_blank" rel="noopener" data-t="Assurance vie">Assurance vie</a></li>
         <li><a class="mj-sig__app" style="--mj-c: #3b82f6" href="https://mohamed-ja.github.io/simulateur-Assurance-Automobile/" target="_blank" rel="noopener" data-t="Assurance auto">Assurance auto</a></li>
         <li><a class="mj-sig__app" style="--mj-c: #14b8a6" href="https://mohamed-ja.github.io/portail-rh/calculateur-salaire/" target="_blank" rel="noopener" data-t="Salaire brut ⇄ net">Salaire brut ⇄ net</a></li>
@@ -2486,6 +2495,10 @@ var AR = {
   "Créer mon espace": "أنشئ فضائي",
   "(nouvel onglet)": "(علامة تبويب جديدة)",
   "Du même auteur · gratuits et installables": "من نفس المؤلف · مجانية وقابلة للتثبيت",
+  "Orbite : salaire, crédit, impôt et retraite en Tunisie, au même endroit.": "Orbite: الراتب والقرض والضريبة والتقاعد في تونس، في مكان واحد.",
+  "Découvrir Orbite": "اكتشف Orbite",
+  "Orbite : capacité d'emprunt en Tunisie": "Orbite: قدرة الاقتراض في تونس",
+  "Combien la banque peut vous prêter avec votre salaire, et votre dossier banque en PDF.": "كم يمكن للبنك أن يقرضك حسب راتبك، مع ملفك البنكي بصيغة PDF.",
   "Simulateur Assurance Automobile": "محاكي تأمين السيارات",
   "Économie d'impôt, montant optimal à investir et projection du capital.": "الوفر الضريبي، المبلغ الأمثل للاستثمار وإسقاط رأس المال.",
   "Prime détaillée par garantie, offre imprimable et constat amiable.": "قسط مفصّل حسب كل ضمان، عرض قابل للطباعة ومعاينة ودية.",
